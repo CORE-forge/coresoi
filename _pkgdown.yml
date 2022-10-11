@@ -1,0 +1,14 @@
+url: https://core-forge.github.io/coresoi/
+template:
+  bootstrap: 5
+  bslib:
+    bg: "#FFFFFF"
+    fg: "#2180a7"
+    primary: "#2180a7"
+    base_font: {google: "Dosis"}
+    heading_font: {google: "Lora"}
+    code_font: {google: "JetBrains Mono"}
+  navbar:
+    structure:
+      left:  [intro, reference, articles, tutorials, news]
+      right: [search, github]
