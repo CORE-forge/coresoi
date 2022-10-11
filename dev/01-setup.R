@@ -9,7 +9,8 @@ person(
   comment = c(ORCID = "0000-0002-3444-4094")
 )
 
-usethis::use_pkgdown()
+usethis::use_pkgdown_github_pages()
+pkgdown::build_site_github_pages()
 
 usethis::use_readme_rmd()
 usethis::use_logo("~/Pictures/hex-coresoi.png")

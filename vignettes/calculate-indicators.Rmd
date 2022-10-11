@@ -1,0 +1,33 @@
+---
+title: "How to calculate indicators with `coresoi`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{calculate-indicators}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, eval=FALSE}
+library(coresoi)
+```
+
+
+## Where is data?
+
+Data form BNDCP has benne carefully aggregated and inserted in this package. 
+
+## Quick data exploration
+
+
+## Calculate an indicator
+
+
+
+
