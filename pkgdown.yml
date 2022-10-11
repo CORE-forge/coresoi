@@ -1,8 +1,10 @@
 pandoc: 2.14.2
 pkgdown: 2.0.6
 pkgdown_sha: ~
-articles: {}
-last_built: 2022-10-11T17:50Z
+articles:
+  calculate-indicators: calculate-indicators.html
+  core-api: core-api.html
+last_built: 2022-10-11T18:39Z
 urls:
   reference: https://core-forge.github.io/coresoi/reference
   article: https://core-forge.github.io/coresoi/articles
