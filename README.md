@@ -68,8 +68,9 @@ media and citizens for accountability purposes.
 
 ## 📝 TODOs
 
--   mettere google analytics
+-   setup google analytics
 -   build a template for package
+-   less error prone function indicators (+ escapes, type checkers etc.)
 
 ## Code of Conduct
 

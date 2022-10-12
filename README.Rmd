@@ -56,8 +56,9 @@ The C.R.E. focuses on assessing the risk of corruption in public procurement fro
 
 ## 📝 TODOs
 
-- mettere google analytics
+- setup google analytics
 - build a template for package
+- less error prone function indicators (+ escapes, type checkers etc.)
 
 
 ## Code of Conduct

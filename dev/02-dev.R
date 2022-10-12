@@ -13,8 +13,10 @@ goodpractice::gp()
 
 devtools::test()
 devtools::check()
+devtools::build()
 
-build_site_github_pages()
+pkgdown::build_articles()
+pkgdown::build_site_github_pages()
 
 
 ## when huge release

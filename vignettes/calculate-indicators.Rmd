@@ -14,19 +14,41 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup, eval=FALSE}
+```{r setup}
 library(coresoi)
 ```
 
 
 ## Where is data?
 
-Data form BNDCP has benne carefully aggregated and inserted in this package. 
+Data form BNDCP has been carefully aggregated and inserted in this package. 
+
+... todo
 
 ## Quick data exploration
 
+... todo
 
 ## Calculate an indicator
+
+Let's say we are interested in calculating and indicator say number 11, namely Distance between award value and sums paid. The indicator aims at quantifying the difference between the sum foreseen in the contract and the actual payment by the C.A prior and after the emergency outbreak. This is extremely convenient since we may expect that the ratio between what's should be paid and what it is actually paid (in other words the the portion of the contract  value left to be paid) needs to remain just as equal in the twp periods. We may also suppose that this does not happen due to the fact that during emergency outbreaks inspections and controls are wicker and less in-depth. This may give the chance to fraudsters to get money quicker and runaway 💰. There as indicator for to quantify that risk. All we need to do is to supply to function `ind_11()` data and related variables, check out the documentation:
+
+```{r ind11}
+data(bncp_data, package = "coresoi")
+ind_11(
+  data=bncp_data, 
+  publication_date=data_pubblicazione, 
+  award_value=importo_aggiudicazione, 
+  sums_paid=imp_finale, 
+  cf_amministrazione_appaltante) |>
+  head(10)
+
+```
+
+
+
+
+
 
 
 

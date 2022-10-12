@@ -1,5 +1,5 @@
 ---
-title: "Performing a request to CORE API  via R"
+title: "Performing a request to CORE API via R"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{core-api}
