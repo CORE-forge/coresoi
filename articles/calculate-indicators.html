@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">coresoi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/calculate-indicators.html">How to calculate indicators with `coresoi`</a>
-    <a class="dropdown-item" href="../articles/core-api.html">Performing a request to CORE API  via R</a>
+    <a class="dropdown-item" href="../articles/core-api.html">Performing a request to CORE API via R</a>
   </div>
 </li>
 <li class="nav-item">
@@ -89,15 +89,40 @@
 <div class="section level2">
 <h2 id="where-is-data">Where is data?<a class="anchor" aria-label="anchor" href="#where-is-data"></a>
 </h2>
-<p>Data form BNDCP has benne carefully aggregated and inserted in this package.</p>
+<p>Data form BNDCP has been carefully aggregated and inserted in this package.</p>
+<p>… todo</p>
 </div>
 <div class="section level2">
 <h2 id="quick-data-exploration">Quick data exploration<a class="anchor" aria-label="anchor" href="#quick-data-exploration"></a>
 </h2>
+<p>… todo</p>
 </div>
 <div class="section level2">
 <h2 id="calculate-an-indicator">Calculate an indicator<a class="anchor" aria-label="anchor" href="#calculate-an-indicator"></a>
 </h2>
+<p>Let’s say we are interested in calculating and indicator say number 11, namely Distance between award value and sums paid. The indicator aims at quantifying the difference between the sum foreseen in the contract and the actual payment by the C.A prior and after the emergency outbreak. This is extremely convenient since we may expect that the ratio between what’s should be paid and what it is actually paid (in other words the the portion of the contract value left to be paid) needs to remain just as equal in the twp periods. We may also suppose that this does not happen due to the fact that during emergency outbreaks inspections and controls are wicker and less in-depth. This may give the chance to fraudsters to get money quicker and runaway 💰. There as indicator for to quantify that risk. All we need to do is to supply to function <code><a href="../reference/ind_11.html">ind_11()</a></code> data and related variables, check out the documentation:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">bncp_data</span>, package <span class="op">=</span> <span class="st">"coresoi"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/ind_11.html">ind_11</a></span><span class="op">(</span></span>
+<span>  data<span class="op">=</span><span class="va">bncp_data</span>, </span>
+<span>  publication_date<span class="op">=</span><span class="va">data_pubblicazione</span>, </span>
+<span>  award_value<span class="op">=</span><span class="va">importo_aggiudicazione</span>, </span>
+<span>  sums_paid<span class="op">=</span><span class="va">imp_finale</span>, </span>
+<span>  <span class="va">cf_amministrazione_appaltante</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 4</span></span></span>
+<span><span class="co">#&gt;    cf_amministrazione_appaltante prepost ind_11_mean ind_11_median</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> 00033120437                   post          0.974         0.974</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> 00040020620                   pre           1.00          1.00 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> 00040490773                   pre           1.05          1.05 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> 00040490773                   post          0.995         0.995</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> 00040490773                   post          0.995         0.995</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> 00040520579                   pre           0.999         0.999</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> 00041640293                   pre           1.11          1.14 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> 00041640293                   pre           1.11          1.14 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> 00041640293                   pre           1.11          1.14 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> 00041640293                   pre           1.11          1.14</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
