@@ -4,11 +4,11 @@
 \name{coresoi-package}
 \alias{coresoi}
 \alias{coresoi-package}
-\title{coresoi: What the Package Does (One Line, Title Case)}
+\title{coresoi: Measuring Corruption Risk in Emergency}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-What the package does (one paragraph).
+the package offers a set of indicators explicitly built on top of BNDCP to measure corruption in emergency
 }
 \seealso{
 Useful links:

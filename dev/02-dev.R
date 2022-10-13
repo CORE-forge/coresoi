@@ -18,6 +18,7 @@ devtools::build()
 pkgdown::build_articles()
 pkgdown::build_site_github_pages()
 
+devtools::build_readme()
 
 ## when huge release
 #' > Update the `NEWS.md` file and..

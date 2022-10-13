@@ -71,6 +71,7 @@ media and citizens for accountability purposes.
 -   setup google analytics
 -   build a template for package
 -   less error prone function indicators (+ escapes, type checkers etc.)
+-   fix aggregation bug on `ind_11()`
 
 ## Code of Conduct
 

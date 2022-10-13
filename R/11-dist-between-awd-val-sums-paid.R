@@ -3,7 +3,7 @@
 #' @param data dataset to be passed, expects tibble
 #' @param award_value The date when the tender was awarded
 #' @param sums_paid The amount paid by the C.A.
-#' @param ... the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by
+#' @param group the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by
 #' @param outbreak_starting_date The date when the emergency officially started, Default: lubridate::ymd("2017-06-30")
 #' @param publication_date The date when the tender was published
 #' @return a tibble [n x 5] containing cf_amministrazione_appaltante
@@ -25,9 +25,9 @@
 #' @rdname ind_11
 #' @export
 #' @importFrom lubridate ymd
-#' @importFrom dplyr filter mutate if_else group_by summarise n ungroup select
+#' @importFrom dplyr filter mutate if_else group_by summarise n
 #' @importFrom forcats as_factor
-ind_11 <- function(data, award_value, sums_paid, ...,
+ind_11 <- function(data, award_value, sums_paid, group,
                    outbreak_starting_date = lubridate::ymd("2017-06-30"),
                    publication_date) {
 
@@ -47,15 +47,12 @@ ind_11 <- function(data, award_value, sums_paid, ...,
       prepost = forcats::as_factor(prepost),
       ratio = {{ sums_paid }} / {{ award_value }}
     ) %>%
-    dplyr::group_by(..., prepost) %>%
+    dplyr::group_by({{ group }}, prepost) %>%
     dplyr::summarise(
-      ...,
       prepost_count = dplyr::n(),
       ind_11_mean = mean(ratio, na.rm = TRUE),
       ind_11_median = median(ratio, na.rm = TRUE)
-    ) %>%
-    dplyr::ungroup() %>%
-    dplyr::select(-prepost_count)
+    )
 
   return(df)
 }
