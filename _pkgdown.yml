@@ -12,3 +12,10 @@ template:
     structure:
       left:  [intro, reference, articles, tutorials, news]
       right: [search, github]
+reference:
+  - title: "Risk Indicators"
+    desc: "COrruption Risk Indicators in Emergency"
+    contents:
+      - 01-high-winning-rate
+      - 02-high-economic-value
+      - 11-dist-between-awd-val-sums-paid
