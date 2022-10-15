@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   calculate-indicators: calculate-indicators.html
   core-api: core-api.html
-last_built: 2022-10-13T00:31Z
+last_built: 2022-10-15T17:35Z
 urls:
   reference: https://core-forge.github.io/coresoi/reference
   article: https://core-forge.github.io/coresoi/articles
