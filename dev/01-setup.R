@@ -9,11 +9,10 @@ person(
   comment = c(ORCID = "0000-0002-3444-4094")
 )
 
-usethis::use_pkgdown_github_pages()
-pkgdown::build_site_github_pages()
+
 
 usethis::use_readme_rmd()
-usethis::use_logo("~/Pictures/hex-coresoi.png")
+usethis::use_logo("~/Pictures/hex-corel190.png")
 usethis::use_cran_badge()
 usethis::use_lifecycle_badge("experimental")
 
@@ -35,62 +34,31 @@ devtools::test()         # see it passes!!
 usethis::use_tidy_description()
 
 
+devtools::check()
+devtools::build()
+devtools::build_readme()
 styler::style_pkg()
 
-devtools::check_man()
-devtools::test()
-devtools::check(cran = F)
+#' R-CDM-check and coverage
+#' --------------------------------------------------------------------
+
+usethis::use_github_actions_badge("R-CMD-check")
+usethis::use_github_actions_badge("covr")
 
 
-usethis::use_git()
-usethis::git_vaccinate()
-#'
-#' Commit everything before to continue!
-#'
-# remember to open and activate PuTTY
-usethis::use_github()
-usethis::use_tidy_github()
 
-
+## fist commit something
+usethis::use_pkgdown_github_pages()
+pkgdown::build_site_github_pages()
 usethis::use_github_action("pkgdown")
 usethis::use_github_actions_badge("pkgdown")
 
 
-#' R-CDM-check and coverage
-#' --------------------------------------------------------------------
-usethis::use_github_actions_badge("check-full",
-                                  save_as = "R-CMD-check.yaml"
-)
-usethis::use_github_actions_badge("R-CMD-check")
-
-usethis::use_github_action("test-coverage",
-                           save_as = "covr.yaml"
-)
-usethis::use_github_actions_badge("covr")
-
-#' Final checks and update version
-#' ====================================================================
-#'
-usethis::use_tidy_description()
-devtools::check_man()
-
-spelling::spell_check_package()
-spelling::update_wordlist()
-
-lintr::lint_package()
-renv::status()
-devtools::check()
 
 #'
 #' > Update and knit the `README.Rmd`
 #'
 usethis::use_version("dev")
-
-
-
-
-
-
 
 
 #'
