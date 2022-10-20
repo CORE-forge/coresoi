@@ -1,37 +1,36 @@
 
 
 ind_6 <- function(data, outbreak_date = ymd(as_date("2022-02-21"))) {
-  data = data %>%
+  data <- data %>%
     select(cig, data_agiundicazione_definitiva, data_inizio_effettiva, data_termine_contrattuale, data_effettiva_ultimazione, nvarianti2)
   return(data)
 }
 
-  # statistical unit:; contract CIG
+# statistical unit:; contract CIG
 
-  # vars
-  ## - cig
-  ## - cpv
-  ## - award date (data_agiundicazione_definitiva)
-  ## - end date
-  ## - modficiation date
-  ## - moification type
-  ## . outbreakl date (assuming covid: 21 FEBBRAIO 2020 )
-
-
-  ## steps
-  ## - those who have end cotnract date  after emergency out break
-  ## - those who have end beofre outbreaks with modification after outbreaks
+# vars
+## - cig
+## - cpv
+## - award date (data_agiundicazione_definitiva)
+## - end date
+## - modficiation date
+## - moification type
+## . outbreakl date (assuming covid: 21 FEBBRAIO 2020 )
 
 
-  # vars to include
-  # -
-
-  ## caveats:
-  ## magari puoi guardare gli aggiundicati
+## steps
+## - those who have end cotnract date  after emergency out break
+## - those who have end beofre outbreaks with modification after outbreaks
 
 
-#
-#
+# vars to include
+# -
+
+## caveats:
+## magari puoi guardare gli aggiundicati
+
+
+
 # outbreak_date = ymd(as_date("2022-02-21"))
 # bncp_data %>%
 #   select(cig, data_aggiudicazione_definitiva, data_inizio_effettiva, data_termine_contrattuale, data_effettiva_ultimazione, nvarianti2) %>%
