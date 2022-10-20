@@ -16,6 +16,9 @@ devtools::check()
 devtools::build()
 
 pkgdown::build_articles()
+
+
+## remember to add new function to reference
 # this actually is run in a workflow, you dont need to execute it
 pkgdown::build_site_github_pages()
 

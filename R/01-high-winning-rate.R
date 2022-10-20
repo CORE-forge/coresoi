@@ -23,8 +23,8 @@ compute_fisher <- function(a, b, c, d) {
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   data("bncp_data")
-#'   ind_1(data = bncp_data, publication_date = data_pubblicazione, cpv = cod_cpv, group = cod_provincia2)
+#'   data("test_data_bndcp_core")
+#'   ind_1(data = test_data_bndcp_core, publication_date = data_pubblicazione, cpv = cod_cpv, group = cod_provincia2)
 #' }
 #' }
 #' @seealso
