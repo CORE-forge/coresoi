@@ -1,3 +1,7 @@
 ## code to prepare `DATASET` dataset goes here
 
-usethis::use_data(DATASET, overwrite = TRUE)
+library(here)
+load(here("data","data_test_core.rdata"))
+
+
+usethis::use_data(data_test_core %>% tibble(), overwrite = TRUE)
