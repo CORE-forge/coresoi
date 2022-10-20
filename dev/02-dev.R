@@ -16,6 +16,7 @@ devtools::check()
 devtools::build()
 
 pkgdown::build_articles()
+# this actually is run in a workflow, you dont need to execute it
 pkgdown::build_site_github_pages()
 
 devtools::build_readme()
