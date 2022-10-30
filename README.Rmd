@@ -37,13 +37,34 @@ This is a basic example which shows you how to solve a common problem:
 
 ```{r example}
 library(coresoi)
-## basic example code
-```
+library(dplyr)
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+## basic example code with ind_1() i.e. High Winning Rate
+ind_1_res <- ind_1(
+  data = test_data_bndcp_core, 
+  publication_date = data_pubblicazione,
+  cpv = cod_cpv,
+  group = nome_regione2
+  ) %>% 
+  mutate(
+    across(where(is.numeric), ~round(., 3))
+  )
+
+ind_1_res
+```
+Let's now visualize results for top 10 provinces by Fisher Estimate.
 
 ```{r cars}
-summary(cars)
+library(ggplot2)
+library(forcats)
+library(tidyr)
+ggplot(drop_na(ind_1_res), aes(y = fct_reorder(nome_regione2, fisher_test), x = fisher_test)) +
+  geom_col() +
+  labs(
+    y = "",
+    x = "Fisher test pvalue"
+  )
+
 ```
 
 

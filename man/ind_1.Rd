@@ -35,15 +35,14 @@ it computes the indicator n° 1
 \examples{
 \dontrun{
 if (interactive()) {
-  data("bncp_data")
-  ind_1(data = bncp_data, publication_date = data_pubblicazione, cpv = cod_cpv, group = cod_provincia2)
+  data("test_data_bndcp_core")
+  ind_1(data = test_data_bndcp_core, publication_date = data_pubblicazione, cpv = cod_cpv, group = cod_provincia2)
 }
 }
 }
 \seealso{
 \code{\link[lubridate]{ymd}}
 \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{c("rowwise", "rowwise", "rowwise")}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{reexports}}
-\code{\link[forcats]{as_factor}}
 \code{\link[stringr]{str_sub}}
 \code{\link[tidyr]{nest}}
 }

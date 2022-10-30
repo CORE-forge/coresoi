@@ -29,22 +29,60 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(coresoi)
-## basic example code
+library(dplyr)
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+
+## basic example code with ind_1() i.e. High Winning Rate
+ind_1_res <- ind_1(
+  data = test_data_bndcp_core, 
+  publication_date = data_pubblicazione,
+  cpv = cod_cpv,
+  group = nome_regione2
+  ) %>% 
+  mutate(
+    across(where(is.numeric), ~round(., 3))
+  )
+
+ind_1_res
+#> # A tibble: 21 × 5
+#> # Rowwise: 
+#>    nome_regione2         prop_test correct_prop_test fisher_test fisher_estimate
+#>    <chr>                     <dbl>             <dbl>       <dbl>           <dbl>
+#>  1 Abruzzo                   0.741             0.725       0.55            0.938
+#>  2 Basilicata                1                 1           0               0.338
+#>  3 Calabria                  0.004             0.005       0.01            1.47 
+#>  4 Campania                  1                 1           0               0.397
+#>  5 Emilia-Romagna            0.796             0.789       0.408           0.959
+#>  6 Friuli-Venezia Giulia     1                 1           0               0.23 
+#>  7 Lazio                     0                 0           0               1.22 
+#>  8 Liguria                   1                 1           0               0.669
+#>  9 Lombardia                 0                 0           0               1.30 
+#> 10 Marche                    0                 0           0               2.12 
+#> # … with 11 more rows
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+Let’s now visualize results for top 10 provinces by Fisher Estimate.
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+library(ggplot2)
+library(forcats)
+library(tidyr)
+ggplot(drop_na(ind_1_res), aes(y = fct_reorder(nome_regione2, fisher_test), x = fisher_test)) +
+  geom_col() +
+  labs(
+    y = "",
+    x = "Fisher test pvalue"
+  )
 ```
+
+<img src="man/figures/README-cars-1.png" width="100%" />
 
 ## CORE ecosystem
 

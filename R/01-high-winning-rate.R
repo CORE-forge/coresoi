@@ -30,7 +30,6 @@ compute_fisher <- function(a, b, c, d) {
 #' @seealso
 #'  \code{\link[lubridate]{ymd}}
 #'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{c("rowwise", "rowwise", "rowwise")}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{reexports}}
-#'  \code{\link[forcats]{as_factor}}
 #'  \code{\link[stringr]{str_sub}}
 #'  \code{\link[tidyr]{nest}}
 #' @rdname ind_1
@@ -95,5 +94,3 @@ ind_1 <- function(data,
     dplyr::select({{ group }}, dplyr::contains("prop"), dplyr::contains("fisher")) %>%
     return()
 }
-
-
