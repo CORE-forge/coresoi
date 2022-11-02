@@ -84,12 +84,12 @@
 <p>You can install the development version of core-soi from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"CORE-forge/core-soi"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"CORE-forge/coresoi"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<h2 id="example-compute-indicator-high-winning-rate">Example: Compute indicator High Winning Rate<a class="anchor" aria-label="anchor" href="#example-compute-indicator-high-winning-rate"></a>
 </h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
+<p>it computes the indicator n° 1 which mainly accounts for companies that after the Emergency outbreak (say Covid-19) were awarded public contracts much more frequently than before the Emergency.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://core-forge.github.io/coresoi/">coresoi</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -111,13 +111,14 @@
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">.</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">nome_regione2</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ind_1_res</span></span>
-<span><span class="co">#&gt; # A tibble: 21 × 5</span></span>
+<span><span class="co">#&gt; # A tibble: 20 × 5</span></span>
 <span><span class="co">#&gt; # Rowwise: </span></span>
 <span><span class="co">#&gt;    nome_regione2         prop_test correct_prop_test fisher_test fisher_estimate</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;                     &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;    &lt;fct&gt;                     &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt;  1 Abruzzo                   0.741             0.725       0.55            0.938</span></span>
 <span><span class="co">#&gt;  2 Basilicata                1                 1           0               0.338</span></span>
 <span><span class="co">#&gt;  3 Calabria                  0.004             0.005       0.01            1.47 </span></span>
@@ -128,7 +129,16 @@
 <span><span class="co">#&gt;  8 Liguria                   1                 1           0               0.669</span></span>
 <span><span class="co">#&gt;  9 Lombardia                 0                 0           0               1.30 </span></span>
 <span><span class="co">#&gt; 10 Marche                    0                 0           0               2.12 </span></span>
-<span><span class="co">#&gt; # … with 11 more rows</span></span></code></pre></div>
+<span><span class="co">#&gt; 11 Molise                    0.954             0.864       0.249           0    </span></span>
+<span><span class="co">#&gt; 12 Piemonte                  1                 1           0               0.693</span></span>
+<span><span class="co">#&gt; 13 Puglia                    0.631             0.619       0.756           0.979</span></span>
+<span><span class="co">#&gt; 14 Sardegna                  0                 0           0               1.62 </span></span>
+<span><span class="co">#&gt; 15 Sicilia                   0.928             0.923       0.149           0.905</span></span>
+<span><span class="co">#&gt; 16 Toscana                   1                 1           0               0.475</span></span>
+<span><span class="co">#&gt; 17 Trentino-Alto Adige       1                 1           0               0.441</span></span>
+<span><span class="co">#&gt; 18 Umbria                    1                 1           0               0.654</span></span>
+<span><span class="co">#&gt; 19 Valle d'Aosta             0.346             0.417       0.717           1.16 </span></span>
+<span><span class="co">#&gt; 20 Veneto                    0                 0           0               1.19</span></span></code></pre></div>
 <p>Let’s now visualize results for top 10 provinces by Fisher Estimate.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
