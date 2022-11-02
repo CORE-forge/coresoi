@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">coresoi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9003</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -89,27 +89,59 @@
 <div class="section level2">
 <h2 id="whats-an-api">What’s an api<a class="anchor" aria-label="anchor" href="#whats-an-api"></a>
 </h2>
-<p>A good data science endeavor is powered by interesting data sets. While services such as Kaggle provide free data sets to eager data scientists, APIs are another popular method for accessing and acquiring interesting data.</p>
-<p>Instead of downloading a dataset, APIs allow programmers to request data directly from specific websites via an Application Programming Interface (thus, “API”). Many prominent websites, such as Reddit, Twitter, and Facebook, provide APIs via which data analysts and data scientists may gain access to fascinating data. This is also true when you might want to serve your R function to non-R users. In interdisciplinary departments such as DS people need to show results to colleagues without having them to run code on their machine, it can be models or plots. The barres which may prevent this might be team’s non-techical expertise, absence of reproducible envs or just people (like many DEs) using Python 👎. APIs in this sense make you able to abtractize the business logic to code.</p>
+<p>A good data science endeavor is powered by interesting data sets.
+While services such as Kaggle provide free data sets to eager data
+scientists, APIs are another popular method for accessing and acquiring
+interesting data.</p>
+<p>Instead of downloading a dataset, APIs allow programmers to request
+data directly from specific websites via an Application Programming
+Interface (thus, “API”). Many prominent websites, such as Reddit,
+Twitter, and Facebook, provide APIs via which data analysts and data
+scientists may gain access to fascinating data. This is also true when
+you might want to serve your R function to non-R users. In
+interdisciplinary departments such as DS people need to show results to
+colleagues without having them to run code on their machine, it can be
+models or plots. The barres which may prevent this might be team’s
+non-techical expertise, absence of reproducible envs or just people
+(like many DEs) using Python 👎. APIs in this sense make you able to
+abtractize the business logic to code.</p>
 </div>
 <div class="section level2">
 <h2 id="whats-an-api-in-r">What’s an api in R<a class="anchor" aria-label="anchor" href="#whats-an-api-in-r"></a>
 </h2>
-<p>The word “API” refers to the location where one computer program interacts with another or with itself. We’ll be dealing with online APIs in this lesson, where two separate computers — a client and a server — will connect with each other to request and deliver data, respectively.</p>
-<p>APIs provide data scientists with a sophisticated method of requesting clean and vetted data from a website. When a website, such as Facebook, creates an API, they are effectively creating a computer that will wait for data requests.</p>
-<p>What makes this valuable? Contrast the API method with traditional web scraping. When a programmer scrapes a web page, the data is sent in the form of a jumbled piece of HTML. While there are packages that make parsing HTML text simple, these are all cleaning procedures that must be completed before we can even get our hands on the data we need!</p>
+<p>The word “API” refers to the location where one computer program
+interacts with another or with itself. We’ll be dealing with online APIs
+in this lesson, where two separate computers — a client and a server —
+will connect with each other to request and deliver data,
+respectively.</p>
+<p>APIs provide data scientists with a sophisticated method of
+requesting clean and vetted data from a website. When a website, such as
+Facebook, creates an API, they are effectively creating a computer that
+will wait for data requests.</p>
+<p>What makes this valuable? Contrast the API method with traditional
+web scraping. When a programmer scrapes a web page, the data is sent in
+the form of a jumbled piece of HTML. While there are packages that make
+parsing HTML text simple, these are all cleaning procedures that must be
+completed before we can even get our hands on the data we need!</p>
 </div>
 <div class="section level2">
 <h2 id="perform-core-api-request-in">perform core-api request in<a class="anchor" aria-label="anchor" href="#perform-core-api-request-in"></a>
 </h2>
-<p>Since CORE API under hood uses this package we might be interested to see how it behaves when it is called via R. To work with APIs in R, we need to bring in some libraries. These libraries take all of the complexities of an API request and wrap them up in functions that we can use in single lines of code. The R library that we’ll be using are <code>httr2</code>.</p>
+<p>Since CORE API under hood uses this package we might be interested to
+see how it behaves when it is called via R. To work with APIs in R, we
+need to bring in some libraries. These libraries take all of the
+complexities of an API request and wrap them up in functions that we can
+use in single lines of code. The R library that we’ll be using are
+<code>httr2</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://httr2.r-lib.org" class="external-link">httr2</a></span><span class="op">)</span></span>
 <span><span class="va">core_api_url</span> <span class="op">=</span> <span class="st">""</span></span>
 <span><span class="va">req</span> <span class="op">&lt;-</span> <span class="fu">request</span><span class="op">(</span><span class="st">"https://r-project.org"</span><span class="op">)</span></span>
 <span><span class="va">req</span></span></code></pre></div>
-<p>After downloading the libraries, we’ll be able to use them in our R scripts or RMarkdown files.</p>
-<p>Use <code>req_perform()</code> to perform the request, retrieving a response:</p>
+<p>After downloading the libraries, we’ll be able to use them in our R
+scripts or RMarkdown files.</p>
+<p>Use <code>req_perform()</code> to perform the request, retrieving a
+response:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">resp</span> <span class="op">&lt;-</span> <span class="fu">req_perform</span><span class="op">(</span><span class="va">req</span><span class="op">)</span></span>
 <span><span class="va">resp</span></span></code></pre></div>

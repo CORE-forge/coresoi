@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="index.html">coresoi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9003</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -76,6 +76,7 @@
 </h1>
 </div>
 <!-- badges: start -->
+
 <p>The goal of coresoi is to …</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -91,17 +92,55 @@
 <p>This is a basic example which shows you how to solve a common problem:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://core-forge.github.io/coresoi/">coresoi</a></span><span class="op">)</span></span>
-<span><span class="co">## basic example code</span></span></code></pre></div>
-<p>What is special about using <code>README.Rmd</code> instead of just <code>README.md</code>? You can include R chunks like so:</p>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     filter, lag</span></span>
+<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
+<span></span>
+<span><span class="co">## basic example code with ind_1() i.e. High Winning Rate</span></span>
+<span><span class="va">ind_1_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ind_1.html">ind_1</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">test_data_bndcp_core</span>, </span>
+<span>  publication_date <span class="op">=</span> <span class="va">data_pubblicazione</span>,</span>
+<span>  cpv <span class="op">=</span> <span class="va">cod_cpv</span>,</span>
+<span>  group <span class="op">=</span> <span class="va">nome_regione2</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">.</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">ind_1_res</span></span>
+<span><span class="co">#&gt; # A tibble: 21 × 5</span></span>
+<span><span class="co">#&gt; # Rowwise: </span></span>
+<span><span class="co">#&gt;    nome_regione2         prop_test correct_prop_test fisher_test fisher_estimate</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;                     &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt;  1 Abruzzo                   0.741             0.725       0.55            0.938</span></span>
+<span><span class="co">#&gt;  2 Basilicata                1                 1           0               0.338</span></span>
+<span><span class="co">#&gt;  3 Calabria                  0.004             0.005       0.01            1.47 </span></span>
+<span><span class="co">#&gt;  4 Campania                  1                 1           0               0.397</span></span>
+<span><span class="co">#&gt;  5 Emilia-Romagna            0.796             0.789       0.408           0.959</span></span>
+<span><span class="co">#&gt;  6 Friuli-Venezia Giulia     1                 1           0               0.23 </span></span>
+<span><span class="co">#&gt;  7 Lazio                     0                 0           0               1.22 </span></span>
+<span><span class="co">#&gt;  8 Liguria                   1                 1           0               0.669</span></span>
+<span><span class="co">#&gt;  9 Lombardia                 0                 0           0               1.30 </span></span>
+<span><span class="co">#&gt; 10 Marche                    0                 0           0               2.12 </span></span>
+<span><span class="co">#&gt; # … with 11 more rows</span></span></code></pre></div>
+<p>Let’s now visualize results for top 10 provinces by Fisher Estimate.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      speed           dist       </span></span>
-<span><span class="co">#&gt;  Min.   : 4.0   Min.   :  2.00  </span></span>
-<span><span class="co">#&gt;  1st Qu.:12.0   1st Qu.: 26.00  </span></span>
-<span><span class="co">#&gt;  Median :15.0   Median : 36.00  </span></span>
-<span><span class="co">#&gt;  Mean   :15.4   Mean   : 42.98  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:19.0   3rd Qu.: 56.00  </span></span>
-<span><span class="co">#&gt;  Max.   :25.0   Max.   :120.00</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/" class="external-link">forcats</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="va">ind_1_res</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html" class="external-link">fct_reorder</a></span><span class="op">(</span><span class="va">nome_regione2</span>, <span class="va">fisher_test</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">fisher_test</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span></span>
+<span>    y <span class="op">=</span> <span class="st">""</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"Fisher test pvalue"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-cars-1.png" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="core-ecosystem">CORE ecosystem<a class="anchor" aria-label="anchor" href="#core-ecosystem"></a>
@@ -109,7 +148,7 @@
 <p><code>coresoi</code> is part of of the project CO.R.E.- Corruption risk indicators in emergency, financed by the EU Commission, as part of the Internal Police Security Fund (ISF-P) program, The project presented by the Department of Political Sciences as leader with the coordination of Prof. Gnaldi (PI) was funded for a total of 514 thousand euros. The working group is made up of colleagues Prof. Enrico Carloni, Prof. Marco Mazzoni, Prof. Benedetto Ponti, Prof. Maria Giovanna Ranalli. The international network involves Universitat Obierta Catalunya (Spain), Dublin City University (Ireland), Oficina Antifrau de Catalunya (Spain), Infonodes (Italy), Transparency International (Portugal), Villa Montesca Foundation (Italy). The C.R.E. focuses on assessing the risk of corruption in public procurement from a preventive perspective. In view of achieving this goal, central to the European agenda, CO.R.E. it therefore intends to develop and validate a procedure for constructing a synthetic indicator of the risk of corruption in an emergency period that can be usefully used by national anti-corruption agencies, the media and citizens for accountability purposes.</p>
 </div>
 <div class="section level2">
-<h2 id="-todos">📝 TODOs<a class="anchor" aria-label="anchor" href="#-todos"></a>
+<h2 id="id_-todos">📝 TODOs<a class="anchor" aria-label="anchor" href="#id_-todos"></a>
 </h2>
 <ul>
 <li>setup google analytics</li>
