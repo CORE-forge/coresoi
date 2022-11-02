@@ -12,7 +12,7 @@ ind_2(
 )
 }
 \arguments{
-\item{data}{bndcp data}
+\item{data}{test bndcp data}
 
 \item{cpv}{Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract}
 

@@ -12,7 +12,7 @@ compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "g
 
 #' @title Compute High Economic Value indicator
 #' @description High Economic Value for statistical unit
-#' @param data bndcp data
+#' @param data test bndcp data
 #' @param cpv Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract
 #' @param contract_value the value of the contract
 #' @param outbreak_starting_date the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")

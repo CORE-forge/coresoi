@@ -28,12 +28,12 @@ You can install the development version of core-soi from [GitHub](https://github
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("CORE-forge/core-soi")
+devtools::install_github("CORE-forge/coresoi")
 ```
 
-## Example
+## Example: Compute indicator High Winning Rate 
 
-This is a basic example which shows you how to solve a common problem:
+it computes the indicator n° 1 which mainly accounts for companies that after the Emergency outbreak (say Covid-19) were awarded public contracts much more frequently than before the Emergency.
 
 ```{r example}
 library(coresoi)
@@ -48,7 +48,8 @@ ind_1_res <- ind_1(
   ) %>% 
   mutate(
     across(where(is.numeric), ~round(., 3))
-  )
+  ) %>% 
+  filter(nome_regione2 != "")
 
 ind_1_res
 ```

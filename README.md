@@ -20,12 +20,14 @@ You can install the development version of core-soi from
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("CORE-forge/core-soi")
+devtools::install_github("CORE-forge/coresoi")
 ```
 
-## Example
+## Example: Compute indicator High Winning Rate
 
-This is a basic example which shows you how to solve a common problem:
+it computes the indicator n° 1 which mainly accounts for companies that
+after the Emergency outbreak (say Covid-19) were awarded public
+contracts much more frequently than before the Emergency.
 
 ``` r
 library(coresoi)
@@ -48,13 +50,14 @@ ind_1_res <- ind_1(
   ) %>% 
   mutate(
     across(where(is.numeric), ~round(., 3))
-  )
+  ) %>% 
+  filter(nome_regione2 != "")
 
 ind_1_res
-#> # A tibble: 21 × 5
+#> # A tibble: 20 × 5
 #> # Rowwise: 
 #>    nome_regione2         prop_test correct_prop_test fisher_test fisher_estimate
-#>    <chr>                     <dbl>             <dbl>       <dbl>           <dbl>
+#>    <fct>                     <dbl>             <dbl>       <dbl>           <dbl>
 #>  1 Abruzzo                   0.741             0.725       0.55            0.938
 #>  2 Basilicata                1                 1           0               0.338
 #>  3 Calabria                  0.004             0.005       0.01            1.47 
@@ -65,7 +68,16 @@ ind_1_res
 #>  8 Liguria                   1                 1           0               0.669
 #>  9 Lombardia                 0                 0           0               1.30 
 #> 10 Marche                    0                 0           0               2.12 
-#> # … with 11 more rows
+#> 11 Molise                    0.954             0.864       0.249           0    
+#> 12 Piemonte                  1                 1           0               0.693
+#> 13 Puglia                    0.631             0.619       0.756           0.979
+#> 14 Sardegna                  0                 0           0               1.62 
+#> 15 Sicilia                   0.928             0.923       0.149           0.905
+#> 16 Toscana                   1                 1           0               0.475
+#> 17 Trentino-Alto Adige       1                 1           0               0.441
+#> 18 Umbria                    1                 1           0               0.654
+#> 19 Valle d'Aosta             0.346             0.417       0.717           1.16 
+#> 20 Veneto                    0                 0           0               1.19
 ```
 
 Let’s now visualize results for top 10 provinces by Fisher Estimate.
