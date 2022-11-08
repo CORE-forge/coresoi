@@ -33,7 +33,7 @@ ind_3 <- function(data, publication_date, awd_company, outbreak_starting_date = 
     dplyr::group_by(codice_fiscale) %>%
     dplyr::mutate(
       flag_opportunist = dplyr::if_else(max(data_aggiudicazione_definitiva) %within% lubridate::interval(data_pubblicazione - lubridate::years(1), data_pubblicazione), 1, 0),
-      flag_opportunist = dplyr::if_else(data_pubblicazione <=data_aggiudicazione_definitiva, true = 0, false = 1 )
+      flag_opportunist = dplyr::if_else(data_pubblicazione <= data_aggiudicazione_definitiva, true = 0, false = 1)
     ) %>%
     ungroup() %>%
     return()
