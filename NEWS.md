@@ -1,4 +1,4 @@
-# coresoi (development version)
+# coresoi 0.1.0
 
 
 ## core-soi 0.0.0.9003
