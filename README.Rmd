@@ -33,7 +33,8 @@ devtools::install_github("CORE-forge/coresoi")
 
 ## Example: Compute indicator High Winning Rate 
 
-There might be the case in which you have to compute the indicator n° 1, which mainly accounts for companies that after the Emergency outbreak (say Covid-19) were awarded public contracts much more frequently than before the Emergency. The resulting output for indicator 1 is a `tibble` which displays a number of columns on which we aggreed on for frontend purposes.
+There might be the case in which you have to compute the indicator n° 1, which mainly accounts for companies that after the Emergency outbreak (say Covid-19) were awarded public contracts much more frequently than before the Emergency. Indicator 11 computes a [Fish exact's test](https://en.wikipedia.org/wiki/Fisher%27s_exact_test) in proportion from _pre_ and _post_ emergency, poiting out if there is any statistical significance between the two group proportions.
+The resulting indicator follows a schema generated through `coresoi::generate_indicator_schema`.
 
 ```{r example}
 library(coresoi)
@@ -42,14 +43,13 @@ library(dplyr)
 ## basic example code with ind_1() i.e. High Winning Rate
 ind_1_res <- ind_1(
   data = test_data_bndcp_core, 
-  publication_date = data_pubblicazione,
-  cpv = cod_cpv,
-  group = nome_regione2
-  ) %>% 
+  publication_date = data_pubblicazione, 
+  cpv = cod_cpv, 
+  stat_unit = nome_regione2) %>% 
   mutate(
     across(where(is.numeric), ~round(., 3))
   ) %>% 
-  filter(nome_regione2 != "")
+  na.omit(aggregation_name)
 
 ind_1_res
 ```
@@ -60,11 +60,11 @@ Let's now visualize results for top 10 provinces given High Winning Rate  indica
 library(ggplot2)
 library(forcats)
 library(tidyr)
-ggplot(drop_na(ind_1_res), aes(y = fct_reorder(nome_regione2, fisher_test), x = fisher_test)) +
+ggplot(drop_na(ind_1_res), aes(y = fct_reorder(aggregation_name, indicator_value), x = indicator_value)) +
   geom_col() +
   labs(
     y = "",
-    x = "Fisher test pvalue"
+    x = "Fisher' Exact test pvalue (indicator 1)"
   )
 
 ```
