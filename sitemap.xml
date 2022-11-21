@@ -43,6 +43,15 @@
     <loc>https://core-forge.github.io/coresoi/reference/download_and_unzip.html</loc>
   </url>
   <url>
+    <loc>https://core-forge.github.io/coresoi/reference/generate_indicator_schema.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/get_emergency_id_from_date.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/get_emergency_name_from_date.html</loc>
+  </url>
+  <url>
     <loc>https://core-forge.github.io/coresoi/reference/ind_1.html</loc>
   </url>
   <url>

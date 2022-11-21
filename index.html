@@ -15,9 +15,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="deps/Dosis-0.4.2/font.css" rel="stylesheet">
-<link href="deps/JetBrains_Mono-0.4.2/font.css" rel="stylesheet">
-<link href="deps/Lora-0.4.2/font.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="deps/Dosis-0.4.3/font.css" rel="stylesheet">
+<link href="deps/JetBrains_Mono-0.4.3/font.css" rel="stylesheet">
+<link href="deps/Lora-0.4.3/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Measuring Corruption Risk in Emergency">
@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="index.html">coresoi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -77,11 +77,11 @@
 </div>
 <!-- badges: start -->
 
-<p>The goal of coresoi is to …</p>
+<p>The goal of <code>coresoi</code> is to offer a <em>sandbox</em> in which researchers and anti-corruption analysts may play and interact with the set of indicators we designed, offering also mock data extracted from <a href="https://dati.anticorruzione.it/index.html#/home" class="external-link">dati.anticorruzione</a>.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of core-soi from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version of coresoi from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"CORE-forge/coresoi"</span><span class="op">)</span></span></code></pre></div>
@@ -89,7 +89,7 @@
 <div class="section level2">
 <h2 id="example-compute-indicator-high-winning-rate">Example: Compute indicator High Winning Rate<a class="anchor" aria-label="anchor" href="#example-compute-indicator-high-winning-rate"></a>
 </h2>
-<p>it computes the indicator n° 1 which mainly accounts for companies that after the Emergency outbreak (say Covid-19) were awarded public contracts much more frequently than before the Emergency.</p>
+<p>There might be the case in which you have to compute the indicator n° 1, which mainly accounts for companies that after the Emergency outbreak (say Covid-19) were awarded public contracts much more frequently than before the Emergency. Indicator 11 computes a <a href="https://en.wikipedia.org/wiki/Fisher%27s_exact_test" class="external-link">Fish exact’s test</a> in proportion from <em>pre</em> and <em>post</em> emergency, poiting out if there is any statistical significance between the two group proportions. The resulting indicator follows a schema generated through <code><a href="reference/generate_indicator_schema.html">coresoi::generate_indicator_schema</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://core-forge.github.io/coresoi/">coresoi</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
@@ -105,50 +105,53 @@
 <span><span class="co">## basic example code with ind_1() i.e. High Winning Rate</span></span>
 <span><span class="va">ind_1_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ind_1.html">ind_1</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">test_data_bndcp_core</span>, </span>
-<span>  publication_date <span class="op">=</span> <span class="va">data_pubblicazione</span>,</span>
-<span>  cpv <span class="op">=</span> <span class="va">cod_cpv</span>,</span>
-<span>  group <span class="op">=</span> <span class="va">nome_regione2</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
+<span>  publication_date <span class="op">=</span> <span class="va">data_pubblicazione</span>, </span>
+<span>  cpv <span class="op">=</span> <span class="va">cod_cpv</span>, </span>
+<span>  stat_unit <span class="op">=</span> <span class="va">nome_regione2</span><span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">.</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op"><a href="reference/pipe.html">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">nome_regione2</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">aggregation_name</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">ind_1_res</span></span>
-<span><span class="co">#&gt; # A tibble: 20 × 5</span></span>
+<span><span class="co">#&gt; # A tibble: 20 × 12</span></span>
 <span><span class="co">#&gt; # Rowwise: </span></span>
-<span><span class="co">#&gt;    nome_regione2         prop_test correct_prop_test fisher_test fisher_estimate</span></span>
-<span><span class="co">#&gt;    &lt;fct&gt;                     &lt;dbl&gt;             &lt;dbl&gt;       &lt;dbl&gt;           &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 Abruzzo                   0.741             0.725       0.55            0.938</span></span>
-<span><span class="co">#&gt;  2 Basilicata                1                 1           0               0.338</span></span>
-<span><span class="co">#&gt;  3 Calabria                  0.004             0.005       0.01            1.47 </span></span>
-<span><span class="co">#&gt;  4 Campania                  1                 1           0               0.397</span></span>
-<span><span class="co">#&gt;  5 Emilia-Romagna            0.796             0.789       0.408           0.959</span></span>
-<span><span class="co">#&gt;  6 Friuli-Venezia Giulia     1                 1           0               0.23 </span></span>
-<span><span class="co">#&gt;  7 Lazio                     0                 0           0               1.22 </span></span>
-<span><span class="co">#&gt;  8 Liguria                   1                 1           0               0.669</span></span>
-<span><span class="co">#&gt;  9 Lombardia                 0                 0           0               1.30 </span></span>
-<span><span class="co">#&gt; 10 Marche                    0                 0           0               2.12 </span></span>
-<span><span class="co">#&gt; 11 Molise                    0.954             0.864       0.249           0    </span></span>
-<span><span class="co">#&gt; 12 Piemonte                  1                 1           0               0.693</span></span>
-<span><span class="co">#&gt; 13 Puglia                    0.631             0.619       0.756           0.979</span></span>
-<span><span class="co">#&gt; 14 Sardegna                  0                 0           0               1.62 </span></span>
-<span><span class="co">#&gt; 15 Sicilia                   0.928             0.923       0.149           0.905</span></span>
-<span><span class="co">#&gt; 16 Toscana                   1                 1           0               0.475</span></span>
-<span><span class="co">#&gt; 17 Trentino-Alto Adige       1                 1           0               0.441</span></span>
-<span><span class="co">#&gt; 18 Umbria                    1                 1           0               0.654</span></span>
-<span><span class="co">#&gt; 19 Valle d'Aosta             0.346             0.417       0.717           1.16 </span></span>
-<span><span class="co">#&gt; 20 Veneto                    0                 0           0               1.19</span></span></code></pre></div>
-<p>Let’s now visualize results for top 10 provinces by Fisher Estimate.</p>
+<span><span class="co">#&gt;    indicator_id idicat…¹ indic…² aggre…³ emerg…⁴ emerg…⁵ aggre…⁶ aggre…⁷ count…⁸</span></span>
+<span><span class="co">#&gt;           &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;fct&gt;     &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;  </span></span>
+<span><span class="co">#&gt;  1            1 High wi…   0.55  Abruzzo       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt;  2            1 High wi…   0     Basili…       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt;  3            1 High wi…   0.01  Calabr…       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt;  4            1 High wi…   0     Campan…       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt;  5            1 High wi…   0.408 Emilia…       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt;  6            1 High wi…   0     Friuli…       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt;  7            1 High wi…   0     Lazio         3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt;  8            1 High wi…   0     Liguria       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt;  9            1 High wi…   0     Lombar…       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; 10            1 High wi…   0     Marche        3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; 11            1 High wi…   0.249 Molise        3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; 12            1 High wi…   0     Piemon…       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; 13            1 High wi…   0.756 Puglia        3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; 14            1 High wi…   0     Sardeg…       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; 15            1 High wi…   0.149 Sicilia       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; 16            1 High wi…   0     Toscana       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; 17            1 High wi…   0     Trenti…       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; 18            1 High wi…   0     Umbria        3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; 19            1 High wi…   0.717 Valle …       3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; 20            1 High wi…   0     Veneto        3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; # … with 3 more variables: country_name &lt;chr&gt;, indicator_last_update &lt;dttm&gt;,</span></span>
+<span><span class="co">#&gt; #   data_last_update &lt;dttm&gt;, and abbreviated variable names ¹​idicator_name,</span></span>
+<span><span class="co">#&gt; #   ²​indicator_value, ³​aggregation_name, ⁴​emergency_id, ⁵​emergency_name,</span></span>
+<span><span class="co">#&gt; #   ⁶​aggregation_id, ⁷​aggregation_type, ⁸​country_id</span></span></code></pre></div>
+<p>Let’s now visualize results for top 10 provinces given High Winning Rate indicator estimate.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://forcats.tidyverse.org/" class="external-link">forcats</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
-<span><span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="va">ind_1_res</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html" class="external-link">fct_reorder</a></span><span class="op">(</span><span class="va">nome_regione2</span>, <span class="va">fisher_test</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">fisher_test</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html" class="external-link">drop_na</a></span><span class="op">(</span><span class="va">ind_1_res</span><span class="op">)</span>, <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_reorder.html" class="external-link">fct_reorder</a></span><span class="op">(</span><span class="va">aggregation_name</span>, <span class="va">indicator_value</span><span class="op">)</span>, x <span class="op">=</span> <span class="va">indicator_value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_col</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">labs</span><span class="op">(</span></span>
 <span>    y <span class="op">=</span> <span class="st">""</span>,</span>
-<span>    x <span class="op">=</span> <span class="st">"Fisher test pvalue"</span></span>
+<span>    x <span class="op">=</span> <span class="st">"Fisher' Exact test pvalue (indicator 1)"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-cars-1.png" width="100%"></p>
 </div>
@@ -166,6 +169,7 @@
 <li>less error prone function indicators (+ escapes, type checkers etc.)</li>
 <li>fix aggregation bug on <code><a href="reference/ind_11.html">ind_11()</a></code>
 </li>
+<li>mettere jl n uovo <code>test_data</code> con 100’000 più recenti</li>
 </ul>
 </div>
 <div class="section level2">
