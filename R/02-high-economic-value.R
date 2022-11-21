@@ -16,11 +16,12 @@ compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "g
 #' @param cpv Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract
 #' @param contract_value the value of the contract
 #' @param outbreak_starting_date the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")
-#' @return tibble n x 5
+#' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   # EXAMPLE1
+#'   data("test_data_bndcp_core")
+#'   ind_2(test_data_bndcp_core, cpv = cod_cpv, contract_value = importo_aggiudicazione, publication_date = data_pubblicazione)
 #' }
 #' }
 #' @seealso
@@ -39,7 +40,12 @@ compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "g
 ind_2 <- function(data,
                   cpv,
                   contract_value,
-                  outbreak_starting_date = lubridate::ymd("2017-06-30")) {
+                  publication_date,
+                  outbreak_starting_date = lubridate::ymd("2017-06-30"),
+                  stat_unit) {
+  indicator_id <- 2
+  indicator_name <- "High Economic Value"
+
   data %>%
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= outbreak_starting_date, true = "post", false = "pre"),
@@ -48,7 +54,7 @@ ind_2 <- function(data,
     ) %>%
     tidyr::unnest(aggiudicatari, keep_empty = FALSE) %>%
     tidyr::drop_na({{ contract_value }}) %>%
-    dplyr::group_by(codice_fiscale) %>%
+    dplyr::group_by({{ stat_unit }}) %>%
     dplyr::filter(all(c("pre", "post") %in% prepost)) %>%
     dplyr::ungroup(prepost) %>%
     dplyr::summarise(
@@ -56,6 +62,17 @@ ind_2 <- function(data,
       median = median({{ contract_value }}, na.rm = TRUE),
       iqr = IQR({{ contract_value }}, na.rm = TRUE),
       wilcox_test = compute_wilcox_test(var = {{ contract_value }}, group = prepost, data = .)$p.value
+    ) %>%
+    generate_indicator_schema(
+      indicator_id = indicator_id,
+      indicator_name = indicator_name,
+      wilcox_test,
+      {{ stat_unit }},
+      outbreak_starting_date = outbreak_starting_date
+    ) %>%
+    dplyr::rename(
+      indicator_name = wilcox_test,
+      aggregation_name = {{ stat_unit }}
     ) %>%
     return()
 }

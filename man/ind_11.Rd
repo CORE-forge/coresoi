@@ -2,35 +2,35 @@
 % Please edit documentation in R/11-dist-betw-awd-val-sums-paid.R
 \name{ind_11}
 \alias{ind_11}
-\title{ind_11}
+\title{Compute Distance between award value and sums paid indicator}
 \usage{
 ind_11(
   data,
   award_value,
   sums_paid,
-  group,
+  stat_unit,
   outbreak_starting_date = lubridate::ymd("2017-06-30"),
   publication_date
 )
 }
 \arguments{
-\item{data}{dataset to be passed, expects tibble}
+\item{data}{data to be passed, expects tibble}
 
 \item{award_value}{The date when the tender was awarded}
 
 \item{sums_paid}{The amount paid by the C.A.}
 
-\item{group}{the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by}
+\item{stat_unit}{the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by}
 
 \item{outbreak_starting_date}{The date when the emergency officially started, Default: lubridate::ymd("2017-06-30")}
 
 \item{publication_date}{The date when the tender was published}
 }
 \value{
-a tibble \link{n x 5} containing cf_amministrazione_appaltante
+indicator schema as from \code{generate_indicator_schema}
 }
 \description{
-The difference between the sum foreseen in the contract and the actual payment by the C.A.
+The difference between the sum foreseen in the contract and the actual payment by the C.A. (ita SA stazione Appaltante)
 }
 \details{
 DETAILS
@@ -39,7 +39,7 @@ DETAILS
 \dontrun{
 if (interactive()) {
   ind_11(
-    .data = bncp_data, publication_date = data_pubblicazione,
+    data = test_data_bndcp_core, publication_date = data_pubblicazione,
     award_value = importo_aggiudicazione, sums_paid = imp_finale,
     cf_amministrazione_appaltante
   )

@@ -9,8 +9,7 @@ ind_1(
   publication_date,
   cpv,
   outbreak_starting_date = lubridate::ymd("2017-06-30"),
-  divison,
-  group
+  stat_unit
 )
 }
 \arguments{
@@ -22,12 +21,12 @@ ind_1(
 
 \item{outbreak_starting_date}{the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")}
 
-\item{divison}{first two digits in cpv code identifying the division, for more info check https://simap.ted.europa.eu/it/cpv}
+\item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
 
-\item{group}{statistical unit}
+\item{divison}{first two digits in cpv code identifying the division, for more info check https://simap.ted.europa.eu/it/cpv}
 }
 \value{
-tibble df with 5 columns (group, prop_test, correct_prop_test, fisher_test, fisher_estimate )
+indicator schema as from \code{generate_indicator_schema}
 }
 \description{
 it computes the indicator n° 1
@@ -36,7 +35,7 @@ it computes the indicator n° 1
 \dontrun{
 if (interactive()) {
   data("test_data_bndcp_core")
-  ind_1(data = test_data_bndcp_core, publication_date = data_pubblicazione, cpv = cod_cpv, group = cod_provincia2)
+  ind_1(data = test_data_bndcp_core, publication_date = data_pubblicazione, cpv = cod_cpv, stat_unit = nome_provincia2)
 }
 }
 }

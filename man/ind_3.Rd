@@ -2,13 +2,13 @@
 % Please edit documentation in R/03-os-opportunistic-company.R
 \name{ind_3}
 \alias{ind_3}
-\title{compute One-shot opportunistic companies}
+\title{Compute One-shot opportunistic companies indicator}
 \usage{
 ind_3(
   data,
   publication_date,
-  awd_company,
-  outbreak_starting_date = lubridate::ymd("2017-06-30")
+  outbreak_starting_date = lubridate::ymd("2017-06-30"),
+  stat_unit
 )
 }
 \arguments{
@@ -16,12 +16,12 @@ ind_3(
 
 \item{publication_date}{The date when the tender was published}
 
-\item{awd_company}{The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)}
-
 \item{outbreak_starting_date}{the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")}
+
+\item{stat_unit}{The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)}
 }
 \value{
-tibble n x 7
+indicator schema as from \code{generate_indicator_schema}
 }
 \description{
 The indicator reveals whether the company that won the public tender or contract has a previous history of at least one year since the opening of the tender.
@@ -29,7 +29,8 @@ The indicator reveals whether the company that won the public tender or contract
 \examples{
 \dontrun{
 if (interactive()) {
-  # EXAMPLE1
+  data("test_data_bndcp_core")
+  ind_3(test_data_bndcp_core, publication_date = data_pubblicazione, stat_unit = codice_fiscale)
 }
 }
 }

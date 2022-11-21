@@ -5,8 +5,8 @@
 compute_fisher <- function(a, b, c, d) {
   data <- matrix(c(a, b, c, d), ncol = 2)
   c(
-    p_value = fisher.test(data)$p.value,
-    fisher_estimate = fisher.test(data)$estimate
+    p_value = round(fisher.test(data)$p.value, 3),
+    fisher_estimate = round(fisher.test(data)$estimate, 3)
   )
 }
 
@@ -18,13 +18,13 @@ compute_fisher <- function(a, b, c, d) {
 #' @param cpv Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract
 #' @param outbreak_starting_date the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")
 #' @param divison first two digits in cpv code identifying the division, for more info check https://simap.ted.europa.eu/it/cpv
-#' @param group statistical unit
-#' @return tibble df with 5 columns (group, prop_test, correct_prop_test, fisher_test, fisher_estimate )
+#' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
+#' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
 #'   data("test_data_bndcp_core")
-#'   ind_1(data = test_data_bndcp_core, publication_date = data_pubblicazione, cpv = cod_cpv, group = cod_provincia2)
+#'   ind_1(data = test_data_bndcp_core, publication_date = data_pubblicazione, cpv = cod_cpv, stat_unit = nome_provincia2)
 #' }
 #' }
 #' @seealso
@@ -43,12 +43,15 @@ ind_1 <- function(data,
                   publication_date,
                   cpv,
                   outbreak_starting_date = lubridate::ymd("2017-06-30"),
-                  divison,
-                  group) {
+                  stat_unit) {
 
-  # TODO
-  # - how do you make abstract aggiudicatatari, should I explicit that?
-  # - can make summarisation slimmer by defining a further function
+  # TODO: how do you make abstract aggiudicatatari, should I explicit that?
+  # TODO: can make summarisation slimmer by defining a further function
+  # TODO: desume emergency from date (f within, then ...)
+
+  indicator_id <- 1
+  indicator_name <- "High winning rate"
+
 
   data %>%
     dplyr::mutate(
@@ -56,9 +59,8 @@ ind_1 <- function(data,
       prepost = forcats::as_factor(prepost),
       flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == "33", 1, 0)
     ) %>%
-    ## you just expect to have to that
     tidyr::unnest(aggiudicatari, keep_empty = FALSE) %>%
-    dplyr::group_by({{ group }}) %>%
+    dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
       n = dplyr::n(),
       n_11 = sum(flagdivision == 0 & prepost == "pre"),
@@ -75,14 +77,14 @@ ind_1 <- function(data,
     dplyr::rowwise() %>%
     dplyr::mutate(
       # prop_test: Simple asymptotic method (no correction)
-      prop_test = prop.test(
+      prop_test = stats::prop.test(
         x = c(n_22, n_12),
         n = c(m_2, m_1),
         correct = FALSE,
         alternative = "greater"
       )$p.value %>% suppressWarnings(),
       # correct_prop_test: Simple asymptotic method (with correction)
-      correct_prop_test = prop.test(
+      correct_prop_test = stats::prop.test(
         x = c(n_22, n_12),
         n = c(m_2, m_1),
         correct = TRUE,
@@ -91,6 +93,17 @@ ind_1 <- function(data,
       fisher_test = compute_fisher(n_11, n_12, n_21, n_22)[[1]],
       fisher_estimate = compute_fisher(n_11, n_12, n_21, n_22)[[2]]
     ) %>%
-    dplyr::select({{ group }}, dplyr::contains("prop"), dplyr::contains("fisher")) %>%
+    dplyr::select({{ stat_unit }}, dplyr::contains("prop"), dplyr::contains("fisher")) %>%
+    generate_indicator_schema(
+      indicator_id = indicator_id,
+      indicator_name = indicator_name,
+      fisher_test,
+      {{ stat_unit }},
+      outbreak_starting_date = outbreak_starting_date
+    ) %>%
+    dplyr::rename(
+      indicator_value = fisher_test,
+      aggregation_name = {{ stat_unit }}
+    ) %>%
     return()
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/05bis-awarded-notice-communication.R
 \name{ind_5_bis}
 \alias{ind_5_bis}
-\title{Awarded notice communication default}
+\title{Compute Awarded notice communication default indicator}
 \usage{
 ind_5_bis(
   data,
@@ -11,7 +11,7 @@ ind_5_bis(
   cpv,
   outbreak_starting_date = lubridate::ymd("2017-06-30"),
   division = "33",
-  group
+  stat_unit
 )
 }
 \arguments{
@@ -27,16 +27,13 @@ ind_5_bis(
 
 \item{division}{initial two digits from cpv, Default: '33'}
 
-\item{group}{statistical unit of measurement and grouping}
+\item{stat_unit}{statistical unit of measurement and stat_uniting}
 }
 \value{
-OUTPUT_DESCRIPTION
+indicator schema as from \code{generate_indicator_schema}
 }
 \description{
 The indicator reveals the fraction of contracts without award notice communication.
-}
-\details{
-DETAILS
 }
 \examples{
 \dontrun{
@@ -47,7 +44,7 @@ if (interactive()) {
 }
 \seealso{
 \code{\link[lubridate]{ymd}}
-\code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{distinct}}, \code{\link[dplyr]{pull}}, \code{\link[dplyr]{rename}}, \code{\link[dplyr]{mutate-joins}}, \code{\link[dplyr]{arrange}}
+\code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{stat_unit_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{distinct}}, \code{\link[dplyr]{pull}}, \code{\link[dplyr]{rename}}, \code{\link[dplyr]{mutate-joins}}, \code{\link[dplyr]{arrange}}
 \code{\link[forcats]{as_factor}}
 \code{\link[stringr]{str_sub}}
 }

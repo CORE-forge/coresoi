@@ -1,18 +1,18 @@
-#' @title ind_11
-#' @description The difference between the sum foreseen in the contract and the actual payment by the C.A.
-#' @param data dataset to be passed, expects tibble
+#' @title Compute Distance between award value and sums paid indicator
+#' @description The difference between the sum foreseen in the contract and the actual payment by the C.A. (ita SA stazione Appaltante)
+#' @param data data to be passed, expects tibble
 #' @param award_value The date when the tender was awarded
 #' @param sums_paid The amount paid by the C.A.
-#' @param group the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by
+#' @param stat_unit the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by
 #' @param outbreak_starting_date The date when the emergency officially started, Default: lubridate::ymd("2017-06-30")
 #' @param publication_date The date when the tender was published
-#' @return a tibble [n x 5] containing cf_amministrazione_appaltante
+#' @return indicator schema as from `generate_indicator_schema`
 #' @details DETAILS
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
 #'   ind_11(
-#'     .data = bncp_data, publication_date = data_pubblicazione,
+#'     data = test_data_bndcp_core, publication_date = data_pubblicazione,
 #'     award_value = importo_aggiudicazione, sums_paid = imp_finale,
 #'     cf_amministrazione_appaltante
 #'   )
@@ -27,9 +27,11 @@
 #' @importFrom lubridate ymd
 #' @importFrom dplyr filter mutate if_else group_by summarise n
 #' @importFrom forcats as_factor
-ind_11 <- function(data, award_value, sums_paid, group,
+ind_11 <- function(data, award_value, sums_paid, stat_unit,
                    outbreak_starting_date = lubridate::ymd("2017-06-30"),
                    publication_date) {
+  indicator_id <- 11
+  indicator_name <- "Distance between award value and sums paid"
 
   # TODO
   # - data filtering for NA or 0s
@@ -39,7 +41,7 @@ ind_11 <- function(data, award_value, sums_paid, group,
   # - compute indicator for a single cf
   # - might want to use group_by(across(variables))
 
-  df <- data %>%
+  data %>%
     dplyr::filter(!is.na({{ award_value }}) & !is.na({{ sums_paid }}) & {{ award_value }} > 0 &
       {{ sums_paid }} > 0) %>%
     dplyr::mutate(
@@ -47,12 +49,22 @@ ind_11 <- function(data, award_value, sums_paid, group,
       prepost = forcats::as_factor(prepost),
       ratio = {{ sums_paid }} / {{ award_value }}
     ) %>%
-    dplyr::group_by({{ group }}, prepost) %>%
+    dplyr::group_by({{ stat_unit }}, prepost) %>%
     dplyr::summarise(
       prepost_count = dplyr::n(),
       ind_11_mean = mean(ratio, na.rm = TRUE),
       ind_11_median = median(ratio, na.rm = TRUE)
-    )
-
-  return(df)
+    ) %>%
+    generate_indicator_schema(
+      indicator_id = indicator_id,
+      indicator_name = indicator_name,
+      {{ stat_unit }},
+      ind_11_mean,
+      outbreak_starting_date = outbreak_starting_date
+    ) %>%
+    dplyr::rename(
+      indicator_value = ind_11_mean,
+      aggregation_name = {{ stat_unit }}
+    ) %>%
+    return()
 }

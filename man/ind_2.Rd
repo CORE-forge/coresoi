@@ -8,7 +8,9 @@ ind_2(
   data,
   cpv,
   contract_value,
-  outbreak_starting_date = lubridate::ymd("2017-06-30")
+  publication_date,
+  outbreak_starting_date = lubridate::ymd("2017-06-30"),
+  stat_unit
 )
 }
 \arguments{
@@ -21,7 +23,7 @@ ind_2(
 \item{outbreak_starting_date}{the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")}
 }
 \value{
-tibble n x 5
+indicator schema as from \code{generate_indicator_schema}
 }
 \description{
 High Economic Value for statistical unit
@@ -29,7 +31,8 @@ High Economic Value for statistical unit
 \examples{
 \dontrun{
 if (interactive()) {
-  # EXAMPLE1
+  data("test_data_bndcp_core")
+  ind_2(test_data_bndcp_core, cpv = cod_cpv, contract_value = importo_aggiudicazione, publication_date = data_pubblicazione)
 }
 }
 }

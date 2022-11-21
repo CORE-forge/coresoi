@@ -20,11 +20,11 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of coresoi is to ...
+The goal of `coresoi` is to offer a _sandbox_ in which researchers and anti-corruption analysts may play and interact with the set of indicators we designed, offering also mock data extracted from [dati.anticorruzione](https://dati.anticorruzione.it/index.html#/home).
 
 ## Installation
 
-You can install the development version of core-soi from [GitHub](https://github.com/) with:
+You can install the development version of coresoi from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -33,7 +33,7 @@ devtools::install_github("CORE-forge/coresoi")
 
 ## Example: Compute indicator High Winning Rate 
 
-it computes the indicator n° 1 which mainly accounts for companies that after the Emergency outbreak (say Covid-19) were awarded public contracts much more frequently than before the Emergency.
+There might be the case in which you have to compute the indicator n° 1, which mainly accounts for companies that after the Emergency outbreak (say Covid-19) were awarded public contracts much more frequently than before the Emergency. The resulting output for indicator 1 is a `tibble` which displays a number of columns on which we aggreed on for frontend purposes.
 
 ```{r example}
 library(coresoi)
@@ -53,7 +53,8 @@ ind_1_res <- ind_1(
 
 ind_1_res
 ```
-Let's now visualize results for top 10 provinces by Fisher Estimate.
+
+Let's now visualize results for top 10 provinces given High Winning Rate  indicator estimate.
 
 ```{r cars}
 library(ggplot2)
@@ -82,6 +83,7 @@ The C.R.E. focuses on assessing the risk of corruption in public procurement fro
 - build a template for package
 - less error prone function indicators (+ escapes, type checkers etc.)
 - fix aggregation bug on `ind_11()`
+- mettere jl n uovo `test_data` con 100'000 più recenti
 
 
 ## Code of Conduct
