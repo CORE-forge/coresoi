@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{generate_indicator_schema}
 \alias{generate_indicator_schema}
-\title{Generate commmon schema for  indicator}
+\title{Generate commmon schema for indicator}
 \usage{
 generate_indicator_schema(
   .data,
@@ -13,5 +13,6 @@ generate_indicator_schema(
 )
 }
 \description{
-Generate commmon schema for  indicator
+Generate commmon schema for indicator
 }
+\keyword{internal}

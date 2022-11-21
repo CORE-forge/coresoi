@@ -51,8 +51,8 @@ get_emergency_name_from_date <- function(outbreak_starting_date) {
 # TODO function to grab latest data update
 # TODO: need to think a way to open this thing to other countries besides Italy
 
-#' @title Generate commmon schema for  indicator
-#' @keyword internal
+#' @title Generate commmon schema for indicator
+#' @keywords internal
 #' @export
 generate_indicator_schema <- function(.data, indicator_id, indicator_name, outbreak_starting_date, ...) {
   common_schema <- .data %>%
