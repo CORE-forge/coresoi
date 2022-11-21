@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{generate_indicator_schema}
 \alias{generate_indicator_schema}
-\title{Generate commmon schema for each indicator}
+\title{Generate commmon schema for  indicator}
 \usage{
 generate_indicator_schema(
   .data,
@@ -12,34 +12,6 @@ generate_indicator_schema(
   ...
 )
 }
-\arguments{
-\item{.data}{dataset}
-
-\item{indicator_id}{this is defined within each indicator function (\code{ind_2} with 2 and \code{ind_3} and 3)}
-
-\item{indicator_name}{this is defined within each indicator function (\code{ind_2} with "High Economic Value" and \code{ind_3} and  One-shot opportunistic companies)}
-
-\item{outbreak_starting_date}{the date in which the emergency erupts (this defined by )}
-
-\item{...}{indicator_value, aggregation_name}
-}
-\value{
-OUTPUT_DESCRIPTION
-}
 \description{
-provides a common schema to distribute indicators according to https://github.com/CORE-forge/core-dashboard/issues/2
-}
-\details{
-DETAILS
-}
-\examples{
-\dontrun{
-if (interactive()) {
-  # EXAMPLE1
-}
-}
-}
-\seealso{
-\code{\link[lubridate]{now}}
-\code{\link[dplyr]{transmute}}
+Generate commmon schema for  indicator
 }

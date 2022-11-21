@@ -51,28 +51,9 @@ get_emergency_name_from_date <- function(outbreak_starting_date) {
 # TODO function to grab latest data update
 # TODO: need to think a way to open this thing to other countries besides Italy
 
-#' @title Generate commmon schema for each indicator
-#' @description provides a common schema to distribute indicators according to https://github.com/CORE-forge/core-dashboard/issues/2
-#' @param .data dataset
-#' @param indicator_id this is defined within each indicator function (`ind_2` with 2 and `ind_3` and 3)
-#' @param indicator_name this is defined within each indicator function (`ind_2` with "High Economic Value" and `ind_3` and  One-shot opportunistic companies)
-#' @param outbreak_starting_date the date in which the emergency erupts (this defined by )
-#' @param ... indicator_value, aggregation_name
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
-#' @examples
-#' \dontrun{
-#' if (interactive()) {
-#'   # EXAMPLE1
-#' }
-#' }
-#' @seealso
-#'  \code{\link[lubridate]{now}}
-#'  \code{\link[dplyr]{transmute}}
-#' @rdname generate_indicator_schema
+#' @title Generate commmon schema for  indicator
+#' @keyword internal
 #' @export
-#' @importFrom lubridate now
-#' @importFrom dplyr transmute
 generate_indicator_schema <- function(.data, indicator_id, indicator_name, outbreak_starting_date, ...) {
   common_schema <- .data %>%
     dplyr::transmute(
