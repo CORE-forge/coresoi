@@ -31,8 +31,13 @@ High Economic Value for statistical unit
 \examples{
 \dontrun{
 if (interactive()) {
-  data("test_data_bndcp_core")
-  ind_2(test_data_bndcp_core, cpv = cod_cpv, contract_value = importo_aggiudicazione, publication_date = data_pubblicazione)
+  data("mock_data_core")
+  ind_2(
+    data = mock_data_core,
+    cpv = cod_cpv,
+    contract_value = importo_complessivo_gara,
+    publication_date = data_pubblicazione
+  )
 }
 }
 }

@@ -20,8 +20,13 @@ compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "g
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   data("test_data_bndcp_core")
-#'   ind_2(test_data_bndcp_core, cpv = cod_cpv, contract_value = importo_aggiudicazione, publication_date = data_pubblicazione)
+#'   data("mock_data_core")
+#'   ind_2(
+#'     data = mock_data_core,
+#'     cpv = cod_cpv,
+#'     contract_value = importo_complessivo_gara,
+#'     publication_date = data_pubblicazione
+#'   )
 #' }
 #' }
 #' @seealso
@@ -52,7 +57,6 @@ ind_2 <- function(data,
       prepost = forcats::as_factor(prepost),
       flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == "33", 1, 0)
     ) %>%
-    tidyr::unnest(aggiudicatari, keep_empty = FALSE) %>%
     tidyr::drop_na({{ contract_value }}) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::filter(all(c("pre", "post") %in% prepost)) %>%

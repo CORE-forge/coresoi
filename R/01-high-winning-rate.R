@@ -24,7 +24,12 @@ compute_fisher <- function(a, b, c, d) {
 #' \dontrun{
 #' if (interactive()) {
 #'   data("test_data_bndcp_core")
-#'   ind_1(data = test_data_bndcp_core, publication_date = data_pubblicazione, cpv = cod_cpv, stat_unit = nome_provincia2)
+#'   ind_1(
+#'     data = mock_data_core,
+#'     publication_date = data_pubblicazione,
+#'     cpv = cod_cpv,
+#'     stat_unit = provincia
+#'   )
 #' }
 #' }
 #' @seealso
