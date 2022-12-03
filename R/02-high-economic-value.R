@@ -75,7 +75,7 @@ ind_2 <- function(data,
       outbreak_starting_date = outbreak_starting_date
     ) %>%
     dplyr::rename(
-      indicator_value = wilcox_test,
+      indicator_name = wilcox_test,
       aggregation_name = {{ stat_unit }}
     ) %>%
     return()
