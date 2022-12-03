@@ -58,7 +58,7 @@ generate_indicator_schema <- function(.data, indicator_id, indicator_name, outbr
   common_schema <- .data %>%
     dplyr::transmute(
       indicator_id = indicator_id,
-      idicator_name = indicator_name,
+      indicator_name = indicator_name,
       ..., ## indicator_value e aggregation_name
       emergency_id = get_emergency_id_from_date(outbreak_starting_date),
       emergency_name = get_emergency_name_from_date(outbreak_starting_date),
