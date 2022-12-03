@@ -70,7 +70,7 @@ ind_2 <- function(data,
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      wilcox_test,
+      round(wilcox_test, 3),
       {{ stat_unit }},
       outbreak_starting_date = outbreak_starting_date
     ) %>%
