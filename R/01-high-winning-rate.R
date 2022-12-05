@@ -24,7 +24,12 @@ compute_fisher <- function(a, b, c, d) {
 #' \dontrun{
 #' if (interactive()) {
 #'   data("test_data_bndcp_core")
-#'   ind_1(data = test_data_bndcp_core, publication_date = data_pubblicazione, cpv = cod_cpv, stat_unit = nome_provincia2)
+#'   ind_1(
+#'     data = mock_data_core,
+#'     publication_date = data_pubblicazione,
+#'     cpv = cod_cpv,
+#'     stat_unit = provincia
+#'   )
 #' }
 #' }
 #' @seealso
@@ -45,12 +50,12 @@ ind_1 <- function(data,
                   outbreak_starting_date = lubridate::ymd("2017-06-30"),
                   stat_unit) {
 
-  # TODO: how do you make abstract aggiudicatatari, should I explicit that?
   # TODO: can make summarisation slimmer by defining a further function
-  # TODO: desume emergency from date (f within, then ...)
+  # TODO: does the type of test we are applying depends on the emergency we are calling
 
   indicator_id <- 1
   indicator_name <- "High winning rate"
+  aggregation_type <- quo_expr(enquo(stat_unit))
 
 
   data %>%
@@ -59,7 +64,6 @@ ind_1 <- function(data,
       prepost = forcats::as_factor(prepost),
       flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == "33", 1, 0)
     ) %>%
-    tidyr::unnest(aggiudicatari, keep_empty = FALSE) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
       n = dplyr::n(),
@@ -91,7 +95,8 @@ ind_1 <- function(data,
         alternative = "greater"
       )$p.value %>% suppressWarnings(),
       fisher_test = compute_fisher(n_11, n_12, n_21, n_22)[[1]],
-      fisher_estimate = compute_fisher(n_11, n_12, n_21, n_22)[[2]]
+      fisher_estimate = compute_fisher(n_11, n_12, n_21, n_22)[[2]],
+      fisher_test = round(fisher_test, 3)
     ) %>%
     dplyr::select({{ stat_unit }}, dplyr::contains("prop"), dplyr::contains("fisher")) %>%
     generate_indicator_schema(
@@ -99,6 +104,7 @@ ind_1 <- function(data,
       indicator_name = indicator_name,
       fisher_test,
       {{ stat_unit }},
+      aggregation_type = as_string(aggregation_type),
       outbreak_starting_date = outbreak_starting_date
     ) %>%
     dplyr::rename(

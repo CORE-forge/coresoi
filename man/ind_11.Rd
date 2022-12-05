@@ -39,9 +39,10 @@ DETAILS
 \dontrun{
 if (interactive()) {
   ind_11(
-    data = test_data_bndcp_core, publication_date = data_pubblicazione,
-    award_value = importo_aggiudicazione, sums_paid = imp_finale,
-    cf_amministrazione_appaltante
+    data = mock_data_core, publication_date = data_pubblicazione,
+    award_value = importo_aggiudicazione, sums_paid = importo_lotto,
+    cf_amministrazione_appaltante,
+    outbreak_starting_date = lubridate::ymd("2017-06-30")
   )
 }
 }

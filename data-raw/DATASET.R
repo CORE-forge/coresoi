@@ -2,17 +2,30 @@
 
 library(here)
 library(tibble)
+library(readr)
+library(dplyr)
 library(forcats)
-load(here("data", "data_test_core.rdata"))
+library(tidyr)
+library(stringr)
+library(forcats)
+
+## ask me for this!
+## I have cut if for you!
+mock_data_core <- read_csv("/Users/niccolo/Desktop/r_projects/corebd/sample_bdncp_100000.csv") %>%
+  saveRDS(file = here("data-raw", "mock_data_core.rds"))
 
 
-test_data_bndcp_core <- tibble(data_test_core) %>%
+mock_data_core <- read_rds(here("data-raw", "mock_data_core.rds")) %>%
+  select(-...1, -ends_with(".y")) %>%
+  rename_if(endsWith(names(.), ".x"), ~ str_remove(., ".x")) %>%
   mutate(
-    nome_regione2 = fct_recode(nome_regione2,
-      "Trentino-Alto Adige" = "Trentino-Alto Adige/S\xfcdtirol",
-      "Valle d'Aosta" = "Valle d'Aosta/Vall\xe9e d'Aoste"
+    provincia = fct_recode(provincia,
+      "REGGIO NELL'EMILIA" = "REGGIO NELLEMILIA",
+      "L'AQUILA" = "LAQUILA"
     )
   )
 
 
-usethis::use_data(test_data_bndcp_core, overwrite = TRUE)
+## preps
+
+usethis::use_data(mock_data_core, overwrite = TRUE)

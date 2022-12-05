@@ -8,6 +8,7 @@ generate_indicator_schema(
   .data,
   indicator_id,
   indicator_name,
+  aggregation_type,
   outbreak_starting_date,
   ...
 )

@@ -21,9 +21,11 @@ ind_2(
 \item{contract_value}{the value of the contract}
 
 \item{outbreak_starting_date}{the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")}
+
+\item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
 }
 \value{
-indicator schema as from \code{generate_indicator_schema}
+indicator schema as from \code{generate_indicator_schema()} rows determined by aggregation level and \code{indicator_value} based on statistical test performed in \code{ind_2}
 }
 \description{
 High Economic Value for statistical unit
@@ -31,8 +33,13 @@ High Economic Value for statistical unit
 \examples{
 \dontrun{
 if (interactive()) {
-  data("test_data_bndcp_core")
-  ind_2(test_data_bndcp_core, cpv = cod_cpv, contract_value = importo_aggiudicazione, publication_date = data_pubblicazione)
+  data("mock_data_core")
+  ind_2(
+    data = mock_data_core,
+    cpv = cod_cpv,
+    contract_value = importo_complessivo_gara,
+    publication_date = data_pubblicazione
+  )
 }
 }
 }

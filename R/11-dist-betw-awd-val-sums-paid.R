@@ -12,9 +12,10 @@
 #' \dontrun{
 #' if (interactive()) {
 #'   ind_11(
-#'     data = test_data_bndcp_core, publication_date = data_pubblicazione,
-#'     award_value = importo_aggiudicazione, sums_paid = imp_finale,
-#'     cf_amministrazione_appaltante
+#'     data = mock_data_core, publication_date = data_pubblicazione,
+#'     award_value = importo_aggiudicazione, sums_paid = importo_lotto,
+#'     cf_amministrazione_appaltante,
+#'     outbreak_starting_date = lubridate::ymd("2017-06-30")
 #'   )
 #' }
 #' }
@@ -27,17 +28,21 @@
 #' @importFrom lubridate ymd
 #' @importFrom dplyr filter mutate if_else group_by summarise n
 #' @importFrom forcats as_factor
-ind_11 <- function(data, award_value, sums_paid, stat_unit,
+ind_11 <- function(data,
+                   award_value,
+                   sums_paid,
+                   stat_unit,
                    outbreak_starting_date = lubridate::ymd("2017-06-30"),
                    publication_date) {
   indicator_id <- 11
   indicator_name <- "Distance between award value and sums paid"
+  aggregation_type <- quo_expr(enquo(stat_unit))
+
 
   # TODO
   # - data filtering for NA or 0s
   # - coltype checks
   # - colnames existence
-  # - error customisation
   # - compute indicator for a single cf
   # - might want to use group_by(across(variables))
 
@@ -53,13 +58,15 @@ ind_11 <- function(data, award_value, sums_paid, stat_unit,
     dplyr::summarise(
       prepost_count = dplyr::n(),
       ind_11_mean = mean(ratio, na.rm = TRUE),
-      ind_11_median = median(ratio, na.rm = TRUE)
+      ind_11_median = median(ratio, na.rm = TRUE),
+      ind_11_mean = round(ind_11_mean, 3)
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
       {{ stat_unit }},
       ind_11_mean,
+      aggregation_type = as_string(aggregation_type),
       outbreak_starting_date = outbreak_starting_date
     ) %>%
     dplyr::rename(

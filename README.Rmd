@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/core-soi)](https://CRAN.R-project.org/package=core-soi)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Codecov test coverage](https://codecov.io/gh/CORE-forge/core-soi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CORE-forge/core-soi?branch=main)
 <!-- badges: end -->
 
 The goal of `coresoi` is to offer a _sandbox_ in which researchers and anti-corruption analysts may play and interact with the set of indicators we designed, offering also mock data extracted from [dati.anticorruzione](https://dati.anticorruzione.it/index.html#/home).
@@ -42,15 +43,10 @@ library(dplyr)
 
 ## basic example code with ind_1() i.e. High Winning Rate
 ind_1_res <- ind_1(
-  data = test_data_bndcp_core, 
+  data = mock_data_core, 
   publication_date = data_pubblicazione, 
   cpv = cod_cpv, 
-  stat_unit = nome_regione2) %>% 
-  mutate(
-    across(where(is.numeric), ~round(., 3))
-  ) %>% 
-  na.omit(aggregation_name)
-
+  stat_unit = provincia)
 ind_1_res
 ```
 
@@ -60,8 +56,10 @@ Let's now visualize results for top 10 provinces given High Winning Rate  indica
 library(ggplot2)
 library(forcats)
 library(tidyr)
-ggplot(drop_na(ind_1_res), aes(y = fct_reorder(aggregation_name, indicator_value), x = indicator_value)) +
+drop_na(ind_1_res) %>% 
+  ggplot(aes(y = fct_reorder(aggregation_name, indicator_value), x = indicator_value)) +
   geom_col() +
+  scale_y_discrete(guide = guide_axis(check.overlap = TRUE)) +
   labs(
     y = "",
     x = "Fisher' Exact test pvalue (indicator 1)"
