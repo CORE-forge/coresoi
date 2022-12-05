@@ -6,26 +6,23 @@
 \usage{
 ind_5_bis(
   data,
-  publ_date,
-  flag_agg,
+  publication_date,
   cpv,
   outbreak_starting_date = lubridate::ymd("2017-06-30"),
-  division = "33",
+  cpv_division = "33",
   stat_unit
 )
 }
 \arguments{
 \item{data}{bndcp data}
 
-\item{publ_date}{The date when the tender was published}
-
-\item{flag_agg}{PARAM_DESCRIPTION}
+\item{publication_date}{The date when the tender was published}
 
 \item{cpv}{Common Procurement Vocabulary.The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract.}
 
 \item{outbreak_starting_date}{the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")}
 
-\item{division}{initial two digits from cpv, Default: '33'}
+\item{cpv_division}{initial two digits from cpv, Default: '33'}
 
 \item{stat_unit}{statistical unit of measurement and stat_uniting}
 }
@@ -33,12 +30,20 @@ ind_5_bis(
 indicator schema as from \code{generate_indicator_schema}
 }
 \description{
-The indicator reveals the fraction of contracts without award notice communication.
+The indicator reveals the fraction of contracts without any award notice communication.
 }
 \examples{
 \dontrun{
 if (interactive()) {
-  # EXAMPLE1
+  data("mock_data_core")
+  ind_5_bis(
+    data = mock_data_core,
+    publication_date = data_pubblicazione,
+    cpv = cod_cpv,
+    outbreak_starting_date = lubridate::ymd("2017-06-30"),
+    cpv_division = "33",
+    stat_unit = provincia
+  )
 }
 }
 }

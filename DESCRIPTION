@@ -7,6 +7,7 @@ Authors@R:
 Description: the package offers a set of indicators explicitly built on top of BNDCP to measure corruption in emergency
 License: MIT + file LICENSE
 Suggests: 
+    covr,
     knitr,
     rmarkdown,
     spelling,

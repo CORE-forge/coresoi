@@ -21,9 +21,11 @@ ind_2(
 \item{contract_value}{the value of the contract}
 
 \item{outbreak_starting_date}{the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")}
+
+\item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
 }
 \value{
-indicator schema as from \code{generate_indicator_schema}
+indicator schema as from \code{generate_indicator_schema()} rows determined by aggregation level and \code{indicator_value} based on statistical test performed in \code{ind_2}
 }
 \description{
 High Economic Value for statistical unit

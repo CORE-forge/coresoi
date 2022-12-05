@@ -9,6 +9,8 @@
 status](https://www.r-pkg.org/badges/version/core-soi)](https://CRAN.R-project.org/package=core-soi)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Codecov test
+coverage](https://codecov.io/gh/CORE-forge/core-soi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CORE-forge/core-soi?branch=main)
 <!-- badges: end -->
 
 The goal of `coresoi` is to offer a *sandbox* in which researchers and
@@ -51,44 +53,33 @@ library(dplyr)
 
 ## basic example code with ind_1() i.e. High Winning Rate
 ind_1_res <- ind_1(
-  data = test_data_bndcp_core, 
+  data = mock_data_core, 
   publication_date = data_pubblicazione, 
   cpv = cod_cpv, 
-  stat_unit = nome_regione2) %>% 
-  mutate(
-    across(where(is.numeric), ~round(., 3))
-  ) %>% 
-  na.omit(aggregation_name)
-
+  stat_unit = provincia)
+#> Warning: `quo_expr()` is deprecated as of rlang 0.2.0.
+#> Please use `quo_squash()` instead.
+#> This warning is displayed once per session.
 ind_1_res
-#> # A tibble: 20 × 12
+#> # A tibble: 109 × 12
 #> # Rowwise: 
-#>    indicator_id idicat…¹ indic…² aggre…³ emerg…⁴ emerg…⁵ aggre…⁶ aggre…⁷ count…⁸
-#>           <dbl> <chr>      <dbl> <fct>     <dbl> <chr>   <chr>   <chr>   <chr>  
-#>  1            1 High wi…   0.55  Abruzzo       3 other   ISTAT1  nuts_2  1      
-#>  2            1 High wi…   0     Basili…       3 other   ISTAT1  nuts_2  1      
-#>  3            1 High wi…   0.01  Calabr…       3 other   ISTAT1  nuts_2  1      
-#>  4            1 High wi…   0     Campan…       3 other   ISTAT1  nuts_2  1      
-#>  5            1 High wi…   0.408 Emilia…       3 other   ISTAT1  nuts_2  1      
-#>  6            1 High wi…   0     Friuli…       3 other   ISTAT1  nuts_2  1      
-#>  7            1 High wi…   0     Lazio         3 other   ISTAT1  nuts_2  1      
-#>  8            1 High wi…   0     Liguria       3 other   ISTAT1  nuts_2  1      
-#>  9            1 High wi…   0     Lombar…       3 other   ISTAT1  nuts_2  1      
-#> 10            1 High wi…   0     Marche        3 other   ISTAT1  nuts_2  1      
-#> 11            1 High wi…   0.249 Molise        3 other   ISTAT1  nuts_2  1      
-#> 12            1 High wi…   0     Piemon…       3 other   ISTAT1  nuts_2  1      
-#> 13            1 High wi…   0.756 Puglia        3 other   ISTAT1  nuts_2  1      
-#> 14            1 High wi…   0     Sardeg…       3 other   ISTAT1  nuts_2  1      
-#> 15            1 High wi…   0.149 Sicilia       3 other   ISTAT1  nuts_2  1      
-#> 16            1 High wi…   0     Toscana       3 other   ISTAT1  nuts_2  1      
-#> 17            1 High wi…   0     Trenti…       3 other   ISTAT1  nuts_2  1      
-#> 18            1 High wi…   0     Umbria        3 other   ISTAT1  nuts_2  1      
-#> 19            1 High wi…   0.717 Valle …       3 other   ISTAT1  nuts_2  1      
-#> 20            1 High wi…   0     Veneto        3 other   ISTAT1  nuts_2  1      
-#> # … with 3 more variables: country_name <chr>, indicator_last_update <dttm>,
-#> #   data_last_update <dttm>, and abbreviated variable names ¹​idicator_name,
-#> #   ²​indicator_value, ³​aggregation_name, ⁴​emergency_id, ⁵​emergency_name,
-#> #   ⁶​aggregation_id, ⁷​aggregation_type, ⁸​country_id
+#>    indicator_id indica…¹ indic…² aggre…³ aggre…⁴ aggre…⁵ emerg…⁶ emerg…⁷ count…⁸
+#>           <dbl> <chr>      <dbl> <fct>   <chr>   <chr>     <dbl> <chr>   <chr>  
+#>  1            1 High wi…   0.001 AGRIGE… ISTAT1  provin…       3 Other   1      
+#>  2            1 High wi…   0.205 ALESSA… ISTAT1  provin…       3 Other   1      
+#>  3            1 High wi…   0.004 ANCONA  ISTAT1  provin…       3 Other   1      
+#>  4            1 High wi…   0.004 AREZZO  ISTAT1  provin…       3 Other   1      
+#>  5            1 High wi…   1     ASCOLI… ISTAT1  provin…       3 Other   1      
+#>  6            1 High wi…   0.659 ASTI    ISTAT1  provin…       3 Other   1      
+#>  7            1 High wi…   1     AVELLI… ISTAT1  provin…       3 Other   1      
+#>  8            1 High wi…   0.533 BARI    ISTAT1  provin…       3 Other   1      
+#>  9            1 High wi…   0.003 BARLET… ISTAT1  provin…       3 Other   1      
+#> 10            1 High wi…   0.436 BELLUNO ISTAT1  provin…       3 Other   1      
+#> # … with 99 more rows, 3 more variables: country_name <chr>,
+#> #   indicator_last_update <dttm>, data_last_update <dttm>, and abbreviated
+#> #   variable names ¹​indicator_name, ²​indicator_value, ³​aggregation_name,
+#> #   ⁴​aggregation_id, ⁵​aggregation_type, ⁶​emergency_id, ⁷​emergency_name,
+#> #   ⁸​country_id
 ```
 
 Let’s now visualize results for top 10 provinces given High Winning Rate
@@ -98,8 +89,10 @@ indicator estimate.
 library(ggplot2)
 library(forcats)
 library(tidyr)
-ggplot(drop_na(ind_1_res), aes(y = fct_reorder(aggregation_name, indicator_value), x = indicator_value)) +
+drop_na(ind_1_res) %>% 
+  ggplot(aes(y = fct_reorder(aggregation_name, indicator_value), x = indicator_value)) +
   geom_col() +
+  scale_y_discrete(guide = guide_axis(check.overlap = TRUE)) +
   labs(
     y = "",
     x = "Fisher' Exact test pvalue (indicator 1)"

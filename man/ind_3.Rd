@@ -29,8 +29,13 @@ The indicator reveals whether the company that won the public tender or contract
 \examples{
 \dontrun{
 if (interactive()) {
-  data("test_data_bndcp_core")
-  ind_3(test_data_bndcp_core, publication_date = data_pubblicazione, stat_unit = codice_fiscale)
+  data("mock_data_core")
+  ind_3(
+    data = mock_data_core,
+    publication_date = data_pubblicazione,
+    stat_unit = cf_amministrazione_appaltante,
+    outbreak_starting_date = lubridate::ymd("2017-06-30")
+  )
 }
 }
 }
