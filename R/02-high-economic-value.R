@@ -15,8 +15,9 @@ compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "g
 #' @param data test bndcp data
 #' @param cpv Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract
 #' @param contract_value the value of the contract
+#' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
 #' @param outbreak_starting_date the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")
-#' @return indicator schema as from `generate_indicator_schema`
+#' @return indicator schema as from `generate_indicator_schema()` rows determined by aggregation level and `indicator_value` based on statistical test performed in `ind_2`
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
@@ -50,6 +51,7 @@ ind_2 <- function(data,
                   stat_unit) {
   indicator_id <- 2
   indicator_name <- "High Economic Value"
+  aggregation_type <- quo_expr(enquo(stat_unit))
 
   data %>%
     dplyr::mutate(
@@ -65,13 +67,15 @@ ind_2 <- function(data,
       count = n(),
       median = median({{ contract_value }}, na.rm = TRUE),
       iqr = IQR({{ contract_value }}, na.rm = TRUE),
-      wilcox_test = compute_wilcox_test(var = {{ contract_value }}, group = prepost, data = .)$p.value
+      wilcox_test = compute_wilcox_test(var = {{ contract_value }}, group = prepost, data = .)$p.value,
+      wilcox_test = round(wilcox_test, 3)
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      round(wilcox_test, 3),
+      wilcox_test,
       {{ stat_unit }},
+      aggregation_type = as_string(aggregation_type),
       outbreak_starting_date = outbreak_starting_date
     ) %>%
     dplyr::rename(

@@ -8,8 +8,13 @@
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   data("test_data_bndcp_core")
-#'   ind_3(test_data_bndcp_core, publication_date = data_pubblicazione, stat_unit = codice_fiscale)
+#'   data("mock_data_core")
+#'   ind_3(
+#'     data = mock_data_core,
+#'     publication_date = data_pubblicazione,
+#'     stat_unit = cf_amministrazione_appaltante,
+#'     outbreak_starting_date = lubridate::ymd("2017-06-30")
+#'   )
 #' }
 #' }
 #' @seealso
@@ -23,27 +28,31 @@
 #' @importFrom tidyr unnest
 #' @importFrom dplyr mutate across starts_with if_else group_by
 #' @importFrom forcats as_factor
-ind_3 <- function(data, publication_date, outbreak_starting_date = lubridate::ymd("2017-06-30"), stat_unit) {
+ind_3 <- function(data,
+                  publication_date,
+                  outbreak_starting_date = lubridate::ymd("2017-06-30"),
+                  stat_unit) {
   indicator_id <- 3
   indicator_name <- "One-shot opportunistic companies"
+  aggregation_type <- quo_expr(enquo(stat_unit))
 
   data %>%
-    tidyr::unnest(aggiudicatari) %>%
     dplyr::mutate(
       dplyr::across(dplyr::starts_with("data"), lubridate::ymd),
       prepost = dplyr::if_else({{ publication_date }} >= lubridate::ymd("2017-06-30"), true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost)
     ) %>%
     dplyr::group_by({{ stat_unit }}) %>%
-    dplyr::mutate(
+    dplyr::summarise(
       flag_opportunist = dplyr::if_else(max(data_aggiudicazione_definitiva) %within% lubridate::interval(data_pubblicazione - lubridate::years(1), data_pubblicazione), 1, 0),
       flag_opportunist = dplyr::if_else(data_pubblicazione <= data_aggiudicazione_definitiva, true = 0, false = 1)
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      {{ stat_unit }},
       flag_opportunist,
+      {{ stat_unit }},
+      aggregation_type = as_string(aggregation_type),
       outbreak_starting_date = outbreak_starting_date
     ) %>%
     dplyr::rename(
