@@ -40,9 +40,6 @@
     <loc>https://core-forge.github.io/coresoi/reference/coresoi-package.html</loc>
   </url>
   <url>
-    <loc>https://core-forge.github.io/coresoi/reference/download_and_unzip.html</loc>
-  </url>
-  <url>
     <loc>https://core-forge.github.io/coresoi/reference/generate_indicator_schema.html</loc>
   </url>
   <url>
@@ -53,6 +50,9 @@
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/ind_1.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/ind_10.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/ind_11.html</loc>
@@ -68,6 +68,9 @@
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/mock_data_core.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/pipe.html</loc>

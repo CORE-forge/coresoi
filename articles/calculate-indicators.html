@@ -15,9 +15,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Dosis-0.4.3/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.3/font.css" rel="stylesheet">
-<link href="../deps/Lora-0.4.3/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Dosis-0.4.4/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.4/font.css" rel="stylesheet">
+<link href="../deps/Lora-0.4.4/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="How to calculate indicators with `coresoi`">
@@ -114,39 +114,43 @@ to the fact that during emergency outbreaks inspections and controls are
 wicker and less in-depth. This may give the chance to fraudsters to get
 money quicker than before and runaway 💰. There it is an indicator for
 to quantify that type of risk.</p>
-<p>All we need to do is to load data <code>test_data_bndcp_core</code>
-and supply related variables to function <code><a href="../reference/ind_11.html">ind_11()</a></code>. Check
-out the documentation for function <code><a href="../reference/ind_11.html">ind_11()</a></code> to get a grasp
-on that.</p>
+<p>All we need to do is to load data <code>mock_data_core</code> and
+supply related variables to function <code><a href="../reference/ind_11.html">ind_11()</a></code>. Check out
+the documentation for function <code><a href="../reference/ind_11.html">ind_11()</a></code> to get a grasp on
+that.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"test_data_bndcp_core"</span>, package <span class="op">=</span> <span class="st">"coresoi"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mock_data_core"</span>, package <span class="op">=</span> <span class="st">"coresoi"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/ind_11.html">ind_11</a></span><span class="op">(</span></span>
-<span>  data<span class="op">=</span><span class="va">test_data_bndcp_core</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">mock_data_core</span>,</span>
 <span>  award_value<span class="op">=</span><span class="va">importo_aggiudicazione</span>, </span>
-<span>  sums_paid<span class="op">=</span><span class="va">imp_finale</span>,</span>
+<span>  sums_paid<span class="op">=</span><span class="va">importo_lotto</span>,</span>
 <span>  <span class="va">cf_amministrazione_appaltante</span>,</span>
-<span>  publication_date<span class="op">=</span><span class="va">data_pubblicazione</span></span>
+<span>  publication_date<span class="op">=</span><span class="va">data_pubblicazione</span>,</span>
+<span>  outbreak_starting_date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></span><span class="op">(</span><span class="st">"2017-06-30"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: `quo_expr()` is deprecated as of rlang 0.2.0.</span></span>
+<span><span class="co">#&gt; Please use `quo_squash()` instead.</span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once per session.</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 12</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   aggregation_name [8]</span></span></span>
-<span><span class="co">#&gt;    indicator_id idicat…¹ aggre…² indic…³ emerg…⁴ emerg…⁵ aggre…⁶ aggre…⁷ count…⁸</span></span>
-<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>           11 Distanc… 000331…   0.974       3 other   ISTAT1  nuts_2  1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>           11 Distanc… 000400…   1.00        3 other   ISTAT1  nuts_2  1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>           11 Distanc… 000404…   1.05        3 other   ISTAT1  nuts_2  1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>           11 Distanc… 000404…   0.995       3 other   ISTAT1  nuts_2  1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>           11 Distanc… 000405…   0.999       3 other   ISTAT1  nuts_2  1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>           11 Distanc… 000416…   1.11        3 other   ISTAT1  nuts_2  1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>           11 Distanc… 000416…   1.00        3 other   ISTAT1  nuts_2  1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>           11 Distanc… 000465…   1.08        3 other   ISTAT1  nuts_2  1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>           11 Distanc… 000504…   1.19        3 other   ISTAT1  nuts_2  1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>           11 Distanc… 000505…   1.18        3 other   ISTAT1  nuts_2  1      </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># Groups:   aggregation_name [7]</span></span></span>
+<span><span class="co">#&gt;    indicator_id indica…¹ aggre…² indic…³ aggre…⁴ aggre…⁵ emerg…⁶ emerg…⁷ count…⁸</span></span>
+<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>           11 Distanc… 000080…    1.50 ISTAT1  cf_amm…       3 Other   1      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>           11 Distanc… 000331…    1.32 ISTAT1  cf_amm…       3 Other   1      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>           11 Distanc… 000346…    1    ISTAT1  cf_amm…       3 Other   1      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>           11 Distanc… 000351…    1.05 ISTAT1  cf_amm…       3 Other   1      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>           11 Distanc… 000351…    5.38 ISTAT1  cf_amm…       3 Other   1      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>           11 Distanc… 000405…    1.67 ISTAT1  cf_amm…       3 Other   1      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>           11 Distanc… 000405…    1.04 ISTAT1  cf_amm…       3 Other   1      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>           11 Distanc… 000407…    1.15 ISTAT1  cf_amm…       3 Other   1      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>           11 Distanc… 000407…    1    ISTAT1  cf_amm…       3 Other   1      </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>           11 Distanc… 000416…    1.28 ISTAT1  cf_amm…       3 Other   1      </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># … with 3 more variables: country_name &lt;chr&gt;, indicator_last_update &lt;dttm&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   data_last_update &lt;dttm&gt;, and abbreviated variable names ¹​idicator_name,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ²​aggregation_name, ³​indicator_value, ⁴​emergency_id, ⁵​emergency_name,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ⁶​aggregation_id, ⁷​aggregation_type, ⁸​country_id</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   data_last_update &lt;dttm&gt;, and abbreviated variable names ¹​indicator_name,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ²​aggregation_name, ³​indicator_value, ⁴​aggregation_id, ⁵​aggregation_type,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ⁶​emergency_id, ⁷​emergency_name, ⁸​country_id</span></span></span></code></pre></div>
 <p>The output from <code>ind_11</code> is a schema which shows …</p>
 <p>… we may want also to be interested in…</p>
 <p>… ggplot2 graphs and minimal model…</p>
