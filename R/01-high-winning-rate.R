@@ -51,7 +51,7 @@ ind_1 <- function(data,
                   stat_unit) {
 
   # TODO: can make summarisation slimmer by defining a further function
-  # TODO: does the type o f test we are applying depends on the emergency we are calling
+  # TODO: does the type of test we are applying depends on the emergency we are calling
 
   indicator_id <- 1
   indicator_name <- "High winning rate"
