@@ -5,12 +5,9 @@
 
 <!-- badges: start -->
 
-[![CRAN
-status](https://www.r-pkg.org/badges/version/core-soi)](https://CRAN.R-project.org/package=core-soi)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![Codecov test
-coverage](https://codecov.io/gh/CORE-forge/core-soi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CORE-forge/core-soi?branch=main)
+[![codecov](https://codecov.io/gh/CORE-forge/coresoi/branch/main/graph/badge.svg?token=DGJ8P5BZNH)](https://codecov.io/gh/CORE-forge/coresoi)
 <!-- badges: end -->
 
 The goal of `coresoi` is to offer a *sandbox* in which researchers and
