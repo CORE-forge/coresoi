@@ -130,7 +130,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
   )
 })
 
-## check for different scenarios
+## test for different scenarios
 
 test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
   expect_within_range(
@@ -160,7 +160,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "terremoto aquila"
       )
     }),
-    n = 108
+    n = 109 # 108 + NA
   )
 })
 
