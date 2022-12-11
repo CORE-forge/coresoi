@@ -50,12 +50,10 @@ ind_1 <- function(data,
                   cpv,
                   emergency_name,
                   stat_unit) {
-
-
   indicator_id <- 1
   indicator_name <- "High winning rate"
   aggregation_type <- quo_squash(enquo(stat_unit))
-  emergency_scenario = emergency_dates(emergency_name)
+  emergency_scenario <- emergency_dates(emergency_name)
 
   data %>%
     dplyr::mutate(

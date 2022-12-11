@@ -59,7 +59,7 @@ test_that("check `ind_2()` are 12 columns as according to `generate_indicator_sc
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       )
     }), 12
   )
@@ -82,7 +82,7 @@ test_that("check column names are as according to pre determined schema", {
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       ))
     }), col_names
   )
@@ -99,7 +99,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       )
     }),
     min = 0, max = 1
@@ -118,10 +118,10 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       )
     }),
-    n = 109
+    n = 108
   )
 })
 
@@ -135,13 +135,9 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       )
     }),
-    n = 2847
+    n = 3227
   )
 })
-
-
-
-

@@ -15,7 +15,7 @@
 #'     data = mock_data_core, publication_date = data_pubblicazione,
 #'     award_value = importo_aggiudicazione, sums_paid = importo_lotto,
 #'     stat_unit = cf_amministrazione_appaltante,
-#'    emergency_name = "coronavirus"
+#'     emergency_name = "coronavirus"
 #'   )
 #' }
 #' }
@@ -37,7 +37,7 @@ ind_11 <- function(data,
   indicator_id <- 11
   indicator_name <- "Distance between award value and sums paid"
   aggregation_type <- quo_squash(enquo(stat_unit))
-  emergency_scenario = emergency_dates(emergency_name)
+  emergency_scenario <- emergency_dates(emergency_name)
 
 
   # TODO

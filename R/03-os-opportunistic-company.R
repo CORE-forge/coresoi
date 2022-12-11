@@ -35,7 +35,7 @@ ind_3 <- function(data,
   indicator_id <- 3
   indicator_name <- "One-shot opportunistic companies"
   aggregation_type <- quo_squash(enquo(stat_unit))
-  emergency_scenario = emergency_dates(emergency_name)
+  emergency_scenario <- emergency_dates(emergency_name)
 
   data %>%
     dplyr::mutate(

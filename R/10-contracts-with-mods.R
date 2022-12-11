@@ -31,14 +31,14 @@
 #' @importFrom forcats as_factor
 #' @importFrom stats prop.test
 ind_10 <- function(data,
-                  publication_date,
-                  stat_unit,
-                  id_variants,
-                  emergency_name) {
+                   publication_date,
+                   stat_unit,
+                   id_variants,
+                   emergency_name) {
   indicator_id <- 10
   indicator_name <- "Contracts with modifications"
   aggregation_type <- quo_squash(enquo(stat_unit))
-  emergency_scenario = emergency_dates(emergency_name)
+  emergency_scenario <- emergency_dates(emergency_name)
 
   data %>%
     dplyr::mutate(
