@@ -16,7 +16,7 @@ compute_fisher <- function(a, b, c, d) {
 #' @param data bndcp data
 #' @param publication_date The date when the tender was published
 #' @param cpv Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract
-#' @param outbreak_starting_date the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")
+#' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @param divison first two digits in cpv code identifying the division, for more info check https://simap.ted.europa.eu/it/cpv
 #' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
 #' @return indicator schema as from `generate_indicator_schema`
@@ -28,7 +28,8 @@ compute_fisher <- function(a, b, c, d) {
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
 #'     cpv = cod_cpv,
-#'     stat_unit = provincia
+#'     stat_unit = provincia,
+#'     emergency_name = "coronavirus"
 #'   )
 #' }
 #' }
@@ -47,20 +48,18 @@ compute_fisher <- function(a, b, c, d) {
 ind_1 <- function(data,
                   publication_date,
                   cpv,
-                  outbreak_starting_date = lubridate::ymd("2017-06-30"),
+                  emergency_name,
                   stat_unit) {
 
-  # TODO: can make summarisation slimmer by defining a further function
-  # TODO: does the type of test we are applying depends on the emergency we are calling
 
   indicator_id <- 1
   indicator_name <- "High winning rate"
-  aggregation_type <- quo_expr(enquo(stat_unit))
-
+  aggregation_type <- quo_squash(enquo(stat_unit))
+  emergency_scenario = emergency_dates(emergency_name)
 
   data %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= outbreak_starting_date, true = "post", false = "pre"),
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
       flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == "33", 1, 0)
     ) %>%
@@ -105,7 +104,7 @@ ind_1 <- function(data,
       fisher_test,
       {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      outbreak_starting_date = outbreak_starting_date
+      emergency = emergency_scenario
     ) %>%
     dplyr::rename(
       indicator_value = fisher_test,
