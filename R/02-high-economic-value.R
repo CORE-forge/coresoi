@@ -16,7 +16,7 @@ compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "g
 #' @param cpv Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract
 #' @param contract_value the value of the contract
 #' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
-#' @param outbreak_starting_date the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")
+#' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @return indicator schema as from `generate_indicator_schema()` rows determined by aggregation level and `indicator_value` based on statistical test performed in `ind_2`
 #' @examples
 #' \dontrun{
@@ -26,7 +26,9 @@ compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "g
 #'     data = mock_data_core,
 #'     cpv = cod_cpv,
 #'     contract_value = importo_complessivo_gara,
-#'     publication_date = data_pubblicazione
+#'     publication_date = data_pubblicazione,
+#'     stat_unit = provincia
+#'     emergency_name = "coronavirus"
 #'   )
 #' }
 #' }
@@ -47,15 +49,16 @@ ind_2 <- function(data,
                   cpv,
                   contract_value,
                   publication_date,
-                  outbreak_starting_date = lubridate::ymd("2017-06-30"),
+                  emergency_name,
                   stat_unit) {
   indicator_id <- 2
   indicator_name <- "High Economic Value"
-  aggregation_type <- quo_expr(enquo(stat_unit))
+  aggregation_type <- quo_squash(enquo(stat_unit))
+  emergency_scenario = emergency_dates(emergency_name)
 
   data %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= outbreak_starting_date, true = "post", false = "pre"),
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
       flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == "33", 1, 0)
     ) %>%
@@ -76,7 +79,7 @@ ind_2 <- function(data,
       wilcox_test,
       {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      outbreak_starting_date = outbreak_starting_date
+      emergency = emergency_scenario
     ) %>%
     dplyr::rename(
       indicator_value = wilcox_test,

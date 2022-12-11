@@ -5,9 +5,12 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/core-soi)](https://CRAN.R-project.org/package=core-soi)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![codecov](https://codecov.io/gh/CORE-forge/coresoi/branch/main/graph/badge.svg?token=DGJ8P5BZNH)](https://codecov.io/gh/CORE-forge/coresoi)
+[![Codecov test
+coverage](https://codecov.io/gh/CORE-forge/core-soi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CORE-forge/core-soi?branch=main)
 <!-- badges: end -->
 
 The goal of `coresoi` is to offer a *sandbox* in which researchers and
@@ -29,12 +32,13 @@ devtools::install_github("CORE-forge/coresoi")
 
 There might be the case in which you have to compute the indicator n° 1,
 which mainly accounts for companies that after the Emergency outbreak
-(say Covid-19) were awarded public contracts much more frequently than
-before the Emergency. Indicator 11 computes a [Fish exact’s
-test](https://en.wikipedia.org/wiki/Fisher%27s_exact_test) in proportion
-from *pre* and *post* emergency, poiting out if there is any statistical
-significance between the two group proportions. The resulting indicator
-follows a schema generated through `coresoi::generate_indicator_schema`.
+(in this case Coronavirus) were awarded public contracts much more
+frequently than before the Emergency. Indicator 11 computes a [Fish
+exact’s test](https://en.wikipedia.org/wiki/Fisher%27s_exact_test) in
+proportion from *pre* and *post* emergency, poiting out if there is any
+statistical significance between the two group proportions. The
+resulting indicator follows a schema generated through
+`coresoi::generate_indicator_schema`.
 
 ``` r
 library(coresoi)
@@ -53,26 +57,24 @@ ind_1_res <- ind_1(
   data = mock_data_core, 
   publication_date = data_pubblicazione, 
   cpv = cod_cpv, 
-  stat_unit = provincia)
-#> Warning: `quo_expr()` is deprecated as of rlang 0.2.0.
-#> Please use `quo_squash()` instead.
-#> This warning is displayed once per session.
+  stat_unit = provincia,
+  emergency_name = "coronavirus")
 ind_1_res
-#> # A tibble: 109 × 12
+#> # A tibble: 108 × 12
 #> # Rowwise: 
 #>    indicator_id indica…¹ indic…² aggre…³ aggre…⁴ aggre…⁵ emerg…⁶ emerg…⁷ count…⁸
-#>           <dbl> <chr>      <dbl> <fct>   <chr>   <chr>     <dbl> <chr>   <chr>  
-#>  1            1 High wi…   0.001 AGRIGE… ISTAT1  provin…       3 Other   1      
-#>  2            1 High wi…   0.205 ALESSA… ISTAT1  provin…       3 Other   1      
-#>  3            1 High wi…   0.004 ANCONA  ISTAT1  provin…       3 Other   1      
-#>  4            1 High wi…   0.004 AREZZO  ISTAT1  provin…       3 Other   1      
-#>  5            1 High wi…   1     ASCOLI… ISTAT1  provin…       3 Other   1      
-#>  6            1 High wi…   0.659 ASTI    ISTAT1  provin…       3 Other   1      
-#>  7            1 High wi…   1     AVELLI… ISTAT1  provin…       3 Other   1      
-#>  8            1 High wi…   0.533 BARI    ISTAT1  provin…       3 Other   1      
-#>  9            1 High wi…   0.003 BARLET… ISTAT1  provin…       3 Other   1      
-#> 10            1 High wi…   0.436 BELLUNO ISTAT1  provin…       3 Other   1      
-#> # … with 99 more rows, 3 more variables: country_name <chr>,
+#>           <dbl> <chr>      <dbl> <fct>   <chr>   <chr>     <int> <chr>   <chr>  
+#>  1            1 High wi…   0.198 AGRIGE… ISTAT1  provin…       1 Corona… 1      
+#>  2            1 High wi…   0.002 ALESSA… ISTAT1  provin…       1 Corona… 1      
+#>  3            1 High wi…   0.552 ANCONA  ISTAT1  provin…       1 Corona… 1      
+#>  4            1 High wi…   1     AREZZO  ISTAT1  provin…       1 Corona… 1      
+#>  5            1 High wi…   1     ASCOLI… ISTAT1  provin…       1 Corona… 1      
+#>  6            1 High wi…   0.004 ASTI    ISTAT1  provin…       1 Corona… 1      
+#>  7            1 High wi…   0.192 AVELLI… ISTAT1  provin…       1 Corona… 1      
+#>  8            1 High wi…   0.145 BARI    ISTAT1  provin…       1 Corona… 1      
+#>  9            1 High wi…   0.136 BARLET… ISTAT1  provin…       1 Corona… 1      
+#> 10            1 High wi…   0.007 BELLUNO ISTAT1  provin…       1 Corona… 1      
+#> # … with 98 more rows, 3 more variables: country_name <chr>,
 #> #   indicator_last_update <dttm>, data_last_update <dttm>, and abbreviated
 #> #   variable names ¹​indicator_name, ²​indicator_value, ³​aggregation_name,
 #> #   ⁴​aggregation_id, ⁵​aggregation_type, ⁶​emergency_id, ⁷​emergency_name,
@@ -96,7 +98,7 @@ drop_na(ind_1_res) %>%
   )
 ```
 
-<img src="man/figures/README-cars-1.png" width="100%" />
+<img src="man/figures/README-plot-1.png" width="100%" />
 
 ## CORE ecosystem
 
@@ -118,23 +120,13 @@ synthetic indicator of the risk of corruption in an emergency period
 that can be usefully used by national anti-corruption agencies, the
 media and citizens for accountability purposes.
 
+## 📝 TODOs
 
-<!-- CONTRIBUTING -->
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
+-   setup google analytics
+-   build a template for package
+-   less error prone function indicators (+ escapes, type checkers etc.)
+-   fix aggregation bug on `ind_11()`
+-   mettere jl n uovo `test_data` con 100’000 più recenti
 
 ## Code of Conduct
 

@@ -4,13 +4,7 @@
 \alias{ind_1}
 \title{Compute indicator High Winning Rate}
 \usage{
-ind_1(
-  data,
-  publication_date,
-  cpv,
-  outbreak_starting_date = lubridate::ymd("2017-06-30"),
-  stat_unit
-)
+ind_1(data, publication_date, cpv, emergency_name, stat_unit)
 }
 \arguments{
 \item{data}{bndcp data}
@@ -19,7 +13,7 @@ ind_1(
 
 \item{cpv}{Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract}
 
-\item{outbreak_starting_date}{the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")}
+\item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
 
@@ -39,7 +33,8 @@ if (interactive()) {
     data = mock_data_core,
     publication_date = data_pubblicazione,
     cpv = cod_cpv,
-    stat_unit = provincia
+    stat_unit = provincia,
+    emergency_name = "coronavirus"
   )
 }
 }

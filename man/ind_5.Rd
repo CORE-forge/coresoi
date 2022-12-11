@@ -8,7 +8,7 @@ ind_5_bis(
   data,
   publication_date,
   cpv,
-  outbreak_starting_date = lubridate::ymd("2017-06-30"),
+  emergency_name,
   cpv_division = "33",
   stat_unit
 )
@@ -20,7 +20,7 @@ ind_5_bis(
 
 \item{cpv}{Common Procurement Vocabulary.The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract.}
 
-\item{outbreak_starting_date}{the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")}
+\item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{cpv_division}{initial two digits from cpv, Default: '33'}
 
@@ -40,7 +40,7 @@ if (interactive()) {
     data = mock_data_core,
     publication_date = data_pubblicazione,
     cpv = cod_cpv,
-    outbreak_starting_date = lubridate::ymd("2017-06-30"),
+    emergency_name = "coronavirus"
     cpv_division = "33",
     stat_unit = provincia
   )

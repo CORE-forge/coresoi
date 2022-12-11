@@ -46,7 +46,7 @@ ind_11(
   sums_paid=importo_lotto,
   cf_amministrazione_appaltante,
   publication_date=data_pubblicazione,
-  outbreak_starting_date = lubridate::ymd("2017-06-30")
+  emergency_name = "coronavirus"
   ) |>
   head(10)
 

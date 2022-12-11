@@ -3,7 +3,7 @@
 #' @param data test bndcp data
 #' @param publication_date The date when the tender was published
 #' @param stat_unit The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)
-#' @param outbreak_starting_date the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")
+#' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
@@ -13,7 +13,7 @@
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = cf_amministrazione_appaltante,
-#'     outbreak_starting_date = lubridate::ymd("2017-06-30")
+#'     emergency_name = "coronavirus"
 #'   )
 #' }
 #' }
@@ -30,16 +30,17 @@
 #' @importFrom forcats as_factor
 ind_3 <- function(data,
                   publication_date,
-                  outbreak_starting_date = lubridate::ymd("2017-06-30"),
+                  emergency_name,
                   stat_unit) {
   indicator_id <- 3
   indicator_name <- "One-shot opportunistic companies"
-  aggregation_type <- quo_expr(enquo(stat_unit))
+  aggregation_type <- quo_squash(enquo(stat_unit))
+  emergency_scenario <- emergency_dates(emergency_name)
 
   data %>%
     dplyr::mutate(
       dplyr::across(dplyr::starts_with("data"), lubridate::ymd),
-      prepost = dplyr::if_else({{ publication_date }} >= lubridate::ymd("2017-06-30"), true = "post", false = "pre"),
+      prepost = dplyr::if_else({{ publication_date }} >= emergency_scenario$em_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost)
     ) %>%
     dplyr::group_by({{ stat_unit }}) %>%
@@ -53,7 +54,7 @@ ind_3 <- function(data,
       flag_opportunist,
       {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      outbreak_starting_date = outbreak_starting_date
+      emergency = emergency_scenario
     ) %>%
     dplyr::rename(
       indicator_value = flag_opportunist,

@@ -58,7 +58,7 @@ test_that("check `ind_10()` are 12 columns as according to `generate_indicator_s
         publication_date = data_pubblicazione,
         stat_unit = provincia,
         id_variants = id_variante,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       )
     }), 12
   )
@@ -68,7 +68,7 @@ test_that("check `ind_10()` are 12 columns as according to `generate_indicator_s
 ##  need to invert column orded (Je ne sais quoi)
 test_that("check column names are as according to pre determined schema", {
   col_names <- c(
-    "indicator_id", "indicator_name",  "indicator_value","aggregation_name",
+    "indicator_id", "indicator_name", "indicator_value", "aggregation_name",
     "aggregation_id", "aggregation_type", "emergency_id", "emergency_name",
     "country_id", "country_name", "indicator_last_update",
     "data_last_update"
@@ -81,7 +81,7 @@ test_that("check column names are as according to pre determined schema", {
         publication_date = data_pubblicazione,
         stat_unit = provincia,
         id_variants = id_variante,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       ))
     }), col_names
   )
@@ -97,7 +97,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         publication_date = data_pubblicazione,
         stat_unit = provincia,
         id_variants = id_variante,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       )
     }),
     min = 0, max = 1
@@ -115,10 +115,10 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         publication_date = data_pubblicazione,
         stat_unit = provincia,
         id_variants = id_variante,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       )
     }),
-    n = 109
+    n = 108
   )
 })
 
@@ -135,7 +135,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
 #         publication_date = data_pubblicazione,
 #         stat_unit = provincia,
 #         id_variants = id_variante,
-#         outbreak_starting_date = lubridate::ymd("2017-06-30")
+#         emergency_name = "coronavirus"
 #       )
 #     }), n = 109)
 # })
@@ -150,9 +150,64 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         id_variants = id_variante,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       )
     }),
-    n = 2847
+    n = 3227
   )
 })
+
+
+## test for different emergency scenarios
+
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
+  expect_within_range(
+    suppressWarnings({
+      ind_10(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        id_variants = id_variante,
+        emergency_name = "terremoto aquila"
+      )
+    }),
+    min = 0, max = 1
+  )
+})
+
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
+  expect_within_range(
+    suppressWarnings({
+      ind_10(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        id_variants = id_variante,
+        emergency_name = "terremoto aquila"
+      )
+    }),
+    min = 0, max = 1
+  )
+})
+
+
+
+test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario", {
+  expect_equal(
+    ind_10(
+      data = mock_data_core,
+      publication_date = data_pubblicazione,
+      stat_unit = cf_amministrazione_appaltante,
+      id_variants = id_variante,
+      emergency_name = "terremoto ischia"
+    ) %>%  distinct(emergency_name, emergency_id) %>% flatten(),
+    list(
+      emergency_id = 3,
+      emergency_name ="Terremoto Ischia"
+    )
+  )
+})
+
+

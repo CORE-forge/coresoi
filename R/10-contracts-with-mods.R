@@ -4,7 +4,7 @@
 #' @param publication_date PARAM_DESCRIPTION
 #' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
 #' @param id_variants the variants key id value
-#' @param outbreak_starting_date the date of the emergency outbreak (the official one according to emergency declaration), , Default: lubridate::ymd("2017-06-30")
+#' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @return indicator schema as from `generate_indicator_schema()` rows determined by aggregation level and `indicator_value` based on statistical test performed in `ind_10`
 #' @examples
 #' \dontrun{
@@ -15,7 +15,7 @@
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = provincia,
 #'     id_variants = id_variante,
-#'     outbreak_starting_date = lubridate::ymd("2017-06-30")
+#'     emergency_name = "coronavirus"
 #'   )
 #' }
 #' }
@@ -31,17 +31,18 @@
 #' @importFrom forcats as_factor
 #' @importFrom stats prop.test
 ind_10 <- function(data,
-                  publication_date,
-                  stat_unit,
-                  id_variants,
-                  outbreak_starting_date = lubridate::ymd("2017-06-30")) {
+                   publication_date,
+                   stat_unit,
+                   id_variants,
+                   emergency_name) {
   indicator_id <- 10
   indicator_name <- "Contracts with modifications"
-  aggregation_type <- quo_expr(enquo(stat_unit))
+  aggregation_type <- quo_squash(enquo(stat_unit))
+  emergency_scenario <- emergency_dates(emergency_name)
 
   data %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= outbreak_starting_date, true = "post", false = "pre"),
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
       flag_variant = dplyr::if_else(!is.na({{ id_variants }}), true = 1, false = 0)
     ) %>%
@@ -81,7 +82,7 @@ ind_10 <- function(data,
       correct_prop_test,
       {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      outbreak_starting_date = outbreak_starting_date
+      emergency = emergency_scenario
     ) %>%
     dplyr::rename(
       indicator_value = correct_prop_test,

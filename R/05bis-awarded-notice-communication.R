@@ -3,7 +3,7 @@
 #' @param data bndcp data
 #' @param publication_date The date when the tender was published
 #' @param cpv Common Procurement Vocabulary.The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract.
-#' @param outbreak_starting_date the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")
+#' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @param cpv_division initial two digits from cpv, Default: '33'
 #' @param stat_unit statistical unit of measurement and stat_uniting
 #' @return indicator schema as from `generate_indicator_schema`
@@ -15,7 +15,7 @@
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
 #'     cpv = cod_cpv,
-#'     outbreak_starting_date = lubridate::ymd("2017-06-30"),
+#'     emergency_name = "coronavirus"
 #'     cpv_division = "33",
 #'     stat_unit = provincia
 #'   )
@@ -35,16 +35,17 @@
 ind_5_bis <- function(data,
                       publication_date,
                       cpv,
-                      outbreak_starting_date = lubridate::ymd("2017-06-30"),
+                      emergency_name,
                       cpv_division = "33",
                       stat_unit) {
   indicator_id <- 5.1
   indicator_name <- "Awarded notice communication default"
   aggregation_type <- quo_expr(enquo(stat_unit))
+  emergency_scenario = emergency_dates(emergency_name)
 
   prel <- data %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= outbreak_starting_date, true = "post", false = "pre"),
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
       flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == cpv_division, 1, 0)
     ) %>%
@@ -66,7 +67,7 @@ ind_5_bis <- function(data,
       prop_no_communic,
       {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      outbreak_starting_date = outbreak_starting_date
+      emergency = emergency_scenario
     ) %>%
     dplyr::rename(
       indicator_value = prop_no_communic,

@@ -4,19 +4,14 @@
 \alias{ind_3}
 \title{Compute One-shot opportunistic companies indicator}
 \usage{
-ind_3(
-  data,
-  publication_date,
-  outbreak_starting_date = lubridate::ymd("2017-06-30"),
-  stat_unit
-)
+ind_3(data, publication_date, emergency_name, stat_unit)
 }
 \arguments{
 \item{data}{test bndcp data}
 
 \item{publication_date}{The date when the tender was published}
 
-\item{outbreak_starting_date}{the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")}
+\item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{stat_unit}{The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)}
 }
@@ -34,7 +29,7 @@ if (interactive()) {
     data = mock_data_core,
     publication_date = data_pubblicazione,
     stat_unit = cf_amministrazione_appaltante,
-    outbreak_starting_date = lubridate::ymd("2017-06-30")
+    emergency_name = "coronavirus"
   )
 }
 }

@@ -52,7 +52,7 @@ test_that("check `ind_5_bis()` are 12 columns as according to `generate_indicato
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = provincia,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       )
     }), 12
   )
@@ -75,7 +75,7 @@ test_that("check column names are as according to pre determined schema", {
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = provincia,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       ))
     }), col_names
   )
@@ -92,7 +92,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = provincia,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       )
     }),
     min = 0, max = 1
@@ -111,7 +111,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = provincia,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       )
     }),
     n = 224
@@ -128,10 +128,68 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = cf_amministrazione_appaltante,
-        outbreak_starting_date = lubridate::ymd("2017-06-30")
+        emergency_name = "coronavirus"
       )
     }),
     n = 18320
   )
 })
+
+
+## test for different scenarios
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
+  expect_within_range(
+    suppressMessages(
+      ind_5_bis(
+        data = mock_data_core,
+        cpv = cod_cpv,
+        publication_date = data_pubblicazione,
+        cpv_division = "33",
+        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "terremoto aquila"
+      )
+    ),
+    min = 0, max = 1
+  )
+})
+
+
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
+  expect_within_range(
+    suppressMessages(
+      ind_5_bis(
+        data = mock_data_core,
+        cpv = cod_cpv,
+        publication_date = data_pubblicazione,
+        cpv_division = "33",
+        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "terremoto aquila"
+      )
+    ),
+    min = 0, max = 1
+  )
+})
+
+
+
+test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario", {
+  expect_equal(
+    suppressMessages(
+    ind_5_bis(
+      data = mock_data_core,
+      cpv = cod_cpv,
+      publication_date = data_pubblicazione,
+      cpv_division = "33",
+      stat_unit = cf_amministrazione_appaltante,
+      emergency_name = "terremoto ischia"
+    ) %>%  distinct(emergency_name, emergency_id) %>% flatten()),
+    list(
+      emergency_id = 3,
+      emergency_name ="Terremoto Ischia"
+    )
+  )
+})
+
 

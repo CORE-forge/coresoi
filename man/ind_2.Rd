@@ -4,14 +4,7 @@
 \alias{ind_2}
 \title{Compute High Economic Value indicator}
 \usage{
-ind_2(
-  data,
-  cpv,
-  contract_value,
-  publication_date,
-  outbreak_starting_date = lubridate::ymd("2017-06-30"),
-  stat_unit
-)
+ind_2(data, cpv, contract_value, publication_date, emergency_name, stat_unit)
 }
 \arguments{
 \item{data}{test bndcp data}
@@ -20,7 +13,7 @@ ind_2(
 
 \item{contract_value}{the value of the contract}
 
-\item{outbreak_starting_date}{the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")}
+\item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
 }
@@ -38,7 +31,9 @@ if (interactive()) {
     data = mock_data_core,
     cpv = cod_cpv,
     contract_value = importo_complessivo_gara,
-    publication_date = data_pubblicazione
+    publication_date = data_pubblicazione,
+    stat_unit = provincia
+    emergency_name = "coronavirus"
   )
 }
 }
