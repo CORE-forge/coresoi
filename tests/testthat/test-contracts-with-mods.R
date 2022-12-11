@@ -157,3 +157,57 @@ test_that("check if the number of rows is coherent with the aggregation level (`
   )
 })
 
+
+## test for different emergency scenarios
+
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
+  expect_within_range(
+    suppressWarnings({
+      ind_10(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        id_variants = id_variante,
+        emergency_name = "terremoto aquila"
+      )
+    }),
+    min = 0, max = 1
+  )
+})
+
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
+  expect_within_range(
+    suppressWarnings({
+      ind_10(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        id_variants = id_variante,
+        emergency_name = "terremoto aquila"
+      )
+    }),
+    min = 0, max = 1
+  )
+})
+
+
+
+test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario", {
+  expect_equal(
+    ind_10(
+      data = mock_data_core,
+      publication_date = data_pubblicazione,
+      stat_unit = cf_amministrazione_appaltante,
+      id_variants = id_variante,
+      emergency_name = "terremoto ischia"
+    ) %>%  distinct(emergency_name, emergency_id) %>% flatten(),
+    list(
+      emergency_id = 3,
+      emergency_name ="Terremoto Ischia"
+    )
+  )
+})
+
+
