@@ -1,22 +1,3 @@
-#' Gets Emergency id from outbreak date
-#' @keywords internal
-#' @export
-get_emergency_id_from_date <- function(outbreak_starting_date) {
-
-  # TODO distinguish emergecy id from date by state (Italy the
-  # pandemic is started in february. China in decemebr 2019):
-  # depends also from the TZ
-
-  if (outbreak_starting_date %within% lubridate::interval(lubridate::ymd("2020-01-31"), lubridate::ymd("2022-03-23"))) {
-    return(1)
-  } else if (outbreak_starting_date %within% lubridate::interval(lubridate::ymd("2022-2-24"), lubridate::today())) {
-    return(2)
-  } else {
-    return(3)
-  }
-}
-
-
 #' @title get the emergency date from input string
 #' @description gets the outbreak starting date from emergency name input string
 #' @param emergency_name  emergency name character string
@@ -60,15 +41,19 @@ emergency_dates <- function(emergency_name) {
 
   # check if any approximate matches were found
   if (length(emergency_match) > 0) {
-    # if matches were found, return the date corresponding to the first match
-    return(emergency_list[emergency_match[1]])
+    # if matches were found, return the date adn id corresponding to the first match
+    emergency = list()
+    emergency$em_name = names(emergency_list[emergency_match[1]])
+    emergency$em_date = emergency_list[emergency_match[1]][[1]]
+    emergency$em_id = emergency_match[1]
+
+    return(emergency)
+
   } else {
     # if no matches were found, return an error message
     return("Error: Emergency not found in list.")
   }
 }
-
-
 
 
 # TODO function to grab latest data update
@@ -86,7 +71,7 @@ from_aggregation_type_to_eu_nc <- function(variables) {
 #' generate indicator schema
 #' @keywords internal
 #' @export
-generate_indicator_schema <- function(.data, indicator_id, indicator_name, aggregation_type, outbreak_starting_date, ...) {
+generate_indicator_schema <- function(.data, indicator_id, indicator_name, aggregation_type, emergency, ...) {
   common_schema <- .data %>%
     dplyr::transmute(
       indicator_id = indicator_id,
@@ -94,8 +79,9 @@ generate_indicator_schema <- function(.data, indicator_id, indicator_name, aggre
       ..., ## indicator_value e aggregation_name
       aggregation_id = "ISTAT1", # istat id from function
       aggregation_type = aggregation_type, #  define also nuts within funs
-      emergency_id = get_emergency_id_from_date(outbreak_starting_date),
-      emergency_name = get_emergency_name_from_date(outbreak_starting_date),
+      emergency_id = emergency$em_id,
+      #emergency_type = emergency$em_type,
+      emergency_name = emergency$em_name,
       country_id = "1",
       country_name = "Italy",
       indicator_last_update = lubridate::now(),
