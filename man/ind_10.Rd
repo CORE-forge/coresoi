@@ -4,13 +4,7 @@
 \alias{ind_10}
 \title{Compute Contracts with modifications}
 \usage{
-ind_10(
-  data,
-  publication_date,
-  stat_unit,
-  id_variants,
-  outbreak_starting_date = lubridate::ymd("2017-06-30")
-)
+ind_10(data, publication_date, stat_unit, id_variants, emergency_name)
 }
 \arguments{
 \item{data}{mock bndcp data}
@@ -21,7 +15,7 @@ ind_10(
 
 \item{id_variants}{the variants key id value}
 
-\item{outbreak_starting_date}{the date of the emergency outbreak (the official one according to emergency declaration), , Default: lubridate::ymd("2017-06-30")}
+\item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema()} rows determined by aggregation level and \code{indicator_value} based on statistical test performed in \code{ind_10}
@@ -38,7 +32,7 @@ if (interactive()) {
     publication_date = data_pubblicazione,
     stat_unit = provincia,
     id_variants = id_variante,
-    outbreak_starting_date = lubridate::ymd("2017-06-30")
+    emergency_name = "coronavirus"
   )
 }
 }

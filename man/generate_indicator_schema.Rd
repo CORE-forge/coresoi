@@ -2,18 +2,18 @@
 % Please edit documentation in R/utils.R
 \name{generate_indicator_schema}
 \alias{generate_indicator_schema}
-\title{Generate commmon schema for indicator}
+\title{generate indicator schema}
 \usage{
 generate_indicator_schema(
   .data,
   indicator_id,
   indicator_name,
   aggregation_type,
-  outbreak_starting_date,
+  emergency,
   ...
 )
 }
 \description{
-Generate commmon schema for indicator
+generate indicator schema
 }
 \keyword{internal}

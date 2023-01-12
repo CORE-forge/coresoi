@@ -34,7 +34,7 @@ devtools::install_github("CORE-forge/coresoi")
 
 ## Example: Compute indicator High Winning Rate 
 
-There might be the case in which you have to compute the indicator n° 1, which mainly accounts for companies that after the Emergency outbreak (say Covid-19) were awarded public contracts much more frequently than before the Emergency. Indicator 11 computes a [Fish exact's test](https://en.wikipedia.org/wiki/Fisher%27s_exact_test) in proportion from _pre_ and _post_ emergency, poiting out if there is any statistical significance between the two group proportions.
+There might be the case in which you have to compute the indicator n° 1, which mainly accounts for companies that after the Emergency outbreak (in this case Coronavirus) were awarded public contracts much more frequently than before the Emergency. Indicator 11 computes a [Fish exact's test](https://en.wikipedia.org/wiki/Fisher%27s_exact_test) in proportion from _pre_ and _post_ emergency, poiting out if there is any statistical significance between the two group proportions.
 The resulting indicator follows a schema generated through `coresoi::generate_indicator_schema`.
 
 ```{r example}
@@ -46,13 +46,14 @@ ind_1_res <- ind_1(
   data = mock_data_core, 
   publication_date = data_pubblicazione, 
   cpv = cod_cpv, 
-  stat_unit = provincia)
+  stat_unit = provincia,
+  emergency_name = "coronavirus")
 ind_1_res
 ```
 
 Let's now visualize results for top 10 provinces given High Winning Rate  indicator estimate.
 
-```{r cars}
+```{r plot}
 library(ggplot2)
 library(forcats)
 library(tidyr)

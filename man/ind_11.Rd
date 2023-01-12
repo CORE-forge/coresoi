@@ -9,7 +9,7 @@ ind_11(
   award_value,
   sums_paid,
   stat_unit,
-  outbreak_starting_date = lubridate::ymd("2017-06-30"),
+  emergency_name,
   publication_date
 )
 }
@@ -22,7 +22,7 @@ ind_11(
 
 \item{stat_unit}{the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by}
 
-\item{outbreak_starting_date}{The date when the emergency officially started, Default: lubridate::ymd("2017-06-30")}
+\item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{publication_date}{The date when the tender was published}
 }
@@ -41,8 +41,8 @@ if (interactive()) {
   ind_11(
     data = mock_data_core, publication_date = data_pubblicazione,
     award_value = importo_aggiudicazione, sums_paid = importo_lotto,
-    cf_amministrazione_appaltante,
-    outbreak_starting_date = lubridate::ymd("2017-06-30")
+    stat_unit = cf_amministrazione_appaltante,
+    emergency_name = "coronavirus"
   )
 }
 }

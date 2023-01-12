@@ -4,7 +4,7 @@
 #' @param award_value The date when the tender was awarded
 #' @param sums_paid The amount paid by the C.A.
 #' @param stat_unit the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by
-#' @param outbreak_starting_date The date when the emergency officially started, Default: lubridate::ymd("2017-06-30")
+#' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @param publication_date The date when the tender was published
 #' @return indicator schema as from `generate_indicator_schema`
 #' @details DETAILS
@@ -14,8 +14,8 @@
 #'   ind_11(
 #'     data = mock_data_core, publication_date = data_pubblicazione,
 #'     award_value = importo_aggiudicazione, sums_paid = importo_lotto,
-#'     cf_amministrazione_appaltante,
-#'     outbreak_starting_date = lubridate::ymd("2017-06-30")
+#'     stat_unit = cf_amministrazione_appaltante,
+#'     emergency_name = "coronavirus"
 #'   )
 #' }
 #' }
@@ -32,11 +32,12 @@ ind_11 <- function(data,
                    award_value,
                    sums_paid,
                    stat_unit,
-                   outbreak_starting_date = lubridate::ymd("2017-06-30"),
+                   emergency_name,
                    publication_date) {
   indicator_id <- 11
   indicator_name <- "Distance between award value and sums paid"
-  aggregation_type <- quo_expr(enquo(stat_unit))
+  aggregation_type <- quo_squash(enquo(stat_unit))
+  emergency_scenario <- emergency_dates(emergency_name)
 
 
   # TODO
@@ -50,7 +51,7 @@ ind_11 <- function(data,
     dplyr::filter(!is.na({{ award_value }}) & !is.na({{ sums_paid }}) & {{ award_value }} > 0 &
       {{ sums_paid }} > 0) %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= outbreak_starting_date, true = "post", false = "pre"),
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
       ratio = {{ sums_paid }} / {{ award_value }}
     ) %>%
@@ -67,7 +68,7 @@ ind_11 <- function(data,
       {{ stat_unit }},
       ind_11_mean,
       aggregation_type = as_string(aggregation_type),
-      outbreak_starting_date = outbreak_starting_date
+      emergency = emergency_scenario
     ) %>%
     dplyr::rename(
       indicator_value = ind_11_mean,
