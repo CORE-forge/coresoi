@@ -37,13 +37,10 @@
     <loc>https://core-forge.github.io/coresoi/reference/coresoi-package.html</loc>
   </url>
   <url>
+    <loc>https://core-forge.github.io/coresoi/reference/emergency_dates.html</loc>
+  </url>
+  <url>
     <loc>https://core-forge.github.io/coresoi/reference/generate_indicator_schema.html</loc>
-  </url>
-  <url>
-    <loc>https://core-forge.github.io/coresoi/reference/get_emergency_id_from_date.html</loc>
-  </url>
-  <url>
-    <loc>https://core-forge.github.io/coresoi/reference/get_emergency_name_from_date.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/ind_1.html</loc>
