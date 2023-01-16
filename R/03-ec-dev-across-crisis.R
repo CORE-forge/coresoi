@@ -1,5 +1,5 @@
-#' @title Economic deviation across the crisis indicator
-#' @description The difference between the sum foreseen in the contract and the actual payment by the C.A. (ita SA stazione Appaltante)
+#' @title Compute Economic deviation across the crisis indicator
+#' @description The difference between the sum foreseen in the contract and the actual payment by the C.A. ( _ita_ SA stazione Appaltante)
 #' @param data data to be passed, expects tibble
 #' @param award_value The date when the tender was awarded
 #' @param sums_paid The amount paid by the C.A.
