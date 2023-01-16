@@ -31,16 +31,16 @@ Data form BNDCP has been carefully aggregated and inserted in this package.
 
 ## Calculate an indicator
 
-Let's say we are interested in calculating and indicator say number 11, namely Distance between award value and sums paid. The indicator aims at quantifying the difference between the sum foreseen in the contract and the actual payment by the C.A. (_ita_ S.A. Stazione Appaltante) prior and after the emergency outbreak. This is extremely convenient since we may expect that the ratio between what's should be paid and what it is actually paid (in other words the the proportion of the contract  value left to be paid) needs to remain just as equal in the two adjacent periods.
-We may also suppose that this does not happen due to the fact that during emergency outbreaks inspections and controls are wicker and less in-depth. This may give the chance to fraudsters to get money quicker than before and runaway 💰. There it is an indicator for to quantify that type of risk.
+Let's say we are interested in calculating and indicator say number 3, namely **Economic deviation across the crisis**. The indicator aims at quantifying the difference between the sum foreseen in the contract and the actual payment by the C.A. ( _ita_ S.A. Stazione Appaltante) prior and after the emergency outbreak. This is extremely convenient since we may expect that the ratio between what's should be paid and what it is actually paid (in other words the the proportion of the contract  value left to be paid) needs to remain just as equal in the two adjacent periods.
+We may also suppose that this does not happen due to the fact that during emergency outbreaks inspections and controls are wicker and less in-depth. This may give the chance to fraudsters to get money quicker than before and runaway with 💰.
 
-All we need to do is to load data `mock_data_core` and supply related variables to function `ind_11()`. Check out the documentation for function `ind_11()` to get a grasp on that.
+All we need to do is to load data sample `mock_data_core` and supply related variables to function `ind_3()`. Check out the documentation for function `ind_3()` to get a grasp on that.
 
 
 ```{r ind11}
 data("mock_data_core", package = "coresoi")
 
-ind_11(
+ind_3(
   data = mock_data_core,
   award_value=importo_aggiudicazione, 
   sums_paid=importo_lotto,
@@ -52,7 +52,7 @@ ind_11(
 
 ```
 
-The output from `ind_11` is a schema which shows ...
+The output from `ind_3` is a schema which shows ...
 
 
 ... we may want also to be interested in...
