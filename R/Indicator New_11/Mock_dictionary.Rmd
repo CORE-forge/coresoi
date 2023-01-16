@@ -1,0 +1,57 @@
+---
+title: "Dictonary Cookbook"
+author: Giulio G. Cantone
+output: github_document
+---
+
+```{r setup, include=FALSE}
+pacman::p_load(
+  tidyverse,
+  tidytext,
+  SnowballC,
+  coresoi
+)
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The following code will build a *mock* dictionary for the categories of contracts in the mock dataset.
+
+-   Select only relevant columns
+
+```{r}
+
+coresoi::mock_data_core %>%
+  select(ID = cig,
+         contract_object = oggetto_lotto,
+         contract_class = descrizione_cpv,
+         Territory = provincia,
+         Contracting_agent = denominazione_amministrazione_appaltante) -> micromock_data
+```
+
+-   Tidy the the `contract_object`
+
+```{r}
+
+micromock_data %>%
+  tidytext::unnest_tokens(word,contract_object) %>%
+  anti_join(get_stopwords(language = "it")) %>%
+  mutate(word = word %>% wordStem("italian")) -> tidy_mock
+
+```
+
+-   Check statistics per contract class
+
+```{r}
+tidy_mock %>% group_by(contract_class,word) %>%
+  count() %>%
+  arrange(contract_class,-n) %>% View()
+```
+
+---
+
+Two problems:
+
+1.  Contract class is too broad
+
+2.  After the ***n*** of contract classes is fixed, tokens should be weighted through their tf/idf.
