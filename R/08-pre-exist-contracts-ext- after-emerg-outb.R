@@ -1,21 +1,21 @@
-#' @title Compute Contracts with modifications
+#' @title Compute Pre-existing contracts modified after the crisis indicator
 #' @description The indicator reveals the fraction of contracts with at least one modification communication.
 #' @param data mock bndcp data
 #' @param publication_date PARAM_DESCRIPTION
 #' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
 #' @param id_variants the variants key id value
-#' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param outbreak_starting_date the date of the emergency outbreak (the official one according to emergency declaration), , Default: lubridate::ymd("2017-06-30")
 #' @return indicator schema as from `generate_indicator_schema()` rows determined by aggregation level and `indicator_value` based on statistical test performed in `ind_10`
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
 #'   data("mock_data_core")
-#'   ind_10(
+#'   ind_8(
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = provincia,
 #'     id_variants = id_variante,
-#'     emergency_name = "coronavirus"
+#'     outbreak_starting_date = lubridate::ymd("2017-06-30")
 #'   )
 #' }
 #' }
@@ -24,7 +24,7 @@
 #'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{c("rowwise", "rowwise", "rowwise")}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{reexports}}, \code{\link[dplyr]{rename}}
 #'  \code{\link[forcats]{as_factor}}
 #'  \code{\link[stats]{prop.test}}
-#' @rdname ind_10
+#' @rdname ind_8
 #' @export
 #' @importFrom lubridate ymd
 #' @importFrom dplyr mutate if_else group_by summarise n filter rowwise select contains rename
@@ -34,15 +34,14 @@ ind_10 <- function(data,
                    publication_date,
                    stat_unit,
                    id_variants,
-                   emergency_name) {
-  indicator_id <- 10
-  indicator_name <- "Contracts with modifications"
-  aggregation_type <- quo_squash(enquo(stat_unit))
-  emergency_scenario <- emergency_dates(emergency_name)
+                   outbreak_starting_date = lubridate::ymd("2017-06-30")) {
+  indicator_id <- 8
+  indicator_name <- "Pre-existing contracts modified after the crisis"
+  aggregation_type <- quo_expr(enquo(stat_unit))
 
   data %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= outbreak_starting_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
       flag_variant = dplyr::if_else(!is.na({{ id_variants }}), true = 1, false = 0)
     ) %>%
@@ -82,7 +81,7 @@ ind_10 <- function(data,
       correct_prop_test,
       {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      emergency = emergency_scenario
+      outbreak_starting_date = outbreak_starting_date
     ) %>%
     dplyr::rename(
       indicator_value = correct_prop_test,

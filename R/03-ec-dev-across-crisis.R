@@ -1,4 +1,4 @@
-#' @title Compute Distance between award value and sums paid indicator
+#' @title Economic deviation across the crisis indicator
 #' @description The difference between the sum foreseen in the contract and the actual payment by the C.A. (ita SA stazione Appaltante)
 #' @param data data to be passed, expects tibble
 #' @param award_value The date when the tender was awarded
@@ -11,7 +11,7 @@
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   ind_11(
+#'   ind_3(
 #'     data = mock_data_core, publication_date = data_pubblicazione,
 #'     award_value = importo_aggiudicazione, sums_paid = importo_lotto,
 #'     stat_unit = cf_amministrazione_appaltante,
@@ -23,29 +23,21 @@
 #'  \code{\link[lubridate]{ymd}}
 #'  \code{\link[dplyr]{filter}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}
 #'  \code{\link[forcats]{as_factor}}
-#' @rdname ind_11
+#' @rdname ind_3
 #' @export
 #' @importFrom lubridate ymd
 #' @importFrom dplyr filter mutate if_else group_by summarise n
 #' @importFrom forcats as_factor
-ind_11 <- function(data,
+ind_3 <- function(data,
                    award_value,
                    sums_paid,
                    stat_unit,
                    emergency_name,
                    publication_date) {
-  indicator_id <- 11
-  indicator_name <- "Distance between award value and sums paid"
+  indicator_id <- 3
+  indicator_name <- "Economic deviation across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-
-
-  # TODO
-  # - data filtering for NA or 0s
-  # - coltype checks
-  # - colnames existence
-  # - compute indicator for a single cf
-  # - might want to use group_by(across(variables))
 
   data %>%
     dplyr::filter(!is.na({{ award_value }}) & !is.na({{ sums_paid }}) & {{ award_value }} > 0 &
