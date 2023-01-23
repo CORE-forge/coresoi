@@ -48,7 +48,7 @@ tidy_mock %>% group_by(contract_class,word) %>%
   arrange(contract_class,-n) %>% View()
 ```
 
----
+------------------------------------------------------------------------
 
 Two problems:
 
