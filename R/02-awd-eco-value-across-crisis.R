@@ -10,8 +10,8 @@ compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "g
 
 
 
-#' @title Compute High Economic Value indicator
-#' @description High Economic Value for statistical unit
+#' @title Compute Awarded economic value across the crisis indicator
+#' @description companies that after the emergency outbreak were awarded public contracts much higher in economic value than before the emergency scenario
 #' @param data test bndcp data
 #' @param cpv Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract
 #' @param contract_value the value of the contract
@@ -27,7 +27,7 @@ compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "g
 #'     cpv = cod_cpv,
 #'     contract_value = importo_complessivo_gara,
 #'     publication_date = data_pubblicazione,
-#'     stat_unit = provincia
+#'     stat_unit = provincia,
 #'     emergency_name = "coronavirus"
 #'   )
 #' }
@@ -52,9 +52,9 @@ ind_2 <- function(data,
                   emergency_name,
                   stat_unit) {
   indicator_id <- 2
-  indicator_name <- "High Economic Value"
+  indicator_name <- "Awarded economic value across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
-  emergency_scenario = emergency_dates(emergency_name)
+  emergency_scenario <- emergency_dates(emergency_name)
 
   data %>%
     dplyr::mutate(

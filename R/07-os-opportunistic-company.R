@@ -1,6 +1,6 @@
-#' @title Compute One-shot opportunistic companies indicator
+#' @title Compute One-shot opportunistic companies over the crisiss indicator
 #' @description The indicator reveals whether the company that won the public tender or contract has a previous history of at least one year since the opening of the tender.
-#' @param data test bndcp data
+#' @param data mock_data_core exmaple data
 #' @param publication_date The date when the tender was published
 #' @param stat_unit The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
@@ -9,7 +9,7 @@
 #' \dontrun{
 #' if (interactive()) {
 #'   data("mock_data_core")
-#'   ind_3(
+#'   ind_7(
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = cf_amministrazione_appaltante,
@@ -22,18 +22,18 @@
 #'  \code{\link[tidyr]{nest}}
 #'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{across}}, \code{\link[dplyr]{reexports}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}
 #'  \code{\link[forcats]{as_factor}}
-#' @rdname ind_3
+#' @rdname ind_7
 #' @export
 #' @importFrom lubridate ymd interval years %within%
 #' @importFrom tidyr unnest
 #' @importFrom dplyr mutate across starts_with if_else group_by
 #' @importFrom forcats as_factor
-ind_3 <- function(data,
+ind_7 <- function(data,
                   publication_date,
                   emergency_name,
                   stat_unit) {
-  indicator_id <- 3
-  indicator_name <- "One-shot opportunistic companies"
+  indicator_id <- 7
+  indicator_name <- "One-shot opportunistic companies over the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
 

@@ -1,4 +1,4 @@
-#' @title Compute Contracts with modifications
+#' @title Compute Pre-existing contracts modified after the crisis indicator
 #' @description The indicator reveals the fraction of contracts with at least one modification communication.
 #' @param data mock bndcp data
 #' @param publication_date PARAM_DESCRIPTION
@@ -10,7 +10,7 @@
 #' \dontrun{
 #' if (interactive()) {
 #'   data("mock_data_core")
-#'   ind_10(
+#'   ind_8(
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = provincia,
@@ -24,20 +24,20 @@
 #'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{c("rowwise", "rowwise", "rowwise")}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{reexports}}, \code{\link[dplyr]{rename}}
 #'  \code{\link[forcats]{as_factor}}
 #'  \code{\link[stats]{prop.test}}
-#' @rdname ind_10
+#' @rdname ind_8
 #' @export
 #' @importFrom lubridate ymd
 #' @importFrom dplyr mutate if_else group_by summarise n filter rowwise select contains rename
 #' @importFrom forcats as_factor
 #' @importFrom stats prop.test
-ind_10 <- function(data,
-                   publication_date,
-                   stat_unit,
-                   id_variants,
-                   emergency_name) {
-  indicator_id <- 10
-  indicator_name <- "Contracts with modifications"
-  aggregation_type <- quo_squash(enquo(stat_unit))
+ind_8 <- function(data,
+                  publication_date,
+                  stat_unit,
+                  id_variants,
+                  emergency_name) {
+  indicator_id <- 8
+  indicator_name <- "Pre-existing contracts modified after the crisis"
+  aggregation_type <- quo_expr(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
 
   data %>%

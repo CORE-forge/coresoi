@@ -1,6 +1,6 @@
-#' @title Compute Awarded notice communication default indicator
+#' @title Compute Communication default across the crisis indicator
 #' @description The indicator reveals the fraction of contracts without any award notice communication.
-#' @param data bndcp data
+#' @param data mock_data_core example bdncp data
 #' @param publication_date The date when the tender was published
 #' @param cpv Common Procurement Vocabulary.The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract.
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
@@ -11,11 +11,11 @@
 #' \dontrun{
 #' if (interactive()) {
 #'   data("mock_data_core")
-#'   ind_5_bis(
+#'   ind_6(
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
 #'     cpv = cod_cpv,
-#'     emergency_name = "coronavirus"
+#'     emergency_name = "coronavirus",
 #'     cpv_division = "33",
 #'     stat_unit = provincia
 #'   )
@@ -26,22 +26,22 @@
 #'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{stat_unit_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{distinct}}, \code{\link[dplyr]{pull}}, \code{\link[dplyr]{rename}}, \code{\link[dplyr]{mutate-joins}}, \code{\link[dplyr]{arrange}}
 #'  \code{\link[forcats]{as_factor}}
 #'  \code{\link[stringr]{str_sub}}
-#' @rdname ind_5
+#' @rdname ind_6
 #' @export
 #' @importFrom lubridate ymd
 #' @importFrom dplyr mutate if_else group_by summarise distinct pull rename left_join arrange
 #' @importFrom forcats as_factor
 #' @importFrom stringr str_sub
-ind_5_bis <- function(data,
-                      publication_date,
-                      cpv,
-                      emergency_name,
-                      cpv_division = "33",
-                      stat_unit) {
-  indicator_id <- 5.1
-  indicator_name <- "Awarded notice communication default"
+ind_6 <- function(data,
+                  publication_date,
+                  cpv,
+                  emergency_name,
+                  cpv_division = "33",
+                  stat_unit) {
+  indicator_id <- 6
+  indicator_name <- "Communication default across the crisis"
   aggregation_type <- quo_expr(enquo(stat_unit))
-  emergency_scenario = emergency_dates(emergency_name)
+  emergency_scenario <- emergency_dates(emergency_name)
 
   prel <- data %>%
     dplyr::mutate(
