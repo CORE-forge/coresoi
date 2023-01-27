@@ -29,11 +29,11 @@
 #' @importFrom dplyr filter mutate if_else group_by summarise n
 #' @importFrom forcats as_factor
 ind_3 <- function(data,
-                   award_value,
-                   sums_paid,
-                   stat_unit,
-                   emergency_name,
-                   publication_date) {
+                  award_value,
+                  sums_paid,
+                  stat_unit,
+                  emergency_name,
+                  publication_date) {
   indicator_id <- 3
   indicator_name <- "Economic deviation across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
@@ -50,20 +50,20 @@ ind_3 <- function(data,
     dplyr::group_by({{ stat_unit }}, prepost) %>%
     dplyr::summarise(
       prepost_count = dplyr::n(),
-      ind_11_mean = mean(ratio, na.rm = TRUE),
-      ind_11_median = median(ratio, na.rm = TRUE),
-      ind_11_mean = round(ind_11_mean, 3)
+      ind_3_mean = mean(ratio, na.rm = TRUE),
+      ind_3_median = median(ratio, na.rm = TRUE),
+      ind_3_mean = round(ind_3_mean, 3)
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
       {{ stat_unit }},
-      ind_11_mean,
+      ind_3_mean,
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario
     ) %>%
     dplyr::rename(
-      indicator_value = ind_11_mean,
+      indicator_value = ind_3_mean,
       aggregation_name = {{ stat_unit }}
     ) %>%
     return()

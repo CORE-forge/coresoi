@@ -48,16 +48,17 @@ expect_within_range <- function(object, min, max) {
 ## - 2 test compliance to schema OK
 ## - 3 test `indicator_value` inbetween a range OK
 ## - 4 test number of rows choerence with grouping var
+## TODO:  - 5  test diff  scenarios
 
-
-test_that("check `ind_10()` are 12 columns as according to `generate_indicator_schema()`s", {
+test_that("check `ind_2()` are 12 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
-      ind_10(
+      ind_2(
         data = mock_data_core,
+        cpv = cod_cpv,
+        contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        id_variants = id_variante,
         emergency_name = "coronavirus"
       )
     }), 12
@@ -65,7 +66,6 @@ test_that("check `ind_10()` are 12 columns as according to `generate_indicator_s
 })
 
 
-##  need to invert column orded (Je ne sais quoi)
 test_that("check column names are as according to pre determined schema", {
   col_names <- c(
     "indicator_id", "indicator_name", "indicator_value", "aggregation_name",
@@ -76,11 +76,12 @@ test_that("check column names are as according to pre determined schema", {
 
   expect_equal(
     suppressWarnings({
-      names(ind_10(
+      names(ind_2(
         data = mock_data_core,
+        cpv = cod_cpv,
+        contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        id_variants = id_variante,
         emergency_name = "coronavirus"
       ))
     }), col_names
@@ -92,11 +93,12 @@ test_that("check column names are as according to pre determined schema", {
 test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
   expect_within_range(
     suppressWarnings({
-      ind_10(
+      ind_2(
         data = mock_data_core,
+        cpv = cod_cpv,
+        contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        id_variants = id_variante,
         emergency_name = "coronavirus"
       )
     }),
@@ -110,11 +112,12 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 test_that("check if the number of rows is coherent with the aggregation level (`provincia`)", {
   expect_row_number(
     suppressWarnings({
-      ind_10(
+      ind_2(
         data = mock_data_core,
+        cpv = cod_cpv,
+        contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        id_variants = id_variante,
         emergency_name = "coronavirus"
       )
     }),
@@ -122,34 +125,16 @@ test_that("check if the number of rows is coherent with the aggregation level (`
   )
 })
 
-# TODO: we should specify scenario and compute prepost, instead of specifying `outbreak_starting_date`
-# that' beacause we do not want the user to select emergency scenario based on their
-# date, instead this should happen right inside a function
-#
-# test_that("check if the number of rows is coherent with the aggregation level (`provincia`) during Covid Emergency", {
-#
-#   expect_row_number(
-#     suppressWarnings({
-#       ind_10(
-#         data = mock_data_core,
-#         publication_date = data_pubblicazione,
-#         stat_unit = provincia,
-#         id_variants = id_variante,
-#         emergency_name = "coronavirus"
-#       )
-#     }), n = 109)
-# })
-#
-#
 
 test_that("check if the number of rows is coherent with the aggregation level (`cf_amministrazione_appaltante`)", {
   expect_row_number(
     suppressWarnings({
-      ind_10(
+      ind_2(
         data = mock_data_core,
+        cpv = cod_cpv,
+        contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        id_variants = id_variante,
         emergency_name = "coronavirus"
       )
     }),
@@ -157,18 +142,17 @@ test_that("check if the number of rows is coherent with the aggregation level (`
   )
 })
 
+## test with different scenarios
 
-## test for different emergency scenarios
-
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen in a changed scenario i.e. Terremoto Aquila", {
   expect_within_range(
     suppressWarnings({
-      ind_10(
+      ind_2(
         data = mock_data_core,
+        cpv = cod_cpv,
+        contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        id_variants = id_variante,
         emergency_name = "terremoto aquila"
       )
     }),
@@ -177,14 +161,34 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 })
 
 
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
+
+test_that("check if the number of rows is coherent with the aggregation level (`provincia`) with a different emergency scenario", {
+  expect_row_number(
+    suppressWarnings({
+      ind_2(
+        data = mock_data_core,
+        cpv = cod_cpv,
+        contract_value = importo_complessivo_gara,
+        publication_date = data_pubblicazione,
+        stat_unit = provincia,
+        emergency_name = "terremoto aquila"
+      )
+    }),
+    n = 109 # 108 + NA
+  )
+})
+
+
+
+test_that("check if `indicator_value` lays inbetween min/max values (different aggregation units) accroding to test chosen AND it is consistent with a different scenario", {
   expect_within_range(
     suppressWarnings({
-      ind_10(
+      ind_2(
         data = mock_data_core,
+        cpv = cod_cpv,
+        contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        id_variants = id_variante,
+        stat_unit = provincia,
         emergency_name = "terremoto aquila"
       )
     }),
@@ -196,11 +200,12 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 
 test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario", {
   expect_equal(
-    ind_10(
+    ind_2(
       data = mock_data_core,
+      cpv = cod_cpv,
+      contract_value = importo_complessivo_gara,
       publication_date = data_pubblicazione,
       stat_unit = cf_amministrazione_appaltante,
-      id_variants = id_variante,
       emergency_name = "terremoto ischia"
     ) %>% distinct(emergency_name, emergency_id) %>% flatten(),
     list(

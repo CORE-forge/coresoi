@@ -15,7 +15,7 @@
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
 #'     cpv = cod_cpv,
-#'     emergency_name = "coronavirus"
+#'     emergency_name = "coronavirus",
 #'     cpv_division = "33",
 #'     stat_unit = provincia
 #'   )
@@ -33,15 +33,15 @@
 #' @importFrom forcats as_factor
 #' @importFrom stringr str_sub
 ind_6 <- function(data,
-                      publication_date,
-                      cpv,
-                      emergency_name,
-                      cpv_division = "33",
-                      stat_unit) {
+                  publication_date,
+                  cpv,
+                  emergency_name,
+                  cpv_division = "33",
+                  stat_unit) {
   indicator_id <- 6
   indicator_name <- "Communication default across the crisis"
   aggregation_type <- quo_expr(enquo(stat_unit))
-  emergency_scenario = emergency_dates(emergency_name)
+  emergency_scenario <- emergency_dates(emergency_name)
 
   prel <- data %>%
     dplyr::mutate(

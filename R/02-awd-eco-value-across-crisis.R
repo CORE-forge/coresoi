@@ -27,7 +27,7 @@ compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "g
 #'     cpv = cod_cpv,
 #'     contract_value = importo_complessivo_gara,
 #'     publication_date = data_pubblicazione,
-#'     stat_unit = provincia
+#'     stat_unit = provincia,
 #'     emergency_name = "coronavirus"
 #'   )
 #' }
@@ -54,7 +54,7 @@ ind_2 <- function(data,
   indicator_id <- 2
   indicator_name <- "Awarded economic value across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
-  emergency_scenario = emergency_dates(emergency_name)
+  emergency_scenario <- emergency_dates(emergency_name)
 
   data %>%
     dplyr::mutate(
