@@ -2,7 +2,7 @@
 #' @description  compute Wilcox test pvalue
 #' @keywords internal
 #' @export
-compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "greater") {
+compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "less") {
   data %>%
     wilcox.test(var ~ group, data = ., exact = exact, alternative = alternative) %>%
     return()
@@ -16,6 +16,7 @@ compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "g
 #' @param cpv Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract
 #' @param contract_value the value of the contract
 #' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
+#' @param cpv_divison CPV i.e. Common Procurement Vocabulary first two digits
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @return indicator schema as from `generate_indicator_schema()` rows determined by aggregation level and `indicator_value` based on statistical test performed in `ind_2`
 #' @examples
@@ -28,6 +29,7 @@ compute_wilcox_test <- function(data, var, group, exact = TRUE, alternative = "g
 #'     contract_value = importo_complessivo_gara,
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = provincia,
+#'     cpv_divison = 33,
 #'     emergency_name = "coronavirus"
 #'   )
 #' }
@@ -50,6 +52,7 @@ ind_2 <- function(data,
                   contract_value,
                   publication_date,
                   emergency_name,
+                  cpv_divison,
                   stat_unit) {
   indicator_id <- 2
   indicator_name <- "Awarded economic value across the crisis"
@@ -60,9 +63,10 @@ ind_2 <- function(data,
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
-      flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == "33", 1, 0)
+      flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == as.character(cpv_divison), 1, 0)
     ) %>%
     tidyr::drop_na({{ contract_value }}) %>%
+    dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::filter(all(c("pre", "post") %in% prepost)) %>%
     dplyr::ungroup(prepost) %>%
