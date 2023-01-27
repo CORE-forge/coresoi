@@ -5,6 +5,7 @@
 #' @param cpv Common Procurement Vocabulary.The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract.
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @param cpv_division initial two digits from cpv, Default: '33'
+#' @param award_col column indentifying id for that contract award
 #' @param stat_unit statistical unit of measurement and stat_uniting
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
@@ -17,6 +18,7 @@
 #'     cpv = cod_cpv,
 #'     emergency_name = "coronavirus",
 #'     cpv_division = "33",
+#'     award_col = id_aggiudicazione,
 #'     stat_unit = provincia
 #'   )
 #' }
@@ -37,6 +39,7 @@ ind_6 <- function(data,
                   cpv,
                   emergency_name,
                   cpv_division = "33",
+                  award_col,
                   stat_unit) {
   indicator_id <- 6
   indicator_name <- "Communication default across the crisis"
@@ -47,10 +50,14 @@ ind_6 <- function(data,
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
-      flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == cpv_division, 1, 0)
+      ## leave business logic
+      flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == cpv_division, 1, 0),
+      flag_missing = dplyr::if_else(is.na({{ award_col }}), 1, 0)
     ) %>%
     dplyr::group_by({{ stat_unit }}, prepost) %>%
-    dplyr::summarise(prop_no_communic = 1 - mean(flagdivision))
+    dplyr::summarise(
+      prop_no_communic = mean(flag_missing)
+      )
 
   gr <- data %>%
     dplyr::distinct({{ stat_unit }}) %>%
