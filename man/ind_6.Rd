@@ -40,7 +40,7 @@ if (interactive()) {
     data = mock_data_core,
     publication_date = data_pubblicazione,
     cpv = cod_cpv,
-    emergency_name = "coronavirus"
+    emergency_name = "coronavirus",
     cpv_division = "33",
     stat_unit = provincia
   )

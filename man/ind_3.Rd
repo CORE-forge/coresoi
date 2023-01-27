@@ -2,7 +2,7 @@
 % Please edit documentation in R/03-ec-dev-across-crisis.R
 \name{ind_3}
 \alias{ind_3}
-\title{Economic deviation across the crisis indicator}
+\title{Compute Economic deviation across the crisis indicator}
 \usage{
 ind_3(
   data,
@@ -30,7 +30,7 @@ ind_3(
 indicator schema as from \code{generate_indicator_schema}
 }
 \description{
-The difference between the sum foreseen in the contract and the actual payment by the C.A. (ita SA stazione Appaltante)
+The difference between the sum foreseen in the contract and the actual payment by the C.A. ( \emph{ita} SA stazione Appaltante)
 }
 \details{
 DETAILS

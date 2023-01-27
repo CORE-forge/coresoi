@@ -32,7 +32,7 @@ if (interactive()) {
     cpv = cod_cpv,
     contract_value = importo_complessivo_gara,
     publication_date = data_pubblicazione,
-    stat_unit = provincia
+    stat_unit = provincia,
     emergency_name = "coronavirus"
   )
 }
