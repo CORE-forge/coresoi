@@ -30,11 +30,11 @@
 #' @importFrom dplyr mutate if_else group_by summarise n filter rowwise select contains rename
 #' @importFrom forcats as_factor
 #' @importFrom stats prop.test
-ind_10 <- function(data,
-                   publication_date,
-                   stat_unit,
-                   id_variants,
-                   outbreak_starting_date = lubridate::ymd("2017-06-30")) {
+ind_8 <- function(data,
+                  publication_date,
+                  stat_unit,
+                  id_variants,
+                  outbreak_starting_date = lubridate::ymd("2017-06-30")) {
   indicator_id <- 8
   indicator_name <- "Pre-existing contracts modified after the crisis"
   aggregation_type <- quo_expr(enquo(stat_unit))
