@@ -200,6 +200,7 @@ test_that("check if `indicator_value` lays inbetween min/max values (different a
 
 test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario", {
   expect_equal(
+    suppressWarnings({
     ind_2(
       data = mock_data_core,
       cpv = cod_cpv,
@@ -207,7 +208,8 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
       publication_date = data_pubblicazione,
       stat_unit = cf_amministrazione_appaltante,
       emergency_name = "terremoto ischia"
-    ) %>% distinct(emergency_name, emergency_id) %>% flatten(),
+    ) %>% distinct(emergency_name, emergency_id) %>% flatten()
+    }),
     list(
       emergency_id = 3,
       emergency_name = "Terremoto Ischia"
