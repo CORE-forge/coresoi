@@ -1,4 +1,4 @@
-# coresoi (development version)
+# coresoi 0.1.1
 
 # coresoi 0.1.0
 
