@@ -29,7 +29,7 @@
 #' @importFrom dplyr filter mutate if_else group_by summarise n count
 #' @importFrom forcats as_factor
 #' @importFrom DescTools Gini
-#' @importFrom tydir pivot_wider
+#' @importFrom tidyr pivot_wider
 ind_5 <- function(data,
                   stat_unit,
                   publication_date,
