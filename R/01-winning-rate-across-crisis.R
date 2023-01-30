@@ -5,9 +5,22 @@
 compute_fisher <- function(a, b, c, d) {
   data <- matrix(c(a, b, c, d), ncol = 2)
   c(
-    p_value = round(fisher.test(data)$p.value, 3),
-    fisher_estimate = round(fisher.test(data)$estimate, 3)
+    p_value = round(fisher.test(data, alternative = "greater")$p.value, 3),
+    fisher_estimate = round(fisher.test(data, alternative = "greater")$estimate, 3)
   )
+}
+
+#' compute Barnard_2 test in dplyr pipeline in other fashion
+#' @description  compute Barnard test pvalue and estimate in piped expression
+#' @keywords internal
+#' @export
+compute_barnard <- function(a, b, c, d) {
+  data <- matrix(c(a, b, c, d), ncol = 2)
+  value <- suppressWarnings({
+    round(DescTools::BarnardTest(data, alternative = "greater", method = "boschloo")$p.value, 3)
+  })
+  print(value)
+  value
 }
 
 
@@ -49,11 +62,54 @@ ind_1 <- function(data,
                   publication_date,
                   cpv,
                   emergency_name,
-                  stat_unit) {
+                  stat_unit,
+                  barnard = FALSE) {
   indicator_id <- 1
   indicator_name <- "Winning rate across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
+
+  if (barnard) {
+    data %>%
+      dplyr::mutate(
+        prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
+        prepost = forcats::as_factor(prepost),
+        flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == "33", 1, 0)
+      ) %>%
+      dplyr::group_by({{ stat_unit }}) %>%
+      dplyr::summarise(
+        n = dplyr::n(),
+        n_11 = sum(flagdivision == 0 & prepost == "pre"),
+        n_12 = sum(flagdivision == 1 & prepost == "pre"),
+        n_21 = sum(flagdivision == 0 & prepost == "post"),
+        n_22 = sum(flagdivision == 1 & prepost == "post"),
+        m_1 = n_11 + n_12,
+        m_2 = n_21 + n_22,
+        p_1 = n_12 / m_1,
+        p_2 = n_22 / m_2,
+        diff_p2_p1 = p_2 - p_1
+      ) %>%
+      dplyr::filter(!is.na(p_1) & !is.na(p_2)) %>%
+      dplyr::rowwise() %>%
+      dplyr::mutate(
+        ## fisher
+        barnard_test = compute_barnard(n_22, n_12, n_21, n_11),
+      ) %>%
+      dplyr::select({{ stat_unit }}, dplyr::contains("barnard")) %>%
+      generate_indicator_schema(
+        indicator_id = indicator_id,
+        indicator_name = indicator_name,
+        barnard_test,
+        {{ stat_unit }},
+        aggregation_type = as_string(aggregation_type),
+        emergency = emergency_scenario
+      ) %>%
+      dplyr::rename(
+        indicator_value = barnard_test,
+        aggregation_name = {{ stat_unit }}
+      ) %>%
+      return()
+  } else {
 
   data %>%
     dplyr::mutate(
@@ -77,25 +133,11 @@ ind_1 <- function(data,
     dplyr::filter(!is.na(p_1) & !is.na(p_2)) %>%
     dplyr::rowwise() %>%
     dplyr::mutate(
-      # prop_test: Simple asymptotic method (no correction)
-      prop_test = stats::prop.test(
-        x = c(n_22, n_12),
-        n = c(m_2, m_1),
-        correct = FALSE,
-        alternative = "greater"
-      )$p.value %>% suppressWarnings(),
-      # correct_prop_test: Simple asymptotic method (with correction)
-      correct_prop_test = stats::prop.test(
-        x = c(n_22, n_12),
-        n = c(m_2, m_1),
-        correct = TRUE,
-        alternative = "greater"
-      )$p.value %>% suppressWarnings(),
+      ## fisher
       fisher_test = compute_fisher(n_11, n_12, n_21, n_22)[[1]],
-      fisher_estimate = compute_fisher(n_11, n_12, n_21, n_22)[[2]],
-      fisher_test = round(fisher_test, 3)
-    ) %>%
-    dplyr::select({{ stat_unit }}, dplyr::contains("prop"), dplyr::contains("fisher")) %>%
+      fisher_estimate = compute_fisher(n_11, n_12, n_21, n_22)[[2]]
+      ) %>%
+    dplyr::select({{ stat_unit }}, dplyr::contains("fisher")) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
@@ -109,4 +151,5 @@ ind_1 <- function(data,
       aggregation_name = {{ stat_unit }}
     ) %>%
     return()
+  }
 }
