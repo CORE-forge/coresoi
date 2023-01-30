@@ -80,7 +80,7 @@ test_that("check `ind_5()` are 12 columns as according to `generate_indicator_sc
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         winners = denominazione,
-        emergency_name  = "Coronavirus"
+        emergency_name = "Coronavirus"
       )
     }), 12
   )
@@ -102,7 +102,7 @@ test_that("check column names are as according to pre determined schema", {
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         winners = denominazione,
-        emergency_name  = "Coronavirus"
+        emergency_name = "Coronavirus"
       ))
     }), col_names
   )
@@ -118,7 +118,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         publication_date = data_pubblicazione,
         stat_unit = provincia,
         winners = denominazione,
-        emergency_name  = "Coronavirus"
+        emergency_name = "Coronavirus"
       )
     }),
     min = 0, max = 10
@@ -134,7 +134,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         winners = denominazione,
-        emergency_name  = "Coronavirus"
+        emergency_name = "Coronavirus"
       )
     }),
     n = 239 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati

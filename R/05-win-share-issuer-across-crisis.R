@@ -34,8 +34,7 @@ ind_5 <- function(data,
                   stat_unit,
                   publication_date,
                   winners,
-                  emergency_name
-) {
+                  emergency_name) {
   indicator_id <- 5
   indicator_name <- "Winner's share of issuer's contract across the crisis"
   aggregation_type <- rlang::quo_expr(enquo(stat_unit))
@@ -44,10 +43,11 @@ ind_5 <- function(data,
   data %>%
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
-                               true = "post", false = "pre"),
+        true = "post", false = "pre"
+      ),
       prepost = forcats::as_factor(prepost),
     ) %>%
-    dplyr::count( {{ stat_unit }} , {{ winners }} , prepost) %>%
+    dplyr::count({{ stat_unit }}, {{ winners }}, prepost) %>%
     dplyr::group_by({{ stat_unit }}, prepost) %>%
     dplyr::summarise(
       gini = DescTools::Gini(n)
