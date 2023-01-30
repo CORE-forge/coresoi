@@ -34,7 +34,8 @@ if (interactive()) {
     publication_date = data_pubblicazione,
     cpv = cod_cpv,
     stat_unit = provincia,
-    emergency_name = "coronavirus"
+    emergency_name = "coronavirus",
+    barnard = FALSE
   )
 }
 }
