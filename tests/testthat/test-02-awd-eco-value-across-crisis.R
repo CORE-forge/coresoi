@@ -59,7 +59,7 @@ test_that("check `ind_2()` are 12 columns as according to `generate_indicator_sc
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        cpv_divison =  33,
+        cpv_divison = 33,
         emergency_name = "coronavirus"
       )
     }), 12
@@ -83,7 +83,7 @@ test_that("check column names are as according to pre determined schema", {
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        cpv_divison =  33,
+        cpv_divison = 33,
         emergency_name = "coronavirus"
       ))
     }), col_names
@@ -101,7 +101,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        cpv_divison =  33,
+        cpv_divison = 33,
         emergency_name = "coronavirus"
       )
     }),
@@ -121,7 +121,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        cpv_divison =  33,
+        cpv_divison = 33,
         emergency_name = "coronavirus"
       )
     }),
@@ -139,7 +139,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        cpv_divison =  33,
+        cpv_divison = 33,
         emergency_name = "coronavirus"
       )
     }),
@@ -158,7 +158,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        cpv_divison =  33,
+        cpv_divison = 33,
         emergency_name = "terremoto aquila"
       )
     }),
@@ -177,7 +177,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        cpv_divison =  33,
+        cpv_divison = 33,
         emergency_name = "terremoto aquila"
       )
     }),
@@ -196,7 +196,7 @@ test_that("check if `indicator_value` lays inbetween min/max values (different a
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        cpv_divison =  33,
+        cpv_divison = 33,
         emergency_name = "terremoto aquila"
       )
     }),
@@ -209,15 +209,17 @@ test_that("check if `indicator_value` lays inbetween min/max values (different a
 test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario", {
   expect_equal(
     suppressWarnings({
-    ind_2(
-      data = mock_data_core,
-      cpv = cod_cpv,
-      contract_value = importo_complessivo_gara,
-      publication_date = data_pubblicazione,
-      stat_unit = cf_amministrazione_appaltante,
-      cpv_divison =  33,
-      emergency_name = "terremoto ischia"
-    ) %>% distinct(emergency_name, emergency_id) %>% flatten()
+      ind_2(
+        data = mock_data_core,
+        cpv = cod_cpv,
+        contract_value = importo_complessivo_gara,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        cpv_divison = 33,
+        emergency_name = "terremoto ischia"
+      ) %>%
+        distinct(emergency_name, emergency_id) %>%
+        flatten()
     }),
     list(
       emergency_id = 3,

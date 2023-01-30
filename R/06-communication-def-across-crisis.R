@@ -57,7 +57,7 @@ ind_6 <- function(data,
     dplyr::group_by({{ stat_unit }}, prepost) %>%
     dplyr::summarise(
       prop_no_communic = mean(flag_missing)
-      )
+    )
 
   gr <- data %>%
     dplyr::distinct({{ stat_unit }}) %>%

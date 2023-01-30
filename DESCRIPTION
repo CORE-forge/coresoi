@@ -25,6 +25,7 @@ LazyData: true
 Imports: 
     cli,
     dplyr,
+    Exact,
     forcats,
     glue,
     lifecycle,

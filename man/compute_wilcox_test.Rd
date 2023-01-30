@@ -4,7 +4,7 @@
 \alias{compute_wilcox_test}
 \title{compute Wilcox test in dplyr}
 \usage{
-compute_wilcox_test(data, var, group, exact = TRUE, alternative = "greater")
+compute_wilcox_test(data, var, group, exact = TRUE, alternative = "less")
 }
 \description{
 compute Wilcox test pvalue

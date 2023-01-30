@@ -4,7 +4,7 @@
 \alias{ind_1}
 \title{Compute Winning rate across the crisis indicator}
 \usage{
-ind_1(data, publication_date, cpv, emergency_name, stat_unit)
+ind_1(data, publication_date, cpv, emergency_name, stat_unit, barnard = FALSE)
 }
 \arguments{
 \item{data}{bndcp data}
