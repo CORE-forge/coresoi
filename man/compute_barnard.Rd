@@ -2,9 +2,9 @@
 % Please edit documentation in R/01-winning-rate-across-crisis.R
 \name{compute_barnard}
 \alias{compute_barnard}
-\title{compute Barnard_2 test in dplyr pipeline in other fashion}
+\title{compute Barnard test https://en.wikipedia.org/wiki/Barnard\%27s_test}
 \usage{
-compute_barnard(a, b, c, d)
+compute_barnard(a, b, c, d, method = "boschloo")
 }
 \description{
 compute Barnard test pvalue and estimate in piped expression

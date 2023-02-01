@@ -3,6 +3,7 @@
 export("%>%")
 export(compute_barnard)
 export(compute_fisher)
+export(compute_prop_test)
 export(compute_wilcox_test)
 export(emergency_dates)
 export(generate_indicator_schema)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/01-winning-rate-across-crisis.R
 \name{compute_fisher}
 \alias{compute_fisher}
-\title{compute fisher test in dplyr pipeline}
+\title{compute Fisher-exact test https://en.wikipedia.org/wiki/Fisher\%27s_exact_test}
 \usage{
 compute_fisher(a, b, c, d)
 }

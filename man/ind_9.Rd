@@ -47,14 +47,14 @@ if (interactive()) {
   ind_9(
     data = mock_data_core,
     publication_date = data_pubblicazione,
-    exp_start = data_esecutivita_contratto
+    exp_start = data_esecutivita_contratto,
     exp_end = data_termine_contrattuale,
     eff_end = data_effettiva_ultimazione,
     eff_start = data_stipula_contratto,
     stat_unit = cf_amministrazione_appaltante,
     emergency_name = "coronavirus"
   )
-  }
+}
 }
 }
 \seealso{
