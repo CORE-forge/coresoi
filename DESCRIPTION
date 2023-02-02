@@ -24,7 +24,9 @@ Depends:
 LazyData: true
 Imports: 
     cli,
+    DescTools,
     dplyr,
+    Exact,
     forcats,
     glue,
     lifecycle,

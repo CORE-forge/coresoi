@@ -1,3 +1,3 @@
-ind_9 <- function() {
+ind_9 <- function(variables) {
 
 }

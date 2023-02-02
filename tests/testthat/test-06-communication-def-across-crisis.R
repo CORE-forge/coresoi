@@ -52,6 +52,7 @@ test_that("check `ind_6()` are 12 columns as according to `generate_indicator_sc
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = provincia,
+        award_col = id_aggiudicazione,
         emergency_name = "coronavirus"
       )
     }), 12
@@ -75,6 +76,7 @@ test_that("check column names are as according to pre determined schema", {
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = provincia,
+        award_col = id_aggiudicazione,
         emergency_name = "coronavirus"
       ))
     }), col_names
@@ -92,6 +94,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = provincia,
+        award_col = id_aggiudicazione,
         emergency_name = "coronavirus"
       )
     }),
@@ -111,6 +114,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = provincia,
+        award_col = id_aggiudicazione,
         emergency_name = "coronavirus"
       )
     }),
@@ -128,6 +132,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = cf_amministrazione_appaltante,
+        award_col = id_aggiudicazione,
         emergency_name = "coronavirus"
       )
     }),
@@ -147,6 +152,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = cf_amministrazione_appaltante,
+        award_col = id_aggiudicazione,
         emergency_name = "terremoto aquila"
       )
     ),
@@ -165,6 +171,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = cf_amministrazione_appaltante,
+        award_col = id_aggiudicazione,
         emergency_name = "terremoto aquila"
       )
     ),
@@ -183,12 +190,14 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
         publication_date = data_pubblicazione,
         cpv_division = "33",
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "terremoto ischia"
+        emergency_name = "terremoto ischia",
+        award_col = id_aggiudicazione
       ) %>% distinct(emergency_name, emergency_id) %>% flatten()
     ),
     list(
-      emergency_id = 3,
-      emergency_name = "Terremoto Ischia"
+      emergency_name = "Terremoto Ischia",
+      emergency_id = 3
+
     )
   )
 })

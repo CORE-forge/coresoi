@@ -10,6 +10,7 @@ ind_6(
   cpv,
   emergency_name,
   cpv_division = "33",
+  award_col,
   stat_unit
 )
 }
@@ -23,6 +24,8 @@ ind_6(
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{cpv_division}{initial two digits from cpv, Default: '33'}
+
+\item{award_col}{column indentifying id for that contract award}
 
 \item{stat_unit}{statistical unit of measurement and stat_uniting}
 }
@@ -42,6 +45,7 @@ if (interactive()) {
     cpv = cod_cpv,
     emergency_name = "coronavirus",
     cpv_division = "33",
+    award_col = id_aggiudicazione,
     stat_unit = provincia
   )
 }

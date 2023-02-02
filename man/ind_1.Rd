@@ -4,7 +4,7 @@
 \alias{ind_1}
 \title{Compute Winning rate across the crisis indicator}
 \usage{
-ind_1(data, publication_date, cpv, emergency_name, stat_unit)
+ind_1(data, publication_date, cpv, emergency_name, stat_unit, test_type)
 }
 \arguments{
 \item{data}{bndcp data}
@@ -16,6 +16,8 @@ ind_1(data, publication_date, cpv, emergency_name, stat_unit)
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
+
+\item{test_type}{character vector identifying the type of test you want to execute, alternatives are c("barnard", "fisher", "z-test")}
 
 \item{divison}{first two digits in cpv code identifying the division, for more info check https://simap.ted.europa.eu/it/cpv}
 }
@@ -33,8 +35,9 @@ if (interactive()) {
     data = mock_data_core,
     publication_date = data_pubblicazione,
     cpv = cod_cpv,
-    stat_unit = provincia,
-    emergency_name = "coronavirus"
+    stat_unit = cf_amministrazione_appaltante,
+    emergency_name = "coronavirus",
+    test_type = "fisher"
   )
 }
 }

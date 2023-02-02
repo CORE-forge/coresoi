@@ -52,7 +52,7 @@ ind_3(
 
 ```
 
-The output from `ind_3` is a schema which shows ...
+The output from `ind_3` is a schema which shows 
 
 
 ... we may want also to be interested in...

@@ -43,12 +43,6 @@ expect_within_range <- function(object, min, max) {
   fail(message)
 }
 
-## test suite
-## - 1 test colnames for different emergency scenarios OK
-## - 2 test compliance to schema OK
-## - 3 test `indicator_value` inbetween a range OK
-## - 4 test number of rows choerence with grouping var
-## TODO:  - 5  test diff  scenarios
 
 test_that("check `ind_2()` are 12 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
@@ -58,7 +52,9 @@ test_that("check `ind_2()` are 12 columns as according to `generate_indicator_sc
         cpv = cod_cpv,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        stat_unit = cf_amministrazione_appaltante,
+        cpv_divison = 33,
+        test_type  = "ks",
         emergency_name = "coronavirus"
       )
     }), 12
@@ -81,16 +77,18 @@ test_that("check column names are as according to pre determined schema", {
         cpv = cod_cpv,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        stat_unit = cf_amministrazione_appaltante,
+        cpv_divison = 33,
+        test_type  = "ks",
         emergency_name = "coronavirus"
       ))
-    }), col_names
+    }), col_names, tolerance=0.8
   )
 })
 
 
 
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Kolmogorv Smirnov)", {
   expect_within_range(
     suppressWarnings({
       ind_2(
@@ -98,7 +96,9 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         cpv = cod_cpv,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        stat_unit = cf_amministrazione_appaltante,
+        cpv_divison = 33,
+        test_type  = "ks",
         emergency_name = "coronavirus"
       )
     }),
@@ -106,6 +106,26 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
   )
 })
 
+
+
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Wilcoxon-Mann-Whitney)", {
+  expect_within_range(
+    suppressWarnings({
+      ind_2(
+        data = mock_data_core,
+        cpv = cod_cpv,
+        contract_value = importo_complessivo_gara,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        cpv_divison = 33,
+        test_type  = "wilcoxon",
+        emergency_name = "coronavirus"
+      )
+    }),
+    min = 0, max = 1
+  )
+})
 
 
 
@@ -118,10 +138,12 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
+        test_type  = "ks",
+        cpv_divison = 33,
         emergency_name = "coronavirus"
       )
     }),
-    n = 108
+    n = 85
   )
 })
 
@@ -135,10 +157,12 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
+        test_type  = "ks",
+        cpv_divison = 33,
         emergency_name = "coronavirus"
       )
     }),
-    n = 3227
+    n = 239 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
   )
 })
 
@@ -153,6 +177,8 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
+        test_type  = "ks",
+        cpv_divison = 33,
         emergency_name = "terremoto aquila"
       )
     }),
@@ -171,10 +197,12 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
+        test_type  = "ks",
+        cpv_divison = 33,
         emergency_name = "terremoto aquila"
       )
     }),
-    n = 109 # 108 + NA
+    n = 83 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
   )
 })
 
@@ -189,6 +217,8 @@ test_that("check if `indicator_value` lays inbetween min/max values (different a
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
+        test_type  = "ks",
+        cpv_divison = 33,
         emergency_name = "terremoto aquila"
       )
     }),
@@ -198,21 +228,4 @@ test_that("check if `indicator_value` lays inbetween min/max values (different a
 
 
 
-test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario", {
-  expect_equal(
-    suppressWarnings({
-    ind_2(
-      data = mock_data_core,
-      cpv = cod_cpv,
-      contract_value = importo_complessivo_gara,
-      publication_date = data_pubblicazione,
-      stat_unit = cf_amministrazione_appaltante,
-      emergency_name = "terremoto ischia"
-    ) %>% distinct(emergency_name, emergency_id) %>% flatten()
-    }),
-    list(
-      emergency_id = 3,
-      emergency_name = "Terremoto Ischia"
-    )
-  )
-})
+

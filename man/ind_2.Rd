@@ -4,7 +4,16 @@
 \alias{ind_2}
 \title{Compute Awarded economic value across the crisis indicator}
 \usage{
-ind_2(data, cpv, contract_value, publication_date, emergency_name, stat_unit)
+ind_2(
+  data,
+  cpv,
+  contract_value,
+  publication_date,
+  emergency_name,
+  cpv_divison,
+  stat_unit,
+  test_type
+)
 }
 \arguments{
 \item{data}{test bndcp data}
@@ -15,7 +24,11 @@ ind_2(data, cpv, contract_value, publication_date, emergency_name, stat_unit)
 
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
+\item{cpv_divison}{CPV i.e. Common Procurement Vocabulary first two digits}
+
 \item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
+
+\item{test_type}{character vector identifying the type of test you want to execute, alternatives are c("ks", "wilcoxon")}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema()} rows determined by aggregation level and \code{indicator_value} based on statistical test performed in \code{ind_2}
@@ -33,6 +46,7 @@ if (interactive()) {
     contract_value = importo_complessivo_gara,
     publication_date = data_pubblicazione,
     stat_unit = provincia,
+    cpv_divison = 33,
     emergency_name = "coronavirus"
   )
 }
