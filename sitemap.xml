@@ -28,10 +28,19 @@
     <loc>https://core-forge.github.io/coresoi/news/index.html</loc>
   </url>
   <url>
+    <loc>https://core-forge.github.io/coresoi/reference/compute_barnard.html</loc>
+  </url>
+  <url>
     <loc>https://core-forge.github.io/coresoi/reference/compute_fisher.html</loc>
   </url>
   <url>
-    <loc>https://core-forge.github.io/coresoi/reference/compute_wilcox_test.html</loc>
+    <loc>https://core-forge.github.io/coresoi/reference/compute_kolmogorov_smirnoff.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/compute_prop_test.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/compute_wilcox.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/coresoi-package.html</loc>
@@ -50,6 +59,12 @@
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/ind_3.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/ind_4.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/ind_5.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/ind_6.html</loc>
