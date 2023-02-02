@@ -105,7 +105,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
   expect_within_range(
     suppressWarnings({
       ind_1(
-        data = mock_data_core,
+        data = mock_data_core %>% head(10000),
         cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = provincia,

@@ -52,7 +52,8 @@ ind_3 <- function(data,
       prepost_count = dplyr::n(),
       ind_3_mean = mean(ratio, na.rm = TRUE),
       ind_3_median = median(ratio, na.rm = TRUE),
-      ind_3_mean = round(ind_3_mean, 3)
+      ind_3_mean = round(ind_3_mean, 3),
+      ind_3 = compute_kolmogorov_smirnoff(ratio ~ prepost)
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,

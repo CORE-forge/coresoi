@@ -74,7 +74,7 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 #' @param cpv Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @param divison first two digits in cpv code identifying the division, for more info check https://simap.ted.europa.eu/it/cpv
-#' @param test_type character vector identifying the type of test you want to, alternatives are c("barnard", "fisher", "z-test")
+#' @param test_type character vector identifying the type of test you want to execute, alternatives are c("barnard", "fisher", "z-test")
 #' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
