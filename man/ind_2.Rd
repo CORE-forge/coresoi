@@ -11,7 +11,8 @@ ind_2(
   publication_date,
   emergency_name,
   cpv_divison,
-  stat_unit
+  stat_unit,
+  test_type
 )
 }
 \arguments{
@@ -26,6 +27,8 @@ ind_2(
 \item{cpv_divison}{CPV i.e. Common Procurement Vocabulary first two digits}
 
 \item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
+
+\item{test_type}{character vector identifying the type of test you want to execute, alternatives are c("ks", "wilcoxon")}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema()} rows determined by aggregation level and \code{indicator_value} based on statistical test performed in \code{ind_2}

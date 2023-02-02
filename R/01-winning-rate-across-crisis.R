@@ -3,8 +3,7 @@
 #' @keywords internal
 #' @export
 compute_fisher <- function(a, b, c, d) {
-
-  if (any(is.na(list(a,b,c,d)))) {
+  if (any(is.na(list(a, b, c, d)))) {
     stop("All inputs must be non-missing")
   }
 
@@ -113,7 +112,6 @@ ind_1 <- function(data,
   indicator_name <- "Winning rate across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-
 
   test <- function(a, b, c, d, test_type) {
     switch(test_type,

@@ -3,7 +3,7 @@
 #' @keywords internal
 #' @export
 compute_wilcox <- function(data, var, group, exact = TRUE, alternative = "greater") {
-  test_res =  data %>%
+  test_res <- data %>%
     wilcox.test(var ~ group, data = ., exact = exact, alternative = alternative)
   c(
     p_value = round(test_res$p.value, 3),
@@ -16,7 +16,7 @@ compute_wilcox <- function(data, var, group, exact = TRUE, alternative = "greate
 #' @keywords internal
 #' @export
 compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") {
-  test_res = data %>%
+  test_res <- data %>%
     ks.test(var ~ group, data = ., alternative = alternative)
   c(
     p_value = round(test_res$p.value, 3),
@@ -77,15 +77,17 @@ ind_2 <- function(data,
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
 
+
+
   test <- function(a, b, c, d, test_type) {
     switch(test_type,
-           "ks" = {
-             compute_kolmogorov_smirnoff(data, var)
-           },
-           "wilcoxon" = {
-             compute_wilcox(data, var, group)
-           },
-           stop(paste0("No handler for ", test_type))
+      "ks" = {
+        compute_kolmogorov_smirnoff(data, var)
+      },
+      "wilcoxon" = {
+        compute_wilcox(data, var, group)
+      },
+      stop(paste0("No handler for ", test_type))
     )
   }
 

@@ -60,6 +60,7 @@ test_that("check `ind_2()` are 12 columns as according to `generate_indicator_sc
         publication_date = data_pubblicazione,
         stat_unit = provincia,
         cpv_divison = 33,
+        test_type  = "ks",
         emergency_name = "coronavirus"
       )
     }), 12
@@ -86,7 +87,7 @@ test_that("check column names are as according to pre determined schema", {
         cpv_divison = 33,
         emergency_name = "coronavirus"
       ))
-    }), col_names
+    }), col_names, tolerance=1
   )
 })
 

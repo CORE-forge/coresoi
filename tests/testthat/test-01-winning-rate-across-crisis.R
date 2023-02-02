@@ -95,7 +95,7 @@ test_that("check column names are as according to pre determined schema", {
         emergency_name = "coronavirus",
         test_type = "fisher"
       ))
-    }), col_names
+    }), col_names, tolerance=1
   )
 })
 

@@ -17,7 +17,7 @@ ind_1(data, publication_date, cpv, emergency_name, stat_unit, test_type)
 
 \item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
 
-\item{test_type}{character vector identifying the type of test you want to, alternatives are c("barnard", "fisher", "z-test")}
+\item{test_type}{character vector identifying the type of test you want to execute, alternatives are c("barnard", "fisher", "z-test")}
 
 \item{divison}{first two digits in cpv code identifying the division, for more info check https://simap.ted.europa.eu/it/cpv}
 }
