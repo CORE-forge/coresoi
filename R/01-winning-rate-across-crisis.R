@@ -3,17 +3,16 @@
 #' @keywords internal
 #' @export
 compute_fisher <- function(a, b, c, d) {
-  compute_fisher <- function(a, b, c, d) {
-    if (any(is.na(list(a, b, c, d)))) {
-      stop("All inputs must be non-missing")
-    }
 
-    data <- matrix(c(a, b, c, d), ncol = 2)
-    c(
-      p_value = round(fisher.test(data, alternative = "greater")$p.value, 3),
-      estimate = round(fisher.test(data, alternative = "greater")$estimate, 3)
-    )
+  if (any(is.na(list(a,b,c,d)))) {
+    stop("All inputs must be non-missing")
   }
+
+  data <- matrix(c(a, b, c, d), ncol = 2)
+  c(
+    p_value = round(fisher.test(data, alternative = "greater")$p.value, 3),
+    estimate = round(fisher.test(data, alternative = "greater")$estimate, 3)
+  )
 }
 
 #' compute Barnard test https://en.wikipedia.org/wiki/Barnard%27s_test
@@ -28,10 +27,10 @@ compute_barnard <- function(a, b, c, d, method = "boschloo") {
   data <- matrix(c(a, b, c, d), ncol = 2)
   c(
     p_value = suppressWarnings({
-      round(DescTools::BarnardTest(data, alternative = "greater", method = method)$p.value, 3)
+      round(DescTools::BarnardTest(data, alternative = "greater", method = "boschloo")$p.value, 3)
     }),
     estimate = suppressWarnings({
-      round(DescTools::BarnardTest(data, alternative = "greater", method = method)$estimate, 3)
+      round(DescTools::BarnardTest(data, alternative = "greater", method = "boschloo")$estimate, 3)
     })
   )
 }
@@ -119,7 +118,7 @@ ind_1 <- function(data,
   test <- function(a, b, c, d, test_type) {
     switch(test_type,
       "barnard" = {
-        compute_barnard(a, b, c, d)
+        compute_barnard(d, b, c, a)
       },
       "fisher" = {
         compute_fisher(a, b, c, d)

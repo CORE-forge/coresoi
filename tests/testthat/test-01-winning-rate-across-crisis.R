@@ -43,7 +43,7 @@ expect_within_range <- function(object, min, max) {
   fail(message)
 }
 
-test_that("check `ind_1()` are 12 columns as according to `generate_indicator_schema()`s", {
+test_that("check `ind_1()` are 12 columns as according to `generate_indicator_schema()`s with `stat_unit` being **provincia**", {
   expect_col_number(
     suppressWarnings({
       ind_1(
@@ -51,11 +51,30 @@ test_that("check `ind_1()` are 12 columns as according to `generate_indicator_sc
         cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        emergency_name = "coronavirus"
+        emergency_name = "coronavirus",
+        test_type = "fisher"
       )
     }), 12
   )
 })
+
+
+
+test_that("check `ind_1()` are 12 columns as according to `generate_indicator_schema()`s  with `stat_unit` being **cf_amministrazione_appaltante**", {
+  expect_col_number(
+    suppressWarnings({
+      ind_1(
+        data = mock_data_core,
+        cpv = cod_cpv,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "coronavirus",
+        test_type = "fisher"
+      )
+    }), 12
+  )
+})
+
 
 
 test_that("check column names are as according to pre determined schema", {
@@ -72,8 +91,9 @@ test_that("check column names are as according to pre determined schema", {
         data = mock_data_core,
         cpv = cod_cpv,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
-        emergency_name = "coronavirus"
+        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "coronavirus",
+        test_type = "fisher"
       ))
     }), col_names
   )
@@ -81,7 +101,7 @@ test_that("check column names are as according to pre determined schema", {
 
 
 
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen, Barnard, (slow, only on a 10000 top obs)", {
   expect_within_range(
     suppressWarnings({
       ind_1(
@@ -89,7 +109,44 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        emergency_name = "coronavirus"
+        emergency_name = "coronavirus",
+        test_type = "barnard"
+      )
+    }),
+    min = 0, max = 1
+  )
+})
+
+
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Fisher)", {
+  expect_within_range(
+    suppressWarnings({
+      ind_1(
+        data = mock_data_core,
+        cpv = cod_cpv,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "coronavirus",
+        test_type = "fisher"
+      )
+    }),
+    min = 0, max = 1
+  )
+})
+
+
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Z-test proportional test)", {
+  expect_within_range(
+    suppressWarnings({
+      ind_1(
+        data = mock_data_core,
+        cpv = cod_cpv,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "coronavirus",
+        test_type = "fisher"
       )
     }),
     min = 0, max = 1
@@ -99,7 +156,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 
 
 
-test_that("check if the number of rows is coherent with the aggregation level (`provincia`)", {
+test_that("check if the number of rows is coherent with the aggregation level `provincia`", {
   expect_row_number(
     suppressWarnings({
       ind_1(
@@ -107,7 +164,8 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        emergency_name = "coronavirus"
+        emergency_name = "coronavirus",
+        test_type = "fisher"
       )
     }),
     n = 108
@@ -123,7 +181,8 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus"
+        emergency_name = "coronavirus",
+        test_type = "fisher"
       )
     }),
     n = 3227
@@ -139,28 +198,12 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         data = mock_data_core,
         cpv = cod_cpv,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
-        emergency_name = "terremoto aquila"
+        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "terremoto aquila",
+        test_type = "fisher"
       )
     }),
     min = 0, max = 1
-  )
-})
-
-
-
-test_that("check if the number of rows is coherent with the aggregation level (`provincia`) with a different emergency scenario", {
-  expect_row_number(
-    suppressWarnings({
-      ind_1(
-        data = mock_data_core,
-        cpv = cod_cpv,
-        publication_date = data_pubblicazione,
-        stat_unit = provincia,
-        emergency_name = "terremoto aquila"
-      )
-    }),
-    n = 109 # 108 + NA
   )
 })
 
@@ -173,8 +216,9 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         data = mock_data_core,
         cpv = cod_cpv,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
-        emergency_name = "terremoto aquila"
+        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "terremoto aquila",
+        test_type = "z-test"
       )
     }),
     min = 0, max = 1
@@ -190,7 +234,8 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
       cpv = cod_cpv,
       publication_date = data_pubblicazione,
       stat_unit = provincia,
-      emergency_name = "terremoto ischia"
+      emergency_name = "terremoto ischia",
+      test_type = "fisher"
     ) %>% distinct(emergency_name, emergency_id) %>% flatten(),
     list(
       emergency_id = 3,

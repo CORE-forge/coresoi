@@ -19,8 +19,10 @@ reference:
       - ind_1
       - ind_2
       - ind_3
+      - ind_5
       - ind_6
       - ind_7
       - ind_8
+      - ind_9
       - mock_data_core
       - emergency_dates
