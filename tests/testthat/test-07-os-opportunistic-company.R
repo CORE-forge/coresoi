@@ -187,8 +187,8 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
       emergency_name = "terremoto ischia"
     ) %>% ungroup(aggregation_name) %>% distinct(emergency_name, emergency_id) %>% flatten(),
     list(
-      emergency_id = 3,
-      emergency_name = "Terremoto Ischia"
+      emergency_name = "Terremoto Ischia",
+      emergency_id = 3
     )
   )
 })

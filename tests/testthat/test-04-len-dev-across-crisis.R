@@ -68,30 +68,31 @@ test_that("check `ind_4()` are 12 columns as according to `generate_indicator_sc
 })
 
 
-# ##  need to invert column orded (Je ne sais quoi)
-# test_that("check column names are as according to pre determined schema", {
-#   col_names <- c(
-#     "indicator_id", "indicator_name", "indicator_value", "aggregation_name",
-#     "aggregation_id", "aggregation_type", "emergency_id", "emergency_name",
-#     "country_id", "country_name", "indicator_last_update",
-#     "data_last_update"
-#   )
-#
-#   expect_equal(
-#     suppressWarnings({
-#       names(ind_4(
-#         data = mock_data_core,
-#         publication_date = data_pubblicazione,
-#         exp_start = data_esecutivita_contratto,
-#         exp_end = data_termine_contrattuale,
-#         eff_end = data_effettiva_ultimazione,
-#         eff_start = data_stipula_contratto,
-#         stat_unit = cf_amministrazione_appaltante,
-#         emergency_name = "coronavirus"
-#       ))
-#     }), col_names
-#   )
-# })
+##  need to invert column orded (Je ne sais quoi)
+test_that("check column names are as according to pre determined schema", {
+  col_names <- c(
+    "indicator_id", "indicator_name", "indicator_value", "aggregation_name",
+    "aggregation_id", "aggregation_type", "emergency_id", "emergency_name",
+    "country_id", "country_name", "indicator_last_update",
+    "data_last_update"
+  )
+
+
+  expect_equal(
+    suppressWarnings({
+      names(ind_4(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        exp_start = data_esecutivita_contratto,
+        exp_end = data_termine_contrattuale,
+        eff_end = data_effettiva_ultimazione,
+        eff_start = data_stipula_contratto,
+        emergency_name = "coronavirus",
+        stat_unit = cf_amministrazione_appaltante
+      ))
+    }), col_names, tolerance = 0.2
+  )
+})
 
 
 

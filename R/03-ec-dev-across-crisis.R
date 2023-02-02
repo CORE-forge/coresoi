@@ -12,8 +12,10 @@
 #' \dontrun{
 #' if (interactive()) {
 #'   ind_3(
-#'     data = mock_data_core, publication_date = data_pubblicazione,
-#'     award_value = importo_aggiudicazione, sums_paid = importo_lotto,
+#'     data = mock_data_core,
+#'     publication_date = data_pubblicazione,
+#'     award_value = importo_aggiudicazione,
+#'     sums_paid = importo_lotto,
 #'     stat_unit = cf_amministrazione_appaltante,
 #'     emergency_name = "coronavirus"
 #'   )
@@ -47,24 +49,22 @@ ind_3 <- function(data,
       prepost = forcats::as_factor(prepost),
       ratio = {{ sums_paid }} / {{ award_value }}
     ) %>%
-    dplyr::group_by({{ stat_unit }}, prepost) %>%
+    dplyr::group_by({{stat_unit}}) %>%
+    dplyr::filter(all(c("pre", "post") %in% prepost)) %>%
+    dplyr::ungroup(prepost) %>%
     dplyr::summarise(
-      prepost_count = dplyr::n(),
-      ind_3_mean = mean(ratio, na.rm = TRUE),
-      ind_3_median = median(ratio, na.rm = TRUE),
-      ind_3_mean = round(ind_3_mean, 3),
-      ind_3 = compute_kolmogorov_smirnoff(ratio ~ prepost)
+      ind_3 = compute_kolmogorov_smirnoff(var  = ratio, group = prepost, data = .)[1]
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
+      ind_3,
       {{ stat_unit }},
-      ind_3_mean,
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario
     ) %>%
     dplyr::rename(
-      indicator_value = ind_3_mean,
+      indicator_value = ind_3,
       aggregation_name = {{ stat_unit }}
     ) %>%
     return()

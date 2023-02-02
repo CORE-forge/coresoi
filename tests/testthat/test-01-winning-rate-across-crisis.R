@@ -95,7 +95,7 @@ test_that("check column names are as according to pre determined schema", {
         emergency_name = "coronavirus",
         test_type = "fisher"
       ))
-    }), col_names, tolerance=1
+    }), col_names, tolerance=0.8
   )
 })
 
@@ -105,6 +105,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
   expect_within_range(
     suppressWarnings({
       ind_1(
+        # only 10000 obs since this is time consuming
         data = mock_data_core %>% head(10000),
         cpv = cod_cpv,
         publication_date = data_pubblicazione,
@@ -238,8 +239,8 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
       test_type = "fisher"
     ) %>% distinct(emergency_name, emergency_id) %>% flatten(),
     list(
-      emergency_id = 3,
-      emergency_name = "Terremoto Ischia"
+      emergency_name = "Terremoto Ischia",
+      emergency_id = 3
     )
   )
 })

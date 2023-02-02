@@ -71,8 +71,8 @@ ind_4 <- function(data,
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      {{ stat_unit }},
       ind_4_mean,
+      {{ stat_unit }},
       aggregation_type = rlang::as_string(aggregation_type),
       emergency = emergency_scenario
     ) %>%

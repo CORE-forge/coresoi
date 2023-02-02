@@ -16,8 +16,11 @@ compute_wilcox <- function(data, var, group, exact = TRUE, alternative = "greate
 #' @keywords internal
 #' @export
 compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") {
-  test_res <- data %>%
-    ks.test(var ~ group, data = ., alternative = alternative)
+  test_res <- suppressWarnings({
+    data %>%
+      ks.test(var ~ group, data = ., alternative = alternative)
+    })
+
   c(
     p_value = round(test_res$p.value, 3),
     estimate = round(test_res$statistic, 3)
@@ -47,6 +50,7 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = provincia,
 #'     cpv_divison = 33,
+#'     test_type = "ks",
 #'     emergency_name = "coronavirus"
 #'   )
 #' }
@@ -79,10 +83,10 @@ ind_2 <- function(data,
 
 
 
-  test <- function(a, b, c, d, test_type) {
+  test <- function(data, var, group, test_type) {
     switch(test_type,
       "ks" = {
-        compute_kolmogorov_smirnoff(data, var)
+        compute_kolmogorov_smirnoff(data, var, group)
       },
       "wilcoxon" = {
         compute_wilcox(data, var, group)
@@ -104,7 +108,7 @@ ind_2 <- function(data,
     dplyr::ungroup(prepost) %>%
     dplyr::summarise(
       count = n(),
-      test = test(var = {{ contract_value }}, group = prepost, data = .)[1],
+      test = test(var = {{ contract_value }}, group = prepost, data = ., test_type)[1],
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
