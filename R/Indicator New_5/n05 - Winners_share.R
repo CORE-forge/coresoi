@@ -21,15 +21,19 @@
 #' }
 #' @seealso
 #'  \code{\link[lubridate]{ymd}}
-#'  \code{\link[dplyr]{filter}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}
+#'  \code{\link[rlang]{quo_expr}}, \code{\link[rlang]{as_string}}
+#'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{count}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{rename}}
 #'  \code{\link[forcats]{as_factor}}
+#'  \code{\link[DescTools]{Gini}}
+#'  \code{\link[tidyr]{pivot_wider}}
 #' @rdname ind_5
 #' @export
 #' @importFrom lubridate ymd
-#' @importFrom dplyr filter mutate if_else group_by summarise n count
+#' @importFrom rlang quo_expr as_string
+#' @importFrom dplyr mutate if_else count group_by summarise rename
 #' @importFrom forcats as_factor
 #' @importFrom DescTools Gini
-#' @importFrom tydir pivot_wider
+#' @importFrom tidyr pivot_wider
 ind_5 <- function(data,
                   agency,
                   publication_date,
@@ -42,7 +46,7 @@ ind_5 <- function(data,
 
   data %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= outbreak_starting_date,
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= {{ outbreak_starting_date }},
                                true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
     ) %>%
