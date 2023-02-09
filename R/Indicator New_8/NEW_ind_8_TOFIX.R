@@ -30,7 +30,7 @@
 #'  \code{\link[forcats]{as_factor}}
 #' @rdname ind_3
 #' @export
-#' @importFrom lubridate ymd interval years %within%
+#' @importFrom lubridate ymd interval years %within% %m+%
 #' @importFrom tidyr unnest
 #' @importFrom dplyr mutate across starts_with if_else group_by
 #' @importFrom forcats as_factor
@@ -88,9 +88,9 @@ emergency_scenario <- emergency_dates({{ emergency_name }})
     n = dplyr::n(),
     npre = sum(prepost == "pre"),
     ncig = dplyr::n_distinct(cig),
-    ncig_pre = data.table::uniqueN(cig[prepost == "pre"]),
+#    ncig_pre = data.table::uniqueN(cig[prepost == "pre"]),
     nmod = sum(flag_modif == 1),
-    ncig_mod = data.table::uniqueN(cig[flag_modif == 1]),
+#    ncig_mod = data.table::uniqueN(cig[flag_modif == 1]),
     # prop_mod = nmod/npre,
     rf_value = 1*(nmod>0)
   ) %>%
