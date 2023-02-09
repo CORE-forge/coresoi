@@ -9,50 +9,146 @@ pacman::p_load(
   tidyverse,
   tidytext,
   SnowballC,
-  coresoi
+  coresoi,
+  rvest
 )
 
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Scrape summary data on whole contracts of
+
+<https://contrattipubblici.org/cpv> at MCPV level
+
+```{r}
+
+tibble(
+  mcpv = "https://contrattipubblici.org/cpv" %>%
+    read_html() %>%
+    rvest::html_nodes("#cpvList > .accordion > .ms-3 > .p-0 .text-truncate .number") %>%
+    rvest::html_text() %>%
+    str_extract("^.{2}"),
+  description = "https://contrattipubblici.org/cpv" %>%
+    read_html() %>%
+    rvest::html_nodes("#cpvList > .accordion > .ms-3 > .p-0 .p-1.text-truncate") %>%
+    rvest::html_text() %>%
+    str_remove_all("[:digit:]"),
+  N = "https://contrattipubblici.org/cpv" %>%
+    read_html() %>%
+    rvest::html_nodes("#cpvList > .accordion > .ms-3 > .p-0 .col-md-2 .number") %>%
+    html_text()
+) %>%
+  mutate(
+    description = description %>%
+      str_remove("- -") %>%
+      str_squish(),
+    N = N %>% str_remove_all("\\.") %>%
+      as.integer(),
+    E_f = N/sum(N)
+  ) -> pop_mcpv
+```
+
 The following code will build a *mock* dictionary for the categories of contracts in the mock dataset.
+
+-   Compact the sample:
+
+```{r}
+coresoi::mock_data_core %>%
+  arrange(cig, data_pubblicazione, descrizione_cpv,
+          oggetto_lotto, denominazione_amministrazione_appaltante, provincia) %>%
+  group_by(cig) %>%
+  filter(row_number() == 1) %>%
+  ungroup -> sample
+```
 
 -   Select only relevant columns
 
 ```{r}
 
-coresoi::mock_data_core %>%
-  select(ID = cig,
-         contract_object = oggetto_lotto,
-         contract_class = descrizione_cpv,
-         Territory = provincia,
-         Contracting_agent = denominazione_amministrazione_appaltante) -> micromock_data
+sample %>%
+  select(
+    Publication_date = data_pubblicazione,
+    ID = cig,
+    contract_object = oggetto_lotto,
+    contract_class = descrizione_cpv,
+    Territory = provincia,
+    Contracting_agent = denominazione_amministrazione_appaltante
+         ) -> micro_class_sample
 ```
 
 -   Macro grouped cpv
 
 ```{r}
-coresoi::mock_data_core %>%
+
+sample %>%
   transmute(
+    Publication_date = data_pubblicazione,
     ID = cig,
     contract_object = oggetto_lotto,
-    macroclass =
+    mcpv =
       cod_cpv %>%
       as.character() %>%
       str_extract("^.{2}"),
     Territory = provincia,
     Contracting_agent = denominazione_amministrazione_appaltante
-    ) -> macromock_data
+    ) %>%
+  left_join(pop_mcpv %>%
+              select(
+                mcpv, description
+              ), by = "mcpv") -> macro_class_sample
+```
+
+-   Desc Stats of Macro class sample
+
+```{r}
+
+# n
+macro_class_sample %>% nrow()
+
+# n agencies
+
+macro_class_sample %>%
+  pull(Contracting_agent) %>%
+  unique() %>% length()
+
+
+# timings
+
+macro_class_sample %>%
+  arrange(Publication_date) %>%
+  summarise(
+    oldest_contract = first(Publication_date),
+    newest_contract = last(Publication_date)
+  )
+
+# n_macro
+
+macro_class_sample %>%
+  pull(mcpv) %>%
+  unique() %>% length()
+
+# mcpv distribution
+
+macro_class_sample %>%
+  count(mcpv) %>%
+  arrange(-n) %>%
+  mutate(o_f = n/sum(n)) %>%
+  left_join(pop_mcpv %>%
+              select(
+                mcpv, description, E_f
+              ), by = "mcpv") %>%
+  mutate(across(where(is.numeric),round,2)) %>%
+  transmute(mcpv,description,E_f,o_f,n)
 ```
 
 -   Tidy the the `contract_object`
 
 ```{r}
 
-macromock_data %>%
+macro_class_sample %>%
   tidytext::unnest_tokens(word,contract_object) %>%
   anti_join(get_stopwords(language = "it")) %>%
-  mutate(word = word %>% wordStem("italian")) -> tidy_macromock
+  mutate(word = word %>% wordStem("italian")) -> tidy_macro_class
 
 ```
 
@@ -60,24 +156,392 @@ macromock_data %>%
 
 ```{r}
 
-tidy_macromock %>% count(macroclass, word) %>%
-  bind_tf_idf(word, macroclass, n) %>%
-  mutate(across(where(is.numeric),round,3)) %>%
-  arrange(macroclass,-tf_idf) -> macromock_tfidf
+tidy_macro_class %>% count(mcpv, description, word) %>%
+  bind_tf_idf(word, mcpv, n) %>%
+  select(-tf,-idf) %>%
+  mutate(tf_idf = tf_idf * 100) %>%
+#  mutate(across(where(is.numeric),round,3)) %>%
+  arrange(mcpv,-tf_idf) -> macro_class_tfidf
 
+macro_class_tfidf %>%
+  group_by(mcpv) %>%
+  summarise(theta = mean(tf_idf[n > 1]))
+
+```
+
+-   Final vocabularies per MCPV
+
+```{r}
+
+vocabulary = list()
+
+macro_class_tfidf %>%
+  group_by(mcpv) %>%
+  filter(n > 1) %>%
+  mutate(
+    F_tfidf = cumsum(tf_idf) / sum(tf_idf)
+  ) %>%
+  filter(F_tfidf < (.3)) -> vocabulary$'30'
+
+macro_class_tfidf %>%
+  group_by(mcpv) %>%
+  filter(n > 1) %>%
+  mutate(
+    F_tfidf = cumsum(tf_idf) / sum(tf_idf)
+  ) %>%
+  filter(F_tfidf < (.35)) -> vocabulary$'35'
+
+macro_class_tfidf %>%
+  group_by(mcpv) %>%
+  filter(n > 1) %>%
+  mutate(
+    F_tfidf = cumsum(tf_idf) / sum(tf_idf)
+  ) %>%
+  filter(F_tfidf < (.4)) -> vocabulary$'40'
+
+macro_class_tfidf %>%
+  group_by(mcpv) %>%
+  filter(n > 1) %>%
+  mutate(
+    F_tfidf = cumsum(tf_idf) / sum(tf_idf)
+  ) %>%
+  filter(F_tfidf < (.45)) -> vocabulary$'45'
+
+macro_class_tfidf %>%
+  group_by(mcpv) %>%
+  filter(n > 1) %>%
+  mutate(
+    F_tfidf = cumsum(tf_idf) / sum(tf_idf)
+  ) %>%
+  filter(F_tfidf < (.5)) -> vocabulary$'50'
+
+macro_class_tfidf %>%
+  group_by(mcpv) %>%
+  filter(n > 1) %>%
+  mutate(
+    F_tfidf = cumsum(tf_idf) / sum(tf_idf)
+  ) %>%
+  filter(F_tfidf < (.55)) -> vocabulary$'55'
+
+macro_class_tfidf %>%
+  group_by(mcpv) %>%
+  filter(n > 1) %>%
+  mutate(
+    F_tfidf = cumsum(tf_idf) / sum(tf_idf)
+  ) %>%
+  filter(F_tfidf < (.6)) -> vocabulary$'60'
+
+macro_class_tfidf %>%
+  group_by(mcpv) %>%
+  filter(n > 1) %>%
+  mutate(
+    F_tfidf = cumsum(tf_idf) / sum(tf_idf)
+  ) %>%
+  filter(F_tfidf < (.65)) -> vocabulary$'65'
+
+macro_class_tfidf %>%
+  group_by(mcpv) %>%
+  filter(n > 1) %>%
+  mutate(
+    F_tfidf = cumsum(tf_idf) / sum(tf_idf)
+  ) %>%
+  filter(F_tfidf < (.70)) -> vocabulary$'70'
+```
+
+-   Test function
+
+```{r}
+
+semantic_test <- function(
+    dataset,
+    id,
+    mcpv,
+    text,
+    vocabulary) {
+  
+  {{ dataset }} %>%
+    tidytext::unnest_tokens(word, {{ text }}) %>%
+    mutate(word = word %>% wordStem("italian")) %>%
+    mutate(
+      test_1 =
+        if_else(
+          word %in%
+            {{ vocabulary }} $word[{{ vocabulary }} $mcpv == {{ mcpv }}],
+          TRUE,
+          FALSE
+          ),
+      test_2 =
+        if_else(
+          word %in%
+            {{ vocabulary }} $word[{{ vocabulary }} $mcpv != {{ mcpv }}],
+          TRUE,
+          FALSE
+        )
+      ) %>%
+    group_by({{ id }}) %>%
+    summarise(
+      class = first({{ mcpv }}),
+      Test_1 =
+        if_else(
+          sum(test_1) > 0,
+          FALSE,
+          TRUE
+          ),
+      Test_2 =
+        if_else(
+          sum(test_1 == FALSE & test_2 == TRUE) > 0,
+          TRUE,
+          FALSE
+        )
+    ) %>%
+    ungroup() %>%
+    mutate(
+      Outcome =
+        if_else(
+          (Test_1 == T & Test_2 == T),
+          TRUE,
+          FALSE
+        )
+    )
+  
+}
+
+
+```
+
+-   Test of the function
+
+    ```{r}
+
+    tibble(
+      ID = 1,
+      mcpv = "03",
+      contract_object = "verdur ciccio",
+    ) %>%
+        tidytext::unnest_tokens(word, contract_object) %>%
+        mutate(word = word %>% wordStem("italian")) %>%
+        mutate(
+          test_1 =
+            if_else(
+              word %in%
+                vocabulary$'30' $word[vocabulary$'30' $mcpv ==  mcpv ],
+              TRUE,
+              FALSE
+              ),
+          test_2 =
+            if_else(
+              word %in%
+                vocabulary$'30' $word[vocabulary$'30' $mcpv !=  mcpv ],
+              TRUE,
+              FALSE
+            )
+          )
+      
+      
+      
+    tibble(
+      ID = 1,
+      mcpv = "03",
+      contract_object = "verdur frutt",
+    ) %>%
+      semantic_test(ID,mcpv,contract_object,vocabulary$'30') %>%
+      mutate(theta = .3)
+      
+    ```
+
+```{=html}
+<!-- -->
+```
+-   Test of the sample
+
+```{r}
+
+macro_class_sample %>%
+  semantic_test(ID,mcpv,contract_object,vocabulary$'30') %>%
+  mutate(theta = .3) %>%
+  add_row(
+    macro_class_sample %>%
+      semantic_test(ID,mcpv,contract_object,vocabulary$'35') %>% mutate(theta = .35)) %>%
+  add_row(
+    macro_class_sample %>%
+      semantic_test(ID,mcpv,contract_object,vocabulary$'40') %>% mutate(theta = .4)) %>%
+  add_row(
+    macro_class_sample %>%
+      semantic_test(ID,mcpv,contract_object,vocabulary$'45') %>% mutate(theta = .45)) %>%
+  add_row(
+    macro_class_sample %>%
+      semantic_test(ID,mcpv,contract_object,vocabulary$'50') %>% mutate(theta = .5)) %>%
+  add_row(
+    macro_class_sample %>%
+      semantic_test(ID,mcpv,contract_object,vocabulary$'55') %>% mutate(theta = .55)) %>%
+  add_row(
+    macro_class_sample %>%
+      semantic_test(ID,mcpv,contract_object,vocabulary$'60') %>% mutate(theta = .6)) %>%
+  add_row(
+    macro_class_sample %>%
+      semantic_test(ID,mcpv,contract_object,vocabulary$'65') %>% mutate(theta = .65)) %>%
+  add_row(
+    macro_class_sample %>%
+      semantic_test(ID,mcpv,contract_object,vocabulary$'70') %>% mutate(theta = .7)) -> results
+  
+
+```
+
+-   Results study
+
+```{r}
+
+results %>%
+  left_join(macro_class_sample %>%
+               transmute(
+                 ID,
+                 contract_object),
+             by = "ID"
+  ) %>%
+  transmute(
+    class,
+    contract_object,
+    Test_1,Test_2
+  ) %>% View()
+```
+
+-   Result graphs
+
+```{r}
+
+results %>%
+  group_by(theta) %>%
+  summarise(
+    n = n(),
+    Positives_T1 = sum(Test_1 == T) / n,
+    Positives_T2 = sum(Test_2 == T) / n,
+    Positives = sum(Outcome == T) / n
+  ) %>%
+  mutate(across(where(is.numeric),round,3)) %>%
+  ggplot() +
+  geom_line(aes(
+    y = Positives_T1,
+    x = theta),
+    color = "cyan",
+    size = 1,
+    alpha = .8
+  ) +
+  geom_point(aes(
+    y = Positives_T1,
+    x = theta,
+    color = "T1"),
+  ) +
+  geom_line(aes(
+    y = Positives_T2,
+    x = theta),
+    color = "orange",
+    size = 1,
+    alpha = .8
+  ) +
+  geom_point(aes(
+    y = Positives_T2,
+    x = theta,
+    color = "T2")
+  ) +
+  geom_line(aes(
+    y = Positives,
+    x = theta),
+    color = "violet",
+    size = 1,
+    alpha = .8
+  ) +
+  geom_point(aes(
+    y = Positives,
+    x = theta,
+    color = "T3"),
+  ) +
+  labs(x = expression(vartheta),
+       y = "% Positives",
+       color = "") +
+  scale_color_manual(
+    values =
+      c("T1" = "blue", "T2" = "coral2", "T3" = "orchid3"),
+    labels = 
+      c("T1" = "Test I", "T2" = "Test II",
+        "T3" = "Test I & Test II")
+  ) +
+  theme_test(base_size = 14) +
+  theme(legend.position = c(.75,.65),
+        legend.title = element_blank(),
+        legend.key = element_rect(
+          fill = "antiquewhite1",
+          color = "black",
+          size = .5,
+        ),
+        legend.background = element_rect(
+          fill = "yellow",
+          color = "black",
+            ),
+        legend.margin = margin(6,6,6,6)
+        )
+  
+
+```
+
+```{r}
+results %>%
+  group_by(theta) %>%
+  summarise(
+    n = n(),
+    Positives_T1 = sum(Test_1 == T) / n,
+    Positives_T2 = sum(Test_2 == T) / n,
+    Positives = sum(Outcome == T) / n
+  ) %>%
+  mutate(across(where(is.numeric),round,3)) %>%
+  ggplot() +
+  geom_line(aes(
+    y = Positives_T1,
+    x = theta,
+    color = "cyan"
+  )) +
+  geom_point(aes(
+    y = Positives_T1,
+    x = theta,
+    color = "blue"
+  )) +
+  geom_line(aes(
+    y = Positives_T2,
+    x = theta,
+    color = "orange"
+  )) +
+  geom_point(aes(
+    y = Positives_T2,
+    x = theta,
+    color = "red"
+  )) +
+  geom_line(aes(
+    y = Positives,
+    x = theta,
+    color = "violet"
+  )) +
+  geom_point(aes(
+    y = Positives,
+    x = theta,
+    color = "purple"
+  )) +
+  scale_color_manual(values = c("ciao" = "cyan", "blue" = "blue", "orange" = "orange", "red" = "red", "violet" = "violet", "purple" = "purple"),
+                     name = "Legend") +
+  theme_test(base_size = 14) +
+  ylab("Positives") +
+  xlab(expression(vartheta))
 ```
 
 -   Summary stats
 
 ```{r}
 
-tidy_mock %>% group_by(macroclass) %>%
+tidy_mock %>% group_by(mcpv) %>%
   summarise(
     n = n()
   ) %>%
   left_join(
     macromock_tfidf %>%
-  group_by(macroclass) %>%
+  group_by(mcpv) %>%
   summarise(gini = DescTools::Gini(n),
             atkinson = ineq::Atkinson(n))
   ) %>%
