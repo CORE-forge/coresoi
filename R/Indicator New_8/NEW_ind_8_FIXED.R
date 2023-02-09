@@ -4,8 +4,7 @@
 #' @param publication_date The date when the tender was published
 #' @param stat_unit Identifier of agency or winners
 #' @param variant_date Date of the variation of the contract
-#' @param winning_date Date when the contract has a winner
-#' @param months_win ???
+#' @param months_win Finestra delle varianti
 #' @param emergency_name the date of the emergency outbreak, Default: lubridate::ymd("2017-06-30")
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
@@ -17,7 +16,6 @@
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = cf_amministrazione_appaltante,
 #'     variant_date = data_approvazione_variante,
-#'     winning_date = data_aggiudicazione_definitiva,
 #'     months_win = 6,
 #'     emergency_name = ???
 #'   )
