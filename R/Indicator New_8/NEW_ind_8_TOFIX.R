@@ -68,7 +68,7 @@ emergency_scenario <- emergency_dates({{ emergency_name }})
 
 #Let's discuss this later
 
-data_out <- data %>%
+{{ data }} %>%
   dplyr::mutate(
     prepost = dplyr::if_else(
       lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
@@ -82,17 +82,11 @@ data_out <- data %>%
                               months(months_win)),
       true = 1,
       false = 0),
-  )
-
-### CIG?
-
-# out <- data_out %>%
-data_out %>%
+  ) %>%
   dplyr::group_by({{ stat_unit }}) %>%
   dplyr::summarise(
     n = dplyr::n(),
     npre = sum(prepost == "pre"),
-    # CIG?
     ncig = dplyr::n_distinct(cig),
     ncig_pre = data.table::uniqueN(cig[prepost == "pre"]),
     nmod = sum(flag_modif == 1),
@@ -103,14 +97,13 @@ data_out %>%
   generate_indicator_schema(
     indicator_id = indicator_id,
     indicator_name = indicator_name,
-    # ???
-    OUTPUT,
+    output = ref_value,
     {{ stat_unit }},
     aggregation_type = as_string(aggregation_type),
     outbreak_starting_date = outbreak_starting_date
   ) %>%
   dplyr::rename(
-    indicator_value = OUTPUT,
+    indicator_value = output,
     aggregation_name = {{ stat_unit }}
   ) %>%
   return()
