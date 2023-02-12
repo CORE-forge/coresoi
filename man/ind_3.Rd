@@ -39,8 +39,10 @@ DETAILS
 \dontrun{
 if (interactive()) {
   ind_3(
-    data = mock_data_core, publication_date = data_pubblicazione,
-    award_value = importo_aggiudicazione, sums_paid = importo_lotto,
+    data = mock_data_core,
+    publication_date = data_pubblicazione,
+    award_value = importo_aggiudicazione,
+    sums_paid = importo_lotto,
     stat_unit = cf_amministrazione_appaltante,
     emergency_name = "coronavirus"
   )
