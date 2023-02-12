@@ -88,8 +88,3 @@ generate_indicator_schema <- function(.data, indicator_id, indicator_name, aggre
     )
   return(common_schema)
 }
-
-
-
-
-

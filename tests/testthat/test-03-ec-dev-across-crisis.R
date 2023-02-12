@@ -78,7 +78,8 @@ test_that("check column names are as according to pre determined schema", {
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       ))
-    }), col_names, tolerance=0.8
+    }), col_names,
+    tolerance = 0.8
   )
 })
 
@@ -173,8 +174,3 @@ test_that("check if the number of rows is coherent with the aggregation level (`
     n = 108 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
   )
 })
-
-
-
-
-

@@ -35,12 +35,10 @@ ind_8 <- function(data,
                   stat_unit,
                   variant_date,
                   emergency_name,
-                  months_win = 6){
-
-
+                  months_win = 6) {
   indicator_id <- 8
   indicator_name <- "Pre-existing contracts modified after the crisis"
-  aggregation_type <- quo_squash(enquo( stat_unit))
+  aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
 
   data %>%
@@ -48,14 +46,18 @@ ind_8 <- function(data,
       prepost = dplyr::if_else(
         lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
         true = "post",
-        false = "pre"),
+        false = "pre"
+      ),
       prepost = forcats::as_factor(prepost),
       flag_modif = dplyr::if_else(
         prepost == "pre" & lubridate::ymd({{ variant_date }}) %within%
-          lubridate::interval(emergency_scenario$em_date,
-                              emergency_scenario$em_date %m+% months(months_win)),
+          lubridate::interval(
+            emergency_scenario$em_date,
+            emergency_scenario$em_date %m+% months(months_win)
+          ),
         true = 1,
-        false = 0),
+        false = 0
+      ),
     ) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
@@ -66,7 +68,7 @@ ind_8 <- function(data,
       nmod = sum(flag_modif == 1),
       #    ncig_mod = data.table::uniqueN(cig[flag_modif == 1]),
       # prop_mod = nmod/npre,
-      rf_value = 1*(nmod>0)
+      rf_value = 1 * (nmod > 0)
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
@@ -81,5 +83,4 @@ ind_8 <- function(data,
       aggregation_name = {{ stat_unit }}
     ) %>%
     return()
-
 }

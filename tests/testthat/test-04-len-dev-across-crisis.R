@@ -90,7 +90,8 @@ test_that("check column names are as according to pre determined schema", {
         emergency_name = "coronavirus",
         stat_unit = cf_amministrazione_appaltante
       ))
-    }), col_names, tolerance = 0.2
+    }), col_names,
+    tolerance = 0.2
   )
 })
 
