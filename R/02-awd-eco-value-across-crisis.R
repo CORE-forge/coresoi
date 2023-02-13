@@ -19,7 +19,7 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
   test_res <- suppressWarnings({
     data %>%
       ks.test(var ~ group, data = ., alternative = alternative)
-    })
+  })
 
   c(
     p_value = round(test_res$p.value, 3),

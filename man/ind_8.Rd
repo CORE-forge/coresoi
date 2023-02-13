@@ -4,42 +4,51 @@
 \alias{ind_8}
 \title{Compute Pre-existing contracts modified after the crisis indicator}
 \usage{
-ind_8(data, publication_date, stat_unit, id_variants, emergency_name)
+ind_8(
+  data,
+  publication_date,
+  stat_unit,
+  variant_date,
+  emergency_name,
+  months_win = 6
+)
 }
 \arguments{
-\item{data}{mock bndcp data}
+\item{data}{bndcp data}
 
-\item{publication_date}{PARAM_DESCRIPTION}
+\item{publication_date}{The date when the tender was published}
 
-\item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
+\item{stat_unit}{tatistical unit of measurement, aggregation variable, the indicator target. In this case the identifier of agency or winners.}
 
-\item{id_variants}{the variants key id value}
+\item{variant_date}{Date of contract variation}
 
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
+
+\item{months_win}{time window for variation to be happening}
 }
 \value{
-indicator schema as from \code{generate_indicator_schema()} rows determined by aggregation level and \code{indicator_value} based on statistical test performed in \code{ind_10}
+indicator schema as from \code{generate_indicator_schema}
 }
 \description{
-The indicator reveals the fraction of contracts with at least one modification communication.
+The contract changed
 }
 \examples{
 \dontrun{
 if (interactive()) {
   data("mock_data_core")
-  ind_8(
+  ind_3(
     data = mock_data_core,
     publication_date = data_pubblicazione,
-    stat_unit = provincia,
-    id_variants = id_variante,
+    stat_unit = cf_amministrazione_appaltante,
+    variant_date = data_approvazione_variante,
+    months_win = 6,
     emergency_name = "coronavirus"
   )
 }
 }
 }
 \seealso{
-\code{\link[lubridate]{ymd}}
-\code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{c("rowwise", "rowwise", "rowwise")}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{reexports}}, \code{\link[dplyr]{rename}}
+\code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{n_distinct}}, \code{\link[dplyr]{rename}}
+\code{\link[lubridate]{ymd}}, \code{\link[lubridate]{interval}}
 \code{\link[forcats]{as_factor}}
-\code{\link[stats]{prop.test}}
 }

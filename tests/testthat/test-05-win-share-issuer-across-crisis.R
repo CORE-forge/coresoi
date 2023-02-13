@@ -192,7 +192,6 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
     list(
       emergency_name = "Terremoto Ischia",
       emergency_id = 3
-
     )
   )
 })

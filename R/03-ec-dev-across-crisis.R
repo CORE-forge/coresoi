@@ -49,11 +49,11 @@ ind_3 <- function(data,
       prepost = forcats::as_factor(prepost),
       ratio = {{ sums_paid }} / {{ award_value }}
     ) %>%
-    dplyr::group_by({{stat_unit}}) %>%
+    dplyr::group_by({{ stat_unit }}) %>%
     dplyr::filter(all(c("pre", "post") %in% prepost)) %>%
     dplyr::ungroup(prepost) %>%
     dplyr::summarise(
-      ind_3 = compute_kolmogorov_smirnoff(var  = ratio, group = prepost, data = .)[1]
+      ind_3 = compute_kolmogorov_smirnoff(var = ratio, group = prepost, data = .)[1]
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,

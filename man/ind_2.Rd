@@ -47,6 +47,7 @@ if (interactive()) {
     publication_date = data_pubblicazione,
     stat_unit = provincia,
     cpv_divison = 33,
+    test_type = "ks",
     emergency_name = "coronavirus"
   )
 }
