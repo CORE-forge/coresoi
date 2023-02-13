@@ -52,7 +52,7 @@ ind_9 <- function(data,
                   emergency_name) {
   indicator_id <- 9
   indicator_name <- "Lengthy contracts"
-  aggregation_type <- quo_squash(enquo(stat_unit))
+  aggregation_type <- rlang::quo_squash(rlang::enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
 
   data %>%
@@ -84,17 +84,7 @@ ind_9 <- function(data,
       ntot = dplyr::n(),
       nnomiss = sum(!is.na(contract_duration)),
       mean = mean(contract_duration, na.rm = TRUE),
-      ttest  = t.test(x = contract_duration[nnomiss!=1], mu =grand_mean)$p.value)
-
-      ttest = dplyr::if_else(nnomiss == 1,
-                             true = NA_real_,
-                             false = do(tidy(t.test(value ~ group, data = .)))$p.value))
-
-
-      ttest = dplyr::if_else(nnomiss == 1,
-                             true = NA_real_,
-                             false = t.test(y=contract_duration, mu=grand_mean, alternative="greater")$p.value)
-    ) %>%
+      ttest  = t.test(x = contract_duration, mu =grand_mean)$p.value) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
@@ -111,24 +101,7 @@ ind_9 <- function(data,
 }
 
 
-ind_9(
- data = mock_data_core,
- publication_date = data_pubblicazione,
- stat_unit = cf_amministrazione_appaltante,
- cpv = cod_cpv,
- eff_start =data_inizio_effettiva,
- eff_end = data_effettiva_ultimazione,
- emergency_name = "coronavirus"
-)
-
-
-
-
-
-
-
-
-
+## source("R/utils.R")
 indicator_id <- 9
 indicator_name <- "Lengthy contracts"
 emergency_scenario <- emergency_dates("coronavirus")
@@ -167,52 +140,6 @@ wowo =data_out %>%
 
 
 
-wowo =data_out %>%
-  dplyr::filter(prepost == "post" & !is.na(contract_duration)) %>%
-  # dplyr::filter(flagdivision == 1) %>%  #commented for the moment (very few data)
-  dplyr::group_by(cf_amministrazione_appaltante) %>%
-  dplyr::summarise(
-    values = list(contract_duration)) %>%
-    ttest  = map_dbl(., ~ t.test(.x$E[[1L]], .x$I[[1L]])$p.value)
-
-
-
-
-
-
-    ttest = dplyr::if_else(nnomiss == 1,
-                           true = NA_integer_,
-                           false =  t.test(x=contract_duration, mu=grand_mean, alternative="greater", data = .)$p.value)
-  )
-    ttest = case_when(
-      nnomiss == 1  ~ NA_integer_,
-      nnomiss == 2 ~ stats::t.test(x=.$contract_duration, mu=171.7222, alternative="greater", na.rm  = T)$p.value,
-      .default = "other"
-    )
-    ttest = case_when(
-      nnomiss == 1  ~ 23,
-      nnomiss == 2 ~ stats::t.test(x=.$contract_duration, mu=171.7222, alternative="greater", na.rm  = T)$p.value,
-      .default = "other"
-    ))
-    ttest = dplyr::if_else(nnomiss == 1,
-                           true = NA_character_,
-                           false = list(t.test(x=contract_duration, mu=171.7222, alternative="greater", na.rm  = T)))
-    )
-
-
-
-
-
-    test = purrr::if(is.na(contract_duration) ~ t.test(x=contract_duration, mu=grand_mean, alternative="greater", data = .)$p.value, ~NA))
-
-
-
-
-    #to be compared with grand_mean
-    # median = median(contract_duration, na.rm = TRUE),
-    # test not to be performed if nnomiss == 1: not working, why?
-    ttest = dplyr::if_else(condition = nnomiss == 1, true = NA_character_, false = t.test(x=contract_duration, mu=grand_mean, alternative="greater", data = .)$p.value)
-    )
   generate_indicator_schema(
     indicator_id = indicator_id,
     indicator_name = indicator_name,
