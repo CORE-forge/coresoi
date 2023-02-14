@@ -36,10 +36,13 @@ ind_3 <- function(data,
                   stat_unit,
                   emergency_name,
                   publication_date) {
+
   indicator_id <- 3
   indicator_name <- "Economic deviation across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
+  cpvs = get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  cpv_col = grab_cpv(data = data)
 
   data %>%
     dplyr::filter(!is.na({{ award_value }}) & !is.na({{ sums_paid }}) & {{ award_value }} > 0 &
@@ -47,8 +50,10 @@ ind_3 <- function(data,
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
       ratio = {{ sums_paid }} / {{ award_value }}
     ) %>%
+    dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::filter(all(c("pre", "post") %in% prepost)) %>%
     dplyr::ungroup(prepost) %>%

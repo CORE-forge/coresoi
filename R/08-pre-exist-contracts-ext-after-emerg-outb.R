@@ -11,7 +11,7 @@
 #' \dontrun{
 #' if (interactive()) {
 #'   data("mock_data_core")
-#'   ind_3(
+#'   ind_8(
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = cf_amministrazione_appaltante,
@@ -40,6 +40,8 @@ ind_8 <- function(data,
   indicator_name <- "Pre-existing contracts modified after the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
+  cpvs = get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  cpv_col = grab_cpv(data = data)
 
   data %>%
     dplyr::mutate(
@@ -49,6 +51,7 @@ ind_8 <- function(data,
         false = "pre"
       ),
       prepost = forcats::as_factor(prepost),
+      flag_division = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
       flag_modif = dplyr::if_else(
         prepost == "pre" & lubridate::ymd({{ variant_date }}) %within%
           lubridate::interval(
@@ -59,6 +62,7 @@ ind_8 <- function(data,
         false = 0
       ),
     ) %>%
+    dplyr::filter(flag_division == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
       n = dplyr::n(),

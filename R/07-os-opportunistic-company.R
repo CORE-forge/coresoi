@@ -36,13 +36,17 @@ ind_7 <- function(data,
   indicator_name <- "One-shot opportunistic companies over the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
+  cpvs = get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  cpv_col = grab_cpv(data = data)
 
   data %>%
     dplyr::mutate(
       dplyr::across(dplyr::starts_with("data"), lubridate::ymd),
       prepost = dplyr::if_else({{ publication_date }} >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = forcats::as_factor(prepost)
+      prepost = forcats::as_factor(prepost),
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
     ) %>%
+    dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
       flag_opportunist = dplyr::if_else(max(data_aggiudicazione_definitiva) %within% lubridate::interval(data_pubblicazione - lubridate::years(1), data_pubblicazione), 1, 0),

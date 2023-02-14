@@ -32,10 +32,8 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 #' @title Compute Awarded economic value across the crisis indicator
 #' @description companies that after the emergency outbreak were awarded public contracts much higher in economic value than before the emergency scenario
 #' @param data test bndcp data
-#' @param cpv Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract
 #' @param contract_value the value of the contract
 #' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
-#' @param cpv_divison CPV i.e. Common Procurement Vocabulary first two digits
 #' @param test_type character vector identifying the type of test you want to execute, alternatives are c("ks", "wilcoxon")
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @return indicator schema as from `generate_indicator_schema()` rows determined by aggregation level and `indicator_value` based on statistical test performed in `ind_2`
@@ -45,11 +43,9 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 #'   data("mock_data_core")
 #'   ind_2(
 #'     data = mock_data_core,
-#'     cpv = cod_cpv,
 #'     contract_value = importo_complessivo_gara,
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = provincia,
-#'     cpv_divison = 33,
 #'     test_type = "ks",
 #'     emergency_name = "coronavirus"
 #'   )
@@ -69,18 +65,17 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 #' @importFrom stringr str_sub
 #' @importFrom tidyr unnest drop_na
 ind_2 <- function(data,
-                  cpv,
                   contract_value,
                   publication_date,
                   emergency_name,
-                  cpv_divison,
                   stat_unit,
                   test_type) {
   indicator_id <- 2
   indicator_name <- "Awarded economic value across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-
+  cpvs = get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  cpv_col = grab_cpv(data = data)
 
 
   test <- function(data, var, group, test_type) {
@@ -99,7 +94,7 @@ ind_2 <- function(data,
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
-      flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == as.character(cpv_divison), 1, 0)
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
     ) %>%
     tidyr::drop_na({{ contract_value }}) %>%
     dplyr::filter(flagdivision == 1) %>%

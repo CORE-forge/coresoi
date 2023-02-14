@@ -70,20 +70,16 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 #' @description companies that after the Covid19 outbreak were awarded public contracts much more frequently than before the Covid-19.
 #' @param data bndcp data
 #' @param publication_date The date when the tender was published
-#' @param cpv Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
-#' @param divison first two digits in cpv code identifying the division, for more info check https://simap.ted.europa.eu/it/cpv
 #' @param test_type character vector identifying the type of test you want to execute, alternatives are c("barnard", "fisher", "z-test")
 #' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   data("test_data_bndcp_core")
 #'   ind_1(
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
-#'     cpv = cod_cpv,
 #'     stat_unit = cf_amministrazione_appaltante,
 #'     emergency_name = "coronavirus",
 #'     test_type = "fisher"
@@ -104,7 +100,6 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 #' @importFrom tidyr unnest
 ind_1 <- function(data,
                   publication_date,
-                  cpv,
                   emergency_name,
                   stat_unit,
                   test_type) {
@@ -112,6 +107,8 @@ ind_1 <- function(data,
   indicator_name <- "Winning rate across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
+  cpvs = get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  cpv_col = grab_cpv(data = data)
 
   test <- function(a, b, c, d, test_type) {
     switch(test_type,
@@ -132,7 +129,7 @@ ind_1 <- function(data,
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
-      flagdivision = dplyr::if_else(stringr::str_sub({{ cpv }}, start = 1, end = 2) == "33", 1, 0)
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
     ) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(

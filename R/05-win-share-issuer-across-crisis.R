@@ -39,6 +39,8 @@ ind_5 <- function(data,
   indicator_name <- "Winner's share of issuer's contract across the crisis"
   aggregation_type <- rlang::quo_expr(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
+  cpvs = get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  cpv_col = grab_cpv(data = data)
 
   data %>%
     dplyr::mutate(
@@ -46,7 +48,9 @@ ind_5 <- function(data,
         true = "post", false = "pre"
       ),
       prepost = forcats::as_factor(prepost),
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
     ) %>%
+    dplyr::filter(flagdivision == 1) %>%
     dplyr::count({{ stat_unit }}, {{ winners }}, prepost) %>%
     dplyr::group_by({{ stat_unit }}, prepost) %>%
     dplyr::summarise(
