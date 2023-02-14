@@ -64,14 +64,10 @@ ind_5 <- function(data,
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      ratio,
-      {{ stat_unit }},
+      indicator_value = ratio,
+      aggregation_name = {{ stat_unit }},
       aggregation_type = rlang::as_string(aggregation_type),
       emergency = emergency_scenario
-    ) %>%
-    dplyr::rename(
-      indicator_value = ratio,
-      aggregation_name = {{ stat_unit }}
     ) %>%
     return()
 }

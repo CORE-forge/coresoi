@@ -108,14 +108,10 @@ ind_2 <- function(data,
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      test,
-      {{ stat_unit }},
+      indicator_value = test,
+      aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario
-    ) %>%
-    dplyr::rename(
-      indicator_value = test,
-      aggregation_name = {{ stat_unit }}
     ) %>%
     return()
 }

@@ -68,14 +68,10 @@ ind_6 <- function(data,
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      prop_no_communic,
-      {{ stat_unit }},
+      indicator_value =  prop_no_communic,
+      aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario
-    ) %>%
-    dplyr::rename(
-      indicator_value = prop_no_communic,
-      aggregation_name = {{ stat_unit }}
     ) %>%
     return()
 }

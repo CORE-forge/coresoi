@@ -75,14 +75,10 @@ ind_4 <- function(data,
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      ind_4_mean,
-      {{ stat_unit }},
+      indicator_value = ind_4_mean,
+      aggregation_name = {{ stat_unit }},
       aggregation_type = rlang::as_string(aggregation_type),
       emergency = emergency_scenario
-    ) %>%
-    dplyr::rename(
-      indicator_value = ind_4_mean,
-      aggregation_name = {{ stat_unit }}
     ) %>%
     return()
 }

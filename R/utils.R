@@ -115,12 +115,14 @@ from_aggregation_type_to_eu_nc <- function(variables) {
 #' generate indicator schema
 #' @keywords internal
 #' @export
-generate_indicator_schema <- function(.data, indicator_id, indicator_name, aggregation_type, emergency, ...) {
+generate_indicator_schema <- function(.data, indicator_id, indicator_name, aggregation_type, emergency, indicator_name, aggregation_name ) {# ...
   common_schema <- .data %>%
     dplyr::transmute(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      ..., ## indicator_value e aggregation_name
+      indicator_value, ## ...
+      aggregation_name,
+      ## indicator_value e aggregation_name
       aggregation_id = "ISTAT1", # istat id from function
       aggregation_type = aggregation_type, #  define also nuts within funs
       emergency_id = emergency$em_id,
