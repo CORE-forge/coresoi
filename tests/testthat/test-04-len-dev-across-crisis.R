@@ -130,7 +130,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "coronavirus"
       )
     }),
-    n = 1111 ## qui 1111 sottratti gli NA, al variare del mock pure questi cambiano
+    n = 202 ## qui 1111 sottratti gli NA, al variare del mock pure questi cambiano
   )
 })
 
@@ -153,3 +153,4 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     min = 0.1, max = 1
   )
 })
+

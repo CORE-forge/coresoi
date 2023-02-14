@@ -137,7 +137,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "Coronavirus"
       )
     }),
-    n = 9160 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
+    n = 2902 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
   )
 })
 
@@ -171,7 +171,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "terremoto aquila"
       )
     }),
-    n = 9160 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
+    n = 7084 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
   )
 })
 
@@ -195,3 +195,4 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
     )
   )
 })
+

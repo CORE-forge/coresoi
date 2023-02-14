@@ -48,9 +48,7 @@ test_that("check `ind_6()` are 12 columns as according to `generate_indicator_sc
     suppressMessages({
       ind_6(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
-        cpv_division = "33",
         stat_unit = provincia,
         award_col = id_aggiudicazione,
         emergency_name = "coronavirus"
@@ -72,9 +70,7 @@ test_that("check column names are as according to pre determined schema", {
     suppressMessages({
       names(ind_6(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
-        cpv_division = "33",
         stat_unit = provincia,
         award_col = id_aggiudicazione,
         emergency_name = "coronavirus"
@@ -90,9 +86,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     suppressMessages({
       ind_6(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
-        cpv_division = "33",
         stat_unit = provincia,
         award_col = id_aggiudicazione,
         emergency_name = "coronavirus"
@@ -110,9 +104,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
     suppressMessages({
       ind_6(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
-        cpv_division = "33",
         stat_unit = provincia,
         award_col = id_aggiudicazione,
         emergency_name = "coronavirus"
@@ -128,9 +120,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
     suppressMessages({
       ind_6(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
-        cpv_division = "33",
         stat_unit = cf_amministrazione_appaltante,
         award_col = id_aggiudicazione,
         emergency_name = "coronavirus"
@@ -148,9 +138,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     suppressMessages(
       ind_6(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
-        cpv_division = "33",
         stat_unit = cf_amministrazione_appaltante,
         award_col = id_aggiudicazione,
         emergency_name = "terremoto aquila"
@@ -167,9 +155,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     suppressMessages(
       ind_6(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
-        cpv_division = "33",
         stat_unit = cf_amministrazione_appaltante,
         award_col = id_aggiudicazione,
         emergency_name = "terremoto aquila"
@@ -186,9 +172,7 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
     suppressMessages(
       ind_6(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
-        cpv_division = "33",
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "terremoto ischia",
         award_col = id_aggiudicazione
@@ -200,3 +184,4 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
     )
   )
 })
+

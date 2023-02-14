@@ -131,6 +131,7 @@ ind_1 <- function(data,
       prepost = forcats::as_factor(prepost),
       flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
     ) %>%
+    dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
       n = dplyr::n(),

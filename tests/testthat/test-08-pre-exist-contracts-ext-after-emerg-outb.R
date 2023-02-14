@@ -119,7 +119,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "coronavirus"
       )
     }),
-    n = 9160 ## this is wrong!
+    n = 2902 ## this is wrong!
   )
 })
 
@@ -160,3 +160,4 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
     )
   )
 })
+

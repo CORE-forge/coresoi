@@ -174,3 +174,4 @@ test_that("check if the number of rows is coherent with the aggregation level (`
     n = 108 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
   )
 })
+
