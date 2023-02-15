@@ -26,3 +26,4 @@ reference:
       - ind_8
       - mock_data_core
       - emergency_dates
+      - get_associated_cpv_from_emergency
