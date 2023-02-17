@@ -153,4 +153,3 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     min = 0.1, max = 1
   )
 })
-

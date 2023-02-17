@@ -36,8 +36,8 @@ ind_7 <- function(data,
   indicator_name <- "One-shot opportunistic companies over the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs = get_associated_cpv_from_emergency(emergency_scenario$em_name)
-  cpv_col = grab_cpv(data = data)
+  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  cpv_col <- grab_cpv(data = data)
 
   data %>%
     dplyr::mutate(
@@ -52,6 +52,7 @@ ind_7 <- function(data,
       flag_opportunist = dplyr::if_else(max(data_aggiudicazione_definitiva) %within% lubridate::interval(data_pubblicazione - lubridate::years(1), data_pubblicazione), 1, 0),
       flag_opportunist = dplyr::if_else(data_pubblicazione <= data_aggiudicazione_definitiva, true = 0, false = 1)
     ) %>%
+    ungroup({{ stat_unit }}) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,

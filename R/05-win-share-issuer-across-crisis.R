@@ -39,8 +39,8 @@ ind_5 <- function(data,
   indicator_name <- "Winner's share of issuer's contract across the crisis"
   aggregation_type <- rlang::quo_expr(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs = get_associated_cpv_from_emergency(emergency_scenario$em_name)
-  cpv_col = grab_cpv(data = data)
+  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  cpv_col <- grab_cpv(data = data)
 
   data %>%
     dplyr::mutate(

@@ -160,4 +160,3 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
     )
   )
 })
-

@@ -4,26 +4,14 @@
 \alias{ind_6}
 \title{Compute Communication default across the crisis indicator}
 \usage{
-ind_6(
-  data,
-  publication_date,
-  cpv,
-  emergency_name,
-  cpv_division = "33",
-  award_col,
-  stat_unit
-)
+ind_6(data, publication_date, emergency_name, award_col, stat_unit)
 }
 \arguments{
 \item{data}{mock_data_core example bdncp data}
 
 \item{publication_date}{The date when the tender was published}
 
-\item{cpv}{Common Procurement Vocabulary.The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract.}
-
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
-
-\item{cpv_division}{initial two digits from cpv, Default: '33'}
 
 \item{award_col}{column indentifying id for that contract award}
 
@@ -42,9 +30,7 @@ if (interactive()) {
   ind_6(
     data = mock_data_core,
     publication_date = data_pubblicazione,
-    cpv = cod_cpv,
     emergency_name = "coronavirus",
-    cpv_division = "33",
     award_col = id_aggiudicazione,
     stat_unit = provincia
   )

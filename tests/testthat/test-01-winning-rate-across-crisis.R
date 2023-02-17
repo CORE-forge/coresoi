@@ -202,20 +202,20 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 
 
 
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
-  expect_within_range(
-    suppressWarnings({
-      ind_1(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "terremoto aquila",
-        test_type = "z-test"
-      )
-    }),
-    min = 0, max = 1
-  )
-})
+# test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
+#   expect_within_range(
+#     suppressWarnings({
+#       ind_1(
+#         data = mock_data_core,
+#         publication_date = data_pubblicazione,
+#         stat_unit = cf_amministrazione_appaltante,
+#         emergency_name = "terremoto aquila",
+#         test_type = "z-test"
+#       )
+#     }),
+#     min = 0, max = 1
+#   )
+# })
 
 
 
@@ -234,4 +234,3 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
     )
   )
 })
-

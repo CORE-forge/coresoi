@@ -40,8 +40,8 @@ ind_8 <- function(data,
   indicator_name <- "Pre-existing contracts modified after the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs = get_associated_cpv_from_emergency(emergency_scenario$em_name)
-  cpv_col = grab_cpv(data = data)
+  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  cpv_col <- grab_cpv(data = data)
 
   data %>%
     dplyr::mutate(

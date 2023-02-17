@@ -18,15 +18,15 @@ cod_stat <- read_delim(here("data-raw", "cod-stat-23.csv"), locale = locale(enco
   )
 
 ## scrape dati ufficiali to map from `luogo_istat` to NUTS 2 and 3
-url = "https://dait.interno.gov.it/territorio-e-autonomie-locali/sut/elenco_codici_comuni.php"
+url <- "https://dait.interno.gov.it/territorio-e-autonomie-locali/sut/elenco_codici_comuni.php"
 
-elenco_cod_comuni_italiani = url %>%
+elenco_cod_comuni_italiani <- url %>%
   read_html() %>%
   html_table() %>%
   .[[1]] %>%
   clean_names()
 
-merged_elenco_cod_comuni_italiani = elenco_cod_comuni_italiani %>%
+merged_elenco_cod_comuni_italiani <- elenco_cod_comuni_italiani %>%
   left_join(cod_stat, by = c("sigla" = "sigla_automobilistica"), multiple = "first", keep = F) %>%
   select()
 

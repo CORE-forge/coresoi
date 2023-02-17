@@ -6,11 +6,9 @@
 \usage{
 ind_2(
   data,
-  cpv,
   contract_value,
   publication_date,
   emergency_name,
-  cpv_divison,
   stat_unit,
   test_type
 )
@@ -18,13 +16,9 @@ ind_2(
 \arguments{
 \item{data}{test bndcp data}
 
-\item{cpv}{Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract}
-
 \item{contract_value}{the value of the contract}
 
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
-
-\item{cpv_divison}{CPV i.e. Common Procurement Vocabulary first two digits}
 
 \item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
 
@@ -42,11 +36,9 @@ if (interactive()) {
   data("mock_data_core")
   ind_2(
     data = mock_data_core,
-    cpv = cod_cpv,
     contract_value = importo_complessivo_gara,
     publication_date = data_pubblicazione,
     stat_unit = provincia,
-    cpv_divison = 33,
     test_type = "ks",
     emergency_name = "coronavirus"
   )

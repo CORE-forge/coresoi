@@ -39,8 +39,8 @@ ind_6 <- function(data,
   indicator_name <- "Communication default across the crisis"
   aggregation_type <- quo_expr(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs = get_associated_cpv_from_emergency(emergency_scenario$em_name)
-  cpv_col = grab_cpv(data = data)
+  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  cpv_col <- grab_cpv(data = data)
 
   prel <- data %>%
     dplyr::mutate(
@@ -68,7 +68,7 @@ ind_6 <- function(data,
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value =  prop_no_communic,
+      indicator_value = prop_no_communic,
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario
