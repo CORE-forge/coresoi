@@ -49,11 +49,9 @@ test_that("check `ind_2()` are 12 columns as according to `generate_indicator_sc
     suppressWarnings({
       ind_2(
         data = mock_data_core,
-        cpv = cod_cpv,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        cpv_divison = 33,
         test_type = "ks",
         emergency_name = "coronavirus"
       )
@@ -74,11 +72,9 @@ test_that("check column names are as according to pre determined schema", {
     suppressWarnings({
       names(ind_2(
         data = mock_data_core,
-        cpv = cod_cpv,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        cpv_divison = 33,
         test_type = "ks",
         emergency_name = "coronavirus"
       ))
@@ -94,11 +90,9 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     suppressWarnings({
       ind_2(
         data = mock_data_core,
-        cpv = cod_cpv,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        cpv_divison = 33,
         test_type = "ks",
         emergency_name = "coronavirus"
       )
@@ -115,11 +109,9 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     suppressWarnings({
       ind_2(
         data = mock_data_core,
-        cpv = cod_cpv,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        cpv_divison = 33,
         test_type = "wilcoxon",
         emergency_name = "coronavirus"
       )
@@ -135,16 +127,14 @@ test_that("check if the number of rows is coherent with the aggregation level (`
     suppressWarnings({
       ind_2(
         data = mock_data_core,
-        cpv = cod_cpv,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
         test_type = "ks",
-        cpv_divison = 33,
         emergency_name = "coronavirus"
       )
     }),
-    n = 85
+    n = 101
   )
 })
 
@@ -154,16 +144,14 @@ test_that("check if the number of rows is coherent with the aggregation level (`
     suppressWarnings({
       ind_2(
         data = mock_data_core,
-        cpv = cod_cpv,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         test_type = "ks",
-        cpv_divison = 33,
         emergency_name = "coronavirus"
       )
     }),
-    n = 239 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
+    n = 624 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
   )
 })
 
@@ -174,12 +162,10 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     suppressWarnings({
       ind_2(
         data = mock_data_core,
-        cpv = cod_cpv,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         test_type = "ks",
-        cpv_divison = 33,
         emergency_name = "terremoto aquila"
       )
     }),
@@ -194,16 +180,14 @@ test_that("check if the number of rows is coherent with the aggregation level (`
     suppressWarnings({
       ind_2(
         data = mock_data_core,
-        cpv = cod_cpv,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
         test_type = "ks",
-        cpv_divison = 33,
         emergency_name = "terremoto aquila"
       )
     }),
-    n = 83 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
+    n = 109 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
   )
 })
 
@@ -214,12 +198,10 @@ test_that("check if `indicator_value` lays inbetween min/max values (different a
     suppressWarnings({
       ind_2(
         data = mock_data_core,
-        cpv = cod_cpv,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
         test_type = "ks",
-        cpv_divison = 33,
         emergency_name = "terremoto aquila"
       )
     }),

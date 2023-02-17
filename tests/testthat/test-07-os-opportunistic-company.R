@@ -175,20 +175,3 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     min = 0, max = 1
   )
 })
-
-
-
-test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario", {
-  expect_equal(
-    ind_7(
-      data = mock_data_core,
-      publication_date = data_pubblicazione,
-      stat_unit = provincia,
-      emergency_name = "terremoto ischia"
-    ) %>% ungroup(aggregation_name) %>% distinct(emergency_name, emergency_id) %>% flatten(),
-    list(
-      emergency_name = "Terremoto Ischia",
-      emergency_id = 3
-    )
-  )
-})

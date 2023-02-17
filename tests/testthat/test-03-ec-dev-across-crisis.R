@@ -118,7 +118,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "coronavirus"
       )
     }),
-    n = 108 # without removing NAs
+    n = 79 # without removing NAs
   )
 })
 
@@ -135,7 +135,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "coronavirus"
       )
     }),
-    n = 1551 # without removing NAs and
+    n = 230 # without removing NAs and
   )
 })
 
@@ -171,6 +171,6 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "coronavirus"
       )
     }),
-    n = 108 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
+    n = 79 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
   )
 })

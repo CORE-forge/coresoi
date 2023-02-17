@@ -4,22 +4,18 @@
 \alias{ind_1}
 \title{Compute Winning rate across the crisis indicator}
 \usage{
-ind_1(data, publication_date, cpv, emergency_name, stat_unit, test_type)
+ind_1(data, publication_date, emergency_name, stat_unit, test_type)
 }
 \arguments{
 \item{data}{bndcp data}
 
 \item{publication_date}{The date when the tender was published}
 
-\item{cpv}{Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract}
-
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
 
 \item{test_type}{character vector identifying the type of test you want to execute, alternatives are c("barnard", "fisher", "z-test")}
-
-\item{divison}{first two digits in cpv code identifying the division, for more info check https://simap.ted.europa.eu/it/cpv}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}
@@ -30,11 +26,9 @@ companies that after the Covid19 outbreak were awarded public contracts much mor
 \examples{
 \dontrun{
 if (interactive()) {
-  data("test_data_bndcp_core")
   ind_1(
     data = mock_data_core,
     publication_date = data_pubblicazione,
-    cpv = cod_cpv,
     stat_unit = cf_amministrazione_appaltante,
     emergency_name = "coronavirus",
     test_type = "fisher"

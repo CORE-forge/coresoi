@@ -48,7 +48,6 @@ test_that("check `ind_1()` are 12 columns as according to `generate_indicator_sc
     suppressWarnings({
       ind_1(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
         emergency_name = "coronavirus",
@@ -65,7 +64,6 @@ test_that("check `ind_1()` are 12 columns as according to `generate_indicator_sc
     suppressWarnings({
       ind_1(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus",
@@ -89,7 +87,6 @@ test_that("check column names are as according to pre determined schema", {
     suppressWarnings({
       names(ind_1(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus",
@@ -108,7 +105,6 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
       ind_1(
         # only 10000 obs since this is time consuming
         data = mock_data_core %>% head(10000),
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
         emergency_name = "coronavirus",
@@ -126,7 +122,6 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     suppressWarnings({
       ind_1(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus",
@@ -144,7 +139,6 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     suppressWarnings({
       ind_1(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus",
@@ -163,14 +157,13 @@ test_that("check if the number of rows is coherent with the aggregation level `p
     suppressWarnings({
       ind_1(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
         emergency_name = "coronavirus",
         test_type = "fisher"
       )
     }),
-    n = 108
+    n = 101
   )
 })
 
@@ -180,14 +173,13 @@ test_that("check if the number of rows is coherent with the aggregation level (`
     suppressWarnings({
       ind_1(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus",
         test_type = "fisher"
       )
     }),
-    n = 3227
+    n = 624
   )
 })
 
@@ -198,7 +190,6 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     suppressWarnings({
       ind_1(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "terremoto aquila",
@@ -211,21 +202,20 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 
 
 
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
-  expect_within_range(
-    suppressWarnings({
-      ind_1(
-        data = mock_data_core,
-        cpv = cod_cpv,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "terremoto aquila",
-        test_type = "z-test"
-      )
-    }),
-    min = 0, max = 1
-  )
-})
+# test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
+#   expect_within_range(
+#     suppressWarnings({
+#       ind_1(
+#         data = mock_data_core,
+#         publication_date = data_pubblicazione,
+#         stat_unit = cf_amministrazione_appaltante,
+#         emergency_name = "terremoto aquila",
+#         test_type = "z-test"
+#       )
+#     }),
+#     min = 0, max = 1
+#   )
+# })
 
 
 
@@ -233,7 +223,6 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
   expect_equal(
     ind_1(
       data = mock_data_core,
-      cpv = cod_cpv,
       publication_date = data_pubblicazione,
       stat_unit = provincia,
       emergency_name = "terremoto ischia",

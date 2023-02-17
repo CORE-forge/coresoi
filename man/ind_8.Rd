@@ -36,7 +36,7 @@ The contract changed
 \dontrun{
 if (interactive()) {
   data("mock_data_core")
-  ind_3(
+  ind_8(
     data = mock_data_core,
     publication_date = data_pubblicazione,
     stat_unit = cf_amministrazione_appaltante,

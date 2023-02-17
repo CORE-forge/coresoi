@@ -43,9 +43,11 @@ ind_4 <- function(data,
                   emergency_name,
                   publication_date) {
   indicator_id <- 4
-  indicator_name <- "Lenght deviation across the crisis"
+  indicator_name <- "Length deviation across the crisis"
   aggregation_type <- rlang::quo_expr(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
+  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  cpv_col <- grab_cpv(data = data)
 
 
   data %>%
@@ -58,9 +60,11 @@ ind_4 <- function(data,
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
       dplyr::across(dplyr::contains("data"), lubridate::ymd),
       ratio = as.numeric({{ eff_end }} - {{ eff_start }}) / as.numeric({{ exp_end }} - {{ exp_start }})
     ) %>%
+    dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}, prepost) %>%
     dplyr::summarise(
       prepost_count = dplyr::n(),
@@ -68,17 +72,14 @@ ind_4 <- function(data,
       ind_4_median = median(ratio, na.rm = TRUE),
       ind_4_mean = round(ind_4_mean, 3)
     ) %>%
+    ungroup({{ stat_unit }}) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      ind_4_mean,
-      {{ stat_unit }},
+      indicator_value = ind_4_mean,
+      aggregation_name = {{ stat_unit }},
       aggregation_type = rlang::as_string(aggregation_type),
       emergency = emergency_scenario
-    ) %>%
-    dplyr::rename(
-      indicator_value = ind_4_mean,
-      aggregation_name = {{ stat_unit }}
     ) %>%
     return()
 }
