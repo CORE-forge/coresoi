@@ -56,7 +56,7 @@ ind_5 <- function(data,
         DescTools::GiniSimpson({{ winners }} %>% as_factor()) / ((n() -1)/ n())
     ) %>%
   ungroup() %>%
-  tidyr::pivot_wider(names_from = prepost, values_from = gini) %>%
+  tidyr::pivot_wider(names_from = prepost, values_from = Norm_GS) %>%
     dplyr::mutate(
       ratio = post / pre
     ) %>%
