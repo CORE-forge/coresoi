@@ -24,7 +24,7 @@
 #'  \code{\link[rlang]{quo_expr}}, \code{\link[rlang]{as_string}}
 #'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{count}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{rename}}
 #'  \code{\link[forcats]{as_factor}}
-#'  \code{\link[DescTools]{Gini}}
+#'  \code{\link[DescTools]{GiniSimpson}}
 #'  \code{\link[tidyr]{pivot_wider}}
 #' @rdname ind_5
 #' @export
@@ -50,10 +50,10 @@ ind_5 <- function(data,
                                true = "post", false = "pre"),
       prepost = forcats::as_factor(prepost),
     ) %>%
-    dplyr::count( {{ agency }} , {{ winners }} , prepost) %>%
     dplyr::group_by({{ agency }} , prepost) %>%
     dplyr::summarise(
-      gini = DescTools::Gini(n)
+      Norm_GS =
+        DescTools::GiniSimpson({{ winners }} %>% as_factor()) / ((n() -1)/ n())
     ) %>%
   ungroup() %>%
   tidyr::pivot_wider(names_from = prepost, values_from = gini) %>%
