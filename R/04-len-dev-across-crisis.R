@@ -64,19 +64,24 @@ ind_4 <- function(data,
       dplyr::across(dplyr::contains("data"), lubridate::ymd),
       ratio = as.numeric({{ eff_end }} - {{ eff_start }}) / as.numeric({{ exp_end }} - {{ exp_start }})
     ) %>%
-    dplyr::filter(flagdivision == 1) %>%
-    dplyr::group_by({{ stat_unit }}, prepost) %>%
+    dplyr::filter(ratio != Inf, flagdivision == 1) %>%
+    dplyr::group_by({{ stat_unit }}) %>%
+    dplyr::filter(all(c("pre", "post") %in% prepost)) %>%
     dplyr::summarise(
+      prepost,
       prepost_count = dplyr::n(),
-      ind_4_mean = mean(ratio, na.rm = TRUE),
-      ind_4_median = median(ratio, na.rm = TRUE),
-      ind_4_mean = round(ind_4_mean, 3)
+      ratio_mean = mean(ratio, na.rm = TRUE),
+      ratio_median = median(ratio, na.rm = TRUE),
+      ratio_mean = round(ratio_mean, 3)
+      ) %>%
+    mutate(
+      ind_4 = compute_kolmogorov_smirnoff(var = ratio_mean, group = prepost, data = .)[1]
     ) %>%
     ungroup({{ stat_unit }}) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value = ind_4_mean,
+      indicator_value = ind_4,
       aggregation_name = {{ stat_unit }},
       aggregation_type = rlang::as_string(aggregation_type),
       emergency = emergency_scenario
