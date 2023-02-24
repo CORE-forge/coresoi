@@ -4,7 +4,7 @@
 #' @export
 compute_ttest <- function(mean_to_compare, ground_mean) {
   data %>%
-    stats::t.test(x=mean_to_compare, mu=ground_mean, alternative="greater")$p.value
+    stats::t.test(x = mean_to_compare, mu = ground_mean, alternative = "greater")$p.value
 }
 
 #' @title compute Lenghty Contracts indicator
@@ -59,11 +59,13 @@ ind_9 <- function(data,
     dplyr::mutate(
       prepost = dplyr::if_else(
         lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
-        true = "post",false = "pre"),
+        true = "post", false = "pre"
+      ),
       prepost = forcats::as_factor(prepost),
       flagdivision = dplyr::if_else(
         stringr::str_sub({{ cpv }}, start = 1, end = 2) == "33",
-        true = 1, false = 0),
+        true = 1, false = 0
+      ),
       contract_duration = dplyr::if_else(
         {{ eff_end }} < {{ eff_start }},
         true = NA_real_, false =
@@ -85,8 +87,10 @@ ind_9 <- function(data,
       mean = mean(contract_duration, na.rm = TRUE),
       median = median(contract_duration, na.rm = TRUE),
       wilctest = stats::wilcox.test(contract_duration,
-                                    mu = grand_mean,
-                                    alternative = "greater")$p.value %>% suppressWarnings()) %>%
+        mu = grand_mean,
+        alternative = "greater"
+      )$p.value %>% suppressWarnings()
+    ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
