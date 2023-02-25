@@ -94,7 +94,7 @@ ind_9 <- function(data,
       indicator_id = indicator_id,
       indicator_name = indicator_name,
       indicator_value = wilctest,
-      aggregation_tye = {{ stat_unit }},
+      aggregation_name = {{ stat_unit }},
       aggregation_type = rlang::as_string(aggregation_type),
       emergency = emergency_scenario
     ) %>%
