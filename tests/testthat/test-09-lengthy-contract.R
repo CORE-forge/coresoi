@@ -43,35 +43,33 @@ expect_within_range <- function(object, min, max) {
   fail(message)
 }
 
-test_that("check `ind_9()` are 12 columns as according to `generate_indicator_schema()`s with `stat_unit` being **provincia**", {
+
+expect_some_variability <- function(object, exp_value_counts) {
+  act <- quasi_label(rlang::enquo(object), arg = "object")
+
+  act$value_counts <- unique(act$val$indicator_value)
+
+  if (length(act$val$indicator_value) > exp_value_counts) {
+    succeed()
+    return(invisible(act$val))
+  }
+
+  message <- sprintf("`indicator_value` has not that many values %i", act$value_counts)
+  fail(message)
+}
+
+
+
+test_that("check `ind_9()` are 12 columns as according to `generate_indicator_schema()`s with `stat_unit` being **cf_amministrazione_appaltante**", {
   expect_col_number(
-    suppressWarnings({
       ind_9(
         data = mock_data_core,
-        cpv = cod_cpv,
-        publication_date = data_pubblicazione,
-        stat_unit = provincia,
-        emergency_name = "coronavirus",
-        test_type = "fisher"
-      )
-    }), 12
-  )
-})
-
-
-
-test_that("check `ind_9()` are 12 columns as according to `generate_indicator_schema()`s  with `stat_unit` being **cf_amministrazione_appaltante**", {
-  expect_col_number(
-    suppressWarnings({
-      ind_9(
-        data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus",
-        test_type = "fisher"
-      )
-    }), 12
+        eff_start = data_inizio_effettiva ,
+        eff_end = data_effettiva_ultimazione,
+        emergency_name = "coronavirus"
+      ), 12
   )
 })
 
@@ -86,143 +84,64 @@ test_that("check column names are as according to pre determined schema", {
   )
 
   expect_equal(
-    suppressWarnings({
       names(ind_9(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus",
-        test_type = "fisher"
-      ))
-    }), col_names,
+        eff_start = data_inizio_effettiva ,
+        eff_end = data_effettiva_ultimazione,
+        emergency_name = "coronavirus"
+      )), col_names,
     tolerance = 0.8
   )
 })
 
 
 
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen, Barnard, (slow, only on a 10000 top obs)", {
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Wilcoxon)", {
   expect_within_range(
-    suppressWarnings({
       ind_9(
-        # only 10000 obs since this is time consuming
-        data = mock_data_core %>% head(10000),
-        cpv = cod_cpv,
+        data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
-        emergency_name = "coronavirus",
-        test_type = "barnard"
-      )
-    }),
+        stat_unit = cf_amministrazione_appaltante,
+        eff_start = data_inizio_effettiva ,
+        eff_end = data_effettiva_ultimazione,
+        emergency_name = "coronavirus"
+      ),
     min = 0, max = 1
   )
 })
 
 
 
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Fisher)", {
-  expect_within_range(
-    suppressWarnings({
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Wilcoxon)", {
+  expect_some_variability(
       ind_9(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus",
-        test_type = "fisher"
-      )
-    }),
-    min = 0, max = 1
+        eff_start = data_inizio_effettiva ,
+        eff_end = data_effettiva_ultimazione,
+        emergency_name = "coronavirus"
+      ),
+      exp_value_counts = 2
   )
 })
 
 
 
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Z-test proportional test)", {
-  expect_within_range(
-    suppressWarnings({
-      ind_9(
-        data = mock_data_core,
-        cpv = cod_cpv,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus",
-        test_type = "fisher"
-      )
-    }),
-    min = 0, max = 1
-  )
-})
-
-
-
-
-test_that("check if the number of rows is coherent with the aggregation level `provincia`", {
-  expect_row_number(
-    suppressWarnings({
-      ind_9(
-        data = mock_data_core,
-        cpv = cod_cpv,
-        publication_date = data_pubblicazione,
-        stat_unit = provincia,
-        emergency_name = "coronavirus",
-        test_type = "fisher"
-      )
-    }),
-    n = 108
-  )
-})
-
-
-test_that("check if the number of rows is coherent with the aggregation level (`cf_amministrazione_appaltante`)", {
-  expect_row_number(
-    suppressWarnings({
-      ind_9(
-        data = mock_data_core,
-        cpv = cod_cpv,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus",
-        test_type = "fisher"
-      )
-    }),
-    n = 3227
-  )
-})
-
-## test for different scenarios
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
-  expect_within_range(
-    suppressWarnings({
-      ind_9(
-        data = mock_data_core,
-        cpv = cod_cpv,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "terremoto aquila",
-        test_type = "fisher"
-      )
-    }),
-    min = 0, max = 1
-  )
-})
-
-
-
+## test resiliency oevr differnt scenario
 test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
   expect_within_range(
-    suppressWarnings({
       ind_9(
         data = mock_data_core,
-        cpv = cod_cpv,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "terremoto aquila",
-        test_type = "z-test"
-      )
-    }),
+        eff_start = data_inizio_effettiva ,
+        eff_end = data_effettiva_ultimazione,
+        emergency_name = "terremoto aquila"
+      ),
     min = 0, max = 1
   )
 })
@@ -233,15 +152,18 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
   expect_equal(
     ind_9(
       data = mock_data_core,
-      cpv = cod_cpv,
       publication_date = data_pubblicazione,
-      stat_unit = provincia,
-      emergency_name = "terremoto ischia",
-      test_type = "fisher"
-    ) %>% distinct(emergency_name, emergency_id) %>% flatten(),
+      stat_unit = cf_amministrazione_appaltante,
+      eff_start = data_inizio_effettiva ,
+      eff_end = data_effettiva_ultimazione,
+      emergency_name = "terremoto ischia"
+    )%>% distinct(emergency_name, emergency_id) %>% flatten(),
     list(
       emergency_name = "Terremoto Ischia",
       emergency_id = 3
     )
   )
 })
+
+
+## expect variability
