@@ -21,12 +21,13 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
 #' \dontrun{
 #' if (interactive()) {
 #'   ind_9(
-#'     data = mock_data_core, publication_date = data_pubblicazione,
+#'     data = mock_data_core,
+#'     publication_date = data_pubblicazione,
 #'     stat_unit = cf_amministrazione_appaltante,
 #'     cpv = cod_cpv,
-#'     eff_start = ...,
-#'     eff_end = ...,
-#'     emergency_name = ...
+#'     eff_start = data_inizio_effettiva ,
+#'     eff_end = data_effettiva_ultimazione,
+#'     emergency_name = "coronavirus"
 #'   )
 #' }
 #' }
@@ -46,7 +47,6 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
 ind_9 <- function(data,
                   publication_date,
                   stat_unit,
-                  cpv,
                   eff_start,
                   eff_end,
                   emergency_name) {
@@ -54,6 +54,8 @@ ind_9 <- function(data,
   indicator_name <- "Lengthy contracts"
   aggregation_type <- rlang::quo_squash(rlang::enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
+  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  cpv_col <- grab_cpv(data = data)
 
   data %>%
     dplyr::mutate(
@@ -62,10 +64,7 @@ ind_9 <- function(data,
         true = "post", false = "pre"
       ),
       prepost = forcats::as_factor(prepost),
-      flagdivision = dplyr::if_else(
-        stringr::str_sub({{ cpv }}, start = 1, end = 2) == "33",
-        true = 1, false = 0
-      ),
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
       contract_duration = dplyr::if_else(
         {{ eff_end }} < {{ eff_start }},
         true = NA_real_, false =
@@ -94,14 +93,10 @@ ind_9 <- function(data,
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      wilctest,
-      {{ stat_unit }},
+      indicator_value = wilctest,
+      aggregation_tye = {{ stat_unit }},
       aggregation_type = rlang::as_string(aggregation_type),
-      emergency = emergency_name
-    ) %>%
-    dplyr::rename(
-      indicator_value = ttest,
-      aggregation_name = {{ stat_unit }}
+      emergency = emergency_scenario
     ) %>%
     return()
 }

@@ -4,15 +4,7 @@
 \alias{ind_9}
 \title{compute Lenghty Contracts indicator}
 \usage{
-ind_9(
-  data,
-  publication_date,
-  stat_unit,
-  cpv,
-  eff_start,
-  eff_end,
-  emergency_name
-)
+ind_9(data, publication_date, stat_unit, eff_start, eff_end, emergency_name)
 }
 \arguments{
 \item{data}{bndcp data}
@@ -21,13 +13,13 @@ ind_9(
 
 \item{stat_unit}{the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by}
 
-\item{cpv}{Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract}
-
 \item{eff_start}{Effective start of the execution of the contract}
 
 \item{eff_end}{Effective end of the execution of the contract}
 
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
+
+\item{cpv}{Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}
@@ -39,12 +31,13 @@ The indicator reveals whether the duration of the contract is significantly long
 \dontrun{
 if (interactive()) {
   ind_9(
-    data = mock_data_core, publication_date = data_pubblicazione,
+    data = mock_data_core,
+    publication_date = data_pubblicazione,
     stat_unit = cf_amministrazione_appaltante,
     cpv = cod_cpv,
-    eff_start = ...,
-    eff_end = ...,
-    emergency_name = ...
+    eff_start = data_inizio_effettiva ,
+    eff_end = data_effettiva_ultimazione,
+    emergency_name = "coronavirus"
   )
 }
 }
