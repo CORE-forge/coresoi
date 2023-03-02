@@ -2,7 +2,6 @@
 #' @description Divergence in duration between expected and effective times of execution of the contract
 #' @param data data to be passed, expects tibble
 #' @param exp_end Expected end of the contract i.e. contract completion date
-#' @param exp_start Expected initial execution of the contract
 #' @param eff_end Effective end of the execution of the contract
 #' @param eff_start Effective contract signature
 #' @param stat_unit the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by
@@ -16,7 +15,6 @@
 #'   ind_4(
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
-#'     exp_start = data_esecutivita_contratto,
 #'     exp_end = data_termine_contrattuale,
 #'     eff_end = data_effettiva_ultimazione,
 #'     eff_start = data_stipula_contratto,
@@ -35,7 +33,6 @@
 #' @importFrom dplyr filter mutate if_else group_by summarise n
 #' @importFrom forcats as_factor
 ind_4 <- function(data,
-                  exp_start,
                   exp_end,
                   eff_start,
                   eff_end,
@@ -54,7 +51,6 @@ ind_4 <- function(data,
     dplyr::filter(
       !is.na({{ exp_end }}) &
         !is.na({{ eff_end }}) &
-        !is.na({{ exp_start }}) &
         !is.na({{ eff_start }})
     ) %>%
     dplyr::mutate(
@@ -62,7 +58,7 @@ ind_4 <- function(data,
       prepost = forcats::as_factor(prepost),
       flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
       dplyr::across(dplyr::contains("data"), lubridate::ymd),
-      ratio = as.numeric({{ eff_end }} - {{ eff_start }}) / as.numeric({{ exp_end }} - {{ exp_start }})
+      ratio = as.numeric({{ eff_end }} - {{ eff_start }}) / as.numeric({{ exp_end }} - {{ eff_start }})
     ) %>%
     dplyr::filter(ratio != Inf, flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
