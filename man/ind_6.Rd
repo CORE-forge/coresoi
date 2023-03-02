@@ -21,7 +21,21 @@ ind_6(data, publication_date, emergency_name, award_col, stat_unit)
 indicator schema as from \code{generate_indicator_schema}
 }
 \description{
-The indicator reveals the fraction of contracts without any award notice communication.
+The indicator reveals whether - and to what extent - the duty of contracting authorities to communicate the public procurement procedure activation to the Anticorruption Authority ended with a technical failure
+\subsection{Motivation:}{
+
+The red flag considers at risk contracting authorities \strong{who fail to accomplish their duty} to communicate the public procurement procedure activation to the Anticorruption Authority
+}
+
+\subsection{Scoring Rule}{
+
+If Test-statistic significant-> 1, otherwise -> 0
+}
+
+\subsection{Main target unit}{
+
+This indicator targets \strong{contracting authorities}
+}
 }
 \examples{
 \dontrun{

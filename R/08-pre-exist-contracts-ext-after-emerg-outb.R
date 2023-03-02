@@ -1,5 +1,14 @@
 #' @title Compute Pre-existing contracts modified after the crisis indicator
-#' @description The contract changed
+#' @description The indicator reveals whether a pre- existing awarded contract has been modified after the emergency outbreak
+#'
+#' ### Motivation:
+#' The red flag considers at risk contracts awarded before the emergency outbreak, but modified through variants after 6 months (parametric window) from the emergency outbreak
+#'
+#' ### Scoring Rule
+#' If an awarded contract before the outbreak is modified through variants after 6 months from the emergency outbreak -> 1, otherwise -> 0
+#'
+#' ### Main target unit
+#' This indicator targets **companies** and **contracting authorities**
 #' @param data bndcp data
 #' @param publication_date The date when the tender was published
 #' @param stat_unit tatistical unit of measurement, aggregation variable, the indicator target. In this case the identifier of agency or winners.

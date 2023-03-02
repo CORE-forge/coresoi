@@ -19,7 +19,21 @@ ind_7(data, publication_date, emergency_name, stat_unit)
 indicator schema as from \code{generate_indicator_schema}
 }
 \description{
-The indicator reveals whether the company that won the public tender or contract has a previous history of at least one year since the opening of the tender.
+The indicator focuses on companies that after the emergency outbreak were awarded one or more public contracts having participated in the public procurement process without winning in the 5 years before the emergency outbreak
+\subsection{Motivation:}{
+
+The red flag considers at risk those companies that \strong{show a "one- shot opportunistic behaviour"}, that is, companies that after the emergency outbreak were awarded one or more public contracts but \emph{did not show any competitive power in the previous years}
+}
+
+\subsection{Scoring Rule}{
+
+If a company wins one or more contracts after the emergency outbreak having participated in the public procurement process without winning in the 5 years before the emergency outbreak -> 1, otherwise 0
+}
+
+\subsection{Main target unit}{
+
+This indicator targets \strong{companies}
+}
 }
 \examples{
 \dontrun{

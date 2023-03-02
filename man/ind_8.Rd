@@ -30,7 +30,21 @@ ind_8(
 indicator schema as from \code{generate_indicator_schema}
 }
 \description{
-The contract changed
+The indicator reveals whether a pre- existing awarded contract has been modified after the emergency outbreak
+\subsection{Motivation:}{
+
+The red flag considers at risk contracts awarded before the emergency outbreak, but modified through variants after 6 months (parametric window) from the emergency outbreak
+}
+
+\subsection{Scoring Rule}{
+
+If an awarded contract before the outbreak is modified through variants after 6 months from the emergency outbreak -> 1, otherwise -> 0
+}
+
+\subsection{Main target unit}{
+
+This indicator targets \strong{companies} and \strong{contracting authorities}
+}
 }
 \examples{
 \dontrun{

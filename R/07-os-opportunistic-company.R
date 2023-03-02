@@ -1,5 +1,14 @@
 #' @title Compute One-shot opportunistic companies over the crisiss indicator
-#' @description The indicator reveals whether the company that won the public tender or contract has a previous history of at least one year since the opening of the tender.
+#' @description The indicator focuses on companies that after the emergency outbreak were awarded one or more public contracts having participated in the public procurement process without winning in the 5 years before the emergency outbreak
+#'
+#' ### Motivation:
+#' The red flag considers at risk those companies that **show a "one- shot opportunistic behaviour"**, that is, companies that after the emergency outbreak were awarded one or more public contracts but _did not show any competitive power in the previous years_
+#'
+#' ### Scoring Rule
+#' If a company wins one or more contracts after the emergency outbreak having participated in the public procurement process without winning in the 5 years before the emergency outbreak -> 1, otherwise 0
+#'
+#' ### Main target unit
+#' This indicator targets **companies**
 #' @param data mock_data_core exmaple data
 #' @param publication_date The date when the tender was published
 #' @param stat_unit The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)

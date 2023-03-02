@@ -1,5 +1,14 @@
 #' @title Compute Winner's share of issuer's contract across the crisis indicator
-#' @description Compute ratio of Gini of winning companies for agency, before and after a crisis
+#' @description The indicator reveals, for each issuer, the share of contracts awarded to the same company out of the total number of contracts issued
+#'
+#' ### Motivation:
+#' The red flag considers at risk companies that **exceptionally increase** _their competitive power_ over the emergency outbreak, as a consequence of a high proportion of contracts awarded by the same contracting authority
+#'
+#' ### Scoring Rule
+#' If Test-statistic significant-> 1, otherwise -> 0
+#'
+#' ### Main target unit
+#' This indicator targets **companies** and **contracting authorities**
 #' @param data data to be passed, expects tibble
 #' @param publication_date The date when the tender was published
 #' @param stat_unit Column of entities who decide who win the public procurement

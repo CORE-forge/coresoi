@@ -21,7 +21,21 @@ ind_5(data, stat_unit, publication_date, winners, emergency_name)
 indicator schema as from \code{generate_indicator_schema}
 }
 \description{
-Compute ratio of Gini of winning companies for agency, before and after a crisis
+The indicator reveals, for each issuer, the share of contracts awarded to the same company out of the total number of contracts issued
+\subsection{Motivation:}{
+
+The red flag considers at risk companies that \strong{exceptionally increase} \emph{their competitive power} over the emergency outbreak, as a consequence of a high proportion of contracts awarded by the same contracting authority
+}
+
+\subsection{Scoring Rule}{
+
+If Test-statistic significant-> 1, otherwise -> 0
+}
+
+\subsection{Main target unit}{
+
+This indicator targets \strong{companies} and \strong{contracting authorities}
+}
 }
 \details{
 DETAILS

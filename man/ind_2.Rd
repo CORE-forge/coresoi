@@ -28,7 +28,21 @@ ind_2(
 indicator schema as from \code{generate_indicator_schema()} rows determined by aggregation level and \code{indicator_value} based on statistical test performed in \code{ind_2}
 }
 \description{
-companies that after the emergency outbreak were awarded public contracts much higher in economic value than before the emergency scenario
+The indicator focuses on companies that after the emergency outbreak were awarded public contracts much higher in economic value than before the emergency
+\subsection{Motivation:}{
+
+The red flag considers at risk those companies that \strong{exceptionally increase} their \emph{competitive power} over the outbreak, in terms of economic value of their awarded contracts on the relevant economic market.
+}
+
+\subsection{Scoring Rule}{
+
+If Test-statistic significant-> 1, otherwise -> 0
+}
+
+\subsection{Main target unit}{
+
+This indicator targets \strong{Companies}
+}
 }
 \examples{
 \dontrun{

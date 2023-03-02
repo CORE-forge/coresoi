@@ -1,5 +1,14 @@
 #' @title Compute Economic deviation across the crisis indicator
-#' @description The difference between the sum foreseen in the contract and the actual payment by the C.A. ( _ita_ SA stazione Appaltante)
+#' @description The indicator reveals whether there has been a deviation of the contract actual execution economic value from its initial awarded value.
+#'
+#' ### Motivation:
+#' The red flag considers at risk companies whose contracts undergo a **significant increase** of their _economic deviation ratio_ - i.e., ratio between awarded economic value and actual amount paid - across the crisis.
+#'
+#' ### Scoring Rule
+#' If Test-statistic significant-> 1, otherwise -> 0
+#'
+#' ### Main target unit
+#' This indicator targets **companies** and **contracting authorities**
 #' @param data data to be passed, expects tibble
 #' @param award_value The date when the tender was awarded
 #' @param sums_paid The amount paid by the C.A.

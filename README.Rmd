@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/CORE-forge/core-soi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CORE-forge/core-soi?branch=main)
 <!-- badges: end -->
 
-The goal of `coresoi` is to offer a _sandbox_ in which researchers and anti-corruption analysts may play and interact with the set of indicators we designed, offering also mock data extracted from [dati.anticorruzione](https://dati.anticorruzione.it/index.html#/home).
+The goal of `coresoi` is to provide a _sandbox_ environment for researchers and anti-corruption analysts to interact with the indicators we've designed. We also offer mock data extracted from [dati.anticorruzione](https://dati.anticorruzione.it/index.html#/home) to aid in their analysis. Our hope is that this platform will facilitate more effective efforts against corruption and promote greater transparency in government.
 
 ## Installation
 
@@ -32,10 +32,11 @@ You can install the development version of coresoi from [GitHub](https://github.
 devtools::install_github("CORE-forge/coresoi")
 ```
 
-## Example: Compute indicator High Winning Rate 
+## Example: Compute Winning rate across the crisis indicator
 
-There might be the case in which you have to compute the indicator n° 1, which mainly accounts for companies that after the Emergency outbreak (in this case Coronavirus) were awarded public contracts much more frequently than before the Emergency. Indicator 11 computes a [Fish exact's test](https://en.wikipedia.org/wiki/Fisher%27s_exact_test) in proportion from _pre_ and _post_ emergency, poiting out if there is any statistical significance between the two group proportions.
-The resulting indicator follows a schema generated through `coresoi::generate_indicator_schema`.
+In certain cases, it may be necessary to calculate Indicator 1, which primarily focuses on companies that were awarded public contracts at a significantly higher rate after the outbreak of the Emergency (in this case, the Coronavirus) than before. Indicator 1 uses a [Fisher's exact](https://en.wikipedia.org/wiki/Fisher%27s_exact_test) (other test choices include [Barnard](https://en.wikipedia.org/wiki/Barnard%27s_test)  and [z-test](https://en.wikipedia.org/wiki/Z-test)) test to compare the proportions of pre- and post-Emergency contracts and determine if there is any statistically significant difference between the two groups.
+
+The resulting indicator follows a schema (which is convenient to ship to frontends) that is generated using the `coresoi::generate_indicator_schema` function.
 
 ```{r example}
 library(coresoi)
@@ -45,31 +46,14 @@ library(dplyr)
 ind_1_res <- ind_1(
   data = mock_data_core, 
   publication_date = data_pubblicazione, 
-  cpv = cod_cpv, 
-  stat_unit = provincia,
-  emergency_name = "coronavirus")
+  stat_unit = cf_amministrazione_appaltante,
+  emergency_name = "coronavirus",
+  test_type = "fisher")
 ind_1_res
 ```
 
-Let's now visualize results for top 10 provinces given High Winning Rate  indicator estimate.
 
-```{r plot}
-library(ggplot2)
-library(forcats)
-library(tidyr)
-drop_na(ind_1_res) %>% 
-  ggplot(aes(y = fct_reorder(aggregation_name, indicator_value), x = indicator_value)) +
-  geom_col() +
-  scale_y_discrete(guide = guide_axis(check.overlap = TRUE)) +
-  labs(
-    y = "",
-    x = "Fisher' Exact test pvalue (indicator 1)"
-  )
-
-```
-
-
-## CORE ecosystem
+## CORE ecosystem 🌏
 
 `coresoi` is part of of the project CO.R.E.- Corruption risk indicators in emergency, financed by the EU Commission, as part of the Internal Police Security Fund (ISF-P) program,
 The project presented by the Department of Political Sciences as leader with the coordination of Prof. Gnaldi (PI) was funded for a total of 514 thousand euros. The working group is made up of colleagues Prof. Enrico Carloni, Prof. Marco Mazzoni, Prof. Benedetto Ponti, Prof. Maria Giovanna Ranalli. The international network involves Universitat Obierta Catalunya (Spain), Dublin City University (Ireland), Oficina Antifrau de Catalunya (Spain), Infonodes (Italy), Transparency International (Portugal), Villa Montesca Foundation (Italy).
@@ -78,11 +62,9 @@ The C.R.E. focuses on assessing the risk of corruption in public procurement fro
 
 ## 📝 TODOs
 
-- setup google analytics
+- setup Google Analytics
 - build a template for package
-- less error prone function indicators (+ escapes, type checkers etc.)
-- fix aggregation bug on `ind_11()`
-- mettere jl n uovo `test_data` con 100'000 più recenti
+- fix behavior `ind_3`, `ind_5` and `ind_7`
 
 
 ## Code of Conduct
