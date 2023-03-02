@@ -49,9 +49,10 @@ test_that("check `ind_6()` are 12 columns as according to `generate_indicator_sc
       ind_6(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        emergency_name = "coronavirus",
         award_col = id_aggiudicazione,
-        emergency_name = "coronavirus"
+        stat_unit = provincia,
+        test_type = "fisher"
       )
     }), 12
   )
@@ -71,9 +72,10 @@ test_that("check column names are as according to pre determined schema", {
       names(ind_6(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        emergency_name = "coronavirus",
         award_col = id_aggiudicazione,
-        emergency_name = "coronavirus"
+        stat_unit = provincia,
+        test_type = "fisher"
       ))
     }), col_names
   )
@@ -87,9 +89,10 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
       ind_6(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        emergency_name = "coronavirus",
         award_col = id_aggiudicazione,
-        emergency_name = "coronavirus"
+        stat_unit = provincia,
+        test_type = "fisher"
       )
     }),
     min = 0, max = 1
@@ -97,51 +100,50 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 })
 
 
-
-# TODO this has to be investigated, originally 111, now 228!
 test_that("check if the number of rows is coherent with the aggregation level (`provincia`)", {
   expect_row_number(
     suppressMessages({
       ind_6(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        emergency_name = "coronavirus",
         award_col = id_aggiudicazione,
-        emergency_name = "coronavirus"
+        stat_unit = provincia,
+        test_type = "fisher"
       )
     }),
-    n = 224
+    n = 101
   )
 })
 
-# TODO this has to be investigated, originally 28**, now 18320!
 test_that("check if the number of rows is coherent with the aggregation level (`cf_amministrazione_appaltante`)", {
   expect_row_number(
     suppressMessages({
       ind_6(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "coronavirus",
         award_col = id_aggiudicazione,
-        emergency_name = "coronavirus"
+        stat_unit = cf_amministrazione_appaltante,
+        test_type = "fisher"
       )
     }),
-    n = 18320
+    n = 624
   )
 })
 
 
 ## test for different scenarios
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen i.e. 'terremoto aquila'", {
   expect_within_range(
     suppressMessages(
       ind_6(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "terremoto aquila",
         award_col = id_aggiudicazione,
-        emergency_name = "terremoto aquila"
+        stat_unit = cf_amministrazione_appaltante,
+        test_type = "fisher"
       )
     ),
     min = 0, max = 1
@@ -156,9 +158,10 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
       ind_6(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "terremoto aquila",
         award_col = id_aggiudicazione,
-        emergency_name = "terremoto aquila"
+        stat_unit = cf_amministrazione_appaltante,
+        test_type = "fisher"
       )
     ),
     min = 0, max = 1
@@ -167,15 +170,16 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 
 
 
-test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario", {
+test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario, a new one i.e. 'terremoto ischia'", {
   expect_equal(
     suppressMessages(
       ind_6(
         data = mock_data_core,
         publication_date = data_pubblicazione,
+        emergency_name = "terremoto Ischia",
+        award_col = id_aggiudicazione,
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "terremoto ischia",
-        award_col = id_aggiudicazione
+        test_type = "fisher"
       ) %>% distinct(emergency_name, emergency_id) %>% flatten()
     ),
     list(
