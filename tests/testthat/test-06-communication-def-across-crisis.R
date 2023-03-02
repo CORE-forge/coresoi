@@ -100,6 +100,26 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 })
 
 
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen, this time is 'z-test'", {
+  expect_within_range(
+    suppressMessages({
+      ind_6(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        emergency_name = "coronavirus",
+        award_col = id_aggiudicazione,
+        stat_unit = provincia,
+        test_type = "z-test"
+      )
+    }),
+    min = 0, max = 1
+  )
+})
+
+
+
+
 test_that("check if the number of rows is coherent with the aggregation level (`provincia`)", {
   expect_row_number(
     suppressMessages({
