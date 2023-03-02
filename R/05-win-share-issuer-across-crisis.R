@@ -54,7 +54,7 @@ ind_5 <- function(data,
     dplyr::count({{ stat_unit }}, {{ winners }}, prepost) %>%
     dplyr::group_by({{ stat_unit }}, prepost) %>%
     dplyr::summarise(
-      norm_gs =DescTools::GiniSimpson({{ winners }} %>% as_factor()) / ((n() -1)/ n())
+      norm_gs = DescTools::GiniSimpson({{ winners }} %>% as_factor()) / ((n() - 1) / n())
     ) %>%
     ungroup() %>%
     tidyr::pivot_wider(names_from = prepost, values_from = norm_gs) %>%

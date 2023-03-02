@@ -44,6 +44,26 @@ expect_within_range <- function(object, min, max) {
 }
 
 
+expect_either_0_or_1 <- function(object, min, max) {
+  act <- quasi_label(rlang::enquo(object), arg = "object")
+
+  act$indicator_min <-c(0,1)
+  act$indicator_max <- max(act$val$indicator_value)
+
+  if (any(between(act$val$indicator_value, min, max))) {
+    succeed()
+    return(invisible(act$val))
+  }
+
+  message <- sprintf("`indicator_value` in %s does not stay in [%i - %i] indeed min-max range is [%i -  %i]", act$lab, act$indicator_min, act$indicator_max, min, max)
+  fail(message)
+}
+
+
+
+
+
+
 test_that("check `ind_7()` are 12 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
@@ -106,7 +126,8 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
       ind_7(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        final_award_date = data_aggiudicazione_definitiva,
+        stat_unit = codice_fiscale,
         emergency_name = "terremoto aquila"
       )
     }),

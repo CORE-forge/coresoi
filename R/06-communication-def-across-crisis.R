@@ -47,16 +47,16 @@ ind_6 <- function(data,
 
   test <- function(a, b, c, d, test_type) {
     switch(test_type,
-           "barnard" = {
-             compute_barnard(d, b, c, a)
-           },
-           "fisher" = {
-             compute_fisher(a, b, c, d)
-           },
-           "z-test" = {
-             compute_prop_test(a, b, c, d)
-           },
-           stop(paste0("No handler for ", test_type))
+      "barnard" = {
+        compute_barnard(d, b, c, a)
+      },
+      "fisher" = {
+        compute_fisher(a, b, c, d)
+      },
+      "z-test" = {
+        compute_prop_test(a, b, c, d)
+      },
+      stop(paste0("No handler for ", test_type))
     )
   }
 
@@ -95,6 +95,6 @@ ind_6 <- function(data,
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario
-    )  %>%
+    ) %>%
     return()
 }

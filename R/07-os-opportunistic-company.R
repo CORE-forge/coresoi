@@ -51,7 +51,7 @@ ind_7 <- function(data,
     dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
-      flag_opportunist = dplyr::if_else(max({{ final_award_date }}, na.rm = T) %within% lubridate::interval(emergency_scenario$em_date - lubridate::years(1), emergency_scenario$em_date ), 1, 0),
+      flag_opportunist = dplyr::if_else(max({{ final_award_date }}, na.rm = T) %within% lubridate::interval(emergency_scenario$em_date - lubridate::years(1), emergency_scenario$em_date), 1, 0),
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,

@@ -69,7 +69,7 @@ ind_4 <- function(data,
       ratio_mean = mean(ratio, na.rm = TRUE),
       ratio_median = median(ratio, na.rm = TRUE),
       ratio_mean = round(ratio_mean, 3)
-      ) %>%
+    ) %>%
     mutate(
       ind_4 = compute_kolmogorov_smirnoff(var = ratio_mean, group = prepost, data = .)[1]
     ) %>%
