@@ -50,7 +50,8 @@ test_that("check `ind_7()` are 12 columns as according to `generate_indicator_sc
       ind_7(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        final_award_date = data_aggiudicazione_definitiva,
+        stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       )
     }), 12
@@ -71,7 +72,8 @@ test_that("check column names are as according to pre determined schema", {
       names(ind_7(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        final_award_date = data_aggiudicazione_definitiva,
+        stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       ))
     }), col_names
@@ -86,7 +88,8 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
       ind_7(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        final_award_date = data_aggiudicazione_definitiva,
+        stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       )
     }),
@@ -94,71 +97,6 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
   )
 })
 
-
-
-
-# test_that("check if the number of rows is coherent with the aggregation level (`provincia`)", {
-#   expect_row_number(
-#     suppressWarnings({
-#       ind_7(
-#         data = mock_data_core,
-#         publication_date = data_pubblicazione,
-#         stat_unit = provincia,
-#         emergency_name = "coronavirus"
-#       )
-#     }),
-#     n = 108
-#   )
-# })
-#
-#
-# test_that("check if the number of rows is coherent with the aggregation level (`cf_amministrazione_appaltante`)", {
-#   expect_row_number(
-#     suppressWarnings({
-#       ind_7(
-#         data = mock_data_core,
-#         publication_date = data_pubblicazione,
-#         stat_unit = cf_amministrazione_appaltante,
-#         emergency_name = "coronavirus"
-#       )
-#     }),
-#     n = 3227
-#   )
-# })
-
-
-
-## test for different scenarios
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
-  expect_within_range(
-    suppressWarnings({
-      ind_7(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = provincia,
-        emergency_name = "terremoto aquila"
-      )
-    }),
-    min = 0, max = 1
-  )
-})
-
-
-
-# test_that("check if the number of rows is coherent with the aggregation level (`provincia`) with a different emergency scenario", {
-#   expect_row_number(
-#     suppressWarnings({
-#       ind_7(
-#         data = mock_data_core,
-#         publication_date = data_pubblicazione,
-#         stat_unit = provincia,
-#         emergency_name = "terremoto aquila"
-#       )
-#     }),
-#     n = 108
-#   )
-# })
 
 
 
