@@ -12,6 +12,7 @@
 #'   ind_7(
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
+#'     final_award_date = data_aggiudicazione_definitiva,
 #'     stat_unit = cf_amministrazione_appaltante,
 #'     emergency_name = "coronavirus"
 #'   )
@@ -30,6 +31,7 @@
 #' @importFrom forcats as_factor
 ind_7 <- function(data,
                   publication_date,
+                  final_award_date,
                   emergency_name,
                   stat_unit) {
   indicator_id <- 7
@@ -49,10 +51,8 @@ ind_7 <- function(data,
     dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
-      flag_opportunist = dplyr::if_else(max(data_aggiudicazione_definitiva) %within% lubridate::interval(data_pubblicazione - lubridate::years(1), data_pubblicazione), 1, 0),
-      flag_opportunist = dplyr::if_else(data_pubblicazione <= data_aggiudicazione_definitiva, true = 0, false = 1)
+      flag_opportunist = dplyr::if_else(max({{ final_award_date }}, na.rm = T) %within% lubridate::interval(emergency_scenario$em_date - lubridate::years(1), emergency_scenario$em_date), 1, 0),
     ) %>%
-    ungroup({{ stat_unit }}) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,

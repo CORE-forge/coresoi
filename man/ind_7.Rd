@@ -4,7 +4,7 @@
 \alias{ind_7}
 \title{Compute One-shot opportunistic companies over the crisiss indicator}
 \usage{
-ind_7(data, publication_date, emergency_name, stat_unit)
+ind_7(data, publication_date, final_award_date, emergency_name, stat_unit)
 }
 \arguments{
 \item{data}{mock_data_core exmaple data}
@@ -28,6 +28,7 @@ if (interactive()) {
   ind_7(
     data = mock_data_core,
     publication_date = data_pubblicazione,
+    final_award_date = data_aggiudicazione_definitiva,
     stat_unit = cf_amministrazione_appaltante,
     emergency_name = "coronavirus"
   )

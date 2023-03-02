@@ -6,7 +6,6 @@
 \usage{
 ind_4(
   data,
-  exp_start,
   exp_end,
   eff_start,
   eff_end,
@@ -17,8 +16,6 @@ ind_4(
 }
 \arguments{
 \item{data}{data to be passed, expects tibble}
-
-\item{exp_start}{Expected initial execution of the contract}
 
 \item{exp_end}{Expected end of the contract i.e. contract completion date}
 
@@ -47,7 +44,6 @@ if (interactive()) {
   ind_4(
     data = mock_data_core,
     publication_date = data_pubblicazione,
-    exp_start = data_esecutivita_contratto,
     exp_end = data_termine_contrattuale,
     eff_end = data_effettiva_ultimazione,
     eff_start = data_stipula_contratto,

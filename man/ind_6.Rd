@@ -4,7 +4,7 @@
 \alias{ind_6}
 \title{Compute Communication default across the crisis indicator}
 \usage{
-ind_6(data, publication_date, emergency_name, award_col, stat_unit)
+ind_6(data, publication_date, emergency_name, award_col, stat_unit, test_type)
 }
 \arguments{
 \item{data}{mock_data_core example bdncp data}
@@ -16,6 +16,8 @@ ind_6(data, publication_date, emergency_name, award_col, stat_unit)
 \item{award_col}{column indentifying id for that contract award}
 
 \item{stat_unit}{statistical unit of measurement and stat_uniting}
+
+\item{test_type}{type of the test we would like to apply}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}
@@ -32,7 +34,8 @@ if (interactive()) {
     publication_date = data_pubblicazione,
     emergency_name = "coronavirus",
     award_col = id_aggiudicazione,
-    stat_unit = provincia
+    stat_unit = provincia,
+    test_type = "fisher"
   )
 }
 }

@@ -44,13 +44,34 @@ expect_within_range <- function(object, min, max) {
 }
 
 
+expect_either_0_or_1 <- function(object, min, max) {
+  act <- quasi_label(rlang::enquo(object), arg = "object")
+
+  act$indicator_min <-c(0,1)
+  act$indicator_max <- max(act$val$indicator_value)
+
+  if (any(between(act$val$indicator_value, min, max))) {
+    succeed()
+    return(invisible(act$val))
+  }
+
+  message <- sprintf("`indicator_value` in %s does not stay in [%i - %i] indeed min-max range is [%i -  %i]", act$lab, act$indicator_min, act$indicator_max, min, max)
+  fail(message)
+}
+
+
+
+
+
+
 test_that("check `ind_7()` are 12 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
       ind_7(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        final_award_date = data_aggiudicazione_definitiva,
+        stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       )
     }), 12
@@ -71,7 +92,8 @@ test_that("check column names are as according to pre determined schema", {
       names(ind_7(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        final_award_date = data_aggiudicazione_definitiva,
+        stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       ))
     }), col_names
@@ -86,7 +108,8 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
       ind_7(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        final_award_date = data_aggiudicazione_definitiva,
+        stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       )
     }),
@@ -97,78 +120,14 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 
 
 
-# test_that("check if the number of rows is coherent with the aggregation level (`provincia`)", {
-#   expect_row_number(
-#     suppressWarnings({
-#       ind_7(
-#         data = mock_data_core,
-#         publication_date = data_pubblicazione,
-#         stat_unit = provincia,
-#         emergency_name = "coronavirus"
-#       )
-#     }),
-#     n = 108
-#   )
-# })
-#
-#
-# test_that("check if the number of rows is coherent with the aggregation level (`cf_amministrazione_appaltante`)", {
-#   expect_row_number(
-#     suppressWarnings({
-#       ind_7(
-#         data = mock_data_core,
-#         publication_date = data_pubblicazione,
-#         stat_unit = cf_amministrazione_appaltante,
-#         emergency_name = "coronavirus"
-#       )
-#     }),
-#     n = 3227
-#   )
-# })
-
-
-
-## test for different scenarios
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
-  expect_within_range(
-    suppressWarnings({
-      ind_7(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = provincia,
-        emergency_name = "terremoto aquila"
-      )
-    }),
-    min = 0, max = 1
-  )
-})
-
-
-
-# test_that("check if the number of rows is coherent with the aggregation level (`provincia`) with a different emergency scenario", {
-#   expect_row_number(
-#     suppressWarnings({
-#       ind_7(
-#         data = mock_data_core,
-#         publication_date = data_pubblicazione,
-#         stat_unit = provincia,
-#         emergency_name = "terremoto aquila"
-#       )
-#     }),
-#     n = 108
-#   )
-# })
-
-
-
 test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
   expect_within_range(
     suppressWarnings({
       ind_7(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        final_award_date = data_aggiudicazione_definitiva,
+        stat_unit = codice_fiscale,
         emergency_name = "terremoto aquila"
       )
     }),

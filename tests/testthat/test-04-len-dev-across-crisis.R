@@ -56,7 +56,6 @@ test_that("check `ind_4()` are 12 columns as according to `generate_indicator_sc
       ind_4(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        exp_start = data_esecutivita_contratto,
         exp_end = data_termine_contrattuale,
         eff_end = data_effettiva_ultimazione,
         eff_start = data_stipula_contratto,
@@ -83,7 +82,6 @@ test_that("check column names are as according to pre determined schema", {
       names(ind_4(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        exp_start = data_esecutivita_contratto,
         exp_end = data_termine_contrattuale,
         eff_end = data_effettiva_ultimazione,
         eff_start = data_stipula_contratto,
@@ -103,7 +101,6 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
       ind_4(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        exp_start = data_esecutivita_contratto,
         exp_end = data_termine_contrattuale,
         eff_end = data_effettiva_ultimazione,
         eff_start = data_stipula_contratto,
@@ -122,7 +119,6 @@ test_that("check if the number of rows is coherent with the aggregation level (`
       ind_4(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        exp_start = data_esecutivita_contratto,
         exp_end = data_termine_contrattuale,
         eff_end = data_effettiva_ultimazione,
         eff_start = data_stipula_contratto,
@@ -130,7 +126,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "coronavirus"
       )
     }),
-    n = 202 ## qui 1111 sottratti gli NA, al variare del mock pure questi cambiano
+    n = 221
   )
 })
 
@@ -142,7 +138,6 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
       ind_4(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        exp_start = data_esecutivita_contratto,
         exp_end = data_termine_contrattuale,
         eff_end = data_effettiva_ultimazione,
         eff_start = data_stipula_contratto,
