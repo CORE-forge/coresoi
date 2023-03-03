@@ -25,21 +25,7 @@ ind_9(data, publication_date, stat_unit, eff_start, eff_end, emergency_name)
 indicator schema as from \code{generate_indicator_schema}
 }
 \description{
-The indicator reveals whether the duration of a contract is significantly longer than the average length of awarded contracts after the emergency outbreak
-\subsection{Motivation:}{
-
-The red flag considers at risk contracts won after the emergency outbreak whose duration is not justified by the nature of the crisis, that is, contracts longer than the average duration of contracts won after the emergency outbreak
-}
-
-\subsection{Scoring Rule}{
-
-If Test-statistic significant-> 1, otherwise -> 0
-}
-
-\subsection{Main target unit}{
-
-This indicator targets \strong{companies} and \strong{contracting authorities}
-}
+The indicator reveals whether the duration of the contract is significantly longer than the average length of awarded contracts after the emergency.
 }
 \examples{
 \dontrun{

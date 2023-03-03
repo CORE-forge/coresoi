@@ -30,7 +30,21 @@ ind_3(
 indicator schema as from \code{generate_indicator_schema}
 }
 \description{
-The difference between the sum foreseen in the contract and the actual payment by the C.A. ( \emph{ita} SA stazione Appaltante)
+The indicator reveals whether there has been a deviation of the contract actual execution economic value from its initial awarded value.
+\subsection{Motivation:}{
+
+The red flag considers at risk companies whose contracts undergo a \strong{significant increase} of their \emph{economic deviation ratio} - i.e., ratio between awarded economic value and actual amount paid - across the crisis.
+}
+
+\subsection{Scoring Rule}{
+
+If Test-statistic significant-> 1, otherwise -> 0
+}
+
+\subsection{Main target unit}{
+
+This indicator targets \strong{companies} and \strong{contracting authorities}
+}
 }
 \details{
 DETAILS

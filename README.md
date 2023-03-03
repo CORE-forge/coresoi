@@ -13,10 +13,13 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 coverage](https://codecov.io/gh/CORE-forge/core-soi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CORE-forge/core-soi?branch=main)
 <!-- badges: end -->
 
-The goal of `coresoi` is to offer a *sandbox* in which researchers and
-anti-corruption analysts may play and interact with the set of
-indicators we designed, offering also mock data extracted from
-[dati.anticorruzione](https://dati.anticorruzione.it/index.html#/home).
+The goal of `coresoi` is to provide a *sandbox* environment for
+researchers and anti-corruption analysts to interact with the indicators
+we’ve designed. We also offer mock data extracted from
+[dati.anticorruzione](https://dati.anticorruzione.it/index.html#/home)
+to aid in their analysis. Our hope is that this platform will facilitate
+more effective efforts against corruption and promote greater
+transparency in government.
 
 ## Installation
 
@@ -28,17 +31,22 @@ You can install the development version of coresoi from
 devtools::install_github("CORE-forge/coresoi")
 ```
 
-## Example: Compute indicator High Winning Rate
+## Example: Compute Winning rate across the crisis indicator
 
-There might be the case in which you have to compute the indicator n° 1,
-which mainly accounts for companies that after the Emergency outbreak
-(in this case Coronavirus) were awarded public contracts much more
-frequently than before the Emergency. Indicator 11 computes a [Fish
-exact’s test](https://en.wikipedia.org/wiki/Fisher%27s_exact_test) in
-proportion from *pre* and *post* emergency, poiting out if there is any
-statistical significance between the two group proportions. The
-resulting indicator follows a schema generated through
-`coresoi::generate_indicator_schema`.
+In certain cases, it may be necessary to calculate Indicator 1, which
+primarily focuses on companies that were awarded public contracts at a
+significantly higher rate after the outbreak of the Emergency (in this
+case, the Coronavirus) than before. Indicator 1 uses a [Fisher’s
+exact](https://en.wikipedia.org/wiki/Fisher%27s_exact_test) (other test
+choices include
+[Barnard](https://en.wikipedia.org/wiki/Barnard%27s_test) and
+[z-test](https://en.wikipedia.org/wiki/Z-test)) test to compare the
+proportions of pre- and post-Emergency contracts and determine if there
+is any statistically significant difference between the two groups.
+
+The resulting indicator follows a schema (which is convenient to ship to
+frontends) that is generated using the
+`coresoi::generate_indicator_schema` function.
 
 ``` r
 library(coresoi)
@@ -56,51 +64,32 @@ library(dplyr)
 ind_1_res <- ind_1(
   data = mock_data_core, 
   publication_date = data_pubblicazione, 
-  cpv = cod_cpv, 
-  stat_unit = provincia,
-  emergency_name = "coronavirus")
+  stat_unit = cf_amministrazione_appaltante,
+  emergency_name = "coronavirus",
+  test_type = "fisher")
 ind_1_res
-#> # A tibble: 108 × 12
+#> # A tibble: 624 × 12
 #> # Rowwise: 
 #>    indicator_id indica…¹ indic…² aggre…³ aggre…⁴ aggre…⁵ emerg…⁶ emerg…⁷ count…⁸
-#>           <dbl> <chr>      <dbl> <fct>   <chr>   <chr>     <int> <chr>   <chr>  
-#>  1            1 High wi…   0.198 AGRIGE… ISTAT1  provin…       1 Corona… 1      
-#>  2            1 High wi…   0.002 ALESSA… ISTAT1  provin…       1 Corona… 1      
-#>  3            1 High wi…   0.552 ANCONA  ISTAT1  provin…       1 Corona… 1      
-#>  4            1 High wi…   1     AREZZO  ISTAT1  provin…       1 Corona… 1      
-#>  5            1 High wi…   1     ASCOLI… ISTAT1  provin…       1 Corona… 1      
-#>  6            1 High wi…   0.004 ASTI    ISTAT1  provin…       1 Corona… 1      
-#>  7            1 High wi…   0.192 AVELLI… ISTAT1  provin…       1 Corona… 1      
-#>  8            1 High wi…   0.145 BARI    ISTAT1  provin…       1 Corona… 1      
-#>  9            1 High wi…   0.136 BARLET… ISTAT1  provin…       1 Corona… 1      
-#> 10            1 High wi…   0.007 BELLUNO ISTAT1  provin…       1 Corona… 1      
-#> # … with 98 more rows, 3 more variables: country_name <chr>,
+#>           <dbl> <chr>      <dbl> <chr>   <chr>   <chr>     <int> <chr>   <chr>  
+#>  1            1 Winning…       1 000585… ISTAT1  cf_amm…       1 Corona… 1      
+#>  2            1 Winning…       1 000647… ISTAT1  cf_amm…       1 Corona… 1      
+#>  3            1 Winning…       1 000675… ISTAT1  cf_amm…       1 Corona… 1      
+#>  4            1 Winning…       1 000759… ISTAT1  cf_amm…       1 Corona… 1      
+#>  5            1 Winning…       1 000802… ISTAT1  cf_amm…       1 Corona… 1      
+#>  6            1 Winning…       1 000808… ISTAT1  cf_amm…       1 Corona… 1      
+#>  7            1 Winning…       1 000982… ISTAT1  cf_amm…       1 Corona… 1      
+#>  8            1 Winning…       1 001043… ISTAT1  cf_amm…       1 Corona… 1      
+#>  9            1 Winning…       1 001086… ISTAT1  cf_amm…       1 Corona… 1      
+#> 10            1 Winning…       1 001107… ISTAT1  cf_amm…       1 Corona… 1      
+#> # … with 614 more rows, 3 more variables: country_name <chr>,
 #> #   indicator_last_update <dttm>, data_last_update <dttm>, and abbreviated
 #> #   variable names ¹​indicator_name, ²​indicator_value, ³​aggregation_name,
 #> #   ⁴​aggregation_id, ⁵​aggregation_type, ⁶​emergency_id, ⁷​emergency_name,
 #> #   ⁸​country_id
 ```
 
-Let’s now visualize results for top 10 provinces given High Winning Rate
-indicator estimate.
-
-``` r
-library(ggplot2)
-library(forcats)
-library(tidyr)
-drop_na(ind_1_res) %>% 
-  ggplot(aes(y = fct_reorder(aggregation_name, indicator_value), x = indicator_value)) +
-  geom_col() +
-  scale_y_discrete(guide = guide_axis(check.overlap = TRUE)) +
-  labs(
-    y = "",
-    x = "Fisher' Exact test pvalue (indicator 1)"
-  )
-```
-
-<img src="man/figures/README-plot-1.png" width="100%" />
-
-## CORE ecosystem
+## CORE ecosystem 🌏
 
 `coresoi` is part of of the project CO.R.E.- Corruption risk indicators
 in emergency, financed by the EU Commission, as part of the Internal
@@ -122,11 +111,9 @@ media and citizens for accountability purposes.
 
 ## 📝 TODOs
 
--   setup google analytics
+-   setup Google Analytics
 -   build a template for package
--   less error prone function indicators (+ escapes, type checkers etc.)
--   fix aggregation bug on `ind_11()`
--   mettere jl n uovo `test_data` con 100’000 più recenti
+-   fix behavior `ind_3`, `ind_5` and `ind_7`
 
 ## Code of Conduct
 

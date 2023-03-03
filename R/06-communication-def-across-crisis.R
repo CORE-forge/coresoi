@@ -1,5 +1,14 @@
 #' @title Compute Communication default across the crisis indicator
-#' @description The indicator reveals the fraction of contracts without any award notice communication.
+#' @description The indicator reveals whether - and to what extent - the duty of contracting authorities to communicate the public procurement procedure activation to the Anticorruption Authority ended with a technical failure
+#'
+#' ### Motivation:
+#' The red flag considers at risk contracting authorities **who fail to accomplish their duty** to communicate the public procurement procedure activation to the Anticorruption Authority
+#'
+#' ### Scoring Rule
+#' If Test-statistic significant-> 1, otherwise -> 0
+#'
+#' ### Main target unit
+#' This indicator targets **contracting authorities**
 #' @param data mock_data_core example bdncp data
 #' @param publication_date The date when the tender was published
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"

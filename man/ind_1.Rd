@@ -18,10 +18,24 @@ ind_1(data, publication_date, emergency_name, stat_unit, test_type)
 \item{test_type}{character vector identifying the type of test you want to execute, alternatives are c("barnard", "fisher", "z-test")}
 }
 \value{
-indicator schema as from \code{generate_indicator_schema}
+indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}
 }
 \description{
-companies that after the Covid19 outbreak were awarded public contracts much more frequently than before the Covid-19.
+The indicator focuses on companies that after the emergency outbreak were awarded public contracts much more frequently than before the emergency.
+\subsection{Motivation:}{
+
+The red flag considers at risk companies that \strong{exceptionally increase} their competitive power over the emergency outbreak, in terms of proportion of awarded contracts on the relevant economic market.
+}
+
+\subsection{Scoring Rule}{
+
+If Test-statistic significant-> 1, otherwise -> 0
+}
+
+\subsection{Main target unit}{
+
+This indicator targets \strong{Companies}
+}
 }
 \examples{
 \dontrun{

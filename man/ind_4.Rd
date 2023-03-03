@@ -2,7 +2,7 @@
 % Please edit documentation in R/04-len-dev-across-crisis.R
 \name{ind_4}
 \alias{ind_4}
-\title{Compute Lenght deviation across the crisis indicator}
+\title{Compute Contract Lenght deviation across the crisis indicator}
 \usage{
 ind_4(
   data,
@@ -33,7 +33,21 @@ ind_4(
 indicator schema as from \code{generate_indicator_schema}
 }
 \description{
-Divergence in duration between expected and effective times of execution of the contract
+The indicator reveals whether there has been a deviation of the contract actual execution duration from its stated/expected duration
+\subsection{Motivation:}{
+
+The red flag considers at risk companies whose contracts undergo a significant increase of their length deviation ratio - i.e., ratio between contract actual execution duration and expected duration - across the crisis
+}
+
+\subsection{Scoring Rule}{
+
+If Test-statistic significant-> 1, otherwise -> 0
+}
+
+\subsection{Main target unit}{
+
+This indicator targets \strong{companies} and \strong{contracting authorities}
+}
 }
 \details{
 DETAILS

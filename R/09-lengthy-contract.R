@@ -8,7 +8,16 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
 }
 
 #' @title compute Lenghty Contracts indicator
-#' @description The indicator reveals whether the duration of the contract is significantly longer than the average length of awarded contracts after the emergency.
+#' @description The indicator reveals whether the duration of a contract is significantly longer than the average length of awarded contracts after the emergency outbreak
+#'
+#' ### Motivation:
+#' The red flag considers at risk contracts won after the emergency outbreak whose duration is not justified by the nature of the crisis, that is, contracts longer than the average duration of contracts won after the emergency outbreak
+#'
+#' ### Scoring Rule
+#' If Test-statistic significant-> 1, otherwise -> 0
+#'
+#' ### Main target unit
+#' This indicator targets **companies** and **contracting authorities**
 #' @param data bndcp data
 #' @param publication_date The date when the tender was published
 #' @param stat_unit the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by

@@ -1,5 +1,14 @@
-#' @title Compute Lenght deviation across the crisis indicator
-#' @description Divergence in duration between expected and effective times of execution of the contract
+#' @title Compute Contract Lenght deviation across the crisis indicator
+#' @description The indicator reveals whether there has been a deviation of the contract actual execution duration from its stated/expected duration
+#'
+#' ### Motivation:
+#' The red flag considers at risk companies whose contracts undergo a significant increase of their length deviation ratio - i.e., ratio between contract actual execution duration and expected duration - across the crisis
+#'
+#' ### Scoring Rule
+#' If Test-statistic significant-> 1, otherwise -> 0
+#'
+#' ### Main target unit
+#' This indicator targets **companies** and **contracting authorities**
 #' @param data data to be passed, expects tibble
 #' @param exp_end Expected end of the contract i.e. contract completion date
 #' @param eff_end Effective end of the execution of the contract

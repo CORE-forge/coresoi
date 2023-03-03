@@ -67,13 +67,22 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 
 
 #' @title Compute Winning rate across the crisis indicator
-#' @description companies that after the Covid19 outbreak were awarded public contracts much more frequently than before the Covid-19.
+#' @description The indicator focuses on companies that after the emergency outbreak were awarded public contracts much more frequently than before the emergency.
+#'
+#' ### Motivation:
+#' The red flag considers at risk companies that **exceptionally increase** their competitive power over the emergency outbreak, in terms of proportion of awarded contracts on the relevant economic market.
+#'
+#' ### Scoring Rule
+#' If Test-statistic significant-> 1, otherwise -> 0
+#'
+#' ### Main target unit
+#' This indicator targets **Companies**
 #' @param data bndcp data
 #' @param publication_date The date when the tender was published
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @param test_type character vector identifying the type of test you want to execute, alternatives are c("barnard", "fisher", "z-test")
 #' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
-#' @return indicator schema as from `generate_indicator_schema`
+#' @return indicator schema as from [generate_indicator_schema()]
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
