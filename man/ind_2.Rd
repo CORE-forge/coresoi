@@ -18,6 +18,8 @@ ind_2(
 
 \item{contract_value}{the value of the contract}
 
+\item{publication_date}{the date in which the tender was published}
+
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}

@@ -8,7 +8,7 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-the package offers a set of indicators explicitly built on top of BNDCP to measure corruption in emergency
+A package to calculate CORE red flags and to play with our data
 }
 \seealso{
 Useful links:
@@ -18,7 +18,13 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Niccolò Salvini \email{niccolo.salvini27@gmail.com} (\href{https://orcid.org/0000-0002-3444-4094}{ORCID})
+\strong{Maintainer}: Niccolo Salvini \email{niccolo.salvini27@gmail.com} (\href{https://orcid.org/0000-0002-3444-4094}{ORCID})
+
+Authors:
+\itemize{
+  \item Simone DelSarto \email{simone.delsarto@unipg.it} (\href{https://orcid.org/0000-0003-1102-2881}{ORCID})
+  \item Giulio Cantone \email{prgcan@gmail.com} (\href{https://orcid.org/0000-0001-7149-5213}{ORCID})
+}
 
 }
 \keyword{internal}

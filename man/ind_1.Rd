@@ -52,7 +52,7 @@ if (interactive()) {
 }
 \seealso{
 \code{\link[lubridate]{ymd}}
-\code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{c("rowwise", "rowwise", "rowwise")}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{reexports}}
+\code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{c("rowwise"}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{reexports}}
 \code{\link[stringr]{str_sub}}
 \code{\link[tidyr]{nest}}
 }

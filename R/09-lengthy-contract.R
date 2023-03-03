@@ -21,7 +21,6 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
 #' @param data bndcp data
 #' @param publication_date The date when the tender was published
 #' @param stat_unit the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by
-#' @param cpv Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract
 #' @param eff_start Effective start of the execution of the contract
 #' @param eff_end Effective end of the execution of the contract
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"

@@ -6,7 +6,7 @@
 #' while in the "Dataset" section a series of freely downloadable
 #' JSON and CSV and XML files are available.
 #'
-#' @format ## `who`
+#' @format ## `mock_data_core`
 #' A data frame with 7,240 rows and 60 columns:
 #' \describe{
 #'   \item{cig, cig_accordo_quadro}{Tender Identification Code, is a code assigned by the Authority to uniquely track tenders and contracts nationwide and is assigned at the Lot level.}
