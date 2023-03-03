@@ -5,12 +5,10 @@
 
 <!-- badges: start -->
 
-[![CRAN
-status](https://www.r-pkg.org/badges/version/core-soi)](https://CRAN.R-project.org/package=core-soi)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![Codecov test
-coverage](https://codecov.io/gh/CORE-forge/core-soi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CORE-forge/core-soi?branch=main)
+[![codecov](https://codecov.io/gh/CORE-forge/coresoi/branch/main/graph/badge.svg?token=DGJ8P5BZNH)](https://codecov.io/gh/CORE-forge/coresoi)
+[![R-CMD-check](https://github.com/CORE-forge/core-soi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CORE-forge/core-soi/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of `coresoi` is to provide a *sandbox* environment for
@@ -50,6 +48,24 @@ frontends) that is generated using the
 
 ``` r
 library(coresoi)
+#> Warning in citation(pkgname): no date field in DESCRIPTION file of package
+#> 'coresoi'
+#> Warning in citation(pkgname): could not determine year for 'coresoi' from
+#> package DESCRIPTION file
+#> To cite package 'coresoi' in publications use:
+#> 
+#>   Salvini N, DelSarto S, Cantone G (????). _coresoi: Measuring
+#>   Corruption Risk in Emergency_. R package version 0.1.1,
+#>   <https://core-forge.github.io/coresoi/>.
+#> 
+#> A BibTeX entry for LaTeX users is
+#> 
+#>   @Manual{,
+#>     title = {coresoi: Measuring Corruption Risk in Emergency},
+#>     author = {Niccolo Salvini and Simone DelSarto and Giulio Cantone},
+#>     note = {R package version 0.1.1},
+#>     url = {https://core-forge.github.io/coresoi/},
+#>   }
 library(dplyr)
 #> 
 #> Attaching package: 'dplyr'
