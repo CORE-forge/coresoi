@@ -2,9 +2,11 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
+  Choice-of-elementary-indicators: Choice-of-elementary-indicators.html
+  Data-selection-and-architecture: Data-selection-and-architecture.html
   calculate-indicators: calculate-indicators.html
   core-api: core-api.html
-last_built: 2023-03-03T10:52Z
+last_built: 2023-03-03T17:18Z
 urls:
   reference: https://core-forge.github.io/coresoi/reference
   article: https://core-forge.github.io/coresoi/articles

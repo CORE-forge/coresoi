@@ -10,6 +10,12 @@
     <loc>https://core-forge.github.io/coresoi/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://core-forge.github.io/coresoi/articles/Choice-of-elementary-indicators.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/articles/Data-selection-and-architecture.html</loc>
+  </url>
+  <url>
     <loc>https://core-forge.github.io/coresoi/articles/calculate-indicators.html</loc>
   </url>
   <url>
@@ -40,6 +46,9 @@
     <loc>https://core-forge.github.io/coresoi/reference/compute_prop_test.html</loc>
   </url>
   <url>
+    <loc>https://core-forge.github.io/coresoi/reference/compute_ttest 2.html</loc>
+  </url>
+  <url>
     <loc>https://core-forge.github.io/coresoi/reference/compute_ttest.html</loc>
   </url>
   <url>
@@ -55,7 +64,13 @@
     <loc>https://core-forge.github.io/coresoi/reference/generate_indicator_schema.html</loc>
   </url>
   <url>
+    <loc>https://core-forge.github.io/coresoi/reference/get_associated_cpv_from_emergency 2.html</loc>
+  </url>
+  <url>
     <loc>https://core-forge.github.io/coresoi/reference/get_associated_cpv_from_emergency.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/grab_cpv 2.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/grab_cpv.html</loc>
@@ -83,6 +98,9 @@
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/ind_8.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/ind_9 2.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/ind_9.html</loc>
