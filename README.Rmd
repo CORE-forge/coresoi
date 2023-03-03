@@ -16,9 +16,9 @@ knitr::opts_chunk$set(
 # coresoi <img src="man/figures/logo.png" align="right" height="139" />
 
 <!-- badges: start -->
-[![CRAN status](https://www.r-pkg.org/badges/version/core-soi)](https://CRAN.R-project.org/package=core-soi)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
-[![Codecov test coverage](https://codecov.io/gh/CORE-forge/core-soi/branch/main/graph/badge.svg)](https://app.codecov.io/gh/CORE-forge/core-soi?branch=main)
+[![codecov](https://codecov.io/gh/CORE-forge/coresoi/branch/main/graph/badge.svg?token=DGJ8P5BZNH)](https://codecov.io/gh/CORE-forge/coresoi)
+[![R-CMD-check](https://github.com/CORE-forge/core-soi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CORE-forge/core-soi/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of `coresoi` is to provide a _sandbox_ environment for researchers and anti-corruption analysts to interact with the indicators we've designed. We also offer mock data extracted from [dati.anticorruzione](https://dati.anticorruzione.it/index.html#/home) to aid in their analysis. Our hope is that this platform will facilitate more effective efforts against corruption and promote greater transparency in government.
