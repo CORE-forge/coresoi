@@ -4,9 +4,9 @@ pkgdown_sha: ~
 articles:
   Choice-of-elementary-indicators: Choice-of-elementary-indicators.html
   Data-selection-and-architecture: Data-selection-and-architecture.html
+  try-coresoi-w-your-data: try-coresoi-w-your-data.html
   calculate-indicators: calculate-indicators.html
-  core-api: core-api.html
-last_built: 2023-03-05T17:55Z
+last_built: 2023-03-05T19:35Z
 urls:
   reference: https://core-forge.github.io/coresoi/reference
   article: https://core-forge.github.io/coresoi/articles
