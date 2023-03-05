@@ -41,8 +41,9 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 #' ### Main target unit
 #' This indicator targets **Companies**
 #' @param data test bndcp data
-#' @param contract_value the value of the contract
-#' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
+#' @param contract_value Overall Amount of the Tender
+#' @param stat_unit statistical target unit of measurement, aggregation variable, the indicator target
+#' @param publication_date the date in which the tender was published
 #' @param test_type character vector identifying the type of test you want to execute, alternatives are c("ks", "wilcoxon")
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @return indicator schema as from `generate_indicator_schema()` rows determined by aggregation level and `indicator_value` based on statistical test performed in `ind_2`

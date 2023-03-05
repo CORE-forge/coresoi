@@ -18,8 +18,6 @@ ind_9(data, publication_date, stat_unit, eff_start, eff_end, emergency_name)
 \item{eff_end}{Effective end of the execution of the contract}
 
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
-
-\item{cpv}{Common Procurement Vocabulary. The main vocabulary is based on a tree structure made up with codes of up to 9 digits (an 8 digit code plus a check digit). This combination of digits is associated with a wording that describes the type of supplies, works or services defining the subject of the contract}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

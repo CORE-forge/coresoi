@@ -28,7 +28,7 @@
 #' }
 #' }
 #' @seealso
-#'  \code{\link[lubridate]{ymd}}, \code{\link[lubridate]{character(0)}}, \code{\link[lubridate]{interval}}, \code{\link[lubridate]{period}}
+#'  \code{\link[lubridate]{ymd}}, \code{\link[lubridate]{interval}}, \code{\link[lubridate]{period}}
 #'  \code{\link[tidyr]{nest}}
 #'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{across}}, \code{\link[dplyr]{reexports}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}
 #'  \code{\link[forcats]{as_factor}}

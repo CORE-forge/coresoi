@@ -16,11 +16,13 @@ ind_2(
 \arguments{
 \item{data}{test bndcp data}
 
-\item{contract_value}{the value of the contract}
+\item{contract_value}{Overall Amount of the Tender}
+
+\item{publication_date}{the date in which the tender was published}
 
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
-\item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
+\item{stat_unit}{statistical target unit of measurement, aggregation variable, the indicator target}
 
 \item{test_type}{character vector identifying the type of test you want to execute, alternatives are c("ks", "wilcoxon")}
 }

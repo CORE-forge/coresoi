@@ -78,9 +78,9 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 #' ### Main target unit
 #' This indicator targets **Companies**
 #' @param data bndcp data
-#' @param publication_date The date when the tender was published
-#' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
-#' @param test_type character vector identifying the type of test you want to execute, alternatives are c("barnard", "fisher", "z-test")
+#' @param publication_date date of publication of the notice
+#' @param emergency_name emergency name character string for which you wish to calculate the indicator for, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param test_type  character vector string to identifying the test type you want to apply, available alternatives are c("barnard", "fisher", "z-test")
 #' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
 #' @return indicator schema as from [generate_indicator_schema()]
 #' @examples
@@ -97,7 +97,7 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 #' }
 #' @seealso
 #'  \code{\link[lubridate]{ymd}}
-#'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{c("rowwise", "rowwise", "rowwise")}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{reexports}}
+#'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{rowwise}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{reexports}}
 #'  \code{\link[stringr]{str_sub}}
 #'  \code{\link[tidyr]{nest}}
 #' @rdname ind_1
