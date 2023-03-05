@@ -9,13 +9,13 @@ ind_1(data, publication_date, emergency_name, stat_unit, test_type)
 \arguments{
 \item{data}{bndcp data}
 
-\item{publication_date}{The date when the tender was published}
+\item{publication_date}{date of publication of the notice}
 
-\item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
+\item{emergency_name}{emergency name character string for which you wish to calculate the indicator for, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
 
-\item{test_type}{character vector identifying the type of test you want to execute, alternatives are c("barnard", "fisher", "z-test")}
+\item{test_type}{character vector string to identifying the test type you want to apply, available alternatives are c("barnard", "fisher", "z-test")}
 }
 \value{
 indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}
@@ -52,7 +52,7 @@ if (interactive()) {
 }
 \seealso{
 \code{\link[lubridate]{ymd}}
-\code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{c("rowwise"}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{reexports}}
+\code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{"rowwise"}}, \code{\link[dplyr]{select}}, \code{\link[dplyr]{reexports}}
 \code{\link[stringr]{str_sub}}
 \code{\link[tidyr]{nest}}
 }
