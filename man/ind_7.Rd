@@ -11,6 +11,8 @@ ind_7(data, publication_date, final_award_date, emergency_name, stat_unit)
 
 \item{publication_date}{The date when the tender was published}
 
+\item{final_award_date}{Date of award, as per the minutes}
+
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{stat_unit}{The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)}
