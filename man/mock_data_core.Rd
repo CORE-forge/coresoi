@@ -39,14 +39,54 @@ A data frame with 7,240 rows and 60 columns:
 \item{descrizione_cpv}{Description of the commodity category of the good or service purchased}
 \item{flag_prevalente}{denotes whether the commodity category is prevailing (a contract may include more than one category of goods or services)}
 \item{cup}{Unique Project Code, identifies a public investment project}
-\item{id_categoria}{Year}
-\item{descrizione}{Year}
-\item{descrizione_tipo_categoria}{Year}
-\item{modalita_realizzazione_denominazione}{Year}
-\item{tipo_scelta_contraente_denominazione}{Year}
-\item{data_aggiudicazione_definitiva}{Year}
-\item{esito}{Year}
-...
+\item{id_categoria}{Identification code for the category of works being procured}
+\item{descrizione}{Description of the categories of works}
+\item{descrizione_tipo_categoria}{Description of the type of work category of the contract}
+\item{modalita_realizzazione_denominazione}{Name of the mode of implementation of the contract}
+\item{tipo_scelta_contraente_denominazione}{name of the Contractor's Choice}
+\item{data_aggiudicazione_definitiva}{Date of award, as per the minutes}
+\item{esito}{Description of the outcome of the award process (Awarded, Cancelled...)}
+\item{criterio_aggiudicazione}{Award criterion adopted (most economically advantageous bid, lowest price, etc.)}
+\item{data_comunicazione_esito}{Date of announcement of the outcome of the award.}
+\item{importo_aggiudicazione}{amount of the award}
+\item{ribasso_aggiudicazione}{Value of the rebate made by the Economic Operator who was awarded the tender.}
+\item{flag_subappalto}{Indicator of possibility of subcontracting}
+\item{id_aggiudicazione}{Unique award code}
+\item{cod_esito}{Code identifying outcome of award procedure}
+\item{asta_elettronica}{Indicator of use of electronic auction}
+\item{massimo_ribasso}{Maximum value of the discount charged}
+\item{minimo_ribasso}{Minimum value of the discount charged in the tender}
+\item{data}{reference date for the data block}
+\item{descrizione_evento}{Event Description (Auction Base, Variant...)}
+\item{importo_sicurezza}{Event Description (Auction Base, Variant...)}
+\item{dettaglio_evento}{Detail of variation e.g. variant number}
+\item{importo_forniture}{Amount of Supplies}
+\item{importo_lavori}{Amount of Work}
+\item{importo_progettazione}{Design Amount}
+\item{somme_a_disposizione}{Amounts available}
+\item{importo_servizi}{Amount of Services}
+\item{ulteriori_oneri_non_soggetti_ribasso}{Additional charges not subject to rebate}
+\item{ruolo}{Description of the participant's role.}
+\item{codice_fiscale}{Participant's tax code.}
+\item{denominazione}{Participant name.}
+\item{tipo_soggetto}{Type of participating entity.}
+\item{cf_subappaltante}{Subcontractor Tax Code.}
+\item{data_autorizzazione}{Subcontracting authorization date}
+\item{oggetto}{Subject of subcontracting.}
+\item{descrizione_categoria}{Description of the category of works.}
+\item{cod_categoria}{Works category identification code.}
+\item{data_stipula_contratto}{Date of entering into the contract}
+\item{data_esecutivita_contratto}{Contract execution date}
+\item{data_termine_contrattuale}{Contract termination date}
+\item{data_inizio_effettiva}{Actual start date of work}
+\item{consegna_frazionata}{Fractional delivery indicator}
+\item{id_variante}{Unique variant identifier.}
+\item{motivo_variante}{Description of the reason for the variance.}
+\item{data_approvazione_variante}{Date of approval of the variance.}
+\item{motivo_risoluzione}{Reason for contract resolution}
+\item{motivo_interruzione_anticipata}{Description of the reason for early termination}
+\item{data_conclusione_anticipata}{Date of early termination of the contract}
+\item{data_effettiva_ultimazione}{Effective completion date of the contract}
 }
 }
 }
@@ -57,10 +97,8 @@ A data frame with 7,240 rows and 60 columns:
 mock_data_core
 }
 \description{
-available data can be consulted and downloaded through the
-appropriate subsections; in particular, in the "Analytics" section
-there is a dashboard for browsing and analyzing data on public contracts,
-while in the "Dataset" section a series of freely downloadable
-JSON and CSV and XML files are available.
+Data on public contracts in Italy are published in open open format on the \href{https://dati.anticorruzione.it/opendata/dataset}{portal}.
+The data are those communicated in their original form to the Authority by the Single Procedure Managers of the Contracting Stations.
+In this case we merged the tables whose dimensions  i.e. columns if joined to "bando cig", are to calculate indicators.
 }
 \keyword{datasets}
