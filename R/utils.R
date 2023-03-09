@@ -56,7 +56,7 @@ emergency_dates <- function(emergency_name) {
 
 
 #' @title Get the associated CPV code from emergency name
-#' @description Not all the emergency are going to impact each contract. Some of them like coronavirus are going to impact more CPV 33 "Medical equipments, pharmaceuticals and personal care products" insted of say "Agricultural, forestry, horticultural, aquacultural and apicultural services"
+#' @description Not all the emergency are going to impact each contract. Some of them like coronavirus are going to impact more CPV 33 "Medical equipments, pharmaceuticals and personal care products" insted of say "Agricultural, forestry, horticultural, aquacultural and apicultural services". Here we emplyed a set of domain experts which have worked on associating each emergency to a set of respective CPVs.
 #' @param emergency_name PARAM_DESCRIPTION
 #' @return cpv_code
 #' @details DETAILS
@@ -74,7 +74,7 @@ get_associated_cpv_from_emergency <- function(emergency_name) {
   }
 
   associated_cpv_list <- list(
-    "Coronavirus" = c(18, 19, 22, 24, 30, 32, 34, 38, 39, 41, 44, 65, 85),
+    "Coronavirus" = c(18, 19, 22, 24, 30, 32, 33, 34, 38, 39, 41, 44, 65, 85),
     "Terremoto Aquila" = c(45, 34, 35, 39, 43, 50, 60, 77, 85, 90),
     "Terremoto Ischia" = c(45, 34, 35, 39, 43, 60, 50, 77, 85, 90),
     "Terremoto Centro Italia 2016-2017" = c(45, 34, 35, 39, 43, 50, 60, 77, 85, 90),
