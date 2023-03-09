@@ -99,8 +99,10 @@ tenders and <code>publication_date</code>.</p>
 <div class="section level2">
 <h2 id="integration-with-project-partner-data">Integration with Project Partner Data<a class="anchor" aria-label="anchor" href="#integration-with-project-partner-data"></a>
 </h2>
-<p>To compute indicator <code>ind_1</code>, we need to map each function
-argument to a column in the project partner’s database.</p>
+<p>Before beginning make sure you have correctly installed the package
+<code>coreosoi</code>. To compute indicator <code>ind_1</code>, we need
+to map each function argument to a column in the project partner’s
+database.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(coresoi)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load project partner data</span></span>
@@ -120,11 +122,11 @@ function, passing in the <code>data</code>,
 <p>To map these arguments to columns in the project partner’s database,
 we need to ensure that the partner data has a column named
 <code>stat_unit</code>, which should only be the companies that win
-tenders, and a column named <code>publication_date</code>.</p>
-<p>We then store the result of the indicator calculation in a new
-variable called <code>ind_1_result</code>. Finally, we add the
-<code>ind_1</code> column to the partner’s data using the <code>$</code>
-operator.</p>
+tenders, and a column named <code>publication_date</code>. In order to
+correctly map your data (i.e. the columns emplyed in the calculations)
+to our data (i.e. the columns you are going to pass to indicators
+functions) please refer to our <a href="https://core-forge.github.io/coresoi/reference/mock_data_core.html">sample
+data documentation</a> which goes through all the columns specs.</p>
 </div>
 <div class="section level2">
 <h2 id="conclusion">Conclusion<a class="anchor" aria-label="anchor" href="#conclusion"></a>
