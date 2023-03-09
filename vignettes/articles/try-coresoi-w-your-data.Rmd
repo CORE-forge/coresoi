@@ -16,7 +16,8 @@ library(coresoi)
 The `coresoi` package calculates risk indicators in emergencies. Integration of the package with project partner data requires mapping each function argument to a column in the partner's database. In this vignette, we will explain how to integrate the package with project partner data computing a specific indicator called `ind_1`. We will only need two columns: `stat_unit` which should only be the companies that win tenders and `publication_date`.
 
 ## Integration with Project Partner Data
-To compute indicator `ind_1`, we need to map each function argument to a column in the project partner's database.
+
+Before beginning make sure you have correctly installed the package `coreosoi`. To compute indicator `ind_1`, we need to map each function argument to a column in the project partner's database.
 
 ```{r eval = FALSE}
 library(coresoi)
@@ -35,9 +36,8 @@ ind_1_result <- ind_1(data = partner_data,
 
 In this code snippet, we load the project partner's data using the `read.csv` function. We then call the `ind_1` function, passing in the `data`, `publication_date`, `emergency_name`, `test_type`, and `stat_unit` arguments. 
 
-To map these arguments to columns in the project partner's database, we need to ensure that the partner data has a column named `stat_unit`, which should only be the companies that win tenders, and a column named `publication_date`. 
+To map these arguments to columns in the project partner's database, we need to ensure that the partner data has a column named `stat_unit`, which should only be the companies that win tenders, and a column named `publication_date`. In order to correctly map your data (i.e. the columns emplyed in the calculations) to our data (i.e. the columns you are going to pass to indicators functions) please refer to our [sample data documentation](https://core-forge.github.io/coresoi/reference/mock_data_core.html) which goes through all the columns specs. 
 
-We then store the result of the indicator calculation in a new variable called `ind_1_result`. Finally, we add the `ind_1` column to the partner's data using the `$` operator.
 
 ## Conclusion
 Integrating the `coresoi` package with project partner data requires mapping each function argument to a column in the partner's database. For computing the `ind_1` indicator, we only need two columns: `stat_unit`, which should only be the companies that win tenders and `publication_date`. By following the same template we can integrate all the other indicators available in `coresoi`.
