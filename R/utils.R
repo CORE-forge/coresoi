@@ -97,19 +97,6 @@ get_associated_cpv_from_emergency <- function(emergency_name) {
   return(cpv_match)
 }
 
-
-# TODO function to grab latest data update
-
-from_aggregation_type_to_istat_code <- function(variables) {
-
-}
-
-
-from_aggregation_type_to_eu_nc <- function(variables) {
-
-}
-
-
 #' generate indicator schema
 #' @keywords internal
 #' @export
