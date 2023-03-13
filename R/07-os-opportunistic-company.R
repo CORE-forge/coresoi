@@ -29,9 +29,10 @@
 #' @importFrom dplyr mutate across starts_with if_else group_by
 #' @importFrom forcats as_factor
 ind_7 <- function(data,
-                  publication_date,
+                  award_date,
                   emergency_name,
-                  stat_unit) {
+                  stat_unit,
+                  years_before = 1) {
   indicator_id <- 7
   indicator_name <- "One-shot opportunistic companies over the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
@@ -42,21 +43,26 @@ ind_7 <- function(data,
   data %>%
     dplyr::mutate(
       dplyr::across(dplyr::starts_with("data"), lubridate::ymd),
-      prepost = dplyr::if_else({{ publication_date }} >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = forcats::as_factor(prepost),
-      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
+      prepost = dplyr::if_else({{ award_date }} >= emergency_scenario$em_date,
+                               true = "post",
+                               false = "pre"),
+      prepost = factor(prepost, levels=c("post", "pre")), #NOTE: here prepost refers to the award date!
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
     ) %>%
-    dplyr::filter(flagdivision == 1) %>%
+    dplyr::filter(flagdivision == 1 & !is.na({{ award_date }}) & !is.na({{ stat_unit }})) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
-      flag_opportunist = dplyr::if_else(max(data_aggiudicazione_definitiva) %within% lubridate::interval(data_pubblicazione - lubridate::years(1), data_pubblicazione), 1, 0),
-      flag_opportunist = dplyr::if_else(data_pubblicazione <= data_aggiudicazione_definitiva, true = 0, false = 1)
+      ncontr = n(),
+      flag_oneshot = dplyr::if_else(any(prepost == "post") &
+                                 max({{ award_date }}[prepost == "pre"]) < emergency_scenario$em_date -
+                                   lubridate::years(years_before),
+                               true = 1,
+                               false = 0)
     ) %>%
-    ungroup({{ stat_unit }}) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value = flag_opportunist,
+      indicator_value = flag_oneshot,
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario
