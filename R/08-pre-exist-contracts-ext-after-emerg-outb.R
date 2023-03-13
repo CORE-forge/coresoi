@@ -50,14 +50,11 @@ ind_8 <- function(data,
         true = "post",
         false = "pre"
       ),
-      prepost = forcats::as_factor(prepost),
+      prepost = factor(prepost, levels=c("post", "pre")),
       flag_division = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
       flag_modif = dplyr::if_else(
-        prepost == "pre" & lubridate::ymd({{ variant_date }}) %within%
-          lubridate::interval(
-            emergency_scenario$em_date,
-            emergency_scenario$em_date %m+% months(months_win)
-          ),
+        prepost == "pre" &
+          lubridate::ymd({{ variant_date }}) > emergency_scenario$em_date %m+% months(months_win),
         true = 1,
         false = 0
       ),
@@ -68,10 +65,7 @@ ind_8 <- function(data,
       n = dplyr::n(),
       npre = sum(prepost == "pre"),
       ncig = dplyr::n_distinct(cig),
-      #    ncig_pre = data.table::uniqueN(cig[prepost == "pre"]),
       nmod = sum(flag_modif == 1),
-      #    ncig_mod = data.table::uniqueN(cig[flag_modif == 1]),
-      # prop_mod = nmod/npre,
       rf_value = 1 * (nmod > 0)
     ) %>%
     generate_indicator_schema(
