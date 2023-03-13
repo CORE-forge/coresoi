@@ -93,7 +93,7 @@ ind_2 <- function(data,
   data %>%
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = forcats::as_factor(prepost),
+      prepost = factor(prepost, levels=c("post", "pre")),
       flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
     ) %>%
     tidyr::drop_na({{ contract_value }}) %>%
@@ -103,6 +103,8 @@ ind_2 <- function(data,
     dplyr::ungroup(prepost) %>%
     dplyr::summarise(
       count = n(),
+      median_pre = median( {{ contract_value }}[prepost == "pre"]),
+      median_post = median( {{ contract_value }}[prepost == "post"]),
       test = test(var = {{ contract_value }}, group = prepost, data = ., test_type)[1],
     ) %>%
     generate_indicator_schema(
