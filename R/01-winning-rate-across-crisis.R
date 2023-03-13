@@ -128,10 +128,9 @@ ind_1 <- function(data,
   data %>%
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = forcats::as_factor(prepost),
+      prepost = factor(prepost, levels=c("post", "pre")),
       flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
     ) %>%
-    dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
       n = dplyr::n(),
@@ -149,6 +148,7 @@ ind_1 <- function(data,
     dplyr::rowwise() %>%
     dplyr::mutate(
       ## apply test
+      tab = paste(n_11, n_12, n_21, n_22, sep="-"),
       test = test(n_11, n_12, n_21, n_22, test_type)[1],
     ) %>%
     dplyr::select({{ stat_unit }}, dplyr::contains("test")) %>%
