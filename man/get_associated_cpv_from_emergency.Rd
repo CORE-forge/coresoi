@@ -13,7 +13,7 @@ get_associated_cpv_from_emergency(emergency_name)
 cpv_code
 }
 \description{
-Not all the emergency are going to impact each contract. Some of them like coronavirus are going to impact more CPV 33 "Medical equipments, pharmaceuticals and personal care products" insted of say "Agricultural, forestry, horticultural, aquacultural and apicultural services"
+Not all the emergency are going to impact each contract. Some of them like coronavirus are going to impact more CPV 33 "Medical equipments, pharmaceuticals and personal care products" insted of say "Agricultural, forestry, horticultural, aquacultural and apicultural services". Here we emplyed a set of domain experts which have worked on associating each emergency to a set of respective CPVs.
 }
 \details{
 DETAILS

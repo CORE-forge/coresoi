@@ -64,7 +64,6 @@ if (interactive()) {
 \seealso{
 \code{\link[lubridate]{ymd}}
 \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{summarise}}
-\code{\link[forcats]{as_factor}}
 \code{\link[stringr]{str_sub}}
 \code{\link[tidyr]{nest}}, \code{\link[tidyr]{drop_na}}
 }

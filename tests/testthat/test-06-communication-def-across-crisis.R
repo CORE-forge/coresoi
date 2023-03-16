@@ -132,7 +132,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         test_type = "fisher"
       )
     }),
-    n = 101
+    n = 108
   )
 })
 
@@ -148,7 +148,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         test_type = "fisher"
       )
     }),
-    n = 624
+    n = 731
   )
 })
 

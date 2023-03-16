@@ -10,7 +10,6 @@
 #' ### Main target unit
 #' This indicator targets **companies**
 #' @param data mock_data_core exmaple data
-#' @param publication_date The date when the tender was published
 #' @param stat_unit The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)
 #' @param final_award_date Date of award, as per the minutes
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"

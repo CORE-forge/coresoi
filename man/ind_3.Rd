@@ -66,5 +66,4 @@ if (interactive()) {
 \seealso{
 \code{\link[lubridate]{ymd}}
 \code{\link[dplyr]{filter}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}
-\code{\link[forcats]{as_factor}}
 }
