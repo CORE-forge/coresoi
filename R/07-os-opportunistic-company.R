@@ -14,6 +14,7 @@
 #' @param stat_unit The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)
 #' @param final_award_date Date of award, as per the minutes
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param years_before int how many years we have to
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
@@ -21,10 +22,10 @@
 #'   data("mock_data_core")
 #'   ind_7(
 #'     data = mock_data_core,
-#'     publication_date = data_pubblicazione,
 #'     final_award_date = data_aggiudicazione_definitiva,
 #'     stat_unit = cf_amministrazione_appaltante,
-#'     emergency_name = "coronavirus"
+#'     emergency_name = "coronavirus",
+#'     years_before = 1
 #'   )
 #' }
 #' }
@@ -32,18 +33,16 @@
 #'  \code{\link[lubridate]{ymd}}, \code{\link[lubridate]{interval}}, \code{\link[lubridate]{period}}
 #'  \code{\link[tidyr]{nest}}
 #'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{across}}, \code{\link[dplyr]{reexports}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}
-#'  \code{\link[forcats]{as_factor}}
 #' @rdname ind_7
 #' @export
 #' @importFrom lubridate ymd interval years %within%
 #' @importFrom tidyr unnest
 #' @importFrom dplyr mutate across starts_with if_else group_by
-#' @importFrom forcats as_factor
 ind_7 <- function(data,
-                  publication_date,
                   final_award_date,
                   emergency_name,
-                  stat_unit) {
+                  stat_unit,
+                  years_before) {
   indicator_id <- 7
   indicator_name <- "One-shot opportunistic companies over the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
@@ -54,19 +53,24 @@ ind_7 <- function(data,
   data %>%
     dplyr::mutate(
       dplyr::across(dplyr::starts_with("data"), lubridate::ymd),
-      prepost = dplyr::if_else({{ publication_date }} >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = forcats::as_factor(prepost),
+      prepost = dplyr::if_else({{ final_award_date }} >= emergency_scenario$em_date, true = "post", false = "pre"),
+      prepost = factor(prepost, levels=c("post", "pre")),
       flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
     ) %>%
     dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
-      flag_opportunist = dplyr::if_else(max({{ final_award_date }}, na.rm = T) %within% lubridate::interval(emergency_scenario$em_date - lubridate::years(1), emergency_scenario$em_date), 1, 0),
+      ncontr = n(),
+      flag_oneshot = dplyr::if_else(any(prepost == "post") &
+                                      max({{ final_award_date }}[prepost == "pre"]) < emergency_scenario$em_date -
+                                      lubridate::years(years_before),
+                                    true = 1,
+                                    false = 0)
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value = flag_opportunist,
+      indicator_value = flag_oneshot,
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario

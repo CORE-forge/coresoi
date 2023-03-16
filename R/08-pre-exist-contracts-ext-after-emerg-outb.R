@@ -33,12 +33,10 @@
 #' @seealso
 #'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{n_distinct}}, \code{\link[dplyr]{rename}}
 #'  \code{\link[lubridate]{ymd}}, \code{\link[lubridate]{interval}}
-#'  \code{\link[forcats]{as_factor}}
 #' @rdname ind_8
 #' @export
 #' @importFrom dplyr mutate if_else group_by summarise n n_distinct rename
 #' @importFrom lubridate ymd interval
-#' @importFrom forcats as_factor
 ind_8 <- function(data,
                   publication_date,
                   stat_unit,
@@ -59,18 +57,14 @@ ind_8 <- function(data,
         true = "post",
         false = "pre"
       ),
-      prepost = forcats::as_factor(prepost),
+      prepost = factor(prepost, levels=c("post", "pre")),
       flag_division = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
       flag_modif = dplyr::if_else(
-        prepost == "pre" & lubridate::ymd({{ variant_date }}) %within%
-          lubridate::interval(
-            emergency_scenario$em_date,
-            emergency_scenario$em_date %m+% months(months_win)
-          ),
+        prepost == "pre" &
+          lubridate::ymd({{ variant_date }}) > emergency_scenario$em_date %m+% months(months_win),
         true = 1,
         false = 0
-      ),
-    ) %>%
+      )) %>%
     dplyr::filter(flag_division == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(

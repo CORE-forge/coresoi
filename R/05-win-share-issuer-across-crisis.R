@@ -31,12 +31,10 @@
 #' @seealso
 #'  \code{\link[lubridate]{ymd}}
 #'  \code{\link[dplyr]{filter}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}
-#'  \code{\link[forcats]{as_factor}}
 #' @rdname ind_5
 #' @export
 #' @importFrom lubridate ymd
 #' @importFrom dplyr filter mutate if_else group_by summarise n count
-#' @importFrom forcats as_factor
 #' @importFrom DescTools Gini
 #' @importFrom tidyr pivot_wider
 ind_5 <- function(data,
@@ -56,14 +54,14 @@ ind_5 <- function(data,
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
         true = "post", false = "pre"
       ),
-      prepost = forcats::as_factor(prepost),
+      prepost = factor(prepost, levels = c("pre", "post")),
       flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
     ) %>%
     dplyr::filter(flagdivision == 1) %>%
     dplyr::count({{ stat_unit }}, {{ winners }}, prepost) %>%
     dplyr::group_by({{ stat_unit }}, prepost) %>%
     dplyr::summarise(
-      norm_gs = DescTools::GiniSimpson({{ winners }} %>% as_factor()) / ((n() - 1) / n())
+      norm_gs = DescTools::GiniSimpson({{ winners }} %>% forcats::as_factor()) / ((n() - 1) / n())
     ) %>%
     ungroup() %>%
     tidyr::pivot_wider(names_from = prepost, values_from = norm_gs) %>%

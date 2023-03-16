@@ -35,12 +35,10 @@
 #' @seealso
 #'  \code{\link[lubridate]{ymd}}
 #'  \code{\link[dplyr]{filter}}, \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}
-#'  \code{\link[forcats]{as_factor}}
 #' @rdname ind_4
 #' @export
 #' @importFrom lubridate ymd
 #' @importFrom dplyr filter mutate if_else group_by summarise n
-#' @importFrom forcats as_factor
 ind_4 <- function(data,
                   exp_end,
                   eff_start,
@@ -64,7 +62,7 @@ ind_4 <- function(data,
     ) %>%
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = forcats::as_factor(prepost),
+      prepost = factor(prepost, levels = c("pre", "post")),
       flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
       dplyr::across(dplyr::contains("data"), lubridate::ymd),
       ratio = as.numeric({{ eff_end }} - {{ eff_start }}) / as.numeric({{ exp_end }} - {{ eff_start }})

@@ -69,10 +69,10 @@ test_that("check `ind_7()` are 12 columns as according to `generate_indicator_sc
     suppressWarnings({
       ind_7(
         data = mock_data_core,
-        publication_date = data_pubblicazione,
         final_award_date = data_aggiudicazione_definitiva,
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus"
+        emergency_name = "coronavirus",
+        years_before = 1
       )
     }), 12
   )
@@ -91,10 +91,10 @@ test_that("check column names are as according to pre determined schema", {
     suppressWarnings({
       names(ind_7(
         data = mock_data_core,
-        publication_date = data_pubblicazione,
         final_award_date = data_aggiudicazione_definitiva,
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus"
+        emergency_name = "coronavirus",
+        years_before = 1
       ))
     }), col_names
   )
@@ -107,10 +107,10 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     suppressWarnings({
       ind_7(
         data = mock_data_core,
-        publication_date = data_pubblicazione,
         final_award_date = data_aggiudicazione_definitiva,
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus"
+        emergency_name = "coronavirus",
+        years_before = 1
       )
     }),
     min = 0, max = 1
@@ -125,10 +125,10 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     suppressWarnings({
       ind_7(
         data = mock_data_core,
-        publication_date = data_pubblicazione,
         final_award_date = data_aggiudicazione_definitiva,
         stat_unit = codice_fiscale,
-        emergency_name = "terremoto aquila"
+        emergency_name = "terremoto aquila",
+        years_before = 1
       )
     }),
     min = 0, max = 1

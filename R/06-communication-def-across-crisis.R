@@ -39,7 +39,6 @@
 #' @export
 #' @importFrom lubridate ymd
 #' @importFrom dplyr mutate if_else group_by summarise distinct pull rename left_join arrange
-#' @importFrom forcats as_factor
 #' @importFrom stringr str_sub
 ind_6 <- function(data,
                   publication_date,
@@ -73,7 +72,7 @@ ind_6 <- function(data,
   data %>%
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = forcats::as_factor(prepost),
+      prepost = factor(prepost, levels = c("pre", "post")),
       flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
       flag_missing = dplyr::if_else(is.na({{ award_col }}), 1, 0)
     ) %>%

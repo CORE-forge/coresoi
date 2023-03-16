@@ -64,14 +64,12 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 #' @seealso
 #'  \code{\link[lubridate]{ymd}}
 #'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{filter}}, \code{\link[dplyr]{summarise}}
-#'  \code{\link[forcats]{as_factor}}
 #'  \code{\link[stringr]{str_sub}}
 #'  \code{\link[tidyr]{nest}}, \code{\link[tidyr]{drop_na}}
 #' @rdname ind_2
 #' @export
 #' @importFrom lubridate ymd
 #' @importFrom dplyr mutate if_else group_by filter ungroup summarise
-#' @importFrom forcats as_factor
 #' @importFrom stringr str_sub
 #' @importFrom tidyr unnest drop_na
 ind_2 <- function(data,
@@ -103,7 +101,7 @@ ind_2 <- function(data,
   data %>%
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = forcats::as_factor(prepost),
+      prepost = factor(prepost, levels=c("post", "pre")),
       flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
     ) %>%
     tidyr::drop_na({{ contract_value }}) %>%
