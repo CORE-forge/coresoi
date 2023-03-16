@@ -114,17 +114,13 @@ This indicator targets companies
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ind_7</span><span class="op">(</span><span class="va">data</span>, <span class="va">publication_date</span>, <span class="va">final_award_date</span>, <span class="va">emergency_name</span>, <span class="va">stat_unit</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ind_7</span><span class="op">(</span><span class="va">data</span>, <span class="va">final_award_date</span>, <span class="va">emergency_name</span>, <span class="va">stat_unit</span>, <span class="va">years_before</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>mock_data_core exmaple data</p></dd>
-
-
-<dt>publication_date</dt>
-<dd><p>The date when the tender was published</p></dd>
 
 
 <dt>final_award_date</dt>
@@ -137,6 +133,14 @@ This indicator targets companies
 
 <dt>stat_unit</dt>
 <dd><p>The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)</p></dd>
+
+
+<dt>years_before</dt>
+<dd><p>int how many years we have to</p></dd>
+
+
+<dt>publication_date</dt>
+<dd><p>The date when the tender was published</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -151,8 +155,7 @@ This indicator targets companies
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index"><p><code><a href="https://lubridate.tidyverse.org/reference/ymd.html" class="external-link">ymd</a></code>, <code><a href="https://lubridate.tidyverse.org/reference/interval.html" class="external-link">interval</a></code>, <code><a href="https://lubridate.tidyverse.org/reference/period.html" class="external-link">period</a></code>
 <code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest</a></code>
-<code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/reexports.html" class="external-link">reexports</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></code>
-<code><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></code></p></div>
+<code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/reexports.html" class="external-link">reexports</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></code></p></div>
     </div>
 
     <div class="section level2">
@@ -162,10 +165,10 @@ This indicator targets companies
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mock_data_core"</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu">ind_7</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    data <span class="op">=</span> <span class="va">mock_data_core</span>,</span></span>
-<span class="r-in"><span>    publication_date <span class="op">=</span> <span class="va">data_pubblicazione</span>,</span></span>
 <span class="r-in"><span>    final_award_date <span class="op">=</span> <span class="va">data_aggiudicazione_definitiva</span>,</span></span>
 <span class="r-in"><span>    stat_unit <span class="op">=</span> <span class="va">cf_amministrazione_appaltante</span>,</span></span>
-<span class="r-in"><span>    emergency_name <span class="op">=</span> <span class="st">"coronavirus"</span></span></span>
+<span class="r-in"><span>    emergency_name <span class="op">=</span> <span class="st">"coronavirus"</span>,</span></span>
+<span class="r-in"><span>    years_before <span class="op">=</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
