@@ -4,16 +4,16 @@
 \alias{ind_7}
 \title{Compute One-shot opportunistic companies over the crisiss indicator}
 \usage{
-ind_7(data, publication_date, emergency_name, stat_unit)
+ind_7(data, award_date, emergency_name, stat_unit, years_before = 1)
 }
 \arguments{
 \item{data}{mock_data_core exmaple data}
 
-\item{publication_date}{The date when the tender was published}
-
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{stat_unit}{The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)}
+
+\item{publication_date}{The date when the tender was published}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}
@@ -27,7 +27,7 @@ if (interactive()) {
   data("mock_data_core")
   ind_7(
     data = mock_data_core,
-    publication_date = data_pubblicazione,
+    award_date = data_aggiudicazione_definitiva,
     stat_unit = cf_amministrazione_appaltante,
     emergency_name = "coronavirus"
   )

@@ -42,7 +42,7 @@ if (interactive()) {
     data = mock_data_core,
     publication_date = data_pubblicazione,
     award_value = importo_aggiudicazione,
-    sums_paid = importo_lotto,
+    sums_paid = importo_finale,
     stat_unit = cf_amministrazione_appaltante,
     emergency_name = "coronavirus"
   )

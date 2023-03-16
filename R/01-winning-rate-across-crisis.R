@@ -95,7 +95,6 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 #' @export
 #' @importFrom lubridate ymd
 #' @importFrom dplyr mutate if_else group_by summarise n filter rowwise select contains
-#' @importFrom forcats as_factor
 #' @importFrom stringr str_sub
 #' @importFrom tidyr unnest
 ind_1 <- function(data,

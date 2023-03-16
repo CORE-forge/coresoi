@@ -11,7 +11,7 @@
 #'   data("mock_data_core")
 #'   ind_7(
 #'     data = mock_data_core,
-#'     publication_date = data_pubblicazione,
+#'     award_date = data_aggiudicazione_definitiva,
 #'     stat_unit = cf_amministrazione_appaltante,
 #'     emergency_name = "coronavirus"
 #'   )
@@ -27,7 +27,6 @@
 #' @importFrom lubridate ymd interval years %within%
 #' @importFrom tidyr unnest
 #' @importFrom dplyr mutate across starts_with if_else group_by
-#' @importFrom forcats as_factor
 ind_7 <- function(data,
                   award_date,
                   emergency_name,

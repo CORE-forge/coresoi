@@ -61,7 +61,6 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 #' @export
 #' @importFrom lubridate ymd
 #' @importFrom dplyr mutate if_else group_by filter ungroup summarise
-#' @importFrom forcats as_factor
 #' @importFrom stringr str_sub
 #' @importFrom tidyr unnest drop_na
 ind_2 <- function(data,

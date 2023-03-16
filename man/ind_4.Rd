@@ -6,7 +6,6 @@
 \usage{
 ind_4(
   data,
-  exp_start,
   exp_end,
   eff_start,
   eff_end,
@@ -17,8 +16,6 @@ ind_4(
 }
 \arguments{
 \item{data}{data to be passed, expects tibble}
-
-\item{exp_start}{Expected initial execution of the contract}
 
 \item{exp_end}{Expected end of the contract i.e. contract completion date}
 
@@ -31,6 +28,8 @@ ind_4(
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{publication_date}{The date when the tender was published}
+
+\item{exp_start}{Expected initial execution of the contract}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

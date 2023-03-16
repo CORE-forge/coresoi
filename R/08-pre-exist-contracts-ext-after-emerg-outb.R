@@ -23,12 +23,12 @@
 #' }
 #' @seealso
 #'  \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{if_else}}, \code{\link[dplyr]{group_by}}, \code{\link[dplyr]{summarise}}, \code{\link[dplyr]{context}}, \code{\link[dplyr]{n_distinct}}, \code{\link[dplyr]{rename}}
-#'  \code{\link[lubridate]{ymd}}, \code{\link[lubridate]{interval}}
+#'  \code{\link[lubridate]{ymd}}
 #'  \code{\link[forcats]{as_factor}}
 #' @rdname ind_8
 #' @export
 #' @importFrom dplyr mutate if_else group_by summarise n n_distinct rename
-#' @importFrom lubridate ymd interval
+#' @importFrom lubridate ymd
 #' @importFrom forcats as_factor
 ind_8 <- function(data,
                   publication_date,
