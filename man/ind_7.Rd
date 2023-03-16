@@ -16,8 +16,6 @@ ind_7(data, final_award_date, emergency_name, stat_unit, years_before)
 \item{stat_unit}{The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)}
 
 \item{years_before}{int how many years we have to}
-
-\item{publication_date}{The date when the tender was published}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}
