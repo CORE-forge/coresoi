@@ -179,7 +179,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         test_type = "fisher"
       )
     }),
-    n = 624
+    n = 3227
   )
 })
 

@@ -51,7 +51,7 @@ test_that("check `ind_3()` are 12 columns as according to `generate_indicator_sc
         data = mock_data_core,
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_finale,
+        sums_paid = importo_lotto,
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       )
@@ -74,7 +74,7 @@ test_that("check column names are as according to pre determined schema", {
         data = mock_data_core,
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_finale,
+        sums_paid = importo_lotto,
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       ))
@@ -92,7 +92,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         data = mock_data_core,
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_finale,
+        sums_paid = importo_lotto,
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       )
@@ -113,7 +113,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         data = mock_data_core,
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_finale,
+        sums_paid = importo_lotto,
         stat_unit = provincia,
         emergency_name = "coronavirus"
       )
@@ -130,7 +130,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         data = mock_data_core,
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_finale,
+        sums_paid = importo_lotto,
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       )
@@ -148,7 +148,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         data = mock_data_core,
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_finale,
+        sums_paid = importo_lotto,
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "Terremoto Aquila"
       )
@@ -166,7 +166,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         data = mock_data_core,
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_finale,
+        sums_paid = importo_lotto,
         stat_unit = provincia,
         emergency_name = "coronavirus"
       )
