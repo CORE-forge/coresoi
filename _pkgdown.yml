@@ -39,6 +39,3 @@ reference:
       - emergency_dates
       - get_associated_cpv_from_emergency
 
-
- development:
-  mode: auto
