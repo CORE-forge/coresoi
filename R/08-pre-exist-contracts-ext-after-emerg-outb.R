@@ -1,5 +1,7 @@
-#' @title Compute Pre-existing contracts modified after the crisis indicator
-#' @description The indicator reveals whether a pre- existing awarded contract has been modified after the emergency outbreak
+#' Compute Pre-existing contracts modified after the crisis indicator
+#'
+#' @description
+#'  The indicator reveals whether a pre- existing awarded contract has been modified after the emergency outbreak
 #'
 #' ### Motivation:
 #' The red flag considers at risk contracts awarded before the emergency outbreak, but modified through variants after 6 months (parametric window) from the emergency outbreak

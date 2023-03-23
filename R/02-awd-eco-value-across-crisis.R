@@ -29,8 +29,10 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 
 
 
-#' @title Compute Awarded economic value across the crisis indicator
-#' @description The indicator focuses on companies that after the emergency outbreak were awarded public contracts much higher in economic value than before the emergency
+#' Compute Awarded economic value across the crisis indicator
+#'
+#' @description
+#' The indicator focuses on companies that after the emergency outbreak were awarded public contracts much higher in economic value than before the emergency
 #'
 #' ### Motivation:
 #' The red flag considers at risk those companies that **exceptionally increase** their _competitive power_ over the outbreak, in terms of economic value of their awarded contracts on the relevant economic market.

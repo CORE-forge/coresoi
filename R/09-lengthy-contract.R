@@ -7,8 +7,10 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
     stats::t.test(x = mean_to_compare, mu = ground_mean, alternative = "greater")$p.value
 }
 
-#' @title compute Lenghty Contracts indicator
-#' @description The indicator reveals whether the duration of a contract is significantly longer than the average length of awarded contracts after the emergency outbreak
+#' compute Lenghty Contracts indicator
+#'
+#' @description
+#' The indicator reveals whether the duration of a contract is significantly longer than the average length of awarded contracts after the emergency outbreak
 #'
 #' ### Motivation:
 #' The red flag considers at risk contracts won after the emergency outbreak whose duration is not justified by the nature of the crisis, that is, contracts longer than the average duration of contracts won after the emergency outbreak
