@@ -1,4 +1,5 @@
-#' @title Compute Winner's share of issuer's contract across the crisis indicator
+#' Compute Winner's share of issuer's contract across the crisis indicator
+#'
 #' @description The indicator reveals, for each issuer, the share of contracts awarded to the same company out of the total number of contracts issued
 #'
 #' ### Motivation:

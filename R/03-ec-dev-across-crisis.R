@@ -1,5 +1,7 @@
-#' @title Compute Economic deviation across the crisis indicator
-#' @description The indicator reveals whether there has been a deviation of the contract actual execution economic value from its initial awarded value.
+#' Compute Economic deviation across the crisis indicator
+#'
+#' @description
+#'  The indicator reveals whether there has been a deviation of the contract actual execution economic value from its initial awarded value.
 #'
 #' ### Motivation:
 #' The red flag considers at risk companies whose contracts undergo a **significant increase** of their _economic deviation ratio_ - i.e., ratio between awarded economic value and actual amount paid - across the crisis.
