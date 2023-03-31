@@ -1,0 +1,183 @@
+---
+title: "Logit_cpv"
+output:
+---
+
+```{r setup}
+pacman::p_load(tidyverse,writexl)
+```
+
+```{r}
+datBDNCP1321_cpv %>%
+  mutate(data_pubblicazione = data_pubblicazione %>% as.Date()) -> data
+```
+
+
+Terremoto
+
+```{r}
+data %>%
+  filter(data_pubblicazione >= "2016-08-26",
+         data_pubblicazione < "2017-02-26",
+         mcpv != "") %>%
+  group_by(mcpv) %>%
+  summarise(
+    n_2016_post = n()
+  ) %>%
+  mutate(
+    l_2016_post = qlogis(n_2016_post/sum(n_2016_post))
+  ) %>%
+  left_join(data %>%
+  filter(data_pubblicazione >= "2016-02-26",
+         data_pubblicazione < "2017-08-26",
+         mcpv != "") %>%
+  group_by(mcpv) %>%
+  summarise(
+    n_2016_pre = n()
+  ) %>%
+  mutate(
+    l_2016_pre = qlogis(n_2016_pre/sum(n_2016_pre))
+  )) %>%
+  left_join(data %>%
+  filter(data_pubblicazione >= "2015-08-26",
+         data_pubblicazione < "2016-02-26",
+         mcpv != "") %>%
+  group_by(mcpv) %>%
+  summarise(
+    n_2015_post = n()
+  ) %>%
+  mutate(
+    l_2015_post = qlogis(n_2015_post/sum(n_2015_post))
+  )) %>%
+  left_join(data %>%
+  filter(data_pubblicazione >= "2015-02-26",
+         data_pubblicazione < "2016-08-26",
+         mcpv != "") %>%
+  group_by(mcpv) %>%
+  summarise(
+    n_2015_pre = n()
+  ) %>%
+  mutate(
+    l_2015_pre = qlogis(n_2015_pre/sum(n_2015_pre))
+  )) %>%
+  mutate(
+    did = (l_2016_post - l_2016_pre) - (l_2015_post - l_2015_pre),
+    .after = mcpv
+  ) %>%
+  arrange(-did) %>%
+  transmute(mcpv,did) %>% janitor::adorn_rounding(4) %>% print()
+  write_xlsx("Terremoto.xlsx")
+```
+
+Covid
+         
+```{r}
+data %>%
+  filter(data_pubblicazione >= "2020-02-01",
+         data_pubblicazione < "2020-08-01",
+         mcpv != "") %>%
+  group_by(mcpv) %>%
+  summarise(
+    n_2020_post = n()
+  ) %>%
+  mutate(
+    l_2020_post = qlogis(n_2020_post/sum(n_2020_post))
+  ) %>%
+  left_join(data %>%
+  filter(data_pubblicazione >= "2019-08-01",
+         data_pubblicazione < "2020-02-01",
+         mcpv != "") %>%
+  group_by(mcpv) %>%
+  summarise(
+    n_2020_pre = n()
+  ) %>%
+  mutate(
+    l_2020_pre = qlogis(n_2020_pre/sum(n_2020_pre))
+  )) %>%
+  left_join(data %>%
+  filter(data_pubblicazione >= "2019-02-01",
+         data_pubblicazione < "2019-08-01",
+         mcpv != "") %>%
+  group_by(mcpv) %>%
+  summarise(
+    n_2019_post = n()
+  ) %>%
+  mutate(
+    l_2019_post = qlogis(n_2019_post/sum(n_2019_post))
+  )) %>%
+  left_join(data %>%
+  filter(data_pubblicazione >= "2018-08-01",
+         data_pubblicazione < "2019-02-01",
+         mcpv != "") %>%
+  group_by(mcpv) %>%
+  summarise(
+    n_2019_pre = n()
+  ) %>%
+  mutate(
+    l_2019_pre = qlogis(n_2019_pre/sum(n_2019_pre))
+  )) %>%
+  mutate(
+    did = (l_2020_post - l_2020_pre) - (l_2019_post - l_2019_pre),
+    .after = mcpv
+  ) %>%
+  arrange(-did) %>%
+  transmute(mcpv,did) %>% janitor::adorn_rounding(4) %>% print()
+  write_xlsx("Covid.xlsx")
+```
+
+
+Incendi
+
+```{r}
+data %>%
+  filter(data_pubblicazione >= "2017-06-01",
+         data_pubblicazione < "2018-01-01",
+         mcpv != "") %>%
+  group_by(mcpv) %>%
+  summarise(
+    n_2017_post = n()
+  ) %>%
+  mutate(
+    l_2017_post = qlogis(n_2017_post/sum(n_2017_post))
+  ) %>%
+  left_join(data %>%
+  filter(data_pubblicazione >= "2017-01-01",
+         data_pubblicazione < "2017-07-01",
+         mcpv != "") %>%
+  group_by(mcpv) %>%
+  summarise(
+    n_2017_pre = n()
+  ) %>%
+  mutate(
+    l_2017_pre = qlogis(n_2017_pre/sum(n_2017_pre))
+  )) %>%
+  left_join(data %>%
+  filter(data_pubblicazione >= "2016-06-01",
+         data_pubblicazione < "2017-01-01",
+         mcpv != "") %>%
+  group_by(mcpv) %>%
+  summarise(
+    n_2016_post = n()
+  ) %>%
+  mutate(
+    l_2016_post = qlogis(n_2016_post/sum(n_2016_post))
+  )) %>%
+  left_join(data %>%
+  filter(data_pubblicazione >= "2017-01-01",
+         data_pubblicazione < "2017-07-01",
+         mcpv != "") %>%
+  group_by(mcpv) %>%
+  summarise(
+    n_2016_pre = n()
+  ) %>%
+  mutate(
+    l_2016_pre = qlogis(n_2016_pre/sum(n_2016_pre))
+  )) %>%
+  mutate(
+    did = (l_2017_post - l_2017_pre) - (l_2016_post - l_2016_pre),
+    .after = mcpv
+  ) %>%
+  arrange(-did) %>%
+    transmute(mcpv,did) %>% janitor::adorn_rounding(4) %>% print()
+  write_xlsx("Incendi.xlsx")
+```
