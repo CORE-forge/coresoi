@@ -13,12 +13,10 @@ datBDNCP1321_cpv %>%
 ```
 
 
-Terremoto
-
 ```{r}
 data %>%
-  filter(data_pubblicazione >= "2016-08-26",
-         data_pubblicazione < "2017-02-26",
+  filter(data_pubblicazione >= "2016-08-24",
+         data_pubblicazione < "2017-12-24",
          mcpv != "") %>%
   group_by(mcpv) %>%
   summarise(
@@ -28,8 +26,8 @@ data %>%
     l_2016_post = qlogis(n_2016_post/sum(n_2016_post))
   ) %>%
   left_join(data %>%
-  filter(data_pubblicazione >= "2016-02-26",
-         data_pubblicazione < "2017-08-26",
+  filter(data_pubblicazione >= "2016-04-24",
+         data_pubblicazione < "2016-08-24",
          mcpv != "") %>%
   group_by(mcpv) %>%
   summarise(
@@ -40,7 +38,7 @@ data %>%
   )) %>%
   left_join(data %>%
   filter(data_pubblicazione >= "2015-08-26",
-         data_pubblicazione < "2016-02-26",
+         data_pubblicazione < "2015-12-26",
          mcpv != "") %>%
   group_by(mcpv) %>%
   summarise(
@@ -50,8 +48,8 @@ data %>%
     l_2015_post = qlogis(n_2015_post/sum(n_2015_post))
   )) %>%
   left_join(data %>%
-  filter(data_pubblicazione >= "2015-02-26",
-         data_pubblicazione < "2016-08-26",
+  filter(data_pubblicazione >= "2015-04-24",
+         data_pubblicazione < "2015-08-24",
          mcpv != "") %>%
   group_by(mcpv) %>%
   summarise(
@@ -65,7 +63,7 @@ data %>%
     .after = mcpv
   ) %>%
   arrange(-did) %>%
-  transmute(mcpv,did) %>% janitor::adorn_rounding(4) %>% print()
+#  transmute(mcpv,did) %>% janitor::adorn_rounding(4) %>% print()
   write_xlsx("Terremoto.xlsx")
 ```
 
