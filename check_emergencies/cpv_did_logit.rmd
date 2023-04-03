@@ -37,8 +37,8 @@ data %>%
     l_2016_pre = qlogis(n_2016_pre/sum(n_2016_pre))
   )) %>%
   left_join(data %>%
-  filter(data_pubblicazione >= "2015-08-26",
-         data_pubblicazione < "2015-12-26",
+  filter(data_pubblicazione >= "2015-08-24",
+         data_pubblicazione < "2015-12-24",
          mcpv != "") %>%
   group_by(mcpv) %>%
   summarise(
