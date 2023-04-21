@@ -50,26 +50,40 @@ ind_7 <- function(data,
   cpv_col <- grab_cpv(data = data)
 
   data %>%
+    dplyr::filter(!is.na({{ stat_unit }})) %>%
+    dplyr::filter(!is.na({{ final_award_date }})) %>%
     dplyr::mutate(
       dplyr::across(dplyr::starts_with("data"), lubridate::ymd),
-      prepost = dplyr::if_else({{ final_award_date }} >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = factor(prepost, levels=c("post", "pre")),
-      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
+      # NOTE: prepost according to final_award_date
+      prepost = dplyr::if_else({{ final_award_date }} >= emergency_scenario$em_date,
+        true = "post",
+        false = "pre"
+      ),
+      prepost = factor(prepost, levels = c("post", "pre")),
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs,
+        true = 1,
+        false = 0
+      )
     ) %>%
     dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
+    # rimosso filtro: se non ha un post non è a rischio, la condizione sotto assegnerà flag_oneshot = 0
+    # dplyr::filter(any(prepost == "post")) %>%
     dplyr::summarise(
-      ncontr = n(),
-      flag_oneshot = dplyr::if_else(any(prepost == "post") &
-                                      max({{ final_award_date }}[prepost == "pre"]) < emergency_scenario$em_date -
-                                      lubridate::years(years_before),
-                                    true = 1,
-                                    false = 0)
+      ncontr = dplyr::n(),
+      npre = sum(prepost == "pre"),
+      npost = sum(prepost == "post"),
+      flag_oneshot = dplyr::if_else(
+        any(prepost == "post") & max({{ final_award_date }}[prepost == "pre"]) <
+          emergency_scenario$em_date - lubridate::years(years_before),
+        true = 1,
+        false = 0
+      ) %>% suppressWarnings()
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value = flag_oneshot,
+      indicator_value = flag_oneshot, # no test
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario
