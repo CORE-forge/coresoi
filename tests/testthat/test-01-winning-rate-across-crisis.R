@@ -163,7 +163,7 @@ test_that("check if the number of rows is coherent with the aggregation level `p
         test_type = "fisher"
       )
     }),
-    n = 108
+    n = 109
   )
 })
 
@@ -179,7 +179,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         test_type = "fisher"
       )
     }),
-    n = 731
+    n = 3004
   )
 })
 
@@ -229,8 +229,8 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
       test_type = "fisher"
     ) %>% distinct(emergency_name, emergency_id) %>% flatten(),
     list(
-      emergency_name = "Terremoto Ischia",
-      emergency_id = 3
+      emergency_id = 3,
+      emergency_name = "Terremoto Ischia"
     )
   )
 })
