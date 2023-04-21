@@ -51,26 +51,39 @@ ind_8 <- function(data,
   cpv_col <- grab_cpv(data = data)
 
   data %>%
+    filter(!is.na({{ stat_unit }})) %>%
     dplyr::mutate(
       prepost = dplyr::if_else(
         lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
         true = "post",
         false = "pre"
       ),
-      prepost = factor(prepost, levels=c("post", "pre")),
-      flag_division = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
+      prepost = factor(prepost, levels = c("post", "pre")),
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs,
+        true = 1,
+        false = 0
+      )
+    ) %>%
+    dplyr::filter(flagdivision == 1) %>%
+    dplyr::mutate(
       flag_modif = dplyr::if_else(
         prepost == "pre" &
           lubridate::ymd({{ variant_date }}) > emergency_scenario$em_date %m+% months(months_win),
         true = 1,
         false = 0
-      )) %>%
-    dplyr::filter(flag_division == 1) %>%
+      ),
+      # contract without variants --> 0
+      flag_modif = dplyr::if_else(
+        is.na({{ variant_date }}),
+        true = 0,
+        false = flag_modif
+      )
+    ) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
-      n = dplyr::n(),
-      npre = sum(prepost == "pre"),
-      ncig = dplyr::n_distinct(cig),
+      # n = dplyr::n(),
+      # npre = sum(prepost == "pre"),
+      # ncig = dplyr::n_distinct(cig),
       #    ncig_pre = data.table::uniqueN(cig[prepost == "pre"]),
       nmod = sum(flag_modif == 1),
       #    ncig_mod = data.table::uniqueN(cig[flag_modif == 1]),
@@ -80,7 +93,7 @@ ind_8 <- function(data,
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value = rf_value,
+      indicator_value = rf_value, # no test
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario
