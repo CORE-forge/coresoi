@@ -29,13 +29,14 @@ compute_barnard <- function(a, b, c, d, method = "boschloo") {
   # only post
   else if ((a + b) == 0 & (c + d) > 0) {
     0
-  }
-  else {
+  } else {
     data <- matrix(c(d, b, c, a), ncol = 2)
     out_barn <- DescTools::BarnardTest(data, alternative = "greater", method = "boschloo") %>%
       suppressWarnings()
-    c(p_value = round(out_barn$p.value, 5),
-      estimate = round(out_barn$estimate, 3))
+    c(
+      p_value = round(out_barn$p.value, 5),
+      estimate = round(out_barn$estimate, 3)
+    )
   }
 }
 
