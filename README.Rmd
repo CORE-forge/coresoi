@@ -44,11 +44,12 @@ library(dplyr)
 
 ## basic example code with ind_1() i.e. High Winning Rate
 ind_1_res <- ind_1(
-  data = mock_data_core, 
-  publication_date = data_pubblicazione, 
+  data = mock_data_core,
+  publication_date = data_pubblicazione,
   stat_unit = cf_amministrazione_appaltante,
   emergency_name = "coronavirus",
-  test_type = "fisher")
+  test_type = "fisher"
+)
 ind_1_res
 ```
 

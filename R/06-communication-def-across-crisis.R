@@ -48,7 +48,7 @@ ind_6 <- function(data,
                   test_type) {
   indicator_id <- 6
   indicator_name <- "Communication default across the crisis"
-  aggregation_type <- quo_expr(enquo(stat_unit))
+  aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
   cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   cpv_col <- grab_cpv(data = data)
@@ -71,10 +71,19 @@ ind_6 <- function(data,
 
   data %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
+        true = "post",
+        false = "pre"
+      ),
       prepost = factor(prepost, levels = c("pre", "post")),
-      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
-      flag_missing = dplyr::if_else(is.na({{ award_col }}), 1, 0)
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs,
+        true = 1,
+        false = 0
+      ),
+      flag_missing = dplyr::if_else(is.na({{ award_col }}),
+        true = 1,
+        false = 0
+      )
     ) %>%
     dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
@@ -90,6 +99,7 @@ ind_6 <- function(data,
       p_2 = n_22 / m_2,
       diff_p2_p1 = p_2 - p_1
     ) %>%
+    # remove unit with missing information in pre and post
     dplyr::filter(!is.na(p_1) & !is.na(p_2)) %>%
     dplyr::rowwise() %>%
     dplyr::mutate(
@@ -99,7 +109,7 @@ ind_6 <- function(data,
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value = test,
+      indicator_value = 1 - test, # 1 - pvalue
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario

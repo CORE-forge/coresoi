@@ -62,14 +62,14 @@ expect_some_variability <- function(object, exp_value_counts) {
 
 test_that("check `ind_9()` are 12 columns as according to `generate_indicator_schema()`s with `stat_unit` being **cf_amministrazione_appaltante**", {
   expect_col_number(
-      ind_9(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        eff_start = data_inizio_effettiva ,
-        eff_end = data_effettiva_ultimazione,
-        emergency_name = "coronavirus"
-      ), 12
+    ind_9(
+      data = mock_data_core,
+      publication_date = data_pubblicazione,
+      stat_unit = cf_amministrazione_appaltante,
+      eff_start = data_inizio_effettiva,
+      eff_end = data_effettiva_ultimazione,
+      emergency_name = "coronavirus"
+    ), 12
   )
 })
 
@@ -84,14 +84,14 @@ test_that("check column names are as according to pre determined schema", {
   )
 
   expect_equal(
-      names(ind_9(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        eff_start = data_inizio_effettiva ,
-        eff_end = data_effettiva_ultimazione,
-        emergency_name = "coronavirus"
-      )), col_names,
+    names(ind_9(
+      data = mock_data_core,
+      publication_date = data_pubblicazione,
+      stat_unit = cf_amministrazione_appaltante,
+      eff_start = data_inizio_effettiva,
+      eff_end = data_effettiva_ultimazione,
+      emergency_name = "coronavirus"
+    )), col_names,
     tolerance = 0.8
   )
 })
@@ -101,14 +101,14 @@ test_that("check column names are as according to pre determined schema", {
 
 test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Wilcoxon)", {
   expect_within_range(
-      ind_9(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        eff_start = data_inizio_effettiva ,
-        eff_end = data_effettiva_ultimazione,
-        emergency_name = "coronavirus"
-      ),
+    ind_9(
+      data = mock_data_core,
+      publication_date = data_pubblicazione,
+      stat_unit = cf_amministrazione_appaltante,
+      eff_start = data_inizio_effettiva,
+      eff_end = data_effettiva_ultimazione,
+      emergency_name = "coronavirus"
+    ),
     min = 0, max = 1
   )
 })
@@ -117,15 +117,15 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 
 test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Wilcoxon)", {
   expect_some_variability(
-      ind_9(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        eff_start = data_inizio_effettiva ,
-        eff_end = data_effettiva_ultimazione,
-        emergency_name = "coronavirus"
-      ),
-      exp_value_counts = 2
+    ind_9(
+      data = mock_data_core,
+      publication_date = data_pubblicazione,
+      stat_unit = cf_amministrazione_appaltante,
+      eff_start = data_inizio_effettiva,
+      eff_end = data_effettiva_ultimazione,
+      emergency_name = "coronavirus"
+    ),
+    exp_value_counts = 2
   )
 })
 
@@ -134,14 +134,14 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 ## test resiliency oevr differnt scenario
 test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
   expect_within_range(
-      ind_9(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        eff_start = data_inizio_effettiva ,
-        eff_end = data_effettiva_ultimazione,
-        emergency_name = "terremoto aquila"
-      ),
+    ind_9(
+      data = mock_data_core,
+      publication_date = data_pubblicazione,
+      stat_unit = cf_amministrazione_appaltante,
+      eff_start = data_inizio_effettiva,
+      eff_end = data_effettiva_ultimazione,
+      emergency_name = "terremoto aquila"
+    ),
     min = 0, max = 1
   )
 })
@@ -154,15 +154,13 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
       data = mock_data_core,
       publication_date = data_pubblicazione,
       stat_unit = cf_amministrazione_appaltante,
-      eff_start = data_inizio_effettiva ,
+      eff_start = data_inizio_effettiva,
       eff_end = data_effettiva_ultimazione,
       emergency_name = "terremoto ischia"
-    )%>% distinct(emergency_name, emergency_id) %>% flatten(),
+    ) %>% distinct(emergency_name, emergency_id) %>% flatten(),
     list(
-      emergency_name = "Terremoto Ischia",
-      emergency_id = 3
+      emergency_id = 3,
+      emergency_name = "Terremoto Ischia"
     )
   )
 })
-
-

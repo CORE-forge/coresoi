@@ -42,14 +42,13 @@ data("mock_data_core", package = "coresoi")
 
 ind_3(
   data = mock_data_core,
-  award_value=importo_aggiudicazione, 
-  sums_paid=importo_lotto,
+  award_value = importo_aggiudicazione,
+  sums_paid = importo_lotto,
   cf_amministrazione_appaltante,
-  publication_date=data_pubblicazione,
+  publication_date = data_pubblicazione,
   emergency_name = "coronavirus"
-  ) |>
+) |>
   head(10)
-
 ```
 
 The output from `ind_3` is a schema which shows 
