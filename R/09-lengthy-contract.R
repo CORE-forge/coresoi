@@ -33,7 +33,7 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = cf_amministrazione_appaltante,
 #'     cpv = cod_cpv,
-#'     eff_start = data_inizio_effettiva ,
+#'     eff_start = data_inizio_effettiva,
 #'     eff_end = data_effettiva_ultimazione,
 #'     emergency_name = "coronavirus"
 #'   )

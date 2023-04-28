@@ -53,7 +53,7 @@ ind_7 <- function(data,
     dplyr::mutate(
       dplyr::across(dplyr::starts_with("data"), lubridate::ymd),
       prepost = dplyr::if_else({{ final_award_date }} >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = factor(prepost, levels=c("post", "pre")),
+      prepost = factor(prepost, levels = c("post", "pre")),
       flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
     ) %>%
     dplyr::filter(flagdivision == 1) %>%
@@ -61,10 +61,11 @@ ind_7 <- function(data,
     dplyr::summarise(
       ncontr = n(),
       flag_oneshot = dplyr::if_else(any(prepost == "post") &
-                                      max({{ final_award_date }}[prepost == "pre"]) < emergency_scenario$em_date -
-                                      lubridate::years(years_before),
-                                    true = 1,
-                                    false = 0)
+        max({{ final_award_date }}[prepost == "pre"]) < emergency_scenario$em_date -
+          lubridate::years(years_before),
+      true = 1,
+      false = 0
+      )
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
