@@ -31,4 +31,3 @@ In the following, for each selected red flag, it will be detailed:
 - Scoring rule: i.e., the criteria for assigning scores as a result of the statistical testing procedure outputs and/or the occurrence of specific and well-defined risky circumstances
 - Main target unit: i.e., whether the red flag targets companies, contracting authorities or both as at-risk units
 
-
