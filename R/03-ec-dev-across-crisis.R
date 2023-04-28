@@ -55,7 +55,7 @@ ind_3 <- function(data,
       {{ sums_paid }} > 0) %>%
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = factor(prepost, levels = c("post", "pre")),
+      prepost = factor(prepost, levels=c("post", "pre")),
       flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
       ratio = {{ sums_paid }} / {{ award_value }}
     ) %>%

@@ -57,15 +57,14 @@ ind_8 <- function(data,
         true = "post",
         false = "pre"
       ),
-      prepost = factor(prepost, levels = c("post", "pre")),
+      prepost = factor(prepost, levels=c("post", "pre")),
       flag_division = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
       flag_modif = dplyr::if_else(
         prepost == "pre" &
           lubridate::ymd({{ variant_date }}) > emergency_scenario$em_date %m+% months(months_win),
         true = 1,
         false = 0
-      )
-    ) %>%
+      )) %>%
     dplyr::filter(flag_division == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
