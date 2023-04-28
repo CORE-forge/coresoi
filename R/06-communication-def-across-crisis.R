@@ -1,5 +1,7 @@
-#' @title Compute Communication default across the crisis indicator
-#' @description The indicator reveals whether - and to what extent - the duty of contracting authorities to communicate the public procurement procedure activation to the Anticorruption Authority ended with a technical failure
+#'  Compute Communication default across the crisis indicator
+#'
+#' @description
+#' The indicator reveals whether - and to what extent - the duty of contracting authorities to communicate the public procurement procedure activation to the Anticorruption Authority ended with a technical failure
 #'
 #' ### Motivation:
 #' The red flag considers at risk contracting authorities **who fail to accomplish their duty** to communicate the public procurement procedure activation to the Anticorruption Authority

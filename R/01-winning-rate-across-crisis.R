@@ -72,8 +72,10 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 }
 
 
-#' @title Compute Winning rate across the crisis indicator
-#' @description The indicator focuses on companies that after the emergency outbreak were awarded public contracts much more frequently than before the emergency.
+#' Compute Winning rate across the crisis indicator
+#'
+#' @description
+#' The indicator focuses on companies that after the emergency outbreak were awarded public contracts much more frequently than before the emergency.
 #'
 #' ### Motivation:
 #' The red flag considers at risk companies that **exceptionally increase** their competitive power over the emergency outbreak, in terms of proportion of awarded contracts on the relevant economic market.

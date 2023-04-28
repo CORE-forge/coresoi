@@ -1,5 +1,7 @@
-#' @title Compute Contract Lenght deviation across the crisis indicator
-#' @description The indicator reveals whether there has been a deviation of the contract actual execution duration from its stated/expected duration
+#' Compute Contract Lenght deviation across the crisis indicator
+#'
+#' @description
+#'  The indicator reveals whether there has been a deviation of the contract actual execution duration from its stated/expected duration
 #'
 #' ### Motivation:
 #' The red flag considers at risk companies whose contracts undergo a significant increase of their length deviation ratio - i.e., ratio between contract actual execution duration and expected duration - across the crisis

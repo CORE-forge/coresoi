@@ -11,3 +11,5 @@
 ^\.github$
 ^codecov\.yml$
 ^vignettes/articles$
+^doc$
+^Meta$

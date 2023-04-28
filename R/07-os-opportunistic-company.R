@@ -1,5 +1,7 @@
-#' @title Compute One-shot opportunistic companies over the crisiss indicator
-#' @description The indicator focuses on companies that after the emergency outbreak were awarded one or more public contracts having participated in the public procurement process without winning in the 5 years before the emergency outbreak
+#' Compute One-shot opportunistic companies over the crisiss indicator
+#'
+#' @description
+#' The indicator focuses on companies that after the emergency outbreak were awarded one or more public contracts having participated in the public procurement process without winning in the 5 years before the emergency outbreak
 #'
 #' ### Motivation:
 #' The red flag considers at risk those companies that **show a "one- shot opportunistic behaviour"**, that is, companies that after the emergency outbreak were awarded one or more public contracts but _did not show any competitive power in the previous years_
