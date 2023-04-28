@@ -50,7 +50,3 @@ The output from `ind_2` is a schema which shows
 
 ## Technical support
 
-
-
-
-

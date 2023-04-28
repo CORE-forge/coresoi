@@ -50,7 +50,7 @@ ind_4 <- function(data,
                   publication_date) {
   indicator_id <- 4
   indicator_name <- "Length deviation across the crisis"
-  aggregation_type <- rlang::quo_expr(enquo(stat_unit))
+  aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
   cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   cpv_col <- grab_cpv(data = data)
@@ -63,32 +63,38 @@ ind_4 <- function(data,
         !is.na({{ eff_start }})
     ) %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
+        true = "post",
+        false = "pre"
+      ),
       prepost = factor(prepost, levels = c("pre", "post")),
-      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs,
+        true = 1,
+        false = 0
+      ),
       dplyr::across(dplyr::contains("data"), lubridate::ymd),
-      ratio = as.numeric({{ eff_end }} - {{ eff_start }}) / as.numeric({{ exp_end }} - {{ eff_start }})
+      ratio = as.numeric({{ eff_end }} - {{ eff_start }} + 1) /
+        as.numeric({{ exp_end }} - {{ eff_start }} + 1)
     ) %>%
     dplyr::filter(ratio != Inf, flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::filter(all(c("pre", "post") %in% prepost)) %>%
+    dplyr::ungroup(prepost) %>%
     dplyr::summarise(
-      prepost,
-      prepost_count = dplyr::n(),
-      ratio_mean = mean(ratio, na.rm = TRUE),
-      ratio_median = median(ratio, na.rm = TRUE),
-      ratio_mean = round(ratio_mean, 3)
+      npre = sum(prepost == "pre"),
+      npost = sum(prepost == "post"),
+      mean_pre = mean(ratio[prepost == "pre"]),
+      mean_post = mean(ratio[prepost == "post"]),
+      median_pre = median(ratio[prepost == "pre"]),
+      median_post = median(ratio[prepost == "post"]),
+      ind_4 = compute_kolmogorov_smirnoff(var = ratio, group = prepost, data = .)[1]
     ) %>%
-    mutate(
-      ind_4 = compute_kolmogorov_smirnoff(var = ratio_mean, group = prepost, data = .)[1]
-    ) %>%
-    ungroup({{ stat_unit }}) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value = ind_4,
+      indicator_value = 1 - ind_4, # 1 - pvalue
       aggregation_name = {{ stat_unit }},
-      aggregation_type = rlang::as_string(aggregation_type),
+      aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario
     ) %>%
     return()

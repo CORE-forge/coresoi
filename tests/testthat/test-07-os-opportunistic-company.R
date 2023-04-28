@@ -47,7 +47,7 @@ expect_within_range <- function(object, min, max) {
 expect_either_0_or_1 <- function(object, min, max) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
 
-  act$indicator_min <-c(0,1)
+  act$indicator_min <- c(0, 1)
   act$indicator_max <- max(act$val$indicator_value)
 
   if (any(between(act$val$indicator_value, min, max))) {

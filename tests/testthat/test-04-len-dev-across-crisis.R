@@ -126,7 +126,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "coronavirus"
       )
     }),
-    n = 751
+    n = 76
   )
 })
 

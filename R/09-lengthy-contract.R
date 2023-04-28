@@ -35,7 +35,7 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = cf_amministrazione_appaltante,
 #'     cpv = cod_cpv,
-#'     eff_start = data_inizio_effettiva ,
+#'     eff_start = data_inizio_effettiva,
 #'     eff_end = data_effettiva_ultimazione,
 #'     emergency_name = "coronavirus"
 #'   )
@@ -67,20 +67,24 @@ ind_9 <- function(data,
   cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   cpv_col <- grab_cpv(data = data)
 
-  data %>%
+  data_out <- data %>%
+    dplyr::filter(!is.na({{ stat_unit }})) %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(
-        lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
-        true = "post", false = "pre"
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
+        true = "post",
+        false = "pre"
       ),
-      prepost = forcats::as_factor(prepost),
-      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
+      prepost = factor(prepost, levels = c("post", "pre")),
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs,
+        true = 1,
+        false = 0
+      ),
       contract_duration = dplyr::if_else(
         {{ eff_end }} < {{ eff_start }},
-        true = NA_real_, false =
-          1 + as.numeric({{ eff_end }} - {{ eff_start }})
+        true = NA_real_,
+        false = 1 + as.numeric({{ eff_end }} - {{ eff_start }})
       )
-    ) -> data_out
+    )
 
   grand_mean <- data_out %>%
     dplyr::filter(prepost == "post") %>%
@@ -89,7 +93,7 @@ ind_9 <- function(data,
 
   data_out %>%
     dplyr::filter(prepost == "post" & !is.na(contract_duration)) %>%
-    # dplyr::filter(flagdivision == 1) %>%  #commented for the moment (very few data)
+    dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
       n = dplyr::n(),
@@ -103,7 +107,7 @@ ind_9 <- function(data,
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value = wilctest,
+      indicator_value = 1 - wilctest, # 1 - pvalue
       aggregation_name = {{ stat_unit }},
       aggregation_type = rlang::as_string(aggregation_type),
       emergency = emergency_scenario

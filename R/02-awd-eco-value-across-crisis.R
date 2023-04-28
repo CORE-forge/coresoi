@@ -89,36 +89,60 @@ ind_2 <- function(data,
 
 
   test <- function(data, var, group, test_type) {
-    switch(test_type,
-      "ks" = {
-        compute_kolmogorov_smirnoff(data, var, group)
-      },
-      "wilcoxon" = {
-        compute_wilcox(data, var, group)
-      },
-      stop(paste0("No handler for ", test_type))
-    )
+    # temporary: if two levels in group are not found:
+    if (length(unique(group)) != 2) {
+      # print("999")
+      999
+    } else {
+      # print("test")
+      switch(test_type,
+        "ks" = {
+          compute_kolmogorov_smirnoff(data, var, group)
+        },
+        "wilcoxon" = {
+          compute_wilcox(data, var, group)
+        },
+        stop(paste0("No handler for ", test_type))
+      )
+    }
   }
 
   data %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = factor(prepost, levels=c("post", "pre")),
-      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
+        true = "post",
+        false = "pre"
+      ),
+      prepost = factor(prepost, levels = c("post", "pre")),
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs,
+        true = 1,
+        false = 0
+      )
     ) %>%
+    dplyr::filter(!is.na({{ stat_unit }})) %>%
     tidyr::drop_na({{ contract_value }}) %>%
     dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
-    dplyr::filter(all(c("pre", "post") %in% prepost)) %>%
-    dplyr::ungroup(prepost) %>%
+    # dplyr::filter(all(c("pre", "post") %in% prepost)) %>%
+    # dplyr::ungroup(prepost) %>%
     dplyr::summarise(
-      count = n(),
-      test = test(var = {{ contract_value }}, group = prepost, data = ., test_type)[1],
+      npre = sum(prepost == "pre"),
+      npost = sum(prepost == "post"),
+      mean_pre = mean({{ contract_value }}[prepost == "pre"]),
+      mean_post = mean({{ contract_value }}[prepost == "post"]),
+      median_pre = median({{ contract_value }}[prepost == "pre"]),
+      median_post = median({{ contract_value }}[prepost == "post"]),
+      test = dplyr::case_when(
+        npre > 0 & npost == 0 ~ 1, # not at risk, pvalue=1
+        npre == 0 & npost > 0 ~ 0, # at risk, pvalue=0
+        # npre > 0 & npost > 0 ~ test(var = {{ contract_value }}, group = prepost, data = ., test_type)[1],
+        TRUE ~ test(var = {{ contract_value }}, group = prepost, data = ., test_type)[1]
+      )
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value = test,
+      indicator_value = 1 - test, # 1 - pvalue
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario

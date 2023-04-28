@@ -22,16 +22,22 @@ compute_barnard <- function(a, b, c, d, method = "boschloo") {
   if (any(is.na(list(a, b, c, d)))) {
     stop("All inputs must be non-missing")
   }
-
-  data <- matrix(c(a, b, c, d), ncol = 2)
-  c(
-    p_value = suppressWarnings({
-      round(DescTools::BarnardTest(data, alternative = "greater", method = "boschloo")$p.value, 3)
-    }),
-    estimate = suppressWarnings({
-      round(DescTools::BarnardTest(data, alternative = "greater", method = "boschloo")$estimate, 3)
-    })
-  )
+  # only pre
+  if ((a + b) > 0 & (c + d) == 0) {
+    1
+  }
+  # only post
+  else if ((a + b) == 0 & (c + d) > 0) {
+    0
+  } else {
+    data <- matrix(c(d, b, c, a), ncol = 2)
+    out_barn <- DescTools::BarnardTest(data, alternative = "greater", method = "boschloo") %>%
+      suppressWarnings()
+    c(
+      p_value = round(out_barn$p.value, 5),
+      estimate = round(out_barn$estimate, 3)
+    )
+  }
 }
 
 #' compute Z-test proportional
@@ -123,7 +129,7 @@ ind_1 <- function(data,
   test <- function(a, b, c, d, test_type) {
     switch(test_type,
       "barnard" = {
-        compute_barnard(d, b, c, a)
+        compute_barnard(a, b, c, d)
       },
       "fisher" = {
         compute_fisher(a, b, c, d)
@@ -137,11 +143,17 @@ ind_1 <- function(data,
 
   data %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = factor(prepost, levels=c("post", "pre")),
-      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0)
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
+        true = "post",
+        false = "pre"
+      ),
+      prepost = factor(prepost, levels = c("post", "pre")),
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs,
+        true = 1,
+        false = 0
+      )
     ) %>%
-    dplyr::filter(flagdivision == 1) %>%
+    dplyr::filter(!is.na({{ stat_unit }})) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
       n = dplyr::n(),
@@ -155,18 +167,24 @@ ind_1 <- function(data,
       p_2 = n_22 / m_2,
       diff_p2_p1 = p_2 - p_1
     ) %>%
-    dplyr::filter(!is.na(p_1) & !is.na(p_2)) %>%
+    # dplyr::filter(!is.na(p_1) & !is.na(p_2)) %>%
+    dplyr::filter(n_12 > 0 | n_22 > 0) %>% # at least one contract in selected CPVs
     dplyr::rowwise() %>%
     dplyr::mutate(
       ## apply test
-      tab = paste(n_11, n_12, n_21, n_22, sep="-"),
+      tab = paste(n_11, n_12, n_21, n_22, sep = "-"),
       test = test(n_11, n_12, n_21, n_22, test_type)[1],
+      # new companies --> at risk
+      test = dplyr::if_else(m_1 == 0 & n_22 > 0,
+        true = 0,
+        false = test
+      )
     ) %>%
     dplyr::select({{ stat_unit }}, dplyr::contains("test")) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value = test,
+      indicator_value = 1 - test, # 1 - pvalue
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario

@@ -53,12 +53,20 @@ ind_3 <- function(data,
   cpv_col <- grab_cpv(data = data)
 
   data %>%
-    dplyr::filter(!is.na({{ award_value }}) & !is.na({{ sums_paid }}) & {{ award_value }} > 0 &
+    dplyr::filter(!is.na({{ award_value }}) &
+      !is.na({{ sums_paid }}) &
+      {{ award_value }} > 0 &
       {{ sums_paid }} > 0) %>%
     dplyr::mutate(
-      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date, true = "post", false = "pre"),
-      prepost = factor(prepost, levels=c("post", "pre")),
-      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs, 1, 0),
+      prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
+        true = "post",
+        false = "pre"
+      ),
+      prepost = factor(prepost, levels = c("post", "pre")),
+      flagdivision = dplyr::if_else(stringr::str_sub(.data[[cpv_col]], start = 1, end = 2) %in% cpvs,
+        true = 1,
+        false = 0
+      ),
       ratio = {{ sums_paid }} / {{ award_value }}
     ) %>%
     dplyr::filter(flagdivision == 1) %>%
@@ -66,12 +74,18 @@ ind_3 <- function(data,
     dplyr::filter(all(c("pre", "post") %in% prepost)) %>%
     dplyr::ungroup(prepost) %>%
     dplyr::summarise(
+      npre = sum(prepost == "pre"),
+      npost = sum(prepost == "post"),
+      mean_pre = mean(ratio[prepost == "pre"]),
+      mean_post = mean(ratio[prepost == "post"]),
+      median_pre = median(ratio[prepost == "pre"]),
+      median_post = median(ratio[prepost == "post"]),
       ind_3 = compute_kolmogorov_smirnoff(var = ratio, group = prepost, data = .)[1]
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value = ind_3,
+      indicator_value = 1 - ind_3, # 1 - pvalue
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario
