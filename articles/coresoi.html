@@ -114,22 +114,21 @@ that.</p>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 12</span></span></span>
-<span><span class="co">#&gt;    indicator_id indica…¹ indic…² aggre…³ aggre…⁴ aggre…⁵ emerg…⁶ emerg…⁷ count…⁸</span></span>
-<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            2 Awarded…   0.039 AGRIGE… ISTAT1  provin…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            2 Awarded…   0.946 ALESSA… ISTAT1  provin…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            2 Awarded…   0.586 ANCONA  ISTAT1  provin…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            2 Awarded…   0.368 AREZZO  ISTAT1  provin…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            2 Awarded…   1     ASCOLI… ISTAT1  provin…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            2 Awarded…   0.943 ASTI    ISTAT1  provin…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            2 Awarded…   0.857 AVELLI… ISTAT1  provin…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            2 Awarded…   1     BARI    ISTAT1  provin…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            2 Awarded…   0.226 BARLET… ISTAT1  provin…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            2 Awarded…   0.88  BELLUNO ISTAT1  provin…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with 3 more variables: country_name &lt;chr&gt;, indicator_last_update &lt;dttm&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   data_last_update &lt;dttm&gt;, and abbreviated variable names ¹​indicator_name,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ²​indicator_value, ³​aggregation_name, ⁴​aggregation_id, ⁵​aggregation_type,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ⁶​emergency_id, ⁷​emergency_name, ⁸​country_id</span></span></span></code></pre></div>
+<span><span class="co">#&gt;    indicator_id indicator_name   indicator_value aggregation_name aggregation_id</span></span>
+<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            2 Awarded economi…          0.961  AGRIGENTO        ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            2 Awarded economi…          0.054<span style="text-decoration: underline;">0</span> ALESSANDRIA      ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            2 Awarded economi…          0.414  ANCONA           ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            2 Awarded economi…          0.632  AREZZO           ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            2 Awarded economi…          0      ASCOLI PICENO    ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            2 Awarded economi…          0.057<span style="text-decoration: underline;">0</span> ASTI             ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            2 Awarded economi…          0.143  AVELLINO         ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            2 Awarded economi…          0      BARI             ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            2 Awarded economi…          0.774  BARLETTA-ANDRIA… ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            2 Awarded economi…          0.12   BELLUNO          ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: aggregation_type &lt;chr&gt;, emergency_id &lt;int&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   emergency_name &lt;chr&gt;, country_id &lt;chr&gt;, country_name &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   indicator_last_update &lt;dttm&gt;, data_last_update &lt;dttm&gt;</span></span></span></code></pre></div>
 <p>The output from <code>ind_2</code> is a schema which shows</p>
 </div>
 <div class="section level2">
