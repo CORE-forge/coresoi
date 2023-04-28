@@ -1,6 +1,11 @@
 url: https://core-forge.github.io/coresoi/
 template:
   bootstrap: 5
+  includes:
+    in_header: |
+      <script async defer src="https://hypothes.is/embed.js"></script>
+    after_navbar: |
+      <div class = rmdreview> This documentation is offered in <b><a href="https://openreview.net/">Open Review</a></b> format. We kindly request your feedback in case something is unclear, poorly written, or incorrect. Your input would greatly assist us in improving these documents and providing a better experience for you and our partners. To add your annotations, <span style="background-color: #3297FD; color: white">simply highlight the text</span> and click on <i class="fa fa-quote-left" ></i>the pop-up menu. To view annotations from others, click on <i class="h-icon-chevron-left"></i> the top-right corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i> </div>
   bslib:
     bg: "#FFFFFF"
     fg: "#2180a7"
@@ -8,10 +13,11 @@ template:
     base_font: {google: "Dosis"}
     heading_font: {google: "Lora"}
     code_font: {google: "JetBrains Mono"}
-  navbar:
-    structure:
-      left:  [intro, reference, articles, tutorials, news]
-      right: [search, github]
+
+navbar:
+  structure:
+    right: github
+
 reference:
   - title: "Risk Indicators"
     desc: "COrruption Risk Indicators in Emergency"
@@ -25,6 +31,28 @@ reference:
       - ind_7
       - ind_8
       - ind_9
+
+  - title: "Data"
+    desc: "Sample dataset extracted from our source with which resarchers can play"
+    contents:
       - mock_data_core
+
+  - title: "Others"
+    desc: "Functions that help us during aggregation, computation and displaying results."
+    contents:
       - emergency_dates
       - get_associated_cpv_from_emergency
+
+
+articles:
+- title: "Get started!"
+  navbar: ~
+  contents:
+  - coresoi
+  - articles/ChoiceOfElementaryIndicators
+  - articles/DataSelectionArchitecture
+  - articles/tryCoresoiWithYourData
+
+
+
+
