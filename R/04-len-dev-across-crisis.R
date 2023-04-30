@@ -16,6 +16,7 @@
 #' @param eff_end Effective end of the execution of the contract
 #' @param eff_start Effective contract signature
 #' @param stat_unit the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by
+#' @param cpvs a vector of cpv on which contracts are filtered
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @param publication_date The date when the tender was published
 #' @return indicator schema as from `generate_indicator_schema`
@@ -48,12 +49,15 @@ ind_4 <- function(data,
                   stat_unit,
                   emergency_name,
                   publication_date,
+                  cpvs,
                   ...) {
   indicator_id <- 4
   indicator_name <- "Length deviation across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  if(missing(cpvs)){
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  }
   cpv_col <- grab_cpv(data = data)
 
 

@@ -90,6 +90,7 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 #' @param emergency_name emergency name character string for which you wish to calculate the indicator for, e.g. "Coronavirus" "Terremoto Aquila"
 #' @param test_type  character vector string to identifying the test type you want to apply, available alternatives are c("barnard", "fisher", "z-test")
 #' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
+#' @param cpvs a vector of cpv on which contracts are filtered
 #' @return indicator schema as from [generate_indicator_schema()]
 #' @examples
 #' \dontrun{
@@ -118,12 +119,18 @@ ind_1 <- function(data,
                   publication_date,
                   emergency_name,
                   stat_unit,
-                  test_type, ...) {
+                  test_type,
+                  cpvs,
+                  ...) {
   indicator_id <- 1
   indicator_name <- "Winning rate across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
+
+
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+
+
+
   cpv_col <- grab_cpv(data = data)
 
   test <- function(a, b, c, d, test_type) {

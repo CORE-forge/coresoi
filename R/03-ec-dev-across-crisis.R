@@ -15,6 +15,7 @@
 #' @param award_value The date when the tender was awarded
 #' @param sums_paid The amount paid by the C.A.
 #' @param stat_unit the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by
+#' @param cpvs a vector of cpv on which contracts are filtered
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @param publication_date The date when the tender was published
 #' @return indicator schema as from `generate_indicator_schema`
@@ -44,12 +45,16 @@ ind_3 <- function(data,
                   sums_paid,
                   stat_unit,
                   emergency_name,
-                  publication_date) {
+                  publication_date,
+                  cpvs,
+                  ...) {
   indicator_id <- 3
   indicator_name <- "Economic deviation across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  if(missing(cpvs)){
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  }
   cpv_col <- grab_cpv(data = data)
 
   data %>%

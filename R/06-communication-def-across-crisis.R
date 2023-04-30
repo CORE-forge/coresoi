@@ -16,6 +16,7 @@
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @param award_col column indentifying id for that contract award
 #' @param stat_unit statistical unit of measurement and stat_uniting
+#' @param cpvs a vector of cpv on which contracts are filtered
 #' @param test_type type of the test we would like to apply
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
@@ -48,12 +49,15 @@ ind_6 <- function(data,
                   award_col,
                   stat_unit,
                   test_type,
+                  cpvs,
                   ...) {
   indicator_id <- 6
   indicator_name <- "Communication default across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  if(missing(cpvs)){
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  }
   cpv_col <- grab_cpv(data = data)
 
   test <- function(a, b, c, d, test_type) {

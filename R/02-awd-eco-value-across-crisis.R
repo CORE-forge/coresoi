@@ -47,6 +47,7 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 #' @param stat_unit statistical target unit of measurement, aggregation variable, the indicator target
 #' @param publication_date the date in which the tender was published
 #' @param test_type character vector identifying the type of test you want to execute, alternatives are c("ks", "wilcoxon")
+#' @param cpvs a vector of cpv on which contracts are filtered
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @return indicator schema as from `generate_indicator_schema()` rows determined by aggregation level and `indicator_value` based on statistical test performed in `ind_2`
 #' @examples
@@ -80,12 +81,19 @@ ind_2 <- function(data,
                   emergency_name,
                   stat_unit,
                   test_type,
+                  cpvs,
                   ...) {
   indicator_id <- 2
   indicator_name <- "Awarded economic value across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
+
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+
+
+  if(missing(cpvs)){
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  }
+
   cpv_col <- grab_cpv(data = data)
 
 
