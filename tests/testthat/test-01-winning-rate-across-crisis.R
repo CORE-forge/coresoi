@@ -234,3 +234,45 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
     )
   )
 })
+
+
+## test indciator on other cpvs
+## n rows less or equal than the filtered
+
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
+  expect_within_range(
+    suppressWarnings({
+      ind_1(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "terremoto aquila",
+        test_type = "fisher"
+      )
+    }),
+    min = 0, max = 1
+  )
+})
+
+# expect to have less rows or equal rows when cpvs are filtered
+test_that("check if the number of rows when indicator is filtered out by cpv is loweer than the one with more cpvs on it (i.e. the defualt)", {
+  expect_lte(
+    suppressWarnings({
+      nrow(ind_1(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        emergency_name = "terremoto aquila",
+        test_type = "fisher",
+        cpvs = c(33, 34, 38, 39, 41, 44, 65, 85)
+      ))
+    }), expected = nrow(ind_1(
+      data = mock_data_core,
+      publication_date = data_pubblicazione,
+      stat_unit = cf_amministrazione_appaltante,
+      emergency_name = "terremoto aquila",
+      test_type = "fisher")
+    )
+  )
+})

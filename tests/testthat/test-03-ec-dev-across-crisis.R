@@ -174,3 +174,38 @@ test_that("check if the number of rows is coherent with the aggregation level (`
     n = 92 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
   )
 })
+
+
+
+# expect to have less rows or equal rows when cpvs are filtered
+test_that("check if the number of rows when indicator is filtered out by cpv is loweer than the one with more cpvs on it (i.e. the defualt)", {
+  expect_lte(
+    suppressWarnings({
+      nrow(ind_3(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        award_value = importo_aggiudicazione,
+        sums_paid = importo_lotto,
+        stat_unit = provincia,
+        emergency_name = "coronavirus",
+        cpvs = c(33, 34, 38, 39, 41, 44, 65, 85)
+      ))
+    }), expected = nrow(ind_3(
+      data = mock_data_core,
+      publication_date = data_pubblicazione,
+      award_value = importo_aggiudicazione,
+      sums_paid = importo_lotto,
+      stat_unit = provincia,
+      emergency_name = "coronavirus"
+    ))
+  )
+})
+
+
+
+
+
+
+
+
+

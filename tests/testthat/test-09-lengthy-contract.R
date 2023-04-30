@@ -164,3 +164,26 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
     )
   )
 })
+
+test_that("check if the number of rows when indicator is filtered out by cpv is loweer than the one with more cpvs on it (i.e. the defualt)", {
+  expect_lte(
+    suppressWarnings({
+      nrow(ind_9(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        eff_start = data_inizio_effettiva,
+        eff_end = data_effettiva_ultimazione,
+        emergency_name = "coronavirus",
+        cpvs = c(33, 34, 38, 39, 41, 44, 65, 85)
+      ))
+    }), expected = nrow(ind_9(
+      data = mock_data_core,
+      publication_date = data_pubblicazione,
+      stat_unit = cf_amministrazione_appaltante,
+      eff_start = data_inizio_effettiva,
+      eff_end = data_effettiva_ultimazione,
+      emergency_name = "coronavirus"
+    ))
+  )
+})

@@ -128,9 +128,9 @@ ind_1 <- function(data,
 
 
   emergency_scenario <- emergency_dates(emergency_name)
-
-
-
+  if(missing(cpvs)){
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  }
   cpv_col <- grab_cpv(data = data)
 
   test <- function(a, b, c, d, test_type) {
