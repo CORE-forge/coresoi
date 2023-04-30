@@ -59,7 +59,8 @@ ind_9 <- function(data,
                   stat_unit,
                   eff_start,
                   eff_end,
-                  emergency_name) {
+                  emergency_name,
+                  ...) {
   indicator_id <- 9
   indicator_name <- "Lengthy contracts"
   aggregation_type <- rlang::quo_squash(rlang::enquo(stat_unit))
@@ -110,7 +111,8 @@ ind_9 <- function(data,
       indicator_value = 1 - wilctest, # 1 - pvalue
       aggregation_name = {{ stat_unit }},
       aggregation_type = rlang::as_string(aggregation_type),
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

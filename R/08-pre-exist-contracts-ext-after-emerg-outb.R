@@ -44,7 +44,8 @@ ind_8 <- function(data,
                   stat_unit,
                   variant_date,
                   emergency_name,
-                  months_win = 6) {
+                  months_win = 6,
+                  ...) {
   indicator_id <- 8
   indicator_name <- "Pre-existing contracts modified after the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
@@ -98,7 +99,8 @@ ind_8 <- function(data,
       indicator_value = rf_value, # no test
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

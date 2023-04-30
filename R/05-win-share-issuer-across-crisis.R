@@ -42,7 +42,8 @@ ind_5 <- function(data,
                   stat_unit,
                   publication_date,
                   winners,
-                  emergency_name) {
+                  emergency_name,
+                  ...) {
   indicator_id <- 5
   indicator_name <- "Winner's share of issuer's contract across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
@@ -104,7 +105,8 @@ ind_5 <- function(data,
       indicator_value = ind5, # no test
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

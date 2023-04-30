@@ -47,7 +47,8 @@ ind_4 <- function(data,
                   eff_end,
                   stat_unit,
                   emergency_name,
-                  publication_date) {
+                  publication_date,
+                  ...) {
   indicator_id <- 4
   indicator_name <- "Length deviation across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
@@ -95,7 +96,8 @@ ind_4 <- function(data,
       indicator_value = 1 - ind_4, # 1 - pvalue
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

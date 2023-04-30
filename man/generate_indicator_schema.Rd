@@ -10,6 +10,7 @@ generate_indicator_schema(
   aggregation_type,
   emergency,
   indicator_name,
+  country_name = "Italy",
   ...
 )
 }

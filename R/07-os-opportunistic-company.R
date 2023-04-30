@@ -43,7 +43,8 @@ ind_7 <- function(data,
                   final_award_date,
                   emergency_name,
                   stat_unit,
-                  years_before) {
+                  years_before,
+                  ...) {
   indicator_id <- 7
   indicator_name <- "One-shot opportunistic companies over the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
@@ -88,7 +89,8 @@ ind_7 <- function(data,
       indicator_value = flag_oneshot, # no test
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

@@ -97,10 +97,39 @@ get_associated_cpv_from_emergency <- function(emergency_name) {
   return(cpv_match)
 }
 
+
+#' mapping from country name to id (this is used for frontend purposes)
+#' @keywords internal
+#' @export
+get_country_id_from_name <- function(country_name) {
+
+  associated_id_list <- list(
+    "Italy" = 1,
+    "Spain" = 2,
+    "Portugal" = 3,
+    "Ireland" = 4
+  )
+  country_match <- agrep(country_name, names(associated_id_list), max.distance = 0.3)
+
+  if (length(country_match) > 0) {
+
+    country <- list()
+    country$name <- names(associated_id_list[country_match[1]])
+    country$id <- associated_id_list[country_match[1]][[1]]
+    return(country)
+  } else {
+    # if no matches were found, return an error message
+    return("Error: Country specified not found in list. Country partners avaialble are 'Italy','Spain', 'Portugal', 'Ireland'. If you are willing to partecipate and generate indicators for your country please write email at @maintaner <niccolo.salvini27@gmail.com> ")
+  }
+}
+
+
+
+
 #' generate indicator schema
 #' @keywords internal
 #' @export
-generate_indicator_schema <- function(.data, indicator_id, aggregation_type, emergency, indicator_name, ...) { # ...
+generate_indicator_schema <- function(.data, indicator_id, aggregation_type, emergency, indicator_name, country_name = "Italy", ...) { # ...
   common_schema <- .data %>%
     dplyr::transmute(
       indicator_id = indicator_id,
@@ -111,8 +140,8 @@ generate_indicator_schema <- function(.data, indicator_id, aggregation_type, eme
       emergency_id = emergency$em_id,
       # emergency_type = emergency$em_type,
       emergency_name = emergency$em_name,
-      country_id = "1",
-      country_name = "Italy",
+      country_id = get_country_id_from_name(country_name)$id ,
+      country_name =  get_country_id_from_name(country_name)$name,
       indicator_last_update = lubridate::now(),
       data_last_update = lubridate::now()
     )
