@@ -1,34 +1,3 @@
-#' compute Wilcoxon-Mann-Whitney test in dplyr https://it.wikipedia.org/wiki/Test_di_Wilcoxon-Mann-Whitney
-#' @description  compute Wilcoxon-Mann-Whitney test pvalue
-#' @keywords internal
-#' @export
-compute_wilcox <- function(data, var, group, exact = TRUE, alternative = "greater") {
-  test_res <- data %>%
-    wilcox.test(var ~ group, data = ., exact = exact, alternative = alternative)
-  c(
-    p_value = round(test_res$p.value, 3),
-    estimate = round(test_res$statistic, 3)
-  )
-}
-
-#' compute Kolmogorov Smirnov test in dplyr https://it.wikipedia.org/wiki/Test_di_Kolmogorov-Smirnov
-#' @description  compute Kolmogorov Smirnov test pvalue
-#' @keywords internal
-#' @export
-compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") {
-  test_res <- suppressWarnings({
-    data %>%
-      ks.test(var ~ group, data = ., alternative = alternative)
-  })
-
-  c(
-    p_value = round(test_res$p.value, 3),
-    estimate = round(test_res$statistic, 3)
-  )
-}
-
-
-
 #' Compute Awarded economic value across the crisis indicator
 #'
 #' @description

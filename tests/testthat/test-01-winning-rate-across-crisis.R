@@ -267,7 +267,7 @@ test_that("check if the number of rows when indicator is filtered out by cpv is 
         test_type = "fisher",
         cpvs = c(33, 34, 38, 39, 41, 44, 65, 85)
       ))
-    }), expected = nrow(ind_1(
+x    }), expected = nrow(ind_1(
       data = mock_data_core,
       publication_date = data_pubblicazione,
       stat_unit = cf_amministrazione_appaltante,
