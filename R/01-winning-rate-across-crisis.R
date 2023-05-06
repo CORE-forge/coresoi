@@ -54,25 +54,10 @@ ind_1 <- function(data,
 
 
   emergency_scenario <- emergency_dates(emergency_name)
-  if(missing(cpvs)){
+  if (missing(cpvs)) {
     cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   }
   cpv_col <- grab_cpv(data = data)
-
-  test <- function(a, b, c, d, test_type) {
-    switch(test_type,
-      "barnard" = {
-        compute_barnard(a, b, c, d)
-      },
-      "fisher" = {
-        compute_fisher(a, b, c, d)
-      },
-      "z-test" = {
-        compute_prop_test(a, b, c, d)
-      },
-      stop(paste0("No handler for ", test_type))
-    )
-  }
 
   data %>%
     dplyr::mutate(
@@ -106,7 +91,7 @@ ind_1 <- function(data,
     dplyr::mutate(
       ## apply test
       tab = paste(n_11, n_12, n_21, n_22, sep = "-"),
-      test = test(n_11, n_12, n_21, n_22, test_type)[1],
+      test = test_set_1(n_11, n_12, n_21, n_22, test_type)[1],
       # new companies --> at risk
       test = dplyr::if_else(m_1 == 0 & n_22 > 0,
         true = 0,

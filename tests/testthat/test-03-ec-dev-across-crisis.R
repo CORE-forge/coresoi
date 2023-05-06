@@ -53,6 +53,7 @@ test_that("check `ind_3()` are 12 columns as according to `generate_indicator_sc
         award_value = importo_aggiudicazione,
         sums_paid = importo_lotto,
         stat_unit = cf_amministrazione_appaltante,
+        test_type = "wilcoxon",
         emergency_name = "coronavirus"
       )
     }), 12
@@ -76,6 +77,7 @@ test_that("check column names are as according to pre determined schema", {
         award_value = importo_aggiudicazione,
         sums_paid = importo_lotto,
         stat_unit = cf_amministrazione_appaltante,
+        test_type = "wilcoxon",
         emergency_name = "coronavirus"
       ))
     }), col_names,
@@ -94,6 +96,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         award_value = importo_aggiudicazione,
         sums_paid = importo_lotto,
         stat_unit = cf_amministrazione_appaltante,
+        test_type = "wilcoxon",
         emergency_name = "coronavirus"
       )
     }),
@@ -115,6 +118,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         award_value = importo_aggiudicazione,
         sums_paid = importo_lotto,
         stat_unit = provincia,
+        test_type = "wilcoxon",
         emergency_name = "coronavirus"
       )
     }),
@@ -132,6 +136,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         award_value = importo_aggiudicazione,
         sums_paid = importo_lotto,
         stat_unit = cf_amministrazione_appaltante,
+        test_type = "wilcoxon",
         emergency_name = "coronavirus"
       )
     }),
@@ -150,6 +155,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         award_value = importo_aggiudicazione,
         sums_paid = importo_lotto,
         stat_unit = cf_amministrazione_appaltante,
+        test_type = "wilcoxon",
         emergency_name = "Terremoto Aquila"
       )
     }),
@@ -168,6 +174,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         award_value = importo_aggiudicazione,
         sums_paid = importo_lotto,
         stat_unit = provincia,
+        test_type = "wilcoxon",
         emergency_name = "coronavirus"
       )
     }),
@@ -178,7 +185,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
 
 
 # expect to have less rows or equal rows when cpvs are filtered
-test_that("check if the number of rows when indicator is filtered out by cpv is loweer than the one with more cpvs on it (i.e. the defualt)", {
+test_that("check if the number of rows when indicator is filtered out by cpv is lower than the one with more cpvs on it (i.e. cpvs provided by subject matter experts)", {
   expect_lte(
     suppressWarnings({
       nrow(ind_3(
@@ -187,25 +194,26 @@ test_that("check if the number of rows when indicator is filtered out by cpv is 
         award_value = importo_aggiudicazione,
         sums_paid = importo_lotto,
         stat_unit = provincia,
+        test_type = "wilcoxon",
         emergency_name = "coronavirus",
         cpvs = c(33, 34, 38, 39, 41, 44, 65, 85)
       ))
-    }), expected = nrow(ind_3(
-      data = mock_data_core,
-      publication_date = data_pubblicazione,
-      award_value = importo_aggiudicazione,
-      sums_paid = importo_lotto,
-      stat_unit = provincia,
-      emergency_name = "coronavirus"
-    ))
+    }),
+    expected = suppressWarnings({
+      nrow(ind_3(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        award_value = importo_aggiudicazione,
+        sums_paid = importo_lotto,
+        stat_unit = provincia,
+        test_type = "wilcoxon",
+        emergency_name = "coronavirus"
+      ))
+    })
   )
 })
 
 
 
 
-
-
-
-
-
+# TODO suite di test per appunto differenti test_type

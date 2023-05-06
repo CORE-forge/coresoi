@@ -4,7 +4,16 @@
 \alias{ind_6}
 \title{Compute Communication default across the crisis indicator}
 \usage{
-ind_6(data, publication_date, emergency_name, award_col, stat_unit, test_type)
+ind_6(
+  data,
+  publication_date,
+  emergency_name,
+  award_col,
+  stat_unit,
+  test_type,
+  cpvs,
+  ...
+)
 }
 \arguments{
 \item{data}{mock_data_core example bdncp data}
@@ -18,6 +27,8 @@ ind_6(data, publication_date, emergency_name, award_col, stat_unit, test_type)
 \item{stat_unit}{statistical unit of measurement and stat_uniting}
 
 \item{test_type}{type of the test we would like to apply}
+
+\item{cpvs}{a vector of cpv on which contracts are filtered}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

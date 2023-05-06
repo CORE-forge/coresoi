@@ -119,5 +119,44 @@ compute_unpaired_ttest <- function(.data, var, group, alternative = "less", pair
   )
 }
 
-test_data %>%
-  compute_unpaired_ttest(var = Sepal.Length, group = Species)
+#' switch test wrt statistical circumstances set 1 (indicators 1, ...)
+#' @description switch test wrt statistical circumstances
+#' @keywords internal
+#' @export
+test_set_1 <- function(a, b, c, d, test_type) {
+  switch(test_type,
+    "barnard" = {
+      compute_barnard(a, b, c, d)
+    },
+    "fisher" = {
+      compute_fisher(a, b, c, d)
+    },
+    "z-test" = {
+      compute_prop_test(a, b, c, d)
+    },
+    stop(paste0("No handler for ", test_type))
+  )
+}
+
+#' switch test wrt statistical circumstances set 2 (indicators 2,3,4 ...)
+#' @description switch test wrt statistical circumstances
+#' @keywords internal
+#' @export
+test_set_2 <- function(data, var, group, test_type) {
+  # temporary: if two levels in group are not found:
+  if (length(unique(group)) != 2) {
+    # print("999")
+    999
+  } else {
+    # print("test")
+    switch(test_type,
+      "ks" = {
+        compute_kolmogorov_smirnoff(data, var, group)
+      },
+      "wilcoxon" = {
+        compute_wilcox(data, var, group)
+      },
+      stop(paste0("No handler for ", test_type))
+    )
+  }
+}

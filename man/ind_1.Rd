@@ -4,7 +4,7 @@
 \alias{ind_1}
 \title{Compute Winning rate across the crisis indicator}
 \usage{
-ind_1(data, publication_date, emergency_name, stat_unit, test_type)
+ind_1(data, publication_date, emergency_name, stat_unit, test_type, cpvs, ...)
 }
 \arguments{
 \item{data}{bndcp data}
@@ -16,6 +16,8 @@ ind_1(data, publication_date, emergency_name, stat_unit, test_type)
 \item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
 
 \item{test_type}{character vector string to identifying the test type you want to apply, available alternatives are c("barnard", "fisher", "z-test")}
+
+\item{cpvs}{a vector of cpv on which contracts are filtered}
 }
 \value{
 indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}

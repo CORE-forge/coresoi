@@ -59,31 +59,11 @@ ind_2 <- function(data,
   emergency_scenario <- emergency_dates(emergency_name)
 
 
-  if(missing(cpvs)){
+  if (missing(cpvs)) {
     cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   }
 
   cpv_col <- grab_cpv(data = data)
-
-
-  test <- function(data, var, group, test_type) {
-    # temporary: if two levels in group are not found:
-    if (length(unique(group)) != 2) {
-      # print("999")
-      999
-    } else {
-      # print("test")
-      switch(test_type,
-        "ks" = {
-          compute_kolmogorov_smirnoff(data, var, group)
-        },
-        "wilcoxon" = {
-          compute_wilcox(data, var, group)
-        },
-        stop(paste0("No handler for ", test_type))
-      )
-    }
-  }
 
   data %>%
     dplyr::mutate(
@@ -114,7 +94,7 @@ ind_2 <- function(data,
         npre > 0 & npost == 0 ~ 1, # not at risk, pvalue=1
         npre == 0 & npost > 0 ~ 0, # at risk, pvalue=0
         # npre > 0 & npost > 0 ~ test(var = {{ contract_value }}, group = prepost, data = ., test_type)[1],
-        TRUE ~ test(var = {{ contract_value }}, group = prepost, data = ., test_type)[1]
+        TRUE ~ test_set_2(var = {{ contract_value }}, group = prepost, data = ., test_type)[1]
       )
     ) %>%
     generate_indicator_schema(

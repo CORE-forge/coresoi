@@ -147,12 +147,15 @@ test_that("check if the number of rows when indicator is filtered out by cpv is 
         years_before = 1,
         cpvs = c(33, 34, 38, 39, 41, 44, 65, 85)
       ))
-    }), expected = nrow(ind_7(
-      data = mock_data_core,
-      final_award_date = data_aggiudicazione_definitiva,
-      stat_unit = codice_fiscale,
-      emergency_name = "terremoto aquila",
-      years_before = 1
-    ))
+    }),
+    expected = suppressWarnings({
+      nrow(ind_7(
+        data = mock_data_core,
+        final_award_date = data_aggiudicazione_definitiva,
+        stat_unit = codice_fiscale,
+        emergency_name = "terremoto aquila",
+        years_before = 1
+      ))
+    })
   )
 })

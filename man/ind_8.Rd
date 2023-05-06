@@ -10,7 +10,9 @@ ind_8(
   stat_unit,
   variant_date,
   emergency_name,
-  months_win = 6
+  months_win = 6,
+  cpvs,
+  ...
 )
 }
 \arguments{
@@ -25,6 +27,8 @@ ind_8(
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{months_win}{time window for variation to be happening}
+
+\item{cpvs}{a vector of cpv on which contracts are filtered}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

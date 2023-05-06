@@ -4,7 +4,15 @@
 \alias{ind_7}
 \title{Compute One-shot opportunistic companies over the crisiss indicator}
 \usage{
-ind_7(data, final_award_date, emergency_name, stat_unit, years_before)
+ind_7(
+  data,
+  final_award_date,
+  emergency_name,
+  stat_unit,
+  years_before,
+  cpvs,
+  ...
+)
 }
 \arguments{
 \item{data}{mock_data_core exmaple data}
@@ -16,6 +24,8 @@ ind_7(data, final_award_date, emergency_name, stat_unit, years_before)
 \item{stat_unit}{The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)}
 
 \item{years_before}{int how many years we have to}
+
+\item{cpvs}{a vector of cpv on which contracts are filtered}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

@@ -209,13 +209,15 @@ test_that("check if the number of rows when indicator is filtered out by cpv is 
         emergency_name = "Coronavirus",
         cpvs = c(33, 34, 38, 39, 41, 44, 65, 85)
       ))
-    }), expected = nrow(ind_5(
-      data = mock_data_core,
-      publication_date = data_pubblicazione,
-      stat_unit = cf_amministrazione_appaltante,
-      winners = denominazione,
-      emergency_name = "Coronavirus"
-    ))
+    }),
+    expected = suppressWarnings({
+      nrow(ind_5(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        winners = denominazione,
+        emergency_name = "Coronavirus"
+      ))
+    })
   )
 })
-

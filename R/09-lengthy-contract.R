@@ -67,7 +67,7 @@ ind_9 <- function(data,
   indicator_name <- "Lengthy contracts"
   aggregation_type <- rlang::quo_squash(rlang::enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  if(missing(cpvs)){
+  if (missing(cpvs)) {
     cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   }
   cpv_col <- grab_cpv(data = data)

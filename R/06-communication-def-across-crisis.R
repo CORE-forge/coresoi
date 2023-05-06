@@ -55,25 +55,10 @@ ind_6 <- function(data,
   indicator_name <- "Communication default across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  if(missing(cpvs)){
+  if (missing(cpvs)) {
     cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   }
   cpv_col <- grab_cpv(data = data)
-
-  test <- function(a, b, c, d, test_type) {
-    switch(test_type,
-      "barnard" = {
-        compute_barnard(d, b, c, a)
-      },
-      "fisher" = {
-        compute_fisher(a, b, c, d)
-      },
-      "z-test" = {
-        compute_prop_test(a, b, c, d)
-      },
-      stop(paste0("No handler for ", test_type))
-    )
-  }
 
 
   data %>%
@@ -111,7 +96,7 @@ ind_6 <- function(data,
     dplyr::rowwise() %>%
     dplyr::mutate(
       ## apply test
-      test = test(n_11, n_12, n_21, n_22, test_type)[1],
+      test = test_set_1(n_11, n_12, n_21, n_22, test_type)[1],
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,

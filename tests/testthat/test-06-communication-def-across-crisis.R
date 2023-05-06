@@ -224,15 +224,16 @@ test_that("check if the number of rows when indicator is filtered out by cpv is 
         test_type = "fisher",
         cpvs = c(33, 34, 38, 39, 41, 44, 65, 85)
       ))
-    }), expected = nrow(ind_6(
-      data = mock_data_core,
-      publication_date = data_pubblicazione,
-      emergency_name = "coronavirus",
-      award_col = id_aggiudicazione,
-      stat_unit = cf_amministrazione_appaltante,
-      test_type = "fisher"
-    ))
+    }),
+    expected = suppressWarnings({
+      nrow(ind_6(
+        data = mock_data_core,
+        publication_date = data_pubblicazione,
+        emergency_name = "coronavirus",
+        award_col = id_aggiudicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        test_type = "fisher"
+      ))
+    })
   )
 })
-
-

@@ -102,7 +102,6 @@ get_associated_cpv_from_emergency <- function(emergency_name) {
 #' @keywords internal
 #' @export
 get_country_id_from_name <- function(country_name) {
-
   associated_id_list <- list(
     "Italy" = 1,
     "Spain" = 2,
@@ -112,7 +111,6 @@ get_country_id_from_name <- function(country_name) {
   country_match <- agrep(country_name, names(associated_id_list), max.distance = 0.3)
 
   if (length(country_match) > 0) {
-
     country <- list()
     country$name <- names(associated_id_list[country_match[1]])
     country$id <- associated_id_list[country_match[1]][[1]]
@@ -140,7 +138,7 @@ generate_indicator_schema <- function(.data, indicator_id, aggregation_type, eme
       emergency_id = emergency$em_id,
       # emergency_type = emergency$em_type,
       emergency_name = emergency$em_name,
-      country_id = get_country_id_from_name(country_name)$id ,
+      country_id = get_country_id_from_name(country_name)$id,
       country_name =  get_country_id_from_name(country_name)$name,
       indicator_last_update = lubridate::now(),
       data_last_update = lubridate::now()
