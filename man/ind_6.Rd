@@ -29,6 +29,8 @@ ind_6(
 \item{test_type}{type of the test we would like to apply}
 
 \item{cpvs}{a vector of cpv on which contracts are filtered}
+
+\item{...}{other parameters for generate_indicator_schema as country_name}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

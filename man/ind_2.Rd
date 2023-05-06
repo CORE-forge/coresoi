@@ -29,6 +29,8 @@ ind_2(
 \item{test_type}{character vector identifying the type of test you want to execute, alternatives are c("ks", "wilcoxon")}
 
 \item{cpvs}{a vector of cpv on which contracts are filtered}
+
+\item{...}{other parameters for generate_indicator_schema as country_name}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema()} rows determined by aggregation level and \code{indicator_value} based on statistical test performed in \code{ind_2}

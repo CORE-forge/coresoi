@@ -19,6 +19,7 @@
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @param test_type test type belonging to set 2 i.e. "ks", "wilcoxon"
 #' @param publication_date The date when the tender was published
+#' @param ... other parameters for generate_indicator_schema as country_name
 #' @return indicator schema as from `generate_indicator_schema`
 #' @details DETAILS
 #' @examples

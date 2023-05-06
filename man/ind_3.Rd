@@ -32,6 +32,8 @@ ind_3(
 \item{test_type}{test type belonging to set 2 i.e. "ks", "wilcoxon"}
 
 \item{cpvs}{a vector of cpv on which contracts are filtered}
+
+\item{...}{other parameters for generate_indicator_schema as country_name}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

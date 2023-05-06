@@ -18,6 +18,8 @@ ind_1(data, publication_date, emergency_name, stat_unit, test_type, cpvs, ...)
 \item{test_type}{character vector string to identifying the test type you want to apply, available alternatives are c("barnard", "fisher", "z-test")}
 
 \item{cpvs}{a vector of cpv on which contracts are filtered}
+
+\item{...}{other parameters for generate_indicator_schema as country_name}
 }
 \value{
 indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}

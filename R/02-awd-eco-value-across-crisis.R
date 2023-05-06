@@ -18,6 +18,7 @@
 #' @param test_type character vector identifying the type of test you want to execute, alternatives are c("ks", "wilcoxon")
 #' @param cpvs a vector of cpv on which contracts are filtered
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param ... other parameters for generate_indicator_schema as country_name
 #' @return indicator schema as from `generate_indicator_schema()` rows determined by aggregation level and `indicator_value` based on statistical test performed in `ind_2`
 #' @examples
 #' \dontrun{

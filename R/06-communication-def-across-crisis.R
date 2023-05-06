@@ -18,6 +18,7 @@
 #' @param stat_unit statistical unit of measurement and stat_uniting
 #' @param cpvs a vector of cpv on which contracts are filtered
 #' @param test_type type of the test we would like to apply
+#' @param ... other parameters for generate_indicator_schema as country_name
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{

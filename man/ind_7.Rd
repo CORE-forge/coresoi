@@ -26,6 +26,8 @@ ind_7(
 \item{years_before}{int how many years we have to}
 
 \item{cpvs}{a vector of cpv on which contracts are filtered}
+
+\item{...}{other parameters for generate_indicator_schema as country_name}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

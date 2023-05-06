@@ -17,6 +17,7 @@
 #' @param test_type  character vector string to identifying the test type you want to apply, available alternatives are c("barnard", "fisher", "z-test")
 #' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
 #' @param cpvs a vector of cpv on which contracts are filtered
+#' @param ... other parameters for generate_indicator_schema as country_name
 #' @return indicator schema as from [generate_indicator_schema()]
 #' @examples
 #' \dontrun{
