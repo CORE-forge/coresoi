@@ -10,7 +10,10 @@ ind_3(
   sums_paid,
   stat_unit,
   emergency_name,
-  publication_date
+  publication_date,
+  test_type,
+  cpvs,
+  ...
 )
 }
 \arguments{
@@ -25,6 +28,12 @@ ind_3(
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
 
 \item{publication_date}{The date when the tender was published}
+
+\item{test_type}{test type belonging to set 2 i.e. "ks", "wilcoxon"}
+
+\item{cpvs}{a vector of cpv on which contracts are filtered}
+
+\item{...}{other parameters for generate_indicator_schema as country_name}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}
@@ -58,6 +67,7 @@ if (interactive()) {
     award_value = importo_aggiudicazione,
     sums_paid = importo_lotto,
     stat_unit = cf_amministrazione_appaltante,
+    test_type = "wilcoxon",
     emergency_name = "coronavirus"
   )
 }

@@ -4,7 +4,16 @@
 \alias{ind_9}
 \title{compute Lenghty Contracts indicator}
 \usage{
-ind_9(data, publication_date, stat_unit, eff_start, eff_end, emergency_name)
+ind_9(
+  data,
+  publication_date,
+  stat_unit,
+  eff_start,
+  eff_end,
+  emergency_name,
+  cpvs,
+  ...
+)
 }
 \arguments{
 \item{data}{bndcp data}
@@ -18,6 +27,10 @@ ind_9(data, publication_date, stat_unit, eff_start, eff_end, emergency_name)
 \item{eff_end}{Effective end of the execution of the contract}
 
 \item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
+
+\item{cpvs}{a vector of cpv on which contracts are filtered}
+
+\item{...}{other parameters for generate_indicator_schema as country_name}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}
@@ -47,7 +60,7 @@ if (interactive()) {
     publication_date = data_pubblicazione,
     stat_unit = cf_amministrazione_appaltante,
     cpv = cod_cpv,
-    eff_start = data_inizio_effettiva ,
+    eff_start = data_inizio_effettiva,
     eff_end = data_effettiva_ultimazione,
     emergency_name = "coronavirus"
   )

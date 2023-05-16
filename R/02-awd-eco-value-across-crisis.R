@@ -1,34 +1,3 @@
-#' compute Wilcoxon-Mann-Whitney test in dplyr https://it.wikipedia.org/wiki/Test_di_Wilcoxon-Mann-Whitney
-#' @description  compute Wilcoxon-Mann-Whitney test pvalue
-#' @keywords internal
-#' @export
-compute_wilcox <- function(data, var, group, exact = TRUE, alternative = "greater") {
-  test_res <- data %>%
-    wilcox.test(var ~ group, data = ., exact = exact, alternative = alternative)
-  c(
-    p_value = round(test_res$p.value, 3),
-    estimate = round(test_res$statistic, 3)
-  )
-}
-
-#' compute Kolmogorov Smirnov test in dplyr https://it.wikipedia.org/wiki/Test_di_Kolmogorov-Smirnov
-#' @description  compute Kolmogorov Smirnov test pvalue
-#' @keywords internal
-#' @export
-compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") {
-  test_res <- suppressWarnings({
-    data %>%
-      ks.test(var ~ group, data = ., alternative = alternative)
-  })
-
-  c(
-    p_value = round(test_res$p.value, 3),
-    estimate = round(test_res$statistic, 3)
-  )
-}
-
-
-
 #' Compute Awarded economic value across the crisis indicator
 #'
 #' @description
@@ -47,7 +16,9 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 #' @param stat_unit statistical target unit of measurement, aggregation variable, the indicator target
 #' @param publication_date the date in which the tender was published
 #' @param test_type character vector identifying the type of test you want to execute, alternatives are c("ks", "wilcoxon")
+#' @param cpvs a vector of cpv on which contracts are filtered
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param ... other parameters for generate_indicator_schema as country_name
 #' @return indicator schema as from `generate_indicator_schema()` rows determined by aggregation level and `indicator_value` based on statistical test performed in `ind_2`
 #' @examples
 #' \dontrun{
@@ -79,33 +50,21 @@ ind_2 <- function(data,
                   publication_date,
                   emergency_name,
                   stat_unit,
-                  test_type) {
+                  test_type,
+                  cpvs,
+                  ...) {
   indicator_id <- 2
   indicator_name <- "Awarded economic value across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
+
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
-  cpv_col <- grab_cpv(data = data)
 
 
-  test <- function(data, var, group, test_type) {
-    # temporary: if two levels in group are not found:
-    if (length(unique(group)) != 2) {
-      # print("999")
-      999
-    } else {
-      # print("test")
-      switch(test_type,
-        "ks" = {
-          compute_kolmogorov_smirnoff(data, var, group)
-        },
-        "wilcoxon" = {
-          compute_wilcox(data, var, group)
-        },
-        stop(paste0("No handler for ", test_type))
-      )
-    }
+  if (missing(cpvs)) {
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   }
+
+  cpv_col <- grab_cpv(data = data)
 
   data %>%
     dplyr::mutate(
@@ -136,7 +95,7 @@ ind_2 <- function(data,
         npre > 0 & npost == 0 ~ 1, # not at risk, pvalue=1
         npre == 0 & npost > 0 ~ 0, # at risk, pvalue=0
         # npre > 0 & npost > 0 ~ test(var = {{ contract_value }}, group = prepost, data = ., test_type)[1],
-        TRUE ~ test(var = {{ contract_value }}, group = prepost, data = ., test_type)[1]
+        TRUE ~ test_set_2(var = {{ contract_value }}, group = prepost, data = ., test_type)[1]
       )
     ) %>%
     generate_indicator_schema(
@@ -145,7 +104,8 @@ ind_2 <- function(data,
       indicator_value = 1 - test, # 1 - pvalue
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

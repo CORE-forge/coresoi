@@ -15,7 +15,9 @@
 #' @param stat_unit The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)
 #' @param final_award_date Date of award, as per the minutes
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param cpvs a vector of cpv on which contracts are filtered
 #' @param years_before int how many years we have to
+#' @param ... other parameters for generate_indicator_schema as country_name
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
@@ -43,12 +45,16 @@ ind_7 <- function(data,
                   final_award_date,
                   emergency_name,
                   stat_unit,
-                  years_before) {
+                  years_before,
+                  cpvs,
+                  ...) {
   indicator_id <- 7
   indicator_name <- "One-shot opportunistic companies over the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  if (missing(cpvs)) {
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  }
   cpv_col <- grab_cpv(data = data)
 
   data %>%
@@ -88,7 +94,8 @@ ind_7 <- function(data,
       indicator_value = flag_oneshot, # no test
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

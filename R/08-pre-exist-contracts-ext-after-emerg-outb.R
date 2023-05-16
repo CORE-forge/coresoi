@@ -16,7 +16,9 @@
 #' @param stat_unit tatistical unit of measurement, aggregation variable, the indicator target. In this case the identifier of agency or winners.
 #' @param variant_date Date of contract variation
 #' @param months_win time window for variation to be happening
+#' @param cpvs a vector of cpv on which contracts are filtered
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param ... other parameters for generate_indicator_schema as country_name
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
@@ -44,12 +46,16 @@ ind_8 <- function(data,
                   stat_unit,
                   variant_date,
                   emergency_name,
-                  months_win = 6) {
+                  months_win = 6,
+                  cpvs,
+                  ...) {
   indicator_id <- 8
   indicator_name <- "Pre-existing contracts modified after the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  if (missing(cpvs)) {
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  }
   cpv_col <- grab_cpv(data = data)
 
   data %>%
@@ -98,7 +104,8 @@ ind_8 <- function(data,
       indicator_value = rf_value, # no test
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

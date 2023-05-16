@@ -16,8 +16,11 @@
 #' @param eff_end Effective end of the execution of the contract
 #' @param eff_start Effective contract signature
 #' @param stat_unit the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by
+#' @param cpvs a vector of cpv on which contracts are filtered
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param test_type test type belonging to set 2 i.e. "ks", "wilcoxon"
 #' @param publication_date The date when the tender was published
+#' @param ... other parameters for generate_indicator_schema as country_name
 #' @return indicator schema as from `generate_indicator_schema`
 #' @details DETAILS
 #' @examples
@@ -30,6 +33,7 @@
 #'     eff_end = data_effettiva_ultimazione,
 #'     eff_start = data_stipula_contratto,
 #'     stat_unit = cf_amministrazione_appaltante,
+#'     test_type = "wilcoxon",
 #'     emergency_name = "coronavirus"
 #'   )
 #' }
@@ -47,14 +51,22 @@ ind_4 <- function(data,
                   eff_end,
                   stat_unit,
                   emergency_name,
-                  publication_date) {
+                  publication_date,
+                  test_type,
+                  cpvs,
+                  ...) {
   indicator_id <- 4
   indicator_name <- "Length deviation across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  if (missing(cpvs)) {
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  }
   cpv_col <- grab_cpv(data = data)
 
+  if (missing(test_type)) {
+    test_type <- "wilcoxon"
+  }
 
   data %>%
     dplyr::filter(
@@ -87,7 +99,7 @@ ind_4 <- function(data,
       mean_post = mean(ratio[prepost == "post"]),
       median_pre = median(ratio[prepost == "pre"]),
       median_post = median(ratio[prepost == "post"]),
-      ind_4 = compute_kolmogorov_smirnoff(var = ratio, group = prepost, data = .)[1]
+      ind_4 = test_set_2(var = ratio, group = prepost, data = ., test_type)[1]
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
@@ -95,7 +107,8 @@ ind_4 <- function(data,
       indicator_value = 1 - ind_4, # 1 - pvalue
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

@@ -16,7 +16,9 @@
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
 #' @param award_col column indentifying id for that contract award
 #' @param stat_unit statistical unit of measurement and stat_uniting
+#' @param cpvs a vector of cpv on which contracts are filtered
 #' @param test_type type of the test we would like to apply
+#' @param ... other parameters for generate_indicator_schema as country_name
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
@@ -47,28 +49,17 @@ ind_6 <- function(data,
                   emergency_name,
                   award_col,
                   stat_unit,
-                  test_type) {
+                  test_type,
+                  cpvs,
+                  ...) {
   indicator_id <- 6
   indicator_name <- "Communication default across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
-  cpv_col <- grab_cpv(data = data)
-
-  test <- function(a, b, c, d, test_type) {
-    switch(test_type,
-      "barnard" = {
-        compute_barnard(d, b, c, a)
-      },
-      "fisher" = {
-        compute_fisher(a, b, c, d)
-      },
-      "z-test" = {
-        compute_prop_test(a, b, c, d)
-      },
-      stop(paste0("No handler for ", test_type))
-    )
+  if (missing(cpvs)) {
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   }
+  cpv_col <- grab_cpv(data = data)
 
 
   data %>%
@@ -106,7 +97,7 @@ ind_6 <- function(data,
     dplyr::rowwise() %>%
     dplyr::mutate(
       ## apply test
-      test = test(n_11, n_12, n_21, n_22, test_type)[1],
+      test = test_set_1(n_11, n_12, n_21, n_22, test_type)[1],
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
@@ -114,7 +105,8 @@ ind_6 <- function(data,
       indicator_value = 1 - test, # 1 - pvalue
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

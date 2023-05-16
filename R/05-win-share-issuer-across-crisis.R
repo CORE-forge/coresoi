@@ -14,7 +14,9 @@
 #' @param publication_date The date when the tender was published
 #' @param stat_unit Column of entities who decide who win the public procurement
 #' @param winners Column of winning companies
+#' @param cpvs a vector of cpv on which contracts are filtered
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param ... other parameters for generate_indicator_schema as country_name
 #' @return indicator schema as from `generate_indicator_schema`
 #' @details DETAILS
 #' @examples
@@ -42,12 +44,16 @@ ind_5 <- function(data,
                   stat_unit,
                   publication_date,
                   winners,
-                  emergency_name) {
+                  emergency_name,
+                  cpvs,
+                  ...) {
   indicator_id <- 5
   indicator_name <- "Winner's share of issuer's contract across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  if (missing(cpvs)) {
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  }
   cpv_col <- grab_cpv(data = data)
 
   data %>%
@@ -104,7 +110,8 @@ ind_5 <- function(data,
       indicator_value = ind5, # no test
       aggregation_name = {{ stat_unit }},
       aggregation_type = as_string(aggregation_type),
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

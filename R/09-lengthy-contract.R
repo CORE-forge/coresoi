@@ -25,7 +25,9 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
 #' @param stat_unit the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by
 #' @param eff_start Effective start of the execution of the contract
 #' @param eff_end Effective end of the execution of the contract
+#' @param cpvs a vector of cpv on which contracts are filtered
 #' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param ... other parameters for generate_indicator_schema as country_name
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
@@ -59,12 +61,16 @@ ind_9 <- function(data,
                   stat_unit,
                   eff_start,
                   eff_end,
-                  emergency_name) {
+                  emergency_name,
+                  cpvs,
+                  ...) {
   indicator_id <- 9
   indicator_name <- "Lengthy contracts"
   aggregation_type <- rlang::quo_squash(rlang::enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  if (missing(cpvs)) {
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  }
   cpv_col <- grab_cpv(data = data)
 
   data_out <- data %>%
@@ -110,7 +116,8 @@ ind_9 <- function(data,
       indicator_value = 1 - wilctest, # 1 - pvalue
       aggregation_name = {{ stat_unit }},
       aggregation_type = rlang::as_string(aggregation_type),
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

@@ -52,7 +52,7 @@ test_that("check `ind_2()` are 12 columns as according to `generate_indicator_sc
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        test_type = "ks",
+        test_type = "wilcoxon",
         emergency_name = "coronavirus"
       )
     }), 12
@@ -75,32 +75,13 @@ test_that("check column names are as according to pre determined schema", {
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        test_type = "ks",
+        test_type = "wilcoxon",
         emergency_name = "coronavirus"
       ))
     }), col_names,
     tolerance = 0.8
   )
 })
-
-
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Kolmogorv Smirnov)", {
-  expect_within_range(
-    suppressWarnings({
-      ind_2(
-        data = mock_data_core,
-        contract_value = importo_complessivo_gara,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        test_type = "ks",
-        emergency_name = "coronavirus"
-      )
-    }),
-    min = 0, max = 1
-  )
-})
-
 
 
 
@@ -122,6 +103,25 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 
 
 
+
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Kolmogorv Smirnov)", {
+  expect_within_range(
+    suppressWarnings({
+      ind_2(
+        data = mock_data_core,
+        contract_value = importo_complessivo_gara,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        test_type = "ks",
+        emergency_name = "coronavirus"
+      )
+    }),
+    min = 0, max = 1
+  )
+})
+
+
+
 test_that("check if the number of rows is coherent with the aggregation level (`provincia`)", {
   expect_row_number(
     suppressWarnings({
@@ -130,7 +130,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        test_type = "ks",
+        test_type = "wilcoxon",
         emergency_name = "coronavirus"
       )
     }),
@@ -147,7 +147,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        test_type = "ks",
+        test_type = "wilcoxon",
         emergency_name = "coronavirus"
       )
     }),
@@ -165,7 +165,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        test_type = "ks",
+        test_type = "wilcoxon",
         emergency_name = "terremoto aquila"
       )
     }),
@@ -183,7 +183,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        test_type = "ks",
+        test_type = "wilcoxon",
         emergency_name = "terremoto aquila"
       )
     }),
@@ -201,10 +201,39 @@ test_that("check if `indicator_value` lays inbetween min/max values (different a
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
         stat_unit = provincia,
-        test_type = "ks",
+        test_type = "wilcoxon",
         emergency_name = "terremoto aquila"
       )
     }),
     min = 0, max = 1
+  )
+})
+
+
+
+# expect to have less rows or equal rows when cpvs are filtered
+test_that("check if the number of rows when indicator is filtered out by cpv is loweer than the one with more cpvs on it (i.e. the defualt)", {
+  expect_lte(
+    suppressWarnings({
+      nrow(ind_2(
+        data = mock_data_core,
+        contract_value = importo_complessivo_gara,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        test_type = "wilcoxon",
+        emergency_name = "Coronavirus",
+        cpvs = c(33, 34, 38, 39, 41, 44, 65, 85)
+      ))
+    }),
+    expected = suppressWarnings({
+      nrow(ind_2(
+        data = mock_data_core,
+        contract_value = importo_complessivo_gara,
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        test_type = "wilcoxon",
+        emergency_name = "Coronavirus"
+      ))
+    })
   )
 })

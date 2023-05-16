@@ -134,3 +134,28 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
     min = 0, max = 1
   )
 })
+
+# expect to have less rows or equal rows when cpvs are filtered
+test_that("check if the number of rows when indicator is filtered out by cpv is loweer than the one with more cpvs on it (i.e. the defualt)", {
+  expect_lte(
+    suppressWarnings({
+      nrow(ind_7(
+        data = mock_data_core,
+        final_award_date = data_aggiudicazione_definitiva,
+        stat_unit = codice_fiscale,
+        emergency_name = "terremoto aquila",
+        years_before = 1,
+        cpvs = c(33, 34, 38, 39, 41, 44, 65, 85)
+      ))
+    }),
+    expected = suppressWarnings({
+      nrow(ind_7(
+        data = mock_data_core,
+        final_award_date = data_aggiudicazione_definitiva,
+        stat_unit = codice_fiscale,
+        emergency_name = "terremoto aquila",
+        years_before = 1
+      ))
+    })
+  )
+})
