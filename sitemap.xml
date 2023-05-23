@@ -40,7 +40,13 @@
     <loc>https://core-forge.github.io/coresoi/news/index.html</loc>
   </url>
   <url>
-    <loc>https://core-forge.github.io/coresoi/reference/composite.html</loc>
+    <loc>https://core-forge.github.io/coresoi/reference/aggregate.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/composite_sensitivity.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/composite_sensitivity_methods.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/compute_barnard.html</loc>
@@ -64,6 +70,9 @@
     <loc>https://core-forge.github.io/coresoi/reference/coresoi-package.html</loc>
   </url>
   <url>
+    <loc>https://core-forge.github.io/coresoi/reference/create_indicator_matrix.html</loc>
+  </url>
+  <url>
     <loc>https://core-forge.github.io/coresoi/reference/emergency_dates.html</loc>
   </url>
   <url>
@@ -71,6 +80,9 @@
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/get_associated_cpv_from_emergency.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/get_weights.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/grab_cpv.html</loc>
@@ -106,7 +118,13 @@
     <loc>https://core-forge.github.io/coresoi/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://core-forge.github.io/coresoi/reference/manage_missing.html</loc>
+  </url>
+  <url>
     <loc>https://core-forge.github.io/coresoi/reference/mock_data_core.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/normalise.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/pipe.html</loc>
