@@ -15,9 +15,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Dosis-0.4.5/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.5/font.css" rel="stylesheet">
-<link href="../deps/Lora-0.4.5/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Dosis-0.4.6/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.6/font.css" rel="stylesheet">
+<link href="../deps/Lora-0.4.6/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="How to calculate indicators with `coresoi`">
@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">coresoi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,8 +54,10 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/summary.html">summary</a>
     <a class="dropdown-item" href="../articles/ChoiceOfElementaryIndicators.html">Choice of elementary indicators</a>
     <a class="dropdown-item" href="../articles/DataSelectionArchitecture.html">Data selection and architecture</a>
+    <a class="dropdown-item" href="../articles/CompositeIndicator.html">Composite Indicator (CI)</a>
     <a class="dropdown-item" href="../articles/tryCoresoiWithYourData.html">Try `coresoi` with you own data</a>
   </div>
 </li>
@@ -67,11 +69,17 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/CORE-forge/coresoi/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
-    <div class="rmdreview"> This documentation is offered in <b><a href="https://openreview.net/" class="external-link">Open Review</a></b> format. We kindly request your feedback in case something is unclear, poorly written, or incorrect. Your input would greatly assist us in improving these documents and providing a better experience for you and our partners. To add your annotations, <span style="background-color: #3297FD; color: white">simply highlight the text</span> and click on <i class="fa fa-quote-left"></i>the pop-up menu. To view annotations from others, click on <i class="h-icon-chevron-left"></i> the top-right corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i> </div>
-
+    
   </div>
 </nav><div class="container template-article">
 
@@ -83,18 +91,29 @@
       <img src="../logo.png" class="logo" alt=""><h1>How to calculate indicators with `coresoi`</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/CORE-forge/coresoi/blob/HEAD/vignettes/coresoi.Rmd" class="external-link"><code>vignettes/coresoi.Rmd</code></a></small>
       <div class="d-none name"><code>coresoi.Rmd</code></div>
     </div>
 
     
     
+<p>Companies and contracting authorities at risk of being corrupt across
+emergencies are identified through the selection of a set of red flags
+computed through a procedure which exploits the time discontinuity
+introduced by the emergency outbreak, that is, the possibility to
+distinguish two time-spans, a pre-emergency period and a post-emergency
+period.</p>
+<p>The approach compares, whenever possible, company and/or contracting
+authority behaviours after the emergency outbreak with respect to their
+historical behaviour and assesses the associated risk through
+statistical testing. Given the focus on crises, each red flag is
+calculated regarding contracts awarded in the relevant market for the
+crisis at issue.</p>
+<p>The procedure is extensible to other crisis contexts, replicable to
+other national contexts, and adjustable on account of different market
+trends across the crisis.</p>
 <div class="section level2">
-<h2 id="installation-instructions">Installation instructions<a class="anchor" aria-label="anchor" href="#installation-instructions"></a>
-</h2>
-</div>
-<div class="section level2">
-<h2 id="calculate-indicator-ind_2">Calculate indicator <code>ind_2</code><a class="anchor" aria-label="anchor" href="#calculate-indicator-ind_2"></a>
+<h2 id="compute-red-flags-ind_2">Compute red flags ( <code>ind_2</code> )<a class="anchor" aria-label="anchor" href="#compute-red-flags-ind_2"></a>
 </h2>
 <p>Let’s say we are interested in calculating and indicator say number
 2, All we need to do is to load data sample <code>mock_data_core</code>
@@ -129,15 +148,36 @@ that.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: aggregation_type &lt;chr&gt;, emergency_id &lt;int&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   emergency_name &lt;chr&gt;, country_id &lt;chr&gt;, country_name &lt;chr&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   indicator_last_update &lt;dttm&gt;, data_last_update &lt;dttm&gt;</span></span></span></code></pre></div>
-<p>The output from <code>ind_2</code> is a schema which shows</p>
 </div>
 <div class="section level2">
 <h2 id="usage-tips">Usage tips<a class="anchor" aria-label="anchor" href="#usage-tips"></a>
 </h2>
+<ul>
+<li>To compute red flags using the package, start by loading the sample
+data (<code>mock_data_core</code>) provided in the package.</li>
+<li>Specify the relevant variables for the red flag calculation when
+calling the relevant indicator function (e.g.,
+<code><a href="../reference/ind_2.html">ind_2()</a></code>).</li>
+<li>Refer to the documentation for each indicator function to understand
+the required input variables and the expected output schema.</li>
+<li>The output schema provides information regarding the indicator name,
+indicator value, relevant geographic aggregation, and the emergency
+context for which the red flag was calculated.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="technical-support">Technical support<a class="anchor" aria-label="anchor" href="#technical-support"></a>
 </h2>
+<ul>
+<li>If users encounter any issues while using the package, they can
+refer to the documentation or reach out to the package maintainers via
+Github by opening an <a href="https://github.com/CORE-forge/coresoi/issues/new/choose" class="external-link">issue</a>
+or direcly to (<a href="mailto:niccolo.salvini27@gmail.com">Niccolò
+Salvini</a> or directly for technical support.</li>
+<li>The maintainers can assist with questions regarding the required
+input variables, resolving errors, or understanding the output schema of
+the red flag indicators.</li>
+</ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -147,7 +187,7 @@ that.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Niccolo Salvini, Simone DelSarto, Giulio Cantone.</p>
+<p>Developed by Niccolo Salvini, Simone DelSarto, Michela Gnaldi.</p>
 </div>
 
 <div class="pkgdown-footer-right">

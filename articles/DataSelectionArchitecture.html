@@ -15,9 +15,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Dosis-0.4.5/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.5/font.css" rel="stylesheet">
-<link href="../deps/Lora-0.4.5/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Dosis-0.4.6/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.6/font.css" rel="stylesheet">
+<link href="../deps/Lora-0.4.6/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Data selection and architecture">
@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">coresoi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,8 +54,10 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/summary.html">summary</a>
     <a class="dropdown-item" href="../articles/ChoiceOfElementaryIndicators.html">Choice of elementary indicators</a>
     <a class="dropdown-item" href="../articles/DataSelectionArchitecture.html">Data selection and architecture</a>
+    <a class="dropdown-item" href="../articles/CompositeIndicator.html">Composite Indicator (CI)</a>
     <a class="dropdown-item" href="../articles/tryCoresoiWithYourData.html">Try `coresoi` with you own data</a>
   </div>
 </li>
@@ -67,11 +69,17 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/CORE-forge/coresoi/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
-    <div class="rmdreview"> This documentation is offered in <b><a href="https://openreview.net/" class="external-link">Open Review</a></b> format. We kindly request your feedback in case something is unclear, poorly written, or incorrect. Your input would greatly assist us in improving these documents and providing a better experience for you and our partners. To add your annotations, <span style="background-color: #3297FD; color: white">simply highlight the text</span> and click on <i class="fa fa-quote-left"></i>the pop-up menu. To view annotations from others, click on <i class="h-icon-chevron-left"></i> the top-right corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i> </div>
-
+    
   </div>
 </nav><div class="container template-article">
 
@@ -83,7 +91,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Data selection and architecture</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/CORE-forge/coresoi/blob/HEAD/vignettes/articles/DataSelectionArchitecture.Rmd" class="external-link"><code>vignettes/articles/DataSelectionArchitecture.Rmd</code></a></small>
       <div class="d-none name"><code>DataSelectionArchitecture.Rmd</code></div>
     </div>
 
@@ -92,129 +100,149 @@
 <p>Modern statistical approaches are currently under threat from the Big
 Data era, not only because of the immense processing power required to
 keep up with the amount and rate at which data is accumulating, but also
-due to the wide range of sources from which data may be obtained (Arbia
-et al., 2021). Most of this data, including administrative documents and
-unstructured data gathered from previously unexplored sources, are
-readily accessible to the public (such as crowdsourcing, open data
-portals, web scraping). As a matter of fact, the web undiscloses a
-wealth of intriguing material in plain (web) sight that can be
+due to the wide range of sources from which data may be obtained(
+<em>Arbia et al., 2021</em>). Most of this data, including
+administrative documents and unstructured data gathered from previously
+unexplored sources, are readily accessible to the public (such as
+<strong>crowdsourcing</strong>, <strong>open data portals</strong>,
+<strong>web scraping</strong>). As a matter of fact, the web undiscloses
+a wealth of intriguing material in plain (web) sight that can be
 collected, aggregated and analyzed. Sometimes web platforms may operate
 protection mechanisms to avoid users extracting their data. In some
 other occasions data are stored in open databases and can be accessed
 through APIs (Application Programming Interface) or through manual
-download. This is also the case of the Banca Dati Nazionale dei
-Contratti Pubblici (BNDCP) which is an open data portal offering access
-information on anti- corruption, transparency, and public contracts,
-handled by the Italian Anticorruption Authority (ANAC) as part of its
-institutional functions. The open <a href="www.anac.gov.it/bndp">data
-portal</a> is searchable by keyword and offers a series of filters to
-allow users to refine their results and visualize it through a
-dashboard. The data are also available in machine-readable format,
-making it possible to carry out further analysis and distribute them via
-API through OCDS, which is a common shared standard data model whose
-goal is to support organizations and help them with transparency. The
-portal currently contains more than 110 datasets which are divided into
-three subsections: data on asset declarations, data on conflicts of
-interest, and data on donations and sponsorships. The data on public
-contracts are divided into seven subsections: data on contracting
-authorities, data on economic operators, data on contracts, data on
-Contracting Procedures, data on tenders, data on awarding criteria, and
-data on contract prices. Utilizing this enormous quantity of data
-requires a programmatic approach in addition to a strong grounding in
-various web technologies. A Big Data pipeline (from now on data
-pipeline) is a set of processes that ingest, clean, transform, and store
-data. Data pipelines are essential for data-driven applications, as they
-provide a way to reliably and efficiently move data from one place to
-another. Data pipelines can be batch or real-time, depending on the
-needs of the application. Batch data pipelines are typically used for
-ETL (extract, transform, load) processes, where data is extracted from
-one or more sources, transformed into a format that is suitable for
-analysis, and then loaded into a target data store. Data pipelines can
-be complex, with many different components that must work together in
-order for the data to flow smoothly from one stage to the next. In order
-to build a data pipeline, it is of the utmost importance to have a clear
-understanding of the data flow, the scope (the data consumers
-objectives) and the dependencies between the various components. In this
-regard, we discuss the data pipeline for a web-based application that
-ingests data from a public open data portal. The data pipeline consists
-of the following components: a <strong>web scraper</strong>, a
-<strong>data parsing and aggregation</strong>, a <strong>data
-transformer</strong>, and a <strong>data store</strong> (i.e. database).
-The web scraper is responsible for extracting data from the BNDCP <a href="https://dati.anticorruzione.it/#/home" class="external-link">open data portal</a>, this
-happens according to a schedule which is coordinated with the updating
-rate of the source. Moreover, data are actually extracted i.e. scraped
-from 3 different BDNCP locations: the official BDNCP datasets as
-mentioned above, the L190 communication default which account for
-transmissions between CA (Contracting Authorities) and ANAC, finally
-from a proprietary source. The latter can enrich data regarding winners
-and participants of the bid, such as their number of employees, type of
-company, revenues and CAE (Economic Activity Code). The information is
-crucial to assess the potential risks of participating and winning on
-different entities.</p>
-<p><img src="assets/01-ingestion.png"></p>
-<p>The parsing and aggregation step is done via AWS Glue which is a
-fully-managed ETL (extract, transform, and load) service that makes it
-easy to move data between data stores. It uses Apache Spark as its
-underlying engine for distributed processing of data. The data parser in
-AWS Glue is responsible for parsing the data extracted by the web
-scraper and accounts for the file extensions the organization adopts to
-replicate data across the infrastructure. By using Apache Spark, AWS
-Glue can efficiently aggregate and join files for processing. Once data
-are joined according to the schema ANAC provided in <a href="https://dati.anticorruzione.it/opendata/download/ManualeGestioneOperativa-OD.pdf" class="external-link">this
-document</a></p>
+download. This is also the case of the <strong>Banca Dati Nazionale dei
+Contratti Pubblici (BNDCP)</strong> which is an open data portal
+offering access information on anti-corruption, transparency, and public
+contracts, handled by the Italian Anticorruption Authority (ANAC) as
+part of its institutional functions. The <a href="www.anac.gov.it/bndp">open data portal</a> is searchable by
+keyword and offers a series of filters to allow users to refine their
+results and visualize it through a dashboard. The data are also
+available in machine-readable format, making it possible to carry out
+further analysis and distribute them via API through OCDS, which is a
+common shared standard data model whose goal is to support organizations
+and help them with transparency. The portal currently contains more than
+110 datasets which are divided into three subsections: data on asset
+declarations, data on conflicts of interest, and data on donations and
+sponsorships. The data on public contracts are divided into seven
+subsections: data on contracting authorities, data on economic
+operators, data on contracts, data on Contracting Procedures, data on
+tenders, data on awarding criteria, and data on contract prices.
+Utilizing this enormous quantity of data requires a programmatic
+approach in addition to a strong grounding in various web technologies.
+A <strong>Big Data pipeline</strong> (from now on data pipeline) is a
+set of processes that ingest, clean, transform, and store data. Data
+pipelines are essential for data-driven applications, as they provide a
+way to reliably and efficiently move data from one place to another.
+Data pipelines can be batch or real-time, depending on the needs of the
+application. Batch data pipelines are typically used for
+<strong>ETL</strong> (extract, transform, load) processes, where data is
+extracted from one or more sources, transformed into a format that is
+suitable for analysis, and then loaded into a target data store. Data
+pipelines can be complex, with many different components that must work
+together in order for the data to flow smoothly from one stage to the
+next. In order to build a data pipeline, it is of the utmost importance
+to have a clear understanding of the data flow and the dependencies
+between the various components. In this regard, we discuss the data
+pipeline for a web-based application that ingests data from a public
+open data portal. The data pipeline consists of the following
+components: a <strong>web scraper</strong>, a <strong>data
+parser</strong>, a <strong>data transformer</strong>, and a <strong>data
+store</strong>. The web scraper is responsible for extracting data from
+the BNDCP open data portal, this happens according to a schedule which
+is coordinated with the updating rate of the source. Moreover, data are
+actually extracted i.e. scraped from 3 different BDNCP locations: the
+official BDNCP datasets as mentioned above, the L190 communication
+default which account for transmissions between CA (Contracting
+Authorities) and ANAC, finally from a proprietary source. The latter can
+enrich data regarding winners and participants of the bid, such as their
+number of employees, type of company, revenues and CAE (Economic
+Activity Code). The information is crucial to assess the potential risks
+of participating and winning on different entities. </p>
+<p><img src="assets/01-ingestion.png"> The data parser is responsible
+for parsing the data extracted by the web scraper and accounts for the
+file extensions the organization adopts to replicate data across the
+infrastructure. The data parser component is written in a language
+agnostic open source framework named <strong>Apache Arrow</strong>.
+Apache Arrow is an open source project that provides a columnar
+in-memory data structure for efficient computation. In the end the third
+component parses the data extracted by the web scraper and transforms it
+into a format that is suitable for analysis. The data transformer is
+responsible for transforming the data parsed into a format that is
+suitable for loading into the final data store. Since the amount of data
+we are dealing with does not allow to run proper transformation on local
+machines, this step needs to be delegated to cloud infrastructures. Data
+transformation is run on Amazon Web Services (AWS) and specifically on
+Amazon Elastic MapReduce (EMR). Amazon EMR is a cloud-based big data
+platform for processing vast amounts of data using open source tools
+such as Apache Spark, Apache Hive, Apache HBase, Apache Flink, Apache
+Hudi, and Presto. Once the data is transformed, they are then loaded
+into the final data store. In order to achieve this latest goal, two
+possibilities are in place. On one hand, the managed service called AWS
+Glue can be used. AWS Glue is a fully managed ETL (extract, transform,
+load) service that makes it easy for customers to prepare and load their
+data for analytics. The service automatically discovers and profiles
+data via the Glue Data Catalog, recommends and generates ETL scripts,
+and runs the ETL jobs on a fully managed, scale-out Apache Spark
+environment to load the data into an analytics data store).
+Alternatively, a set of AWS managed services can be employed, such as
+Elastic Container Registry i.e. ECR and ECS Elastic Beanstalk. With
+these services we can containerize the data transformation application
+and deploy it on a scalable AWS infrastructure. This allows us to run
+the data transformation jobs in a fully managed and scalable
+environment. The image below sketches the transformation step for a
+single year (the same transformation needs to be iterated for each
+available year).</p>
 <p><img src="assets/02-etl.png"></p>
-<p>Specifically, the data transformation process is being run on Amazon
-Elastic MapReduce (EMR), which is a cloud-based big data platform that
-allows to process vast amounts of data using open-source tools such as
-Apache Spark, Apache Hive, Apache HBase, Apache Flink, and Presto. One
-of the key benefits of using a cloud-based platform like Amazon EMR is
-that it allows to distribute computation across a cluster of machines,
-which can help to avoid running out of memory or experiencing other
-performance bottlenecks when working with big data. This means that the
-data transformation process can be completed faster and more efficiently
-than if it were run on a single machine or server. Additionally, because
-it is only paid for the resources that are actually used. This can save
-costs compared to maintaining an on-premises infrastructure.</p>
 <p>The data store is the final component of the data pipeline. In order
 to choose the most appropriate data store, we need to consider a number
-of factors such as: capacity, performance, availability, durability,
-security. In our case we decided to use Amazon Simple Storage Service
-(S3). Amazon S3 is an object storage service that offers
-industry-leading scalability, data availability, security, and
-performance. The data store is responsible for storing the transformed
-data. Finally, the aggregated data, which results in a very large file
-with more than 10 millions rows and 150 columns, stays in S3 and waits
-for a further transformation exploiting the same cloud means presented.
-On top of this, massive indicator files (and the one resulting from the
-composition of them) are calculated, generating a number of further
-files. Each of these indicator file must adhere to a schema, meaning
-that the outcome of the calculation must include the date of generation,
-the target statistical measurement unit, among the others, and obviously
-the indicator value. This needs to happen mainly for frontend
-requirements purposes, so that whenever the client-side user requests
-for that information, say indicator 1, the frontend has to put the
-effort only into recalling the files that actually contains that
-information. For each indicator, a number of files are actually
-generated: one for each emergency scenario considered (Covid19, Ukraine
-- Russia war, etc.) and one for each target statistical unit of
-measurement (CA, winner and participants via their tax code or
+of factors such as: <em>capacity</em>, <em>performance</em>,
+<em>availability</em>, <em>durability</em>, <em>security.</em> In our
+case we decided to use Amazon Simple Storage Service (S3). Amazon S3 is
+an object storage service that offers industry-leading scalability, data
+availability, security, and performance. The data store is responsible
+for storing the transformed data. Finally, the aggregated data, which
+results in a very large table with more than 7 millions rows and 150
+columns, stays in S3 and waits for a further transformation exploiting
+the same cloud means presented. On top of this, massive indicator files
+(and the one resulting from the composition of them) are calculated,
+generating a number of further files. Each of these indicator file must
+adhere to a schema, meaning that the outcome of the calculation must
+include the date of generation, the target statistical measurement unit,
+among the others, and obviously the indicator value. This needs to
+happen mainly for frontend requirements purposes, so that whenever the
+client-side user requests for that information, say indicator 1, the
+frontend has to put the effort only into recalling the files that
+actually contains that information. For each indicator, a number of
+files are actually generated: one for each emergency scenario considered
+(i.e., Covid19) and one for each target statistical unit of measurement
+(contracting authority, winner and participants via their tax code or
 geographical aggregation units, regions, municipalities). The indicator
-generation process is quite straightforward: given an emergency scenario
-(two are currently supported: Covid19, Ukraine - Russia war), the data
-on the target units of measurement (often being referred to statistical
-units: CA, winner and participants via their tax code or geographical
-aggregation units, regions, municipalities), a list of indicators and
-the associated calculation rules, the pipeline automatically generates
-all the indicator values for all target units. The generation of
-indicators is actually carried out in two steps: first, all the large
-data is recollected and sorted, then stored in the local database; then,
-starting from this partition, the indicators are actually calculated
-according to the rules associated with each of them and stored in files,
-once again in S3 spaces.</p>
+generation process is quite straightforward: given an emergency
+scenario, the data on the target units of measurement (often being
+referred to statistical units: CA, winner and participants via their tax
+code or geographical aggregation units, regions, municipalities), a list
+of indicators and the associated calculation rules, the pipeline
+automatically generates all the indicator values for all target units.
+The generation of indicators is actually carried out in two steps:
+first, all the large data is recollected and sorted, then stored in the
+local database; then, starting from this partition, the indicators are
+actually calculated according to the rules associated with each of them
+and stored in files, once again in S3 spaces.</p>
 <p><img src="assets/03-computation.png"></p>
-<p>There’s also a further component, the API gateway which makes
-possible to directly query data from the datastore.</p>
-<p>A bird-eye view of the overall infrastructure</p>
+<p>In addition to the components outlined, it is important to note that
+there is also a further integration available through the AWS API
+Gateway. This integration enables the direct querying of data from the
+Athena data store, while also allowing for the utilization of parameters
+in these queries. By leveraging this integration in conjunction with aws
+Lambda, data consumers are able to filter out data and focus on specific
+metrics or results that are relevant to their specific needs or
+requirements. This added functionality provided by the AWS API Gateway
+represents a valuable tool for efficiently managing and utilizing large
+sets of data, ultimately leading to improved decision-making and
+improved overall data management practices.</p>
+<p>Below a <strong>bird-eye</strong> view of the overall
+infrastructure</p>
 <p><img src="assets/04-overall.png"></p>
   </main>
 </div>
@@ -223,7 +251,7 @@ possible to directly query data from the datastore.</p>
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Niccolo Salvini, Simone DelSarto, Giulio Cantone.</p>
+<p>Developed by Niccolo Salvini, Simone DelSarto, Michela Gnaldi.</p>
 </div>
 
 <div class="pkgdown-footer-right">

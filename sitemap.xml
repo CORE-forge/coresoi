@@ -13,6 +13,9 @@
     <loc>https://core-forge.github.io/coresoi/articles/ChoiceOfElementaryIndicators.html</loc>
   </url>
   <url>
+    <loc>https://core-forge.github.io/coresoi/articles/CompositeIndicator.html</loc>
+  </url>
+  <url>
     <loc>https://core-forge.github.io/coresoi/articles/DataSelectionArchitecture.html</loc>
   </url>
   <url>
@@ -20,6 +23,9 @@
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/articles/summary.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/articles/tryCoresoiWithYourData.html</loc>
@@ -32,6 +38,9 @@
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/news/index.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/composite.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/compute_barnard.html</loc>

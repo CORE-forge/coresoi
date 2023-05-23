@@ -15,9 +15,9 @@
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="deps/Dosis-0.4.5/font.css" rel="stylesheet">
-<link href="deps/JetBrains_Mono-0.4.5/font.css" rel="stylesheet">
-<link href="deps/Lora-0.4.5/font.css" rel="stylesheet">
+<script src="deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="deps/Dosis-0.4.6/font.css" rel="stylesheet">
+<link href="deps/JetBrains_Mono-0.4.6/font.css" rel="stylesheet">
+<link href="deps/Lora-0.4.6/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Measuring Corruption Risk in Emergency">
@@ -36,7 +36,7 @@
     
     <a class="navbar-brand me-2" href="index.html">coresoi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,8 +54,10 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="articles/summary.html">summary</a>
     <a class="dropdown-item" href="articles/ChoiceOfElementaryIndicators.html">Choice of elementary indicators</a>
     <a class="dropdown-item" href="articles/DataSelectionArchitecture.html">Data selection and architecture</a>
+    <a class="dropdown-item" href="articles/CompositeIndicator.html">Composite Indicator (CI)</a>
     <a class="dropdown-item" href="articles/tryCoresoiWithYourData.html">Try `coresoi` with you own data</a>
   </div>
 </li>
@@ -67,11 +69,17 @@
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
 </form>
 
-      <ul class="navbar-nav"></ul>
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/CORE-forge/coresoi/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 
-    <div class="rmdreview"> This documentation is offered in <b><a href="https://openreview.net/" class="external-link">Open Review</a></b> format. We kindly request your feedback in case something is unclear, poorly written, or incorrect. Your input would greatly assist us in improving these documents and providing a better experience for you and our partners. To add your annotations, <span style="background-color: #3297FD; color: white">simply highlight the text</span> and click on <i class="fa fa-quote-left"></i>the pop-up menu. To view annotations from others, click on <i class="h-icon-chevron-left"></i> the top-right corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i> </div>
-
+    
   </div>
 </nav><div class="container template-home">
 <div class="row">
@@ -92,82 +100,18 @@
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"CORE-forge/coresoi"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="example-compute-winning-rate-across-the-crisis-indicator">Example: Compute Winning rate across the crisis indicator<a class="anchor" aria-label="anchor" href="#example-compute-winning-rate-across-the-crisis-indicator"></a>
-</h2>
-<p>In certain cases, it may be necessary to calculate Indicator 1, which primarily focuses on companies that were awarded public contracts at a significantly higher rate after the outbreak of the Emergency (in this case, the Coronavirus) than before. Indicator 1 uses a <a href="https://en.wikipedia.org/wiki/Fisher%27s_exact_test" class="external-link">Fisher’s exact</a> (other test choices include <a href="https://en.wikipedia.org/wiki/Barnard%27s_test" class="external-link">Barnard</a> and <a href="https://en.wikipedia.org/wiki/Z-test" class="external-link">z-test</a>) test to compare the proportions of pre- and post-Emergency contracts and determine if there is any statistically significant difference between the two groups.</p>
-<p>The resulting indicator follows a schema (which is convenient to ship to frontends) that is generated using the <code><a href="reference/generate_indicator_schema.html">coresoi::generate_indicator_schema</a></code> function.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://core-forge.github.io/coresoi/">coresoi</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in citation(pkgname): no date field in DESCRIPTION file of package</span></span>
-<span><span class="co">#&gt; 'coresoi'</span></span>
-<span><span class="co">#&gt; Warning in citation(pkgname): could not determine year for 'coresoi' from</span></span>
-<span><span class="co">#&gt; package DESCRIPTION file</span></span>
-<span><span class="co">#&gt; To cite package 'coresoi' in publications use:</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   Salvini N, DelSarto S, Cantone G (????). _coresoi: Measuring</span></span>
-<span><span class="co">#&gt;   Corruption Risk in Emergency_. R package version 0.1.1,</span></span>
-<span><span class="co">#&gt;   &lt;https://core-forge.github.io/coresoi/&gt;.</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   @Manual{,</span></span>
-<span><span class="co">#&gt;     title = {coresoi: Measuring Corruption Risk in Emergency},</span></span>
-<span><span class="co">#&gt;     author = {Niccolo Salvini and Simone DelSarto and Giulio Cantone},</span></span>
-<span><span class="co">#&gt;     note = {R package version 0.1.1},</span></span>
-<span><span class="co">#&gt;     url = {https://core-forge.github.io/coresoi/},</span></span>
-<span><span class="co">#&gt;   }</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
-<span></span>
-<span><span class="co">## basic example code with ind_1() i.e. High Winning Rate</span></span>
-<span><span class="va">ind_1_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ind_1.html">ind_1</a></span><span class="op">(</span></span>
-<span>  data <span class="op">=</span> <span class="va">mock_data_core</span>, </span>
-<span>  publication_date <span class="op">=</span> <span class="va">data_pubblicazione</span>, </span>
-<span>  stat_unit <span class="op">=</span> <span class="va">cf_amministrazione_appaltante</span>,</span>
-<span>  emergency_name <span class="op">=</span> <span class="st">"coronavirus"</span>,</span>
-<span>  test_type <span class="op">=</span> <span class="st">"fisher"</span><span class="op">)</span></span>
-<span><span class="va">ind_1_res</span></span>
-<span><span class="co">#&gt; # A tibble: 624 × 12</span></span>
-<span><span class="co">#&gt; # Rowwise: </span></span>
-<span><span class="co">#&gt;    indicator_id indica…¹ indic…² aggre…³ aggre…⁴ aggre…⁵ emerg…⁶ emerg…⁷ count…⁸</span></span>
-<span><span class="co">#&gt;           &lt;dbl&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt; &lt;chr&gt;   &lt;chr&gt;  </span></span>
-<span><span class="co">#&gt;  1            1 Winning…       1 000585… ISTAT1  cf_amm…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt;  2            1 Winning…       1 000647… ISTAT1  cf_amm…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt;  3            1 Winning…       1 000675… ISTAT1  cf_amm…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt;  4            1 Winning…       1 000759… ISTAT1  cf_amm…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt;  5            1 Winning…       1 000802… ISTAT1  cf_amm…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt;  6            1 Winning…       1 000808… ISTAT1  cf_amm…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt;  7            1 Winning…       1 000982… ISTAT1  cf_amm…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt;  8            1 Winning…       1 001043… ISTAT1  cf_amm…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt;  9            1 Winning…       1 001086… ISTAT1  cf_amm…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt; 10            1 Winning…       1 001107… ISTAT1  cf_amm…       1 Corona… 1      </span></span>
-<span><span class="co">#&gt; # … with 614 more rows, 3 more variables: country_name &lt;chr&gt;,</span></span>
-<span><span class="co">#&gt; #   indicator_last_update &lt;dttm&gt;, data_last_update &lt;dttm&gt;, and abbreviated</span></span>
-<span><span class="co">#&gt; #   variable names ¹​indicator_name, ²​indicator_value, ³​aggregation_name,</span></span>
-<span><span class="co">#&gt; #   ⁴​aggregation_id, ⁵​aggregation_type, ⁶​emergency_id, ⁷​emergency_name,</span></span>
-<span><span class="co">#&gt; #   ⁸​country_id</span></span></code></pre></div>
-</div>
-<div class="section level2">
 <h2 id="core-ecosystem-">CORE ecosystem 🌏<a class="anchor" aria-label="anchor" href="#core-ecosystem-"></a>
 </h2>
-<p><code>coresoi</code> is part of of the project CO.R.E.- Corruption risk indicators in emergency, financed by the EU Commission, as part of the Internal Police Security Fund (ISF-P) program, The project presented by the Department of Political Sciences as leader with the coordination of Prof. Gnaldi (PI) was funded for a total of 514 thousand euros. The working group is made up of colleagues Prof. Enrico Carloni, Prof. Marco Mazzoni, Prof. Benedetto Ponti, Prof. Maria Giovanna Ranalli. The international network involves Universitat Obierta Catalunya (Spain), Dublin City University (Ireland), Oficina Antifrau de Catalunya (Spain), Infonodes (Italy), Transparency International (Portugal), Villa Montesca Foundation (Italy). The C.R.E. focuses on assessing the risk of corruption in public procurement from a preventive perspective. In view of achieving this goal, central to the European agenda, CO.R.E. it therefore intends to develop and validate a procedure for constructing a synthetic indicator of the risk of corruption in an emergency period that can be usefully used by national anti-corruption agencies, the media and citizens for accountability purposes.</p>
-</div>
-<div class="section level2">
-<h2 id="id_-todos">📝 TODOs<a class="anchor" aria-label="anchor" href="#id_-todos"></a>
-</h2>
-<ul>
-<li>setup Google Analytics</li>
-<li>build a template for package</li>
-<li>fix behavior <code>ind_3</code>, <code>ind_5</code> and <code>ind_7</code>
-</li>
-</ul>
+<p><code>coresoi</code> is part of the project <strong>CO.R.E.</strong> - Corruption Risk indicators in Emergency, financed by the EU Commission, as part of the Internal Police Security Fund (ISF-P) program. The project presented by the Department of Political Sciences of the University of Perugia (Italy) as leader with the coordination of Prof. Gnaldi (PI) was funded for a total of 514 thousand euros. The international network involves Universitat Obierta Catalunya ( <strong>Spain</strong> ), Dublin City University ( <strong>Ireland</strong>), Oficina Antifrau de Catalunya ( <strong>Spain</strong>), Infonodes ( <strong>Italy</strong>), Transparency International ( <strong>Portugal</strong>), Villa Montesca Foundation ( <strong>Italy</strong>). CO.R.E. focuses on assessing the risk of corruption in public procurement in emergency settings from a preventive point of view. In view of achieving this goal, central to the European agenda, CO.R.E. intends to develop and validate a replicable procedure for the construction of a synthetic (or composite) indicator (CI) of the risk of corruption in public procurement in various emergency scenarios, which can be usefully employed by national anti-corruption agencies, the media and the citizens for accountability purposes.</p>
+<p>The development of a synthetic measure of corruption risk involves several stages:</p>
+<ol style="list-style-type: decimal">
+<li>selection of the data</li>
+<li>computation of elementary indicators (i.e. red flags) of corruption risk;</li>
+<li>choice of normalization, weighting and aggregation schemes;</li>
+<li>multivariate analysis for the study of the data relational structure;</li>
+<li>sensitivity analysis of the resulting synthetic indicator to check its robustness.</li>
+</ol>
+<p>For each of these steps, <code>coresoi</code> provides a support to any interested user through analytical codes, users’ guides and practical examples.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
@@ -175,7 +119,14 @@
 <p>Please note that the core-soi project is released with a <a href="https://contributor-covenant.org/version/2/1/CODE_OF_CONDUCT.html" class="external-link">Contributor Code of Conduct</a>. By contributing to this project, you agree to abide by its terms.</p>
 </div>
 </div>
-  </main><aside class="col-md-3"><div class="license">
+  </main><aside class="col-md-3"><div class="links">
+<h2 data-toc-skip>Links</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/CORE-forge/coresoi/" class="external-link">Browse source code</a></li>
+</ul>
+</div>
+
+<div class="license">
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
@@ -202,7 +153,7 @@
 <ul class="list-unstyled">
 <li>Niccolo Salvini <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-3444-4094" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Simone DelSarto <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0003-1102-2881" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Giulio Cantone <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0001-7149-5213" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Michela Gnaldi <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-2785-3279" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
@@ -221,7 +172,7 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Niccolo Salvini, Simone DelSarto, Giulio Cantone.</p>
+<p>Developed by Niccolo Salvini, Simone DelSarto, Michela Gnaldi.</p>
 </div>
 
 <div class="pkgdown-footer-right">
