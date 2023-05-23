@@ -1,6 +1,6 @@
 Package: coresoi
 Title: Measuring Corruption Risk in Emergency
-Version: 0.1.1
+Version: 0.2.0
 Authors@R: 
     c(person(given = "Niccolo",family =  "Salvini", email = "niccolo.salvini27@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3444-4094")),
@@ -26,7 +26,7 @@ VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
 LazyData: true
-LazyDataCompression:xz
+LazyDataCompression: xz
 Imports: 
     cli,
     DescTools,

@@ -1,3 +1,5 @@
+# coresoi 0.2.0
+
 # coresoi 0.1.1
 
 # coresoi 0.1.0
