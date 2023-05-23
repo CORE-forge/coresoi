@@ -14,17 +14,17 @@ ind_8(
 )
 }
 \arguments{
-\item{data}{bndcp data}
+\item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
 
-\item{publication_date}{The date when the tender was published}
+\item{publication_date}{This argument corresponds to the name of the column in data containing the publication date for each notice or report.}
 
-\item{stat_unit}{tatistical unit of measurement, aggregation variable, the indicator target. In this case the identifier of agency or winners.}
+\item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.}
 
-\item{variant_date}{Date of contract variation}
+\item{variant_date}{This argument specifies the date of any contract variations that may affect the analysis. If provided, the function will only consider data prior to this date for comparison. If not provided, the function will use the exp_end date for each contract.}
 
-\item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
+\item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
 
-\item{months_win}{time window for variation to be happening}
+\item{months_win}{This argument specifies the time window for contract variation to be considered when identifying a relevant pre and post contract variation period. This value should be numeric and indicates the duration of the time window in months.}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

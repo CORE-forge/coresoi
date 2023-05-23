@@ -7,15 +7,15 @@
 ind_1(data, publication_date, emergency_name, stat_unit, test_type)
 }
 \arguments{
-\item{data}{bndcp data}
+\item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
 
-\item{publication_date}{date of publication of the notice}
+\item{publication_date}{This argument corresponds to the name of the column in data containing the publication date for each notice or report.}
 
-\item{emergency_name}{emergency name character string for which you wish to calculate the indicator for, e.g. "Coronavirus" "Terremoto Aquila"}
+\item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
 
-\item{stat_unit}{statistical unit of measurement, aggregation variable, the indicator target}
+\item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator companies are the targets}
 
-\item{test_type}{character vector string to identifying the test type you want to apply, available alternatives are c("barnard", "fisher", "z-test")}
+\item{test_type}{This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".}
 }
 \value{
 indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}

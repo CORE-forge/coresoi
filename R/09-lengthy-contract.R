@@ -20,12 +20,12 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
 #'
 #' ### Main target unit
 #' This indicator targets **companies** and **contracting authorities**
-#' @param data bndcp data
-#' @param publication_date The date when the tender was published
-#' @param stat_unit the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by
-#' @param eff_start Effective start of the execution of the contract
-#' @param eff_end Effective end of the execution of the contract
-#' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
+#' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
+#' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.
+#' @param eff_start This argument corresponds to the name of the column in data containing the effective start date for each contract.
+#' @param eff_end This argument corresponds to the name of the column in data containing the effective end date for each contract.
+#' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{

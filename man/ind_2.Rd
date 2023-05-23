@@ -14,17 +14,17 @@ ind_2(
 )
 }
 \arguments{
-\item{data}{test bndcp data}
+\item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
 
-\item{contract_value}{Overall Amount of the Tender}
+\item{contract_value}{This argument corresponds to the name of the column in data containing the overall amount of the tender for each contract. The values in this column should be numeric.}
 
-\item{publication_date}{the date in which the tender was published}
+\item{publication_date}{This argument corresponds to the name of the column in data containing the publication date for each notice or report.}
 
-\item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
+\item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
 
-\item{stat_unit}{statistical target unit of measurement, aggregation variable, the indicator target}
+\item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator companies are the target.}
 
-\item{test_type}{character vector identifying the type of test you want to execute, alternatives are c("ks", "wilcoxon")}
+\item{test_type}{This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema()} rows determined by aggregation level and \code{indicator_value} based on statistical test performed in \code{ind_2}

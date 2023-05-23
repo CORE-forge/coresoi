@@ -11,11 +11,11 @@
 #'
 #' ### Main target unit
 #' This indicator targets **companies**
-#' @param data mock_data_core exmaple data
-#' @param stat_unit The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)
-#' @param final_award_date Date of award, as per the minutes
-#' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
-#' @param years_before int how many years we have to
+#' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
+#' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies are the targets.
+#' @param final_award_date  This argument corresponds to the name of the column in data containing the date of the contract award, as recorded in the minutes or official documentation. Although the column values are stored as character strings, the function will automatically convert them to date objects when needed.
+#' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
+#' @param years_before This argument specifies how many years before the variant_date (if provided) or the exp_end date to look for historical contract and payment data for comparison. This value should be an integer, it could also be a fraction of a year.
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{

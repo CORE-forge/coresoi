@@ -64,8 +64,8 @@ is the usual 0.05.
 }
 \examples{
 \dontrun{
-if(interactive()){
- normalise(data_matrix, method = "binary", cutoff = 0.95)
- }
+if (interactive()) {
+  normalise(data_matrix, method = "binary", cutoff = 0.95)
+}
 }
 }

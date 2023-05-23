@@ -7,17 +7,17 @@
 ind_6(data, publication_date, emergency_name, award_col, stat_unit, test_type)
 }
 \arguments{
-\item{data}{mock_data_core example bdncp data}
+\item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
 
-\item{publication_date}{The date when the tender was published}
+\item{publication_date}{This argument corresponds to the name of the column in data containing the publication date for each notice or report.}
 
-\item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
+\item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
 
-\item{award_col}{column indentifying id for that contract award}
+\item{award_col}{This argument corresponds to the name of the column in data containing the unique identification number for each contract award. This column should contain numeric or character values.}
 
-\item{stat_unit}{statistical unit of measurement and stat_uniting}
+\item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator contracting authorities are the targets.}
 
-\item{test_type}{type of the test we would like to apply}
+\item{test_type}{This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

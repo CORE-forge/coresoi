@@ -88,11 +88,11 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 #' @section  Main target unit:
 #' This indicator targets **Companies**
 #'
-#' @param data bndcp data
-#' @param publication_date date of publication of the notice
-#' @param emergency_name emergency name character string for which you wish to calculate the indicator for, e.g. "Coronavirus" "Terremoto Aquila"
-#' @param test_type  character vector string to identifying the test type you want to apply, available alternatives are c("barnard", "fisher", "z-test")
-#' @param stat_unit statistical unit of measurement, aggregation variable, the indicator target
+#' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
+#' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
+#' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
+#' @param test_type  This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".
+#' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator companies are the targets
 #' @examples
 #' \dontrun{
 #' if (interactive()) {

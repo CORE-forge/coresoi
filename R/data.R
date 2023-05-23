@@ -5,7 +5,7 @@
 #' In this case we merged the tables whose dimensions  i.e. columns if joined to "bando cig", are to calculate indicators.
 #'
 #' @format ## `mock_data_core`
-#' A data frame with 7,240 rows and 60 columns:
+#' A data frame with 100,000 rows and 79 columns:
 #' \describe{
 #'   \item{cig, cig_accordo_quadro}{Tender Identification Code, is a code assigned by the Authority to uniquely track tenders and contracts nationwide and is assigned at the Lot level.}
 #'   \item{numero_gara,}{number identifying a tender; a tender consists of one or more lots, each identified by a CIG}

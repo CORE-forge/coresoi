@@ -10,11 +10,11 @@
 #'
 #' ### Main target unit
 #' This indicator targets **companies** and **contracting authorities**
-#' @param data data to be passed, expects tibble
-#' @param publication_date The date when the tender was published
-#' @param stat_unit Column of entities who decide who win the public procurement
-#' @param winners Column of winning companies
-#' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
+#' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
+#' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.
+#' @param winners  This argument corresponds to the name of the column in data containing the winning companies for each contract. This column should contain character or factor values.
+#' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
 #' @return indicator schema as from `generate_indicator_schema`
 #' @details DETAILS
 #' @examples

@@ -38,9 +38,9 @@ by rescaling the estimated discrimination parameters (in such a way they sum to 
 }
 \examples{
 \dontrun{
-if(interactive()){
- #EXAMPLE1
- }
+if (interactive()) {
+  # EXAMPLE1
+}
 }
 }
 \seealso{

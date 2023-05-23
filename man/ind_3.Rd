@@ -14,17 +14,17 @@ ind_3(
 )
 }
 \arguments{
-\item{data}{data to be passed, expects tibble}
+\item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
 
-\item{award_value}{The date when the tender was awarded}
+\item{award_value}{This argument corresponds to the name of the column in data containing the date when the tender was awarded.}
 
-\item{sums_paid}{The amount paid by the C.A.}
+\item{sums_paid}{This argument corresponds to the name of the column in data containing the amount paid by the contracting authority for each contract. The values in this column should be numeric.}
 
-\item{stat_unit}{the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by}
+\item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.}
 
-\item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
+\item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
 
-\item{publication_date}{The date when the tender was published}
+\item{publication_date}{This argument corresponds to the name of the column in data containing the publication date for each notice or report.}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

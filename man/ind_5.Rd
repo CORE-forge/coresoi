@@ -7,15 +7,15 @@
 ind_5(data, stat_unit, publication_date, winners, emergency_name)
 }
 \arguments{
-\item{data}{data to be passed, expects tibble}
+\item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
 
-\item{stat_unit}{Column of entities who decide who win the public procurement}
+\item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.}
 
-\item{publication_date}{The date when the tender was published}
+\item{publication_date}{This argument corresponds to the name of the column in data containing the publication date for each notice or report.}
 
-\item{winners}{Column of winning companies}
+\item{winners}{This argument corresponds to the name of the column in data containing the winning companies for each contract. This column should contain character or factor values.}
 
-\item{emergency_name}{emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"}
+\item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

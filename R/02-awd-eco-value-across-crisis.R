@@ -42,12 +42,12 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 #'
 #' ### Main target unit
 #' This indicator targets **Companies**
-#' @param data test bndcp data
-#' @param contract_value Overall Amount of the Tender
-#' @param stat_unit statistical target unit of measurement, aggregation variable, the indicator target
-#' @param publication_date the date in which the tender was published
-#' @param test_type character vector identifying the type of test you want to execute, alternatives are c("ks", "wilcoxon")
-#' @param emergency_name emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"
+#' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
+#' @param contract_value This argument corresponds to the name of the column in data containing the overall amount of the tender for each contract. The values in this column should be numeric.
+#' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator companies are the target.
+#' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
+#' @param test_type This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".
+#' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
 #' @return indicator schema as from `generate_indicator_schema()` rows determined by aggregation level and `indicator_value` based on statistical test performed in `ind_2`
 #' @examples
 #' \dontrun{
