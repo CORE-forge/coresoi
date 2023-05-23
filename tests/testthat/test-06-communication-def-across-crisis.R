@@ -1,4 +1,5 @@
 library(dplyr)
+library(purrr)
 
 expect_row_number <- function(object, n) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
@@ -200,7 +201,7 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
         award_col = id_aggiudicazione,
         stat_unit = cf_amministrazione_appaltante,
         test_type = "fisher"
-      ) %>% distinct(emergency_name, emergency_id) %>% flatten()
+      ) %>% distinct(emergency_name, emergency_id) %>% purrr::flatten()
     ),
     list(
       emergency_name = "Terremoto Ischia",
