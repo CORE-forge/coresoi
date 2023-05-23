@@ -14,6 +14,7 @@ A package to calculate CORE red flags and to play with our data
 Useful links:
 \itemize{
   \item \url{https://core-forge.github.io/coresoi/}
+  \item \url{https://github.com/CORE-forge/coresoi}
 }
 
 }

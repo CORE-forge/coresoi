@@ -22,21 +22,22 @@ indicator schema as from \code{\link[=generate_indicator_schema]{generate_indica
 }
 \description{
 The indicator focuses on companies that after the emergency outbreak were awarded public contracts much more frequently than before the emergency.
-\subsection{Motivation:}{
+}
+\section{Motivation}{
 
 The red flag considers at risk companies that \strong{exceptionally increase} their competitive power over the emergency outbreak, in terms of proportion of awarded contracts on the relevant economic market.
 }
 
-\subsection{Scoring Rule}{
-
+\section{Scoring Rule}{
+L
 If Test-statistic significant-> 1, otherwise -> 0
 }
 
-\subsection{Main target unit}{
+\section{Main target unit}{
 
 This indicator targets \strong{Companies}
 }
-}
+
 \examples{
 \dontrun{
 if (interactive()) {

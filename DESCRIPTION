@@ -1,13 +1,13 @@
 Package: coresoi
 Title: Measuring Corruption Risk in Emergency
-Version: 0.1.1
+Version: 0.2.0
 Authors@R: 
     c(person(given = "Niccolo",family =  "Salvini", email = "niccolo.salvini27@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3444-4094")),
     person(given ="Simone", family = "DelSarto", email = "simone.delsarto@unipg.it", role = "aut",
            comment = c(ORCID = "0000-0003-1102-2881")),
-    person(given = "Giulio", family = "Cantone", email = "prgcan@gmail.com", role = "aut",
-           comment = c(ORCID = "0000-0001-7149-5213")))
+    person(given = "Michela", family = "Gnaldi", email = "michela.gnaldi@unipg.it", role = "aut",
+           comment = c(ORCID = "0000-0002-2785-3279")))
 Description: A package to calculate CORE red flags and to play with our data
 License: MIT + file LICENSE
 Suggests: 
@@ -21,12 +21,12 @@ Encoding: UTF-8
 Language: en-US
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
-URL: https://core-forge.github.io/coresoi/
+URL: https://core-forge.github.io/coresoi/, https://github.com/CORE-forge/coresoi
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
 LazyData: true
-LazyDataCompression:xz
+LazyDataCompression: xz
 Imports: 
     cli,
     DescTools,

@@ -1,26 +1,23 @@
 url: https://core-forge.github.io/coresoi/
+
 template:
   bootstrap: 5
   includes:
     in_header: |
       <script async defer src="https://hypothes.is/embed.js"></script>
-    after_navbar: |
-      <div class = rmdreview> This documentation is offered in <b><a href="https://openreview.net/">Open Review</a></b> format. We kindly request your feedback in case something is unclear, poorly written, or incorrect. Your input would greatly assist us in improving these documents and providing a better experience for you and our partners. To add your annotations, <span style="background-color: #3297FD; color: white">simply highlight the text</span> and click on <i class="fa fa-quote-left" ></i>the pop-up menu. To view annotations from others, click on <i class="h-icon-chevron-left"></i> the top-right corner of the page <i class="fa fa-arrow-circle-right  fa-rotate-315" aria-hidden="true"></i> </div>
   bslib:
     bg: "#FFFFFF"
     fg: "#2180a7"
+    border-radius: 0.5rem
+    btn-border-radius: 0.25rem
     primary: "#2180a7"
     base_font: {google: "Dosis"}
     heading_font: {google: "Lora"}
     code_font: {google: "JetBrains Mono"}
 
-navbar:
-  structure:
-    right: github
-
 reference:
-  - title: "Risk Indicators"
-    desc: "COrruption Risk Indicators in Emergency"
+  - title: "Red flags of corruption risk in emergencies"
+    desc: "Selected elementary indicators of corruption risk"
     contents:
       - ind_1
       - ind_2
@@ -31,6 +28,12 @@ reference:
       - ind_7
       - ind_8
       - ind_9
+
+  - title: "Composite Indicator (CI) of corruption risk in emergencies"
+    desc: "Synthetic indicator of corruption risk by contracting authority, company province and municipality"
+    contents:
+      - composite
+
 
   - title: "Data"
     desc: "Sample dataset extracted from our source with which resarchers can play"
@@ -49,10 +52,8 @@ articles:
   navbar: ~
   contents:
   - coresoi
+  - articles/summary
   - articles/ChoiceOfElementaryIndicators
   - articles/DataSelectionArchitecture
+  - articles/CompositeIndicator
   - articles/tryCoresoiWithYourData
-
-
-
-
