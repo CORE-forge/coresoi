@@ -44,12 +44,18 @@ ind_2(
 
 ```
 
-The output from `ind_2` is a schema which shows 
-
 
 ## Usage tips
 
+- To compute red flags using the package, start by loading the sample data (`mock_data_core`) provided in the package.
+- Specify the relevant variables for the red flag calculation when calling the relevant indicator function (e.g., `ind_2()`).
+- Refer to the documentation for each indicator function to understand the required input variables and the expected output schema.
+- The output schema provides information regarding the indicator name, indicator value, relevant geographic aggregation, and the emergency context for which the red flag was calculated.
 
 
 ## Technical support
+
+- If users encounter any issues while using the package, they can refer to the documentation or reach out to the package maintainers via Github by opening an [issue](https://github.com/CORE-forge/coresoi/issues/new/choose) or direcly to ([Niccolò Salvini](mailto:niccolo.salvini27@gmail.com) or directly for technical support.
+- The maintainers can assist with questions regarding the required input variables, resolving errors, or understanding the output schema of the red flag indicators.
+
 
