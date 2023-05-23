@@ -8,7 +8,7 @@
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![codecov](https://codecov.io/gh/CORE-forge/coresoi/branch/main/graph/badge.svg?token=DGJ8P5BZNH)](https://codecov.io/gh/CORE-forge/coresoi)
-[![R-CMD-check](https://github.com/CORE-forge/core-soi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CORE-forge/core-soi/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/CORE-forge/coresoi/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/CORE-forge/coresoi/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of `coresoi` is to provide a *sandbox* environment for
