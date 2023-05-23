@@ -137,27 +137,27 @@ This indicator targets companies and contracting authorities
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>bndcp data</p></dd>
+<dd><p>This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.</p></dd>
 
 
 <dt>publication_date</dt>
-<dd><p>The date when the tender was published</p></dd>
+<dd><p>This argument corresponds to the name of the column in data containing the publication date for each notice or report.</p></dd>
 
 
 <dt>stat_unit</dt>
-<dd><p>tatistical unit of measurement, aggregation variable, the indicator target. In this case the identifier of agency or winners.</p></dd>
+<dd><p>This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.</p></dd>
 
 
 <dt>variant_date</dt>
-<dd><p>Date of contract variation</p></dd>
+<dd><p>This argument specifies the date of any contract variations that may affect the analysis. If provided, the function will only consider data prior to this date for comparison. If not provided, the function will use the exp_end date for each contract.</p></dd>
 
 
 <dt>emergency_name</dt>
-<dd><p>emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"</p></dd>
+<dd><p>This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".</p></dd>
 
 
 <dt>months_win</dt>
-<dd><p>time window for variation to be happening</p></dd>
+<dd><p>This argument specifies the time window for contract variation to be considered when identifying a relevant pre and post contract variation period. This value should be numeric and indicates the duration of the time window in months.</p></dd>
 
 </dl></div>
     <div class="section level2">

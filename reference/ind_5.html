@@ -130,23 +130,23 @@ This indicator targets companies and contracting authorities
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>data to be passed, expects tibble</p></dd>
+<dd><p>This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.</p></dd>
 
 
 <dt>stat_unit</dt>
-<dd><p>Column of entities who decide who win the public procurement</p></dd>
+<dd><p>This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.</p></dd>
 
 
 <dt>publication_date</dt>
-<dd><p>The date when the tender was published</p></dd>
+<dd><p>This argument corresponds to the name of the column in data containing the publication date for each notice or report.</p></dd>
 
 
 <dt>winners</dt>
-<dd><p>Column of winning companies</p></dd>
+<dd><p>This argument corresponds to the name of the column in data containing the winning companies for each contract. This column should contain character or factor values.</p></dd>
 
 
 <dt>emergency_name</dt>
-<dd><p>emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"</p></dd>
+<dd><p>This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".</p></dd>
 
 </dl></div>
     <div class="section level2">

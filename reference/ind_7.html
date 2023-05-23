@@ -130,23 +130,23 @@ This indicator targets companies
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>mock_data_core exmaple data</p></dd>
+<dd><p>This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.</p></dd>
 
 
 <dt>final_award_date</dt>
-<dd><p>Date of award, as per the minutes</p></dd>
+<dd><p>This argument corresponds to the name of the column in data containing the date of the contract award, as recorded in the minutes or official documentation. Although the column values are stored as character strings, the function will automatically convert them to date objects when needed.</p></dd>
 
 
 <dt>emergency_name</dt>
-<dd><p>emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"</p></dd>
+<dd><p>This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".</p></dd>
 
 
 <dt>stat_unit</dt>
-<dd><p>The unique ID Code that identifies the awarded company (ex. VAT or Tax Number)</p></dd>
+<dd><p>This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies are the targets.</p></dd>
 
 
 <dt>years_before</dt>
-<dd><p>int how many years we have to</p></dd>
+<dd><p>This argument specifies how many years before the variant_date (if provided) or the exp_end date to look for historical contract and payment data for comparison. This value should be an integer, it could also be a fraction of a year.</p></dd>
 
 </dl></div>
     <div class="section level2">

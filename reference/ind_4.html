@@ -138,7 +138,7 @@ This indicator targets companies and contracting authorities
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>data to be passed, expects tibble</p></dd>
+<dd><p>This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.</p></dd>
 
 
 <dt>exp_end</dt>
@@ -146,23 +146,23 @@ This indicator targets companies and contracting authorities
 
 
 <dt>eff_start</dt>
-<dd><p>Effective contract signature</p></dd>
+<dd><p>This argument corresponds to the name of the column in data containing the effective start date for each contract.</p></dd>
 
 
 <dt>eff_end</dt>
-<dd><p>Effective end of the execution of the contract</p></dd>
+<dd><p>This argument corresponds to the name of the column in data containing the effective end date for each contract.</p></dd>
 
 
 <dt>stat_unit</dt>
-<dd><p>the statistical unit of measurement (can be a vector of grouping variables), i.e. variable to group by</p></dd>
+<dd><p>This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.</p></dd>
 
 
 <dt>emergency_name</dt>
-<dd><p>emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"</p></dd>
+<dd><p>This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".</p></dd>
 
 
 <dt>publication_date</dt>
-<dd><p>The date when the tender was published</p></dd>
+<dd><p>This argument corresponds to the name of the column in data containing the publication date for each notice or report.</p></dd>
 
 </dl></div>
     <div class="section level2">

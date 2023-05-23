@@ -137,27 +137,27 @@ This indicator targets Companies
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>test bndcp data</p></dd>
+<dd><p>This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.</p></dd>
 
 
 <dt>contract_value</dt>
-<dd><p>Overall Amount of the Tender</p></dd>
+<dd><p>This argument corresponds to the name of the column in data containing the overall amount of the tender for each contract. The values in this column should be numeric.</p></dd>
 
 
 <dt>publication_date</dt>
-<dd><p>the date in which the tender was published</p></dd>
+<dd><p>This argument corresponds to the name of the column in data containing the publication date for each notice or report.</p></dd>
 
 
 <dt>emergency_name</dt>
-<dd><p>emergency name character string for which you want to evaluate the indicator, e.g. "Coronavirus" "Terremoto Aquila"</p></dd>
+<dd><p>This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".</p></dd>
 
 
 <dt>stat_unit</dt>
-<dd><p>statistical target unit of measurement, aggregation variable, the indicator target</p></dd>
+<dd><p>This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator companies are the target.</p></dd>
 
 
 <dt>test_type</dt>
-<dd><p>character vector identifying the type of test you want to execute, alternatives are c("ks", "wilcoxon")</p></dd>
+<dd><p>This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".</p></dd>
 
 </dl></div>
     <div class="section level2">
