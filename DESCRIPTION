@@ -38,6 +38,7 @@ Imports:
     logger,
     lubridate,
     magrittr,
+    mirt,
     rlang,
     stringr,
     tidyr,

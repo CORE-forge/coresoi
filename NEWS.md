@@ -1,6 +1,11 @@
 # coresoi 0.2.0
 
+- updates pkg documentation
+- release first version for **composite indicator**
+
 # coresoi 0.1.1
+
+- realesed all the feasible red flags: from `ind_1` to `ind_9` 
 
 # coresoi 0.1.0
 

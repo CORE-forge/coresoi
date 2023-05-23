@@ -32,7 +32,11 @@ reference:
   - title: "Composite Indicator (CI) of corruption risk in emergencies"
     desc: "Synthetic indicator of corruption risk by contracting authority, company province and municipality"
     contents:
-      - composite
+      - create_indicator_matrix
+      - normalise
+      - get_weights
+      - aggregate
+      - composite_sensitivity
 
 
   - title: "Data"

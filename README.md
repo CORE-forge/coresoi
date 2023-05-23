@@ -16,8 +16,8 @@ researchers and anti-corruption analysts to interact with the indicators
 we’ve designed. We also offer mock data extracted from
 [dati.anticorruzione](https://dati.anticorruzione.it/index.html#/home)
 to aid in their analysis. Our hope is that this platform will facilitate
-more effective efforts against corruption and promote greater
-transparency in government.
+and make more effective their efforts in fighting corruption and promote
+greater transparency in government.
 
 ## Installation
 

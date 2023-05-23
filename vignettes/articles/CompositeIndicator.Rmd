@@ -94,7 +94,7 @@ The principal components, denoted by Pr, are therefore estimated by combining (l
 Theoretically, given Q variables, it is possible to find as many principal components, that is,
 
 $$
-\begin{equation} P_1=\\alpha\_{Q1}x_1+\\alpha\_{Q2}x_2+\...+\\alpha\_{QQ}x_Q \\end{equation}
+\begin{equation} P_1=\alpha_{Q1}x_1+\alpha_{Q2}x_2+...+\alpha_{QQ}x_Q \end{equation}
 $$
 
 
@@ -175,13 +175,13 @@ Therefore, two different stages of modelling approaches are available in $SEM$: 
 that related to the measurement models (e.g., one for each supposed latent variables), which specify the relationship between observed variables and the underlying latent one, and ii.
 that regarding the connections among latent variables, defined through the structural models.
 
-... immagine ...
+![](assets/05-irt_path_diagram.png)
 
 An example of a rather simple $SEM$ is reported in Figure 2, where we have 7 indicators $(X1,…,X7)$ that concur to measure three latent variables $(Z1, Z2, Z3)$.
 In this situation we need three measurement models for handling the relationships between the observed indicators and the three latent variables.
 Moreover, the structural model specifies that $Z1$ and $Z3$ have both a direct effect of $Z2$, but they also affect each other.
 
-... immagine ...
+![](assets/06-example_SEM.png)
 
 Several logical steps contribute to define an analysis strategy based on SEM.
 The first step is the model specification, which specifies the supposed relationships among the variables (observed and unobserved) according to the theory or previous knowledge on the phenomenon under study.
@@ -200,4 +200,4 @@ In particular, the CI can be computed using all the possible combinations of the
 For each unit, the distribution of all the possible Cis highlights whether that unit is systematically labeled as corrupt or only under particular circumstances.
 **ANOVA** and/or regression analysis can also be conducted on the outcome of the sensitivity exercise to evaluate which of the factors involved in the construction of the CI is more relevant and influential [@gnaldi2015a]
 
-## references
+## References

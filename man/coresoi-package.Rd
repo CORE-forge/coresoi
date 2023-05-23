@@ -24,7 +24,7 @@ Useful links:
 Authors:
 \itemize{
   \item Simone DelSarto \email{simone.delsarto@unipg.it} (\href{https://orcid.org/0000-0003-1102-2881}{ORCID})
-  \item Giulio Cantone \email{prgcan@gmail.com} (\href{https://orcid.org/0000-0001-7149-5213}{ORCID})
+  \item Michela Gnaldi \email{michela.gnaldi@unipg.it} (\href{https://orcid.org/0000-0002-2785-3279}{ORCID})
 }
 
 }
