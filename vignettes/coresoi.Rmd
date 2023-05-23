@@ -16,11 +16,14 @@ knitr::opts_chunk$set(
 library(coresoi)
 ```
 
+Companies and contracting authorities at risk of being corrupt across emergencies are identified through the selection of a set of red flags computed through a procedure which exploits the time discontinuity introduced by the emergency outbreak, that is, the possibility to distinguish two time-spans, a pre-emergency period and a post-emergency period.  
 
-## Installation instructions
+The approach compares, whenever possible, company and/or contracting authority behaviours after the emergency outbreak with respect to their historical behaviour and assesses the associated risk through statistical testing. Given the focus on crises, each red flag is calculated regarding contracts awarded in the relevant market for the crisis at issue.
+
+The procedure is extensible to other crisis contexts, replicable to other national contexts, and adjustable on account of different market trends across the crisis.
 
 
-## Calculate indicator `ind_2`
+## Compute red flags ( `ind_2` )
 
 Let's say we are interested in calculating and indicator say number 2,
 All we need to do is to load data sample `mock_data_core` and supply related variables to function `ind_2()`. Check out the documentation for function `ind_2()` to get a grasp on that.

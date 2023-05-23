@@ -29,107 +29,40 @@ You can install the development version of coresoi from
 devtools::install_github("CORE-forge/coresoi")
 ```
 
-## Example: Compute Winning rate across the crisis indicator
-
-In certain cases, it may be necessary to calculate Indicator 1, which
-primarily focuses on companies that were awarded public contracts at a
-significantly higher rate after the outbreak of the Emergency (in this
-case, the Coronavirus) than before. Indicator 1 uses a [Fisher’s
-exact](https://en.wikipedia.org/wiki/Fisher%27s_exact_test) (other test
-choices include
-[Barnard](https://en.wikipedia.org/wiki/Barnard%27s_test) and
-[z-test](https://en.wikipedia.org/wiki/Z-test)) test to compare the
-proportions of pre- and post-Emergency contracts and determine if there
-is any statistically significant difference between the two groups.
-
-The resulting indicator follows a schema (which is convenient to ship to
-frontends) that is generated using the
-`coresoi::generate_indicator_schema` function.
-
-``` r
-library(coresoi)
-#> Warning in citation(pkgname): no date field in DESCRIPTION file of package
-#> 'coresoi'
-#> Warning in citation(pkgname): could not determine year for 'coresoi' from
-#> package DESCRIPTION file
-#> To cite package 'coresoi' in publications use:
-#> 
-#>   Salvini N, DelSarto S, Cantone G (????). _coresoi: Measuring
-#>   Corruption Risk in Emergency_. R package version 0.1.1,
-#>   <https://core-forge.github.io/coresoi/>.
-#> 
-#> A BibTeX entry for LaTeX users is
-#> 
-#>   @Manual{,
-#>     title = {coresoi: Measuring Corruption Risk in Emergency},
-#>     author = {Niccolo Salvini and Simone DelSarto and Giulio Cantone},
-#>     note = {R package version 0.1.1},
-#>     url = {https://core-forge.github.io/coresoi/},
-#>   }
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
-
-## basic example code with ind_1() i.e. High Winning Rate
-ind_1_res <- ind_1(
-  data = mock_data_core, 
-  publication_date = data_pubblicazione, 
-  stat_unit = cf_amministrazione_appaltante,
-  emergency_name = "coronavirus",
-  test_type = "fisher")
-ind_1_res
-#> # A tibble: 624 × 12
-#> # Rowwise: 
-#>    indicator_id indica…¹ indic…² aggre…³ aggre…⁴ aggre…⁵ emerg…⁶ emerg…⁷ count…⁸
-#>           <dbl> <chr>      <dbl> <chr>   <chr>   <chr>     <int> <chr>   <chr>  
-#>  1            1 Winning…       1 000585… ISTAT1  cf_amm…       1 Corona… 1      
-#>  2            1 Winning…       1 000647… ISTAT1  cf_amm…       1 Corona… 1      
-#>  3            1 Winning…       1 000675… ISTAT1  cf_amm…       1 Corona… 1      
-#>  4            1 Winning…       1 000759… ISTAT1  cf_amm…       1 Corona… 1      
-#>  5            1 Winning…       1 000802… ISTAT1  cf_amm…       1 Corona… 1      
-#>  6            1 Winning…       1 000808… ISTAT1  cf_amm…       1 Corona… 1      
-#>  7            1 Winning…       1 000982… ISTAT1  cf_amm…       1 Corona… 1      
-#>  8            1 Winning…       1 001043… ISTAT1  cf_amm…       1 Corona… 1      
-#>  9            1 Winning…       1 001086… ISTAT1  cf_amm…       1 Corona… 1      
-#> 10            1 Winning…       1 001107… ISTAT1  cf_amm…       1 Corona… 1      
-#> # … with 614 more rows, 3 more variables: country_name <chr>,
-#> #   indicator_last_update <dttm>, data_last_update <dttm>, and abbreviated
-#> #   variable names ¹​indicator_name, ²​indicator_value, ³​aggregation_name,
-#> #   ⁴​aggregation_id, ⁵​aggregation_type, ⁶​emergency_id, ⁷​emergency_name,
-#> #   ⁸​country_id
-```
-
 ## CORE ecosystem 🌏
 
-`coresoi` is part of of the project CO.R.E.- Corruption risk indicators
-in emergency, financed by the EU Commission, as part of the Internal
-Police Security Fund (ISF-P) program, The project presented by the
-Department of Political Sciences as leader with the coordination of
-Prof. Gnaldi (PI) was funded for a total of 514 thousand euros. The
-working group is made up of colleagues Prof. Enrico Carloni, Prof. Marco
-Mazzoni, Prof. Benedetto Ponti, Prof. Maria Giovanna Ranalli. The
-international network involves Universitat Obierta Catalunya (Spain),
-Dublin City University (Ireland), Oficina Antifrau de Catalunya (Spain),
-Infonodes (Italy), Transparency International (Portugal), Villa Montesca
-Foundation (Italy). The C.R.E. focuses on assessing the risk of
-corruption in public procurement from a preventive perspective. In view
-of achieving this goal, central to the European agenda, CO.R.E. it
-therefore intends to develop and validate a procedure for constructing a
-synthetic indicator of the risk of corruption in an emergency period
-that can be usefully used by national anti-corruption agencies, the
-media and citizens for accountability purposes.
+`coresoi` is part of the project **CO.R.E.** - Corruption Risk
+indicators in Emergency, financed by the EU Commission, as part of the
+Internal Police Security Fund (ISF-P) program. The project presented by
+the Department of Political Sciences of the University of Perugia
+(Italy) as leader with the coordination of Prof. Gnaldi (PI) was funded
+for a total of 514 thousand euros. The international network involves
+Universitat Obierta Catalunya ( **Spain** ), Dublin City University (
+**Ireland**), Oficina Antifrau de Catalunya ( **Spain**), Infonodes (
+**Italy**), Transparency International ( **Portugal**), Villa Montesca
+Foundation ( **Italy**). CO.R.E. focuses on assessing the risk of
+corruption in public procurement in emergency settings from a preventive
+point of view. In view of achieving this goal, central to the European
+agenda, CO.R.E. intends to develop and validate a replicable procedure
+for the construction of a synthetic (or composite) indicator (CI) of the
+risk of corruption in public procurement in various emergency scenarios,
+which can be usefully employed by national anti-corruption agencies, the
+media and the citizens for accountability purposes.
 
-## 📝 TODOs
+The development of a synthetic measure of corruption risk involves
+several stages:
 
--   setup Google Analytics
--   build a template for package
--   fix behavior `ind_3`, `ind_5` and `ind_7`
+1.  selection of the data
+2.  computation of elementary indicators (i.e. red flags) of corruption
+    risk;
+3.  choice of normalization, weighting and aggregation schemes;
+4.  multivariate analysis for the study of the data relational
+    structure;
+5.  sensitivity analysis of the resulting synthetic indicator to check
+    its robustness.
+
+For each of these steps, `coresoi` provides a support to any interested
+user through analytical codes, users’ guides and practical examples.
 
 ## Code of Conduct
 

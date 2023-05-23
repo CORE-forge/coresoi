@@ -32,40 +32,20 @@ You can install the development version of coresoi from [GitHub](https://github.
 devtools::install_github("CORE-forge/coresoi")
 ```
 
-## Example: Compute Winning rate across the crisis indicator
-
-In certain cases, it may be necessary to calculate Indicator 1, which primarily focuses on companies that were awarded public contracts at a significantly higher rate after the outbreak of the Emergency (in this case, the Coronavirus) than before. Indicator 1 uses a [Fisher's exact](https://en.wikipedia.org/wiki/Fisher%27s_exact_test) (other test choices include [Barnard](https://en.wikipedia.org/wiki/Barnard%27s_test)  and [z-test](https://en.wikipedia.org/wiki/Z-test)) test to compare the proportions of pre- and post-Emergency contracts and determine if there is any statistically significant difference between the two groups.
-
-The resulting indicator follows a schema (which is convenient to ship to frontends) that is generated using the `coresoi::generate_indicator_schema` function.
-
-```{r example}
-library(coresoi)
-library(dplyr)
-
-## basic example code with ind_1() i.e. High Winning Rate
-ind_1_res <- ind_1(
-  data = mock_data_core,
-  publication_date = data_pubblicazione,
-  stat_unit = cf_amministrazione_appaltante,
-  emergency_name = "coronavirus",
-  test_type = "fisher"
-)
-ind_1_res
-```
-
-
 ## CORE ecosystem 🌏
 
-`coresoi` is part of of the project CO.R.E.- Corruption risk indicators in emergency, financed by the EU Commission, as part of the Internal Police Security Fund (ISF-P) program,
-The project presented by the Department of Political Sciences as leader with the coordination of Prof. Gnaldi (PI) was funded for a total of 514 thousand euros. The working group is made up of colleagues Prof. Enrico Carloni, Prof. Marco Mazzoni, Prof. Benedetto Ponti, Prof. Maria Giovanna Ranalli. The international network involves Universitat Obierta Catalunya (Spain), Dublin City University (Ireland), Oficina Antifrau de Catalunya (Spain), Infonodes (Italy), Transparency International (Portugal), Villa Montesca Foundation (Italy).
-The C.R.E. focuses on assessing the risk of corruption in public procurement from a preventive perspective. In view of achieving this goal, central to the European agenda, CO.R.E. it therefore intends to develop and validate a procedure for constructing a synthetic indicator of the risk of corruption in an emergency period that can be usefully used by national anti-corruption agencies, the media and citizens for accountability purposes.
+`coresoi` is part of the project __CO.R.E.__ - Corruption Risk indicators in Emergency, financed by the EU Commission, as part of the Internal Police Security Fund (ISF-P) program. The project presented by the Department of Political Sciences of the University of Perugia (Italy) as leader with the coordination of Prof. Gnaldi (PI) was funded for a total of 514 thousand euros. The international network involves Universitat Obierta Catalunya ( __Spain__ ), Dublin City University ( __Ireland__), Oficina Antifrau de Catalunya ( __Spain__), Infonodes ( __Italy__), Transparency International ( __Portugal__), Villa Montesca Foundation ( __Italy__). 
+CO.R.E. focuses on assessing the risk of corruption in public procurement in emergency settings from a preventive point of view. In view of achieving this goal, central to the European agenda, CO.R.E. intends to develop and validate a replicable procedure for the construction of a synthetic (or composite) indicator (CI) of the risk of corruption in public procurement in various emergency scenarios, which can be usefully employed by national anti-corruption agencies, the media and the citizens for accountability purposes. 
 
+The development of a synthetic measure of corruption risk involves several stages:
+ 
+1. selection of the data 
+1. computation of elementary indicators (i.e. red flags) of corruption risk; 
+1. choice of normalization, weighting and aggregation schemes;
+1. multivariate analysis for the study of the data relational structure;
+1. sensitivity analysis of the resulting synthetic indicator to check its robustness. 
 
-## 📝 TODOs
-
-- setup Google Analytics
-- build a template for package
-- fix behavior `ind_3`, `ind_5` and `ind_7`
+For each of these steps, `coresoi` provides a support to any interested user through analytical codes, users’ guides and practical examples.
 
 
 ## Code of Conduct
