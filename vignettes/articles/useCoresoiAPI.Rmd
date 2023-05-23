@@ -1,0 +1,114 @@
+---
+title: "Use CORE API in R"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The **CORE API** appears to be for accessing data related to public procurement in Italy. Specifically, it provides access to information on suppliers ( _Aggiudicatari_), offered contracts ( _Cigs_), and public contracting stations ( _Stazione Appaltante_).
+Many others endpoints (pointing to each of the resources in our database) including indicators are going to be provided soon.
+
+To use the API, you will need to provide an **API key** in the header of your requests (if you are willing to try it just reach out to the [maintainer](mailto:niccolo.salvini27@gmail.com) providing monthly usage and purpose). The possible parameters for each endpoint are listed in the Swagger API specs, and may include information such as a limit on the number of results returned, filtering by *codice_fiscale*, *denominazione*, *provincia*, and other factors depending on the endpoint.
+
+You can call the API using the R functions provided in the following response, or using another programming language or toolset that can handle RESTful APIs. Depending on your needs, you can also use the JSON response data to create reports, analyze trends, or visualize data related to public procurement in Italy.
+
+
+```{r api, eval=FALSE}
+library(httr)
+
+# Set the API endpoint for the Dev environment
+url <- "https://g7x6h7tfvk.execute-api.eu-west-2.amazonaws.com/dev"
+
+# Create a function to call the /aggiudicatari endpoint
+get_aggiudicatari <- function(api_key, limit, cig = NULL, ruolo = NULL, codice_fiscale = NULL,
+                               denominazione = NULL, tipo_soggetto = NULL, id_aggiudicazione = NULL,
+                               sort_param = NULL) {
+  # Set the API endpoint for the /aggiudicatari endpoint
+  endpoint <- "/aggiudicatari"
+  
+  # Create the request URL with the specified parameters
+  request_url <- paste0(url, endpoint, "?limit=", limit)
+  if (!is.null(cig)) request_url <- paste0(request_url, "&cig=", cig)
+  if (!is.null(ruolo)) request_url <- paste0(request_url, "&ruolo=", ruolo)
+  if (!is.null(codice_fiscale)) request_url <- paste0(request_url, "&codice_fiscale=", codice_fiscale)
+  if (!is.null(denominazione)) request_url <- paste0(request_url, "&denominazione=", denominazione)
+  if (!is.null(tipo_soggetto)) request_url <- paste0(request_url, "&tipo_soggetto=", tipo_soggetto)
+  if (!is.null(id_aggiudicazione)) request_url <- paste0(request_url, "&id_aggiudicazione=", id_aggiudicazione)
+  if (!is.null(sort_param)) request_url <- paste0(request_url, "&sort_param=", sort_param)
+  
+  # Make the API request with the API key in the header
+  response <- GET(request_url, add_headers("x-api-key" = api_key))
+  
+  # Return the response as a JSON object
+  content(response, as = "parsed")
+}
+
+# Create a function to call the /cigs endpoint
+get_cigs <- function(api_key, limit, cig = NULL, provincia = NULL, tipo_scelta_contraente = NULL,
+                      data_pubblicazione_min = NULL, data_pubblicazione_max = NULL,
+                      importo_lotto_min = NULL, importo_lotto_max = NULL) {
+  # Set the API endpoint for the /cigs endpoint
+  endpoint <- "/cigs"
+  
+  # Create the request URL with the specified parameters
+  request_url <- paste0(url, endpoint, "?limit=", limit)
+  if (!is.null(cig)) request_url <- paste0(request_url, "&cig=", cig)
+  if (!is.null(provincia)) request_url <- paste0(request_url, "&provincia=", provincia)
+  if (!is.null(tipo_scelta_contraente)) request_url <- paste0(request_url, "&tipo_scelta_contraente=", tipo_scelta_contraente)
+  if (!is.null(data_pubblicazione_min)) request_url <- paste0(request_url, "&data_pubblicazione_min=", data_pubblicazione_min)
+  if (!is.null(data_pubblicazione_max)) request_url <- paste0(request_url, "&data_pubblicazione_max=", data_pubblicazione_max)
+  if (!is.null(importo_lotto_min)) request_url <- paste0(request_url, "&importo_lotto_min=", importo_lotto_min)
+  if (!is.null(importo_lotto_max)) request_url <- paste0(request_url, "&importo_lotto_max=", importo_lotto_max)
+  
+  # Make the API request with the API key in the header
+  response <- GET(request_url, add_headers("x-api-key" = api_key))
+  
+  # Return the response as a JSON object
+  content(response, as = "parsed")
+}
+
+# Create a function to call the /stazione-appaltante endpoint
+get_stazione_appaltante <- function(api_key, limit, codice_fiscale = NULL, partita_iva = NULL,
+                                     denominazione = NULL, provincia_nome = NULL, citta_codice = NULL,
+                                     citta_nome = NULL, sort_param = NULL) {
+  # Set the API endpoint for the /stazione-appaltante endpoint
+  endpoint <- "/stazione-appaltante"
+  
+  # Create the request URL with the specified parameters
+  request_url <- paste0(url, endpoint, "?limit=", limit)
+  if (!is.null(codice_fiscale)) request_url <- paste0(request_url, "&codice_fiscale=", codice_fiscale)
+  if (!is.null(partita_iva)) request_url <- paste0(request_url, "&partita_iva=", partita_iva)
+  if (!is.null(denominazione)) request_url <- paste0(request_url, "&denominazione=", denominazione)
+  if (!is.null(provincia_nome)) request_url <- paste0(request_url, "&provincia_nome=", provincia_nome)
+  if (!is.null(citta_codice)) request_url <- paste0(request_url, "&citta_codice=", citta_codice)
+  if (!is.null(citta_nome)) request_url <- paste0(request_url, "&citta_nome=", citta_nome)
+  if (!is.null(sort_param)) request_url <- paste0(request_url, "&sort_param=", sort_param)
+  
+  # Make the API request with the API key in the header
+  response <- GET(request_url, add_headers("x-api-key" = api_key))
+  
+  # Return the response as a JSON object
+  content(response, as = "parsed")
+}
+
+
+```
+
+
+To use any of these functions, simply provide the required inputs (such as the api_key and limit parameters) along with any optional parameters (such as cig or provincia) according to the Swagger API specifications. For example:
+
+
+```{r apiUsageExamples, eval=FALSE}
+# Call the /aggiudicatari endpoint with a limit of 10 and a CIG of "ZEE21A100F"
+get_aggiudicatari(api_key = "YOUR_API_KEY", limit = 10, cig = "ZEE21A100F")
+
+# Call the /cigs endpoint with a limit of 20 and a minimum lotto import of 1000000
+get_cigs(api_key = "YOUR_API_KEY", limit = 20, importo_lotto_min = 1000000)
+
+# Call the /stazione-appaltante endpoint with a limit of 5 and a province name of "MILANO"
+get_stazione_appaltante(api_key = "YOUR_API_KEY", limit = 5, provincia_nome = "MILANO")
+```
