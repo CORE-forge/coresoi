@@ -19,25 +19,24 @@ ind_1(data, publication_date, emergency_name, stat_unit, test_type)
 }
 \value{
 indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}
-}
-\description{
-The indicator focuses on companies that after the emergency outbreak were awarded public contracts much more frequently than before the emergency.
-}
-\section{Motivation}{
+\subsection{Motivation:}{
 
 The red flag considers at risk companies that \strong{exceptionally increase} their competitive power over the emergency outbreak, in terms of proportion of awarded contracts on the relevant economic market.
 }
 
-\section{Scoring Rule}{
-L
+\subsection{Scoring Rule:L}{
+
 If Test-statistic significant-> 1, otherwise -> 0
 }
 
-\section{Main target unit}{
+\subsection{Main target unit:}{
 
 This indicator targets \strong{Companies}
 }
-
+}
+\description{
+The indicator focuses on companies that after the emergency outbreak were awarded public contracts much more frequently than before the emergency.
+}
 \examples{
 \dontrun{
 if (interactive()) {

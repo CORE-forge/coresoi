@@ -79,13 +79,13 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 #'
 #' @return indicator schema as from [generate_indicator_schema()]
 #'
-#' @section Motivation:
+#' ### Motivation:
 #' The red flag considers at risk companies that **exceptionally increase** their competitive power over the emergency outbreak, in terms of proportion of awarded contracts on the relevant economic market.
 #'
-#' @section Scoring Rule:L
+#' ### Scoring Rule:L
 #' If Test-statistic significant-> 1, otherwise -> 0
 #'
-#' @section  Main target unit:
+#' ### Main target unit:
 #' This indicator targets **Companies**
 #'
 #' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
