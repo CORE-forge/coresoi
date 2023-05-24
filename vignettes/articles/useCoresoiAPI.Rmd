@@ -103,12 +103,15 @@ To use any of these functions, simply provide the required inputs (such as the a
 
 
 ```{r apiUsageExamples, eval=FALSE}
-# Call the /aggiudicatari endpoint with a limit of 10 and a CIG of "ZEE21A100F"
-get_aggiudicatari(api_key = "YOUR_API_KEY", limit = 10, cig = "ZEE21A100F")
+# free usage plan (limited to Rate 100 requests per second, Burst 100 requests,Quota 10,000 requests per month starting on the 1st day)
+free_usage_api_key = "m4JqlGtSl8aZyAIRyPzd3mPTFCO7VC2vo9O7Xpc0"
+
+# Call the /aggiudicatari endpoint with a limit of 10 and a codice_fiscale of "6960001684"
+get_aggiudicatari(api_key = free_usage_api_key, limit = 10)
 
 # Call the /cigs endpoint with a limit of 20 and a minimum lotto import of 1000000
-get_cigs(api_key = "YOUR_API_KEY", limit = 20, importo_lotto_min = 1000000)
+get_cigs(api_key = free_usage_api_key, limit = 20, importo_lotto_min = 1000000)
 
 # Call the /stazione-appaltante endpoint with a limit of 5 and a province name of "MILANO"
-get_stazione_appaltante(api_key = "YOUR_API_KEY", limit = 5, provincia_nome = "MILANO")
+get_stazione_appaltante(api_key = free_usage_api_key, limit = 5, provincia_nome = "MILANO")
 ```
