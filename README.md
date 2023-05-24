@@ -11,13 +11,19 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![R-CMD-check](https://github.com/CORE-forge/coresoi/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/CORE-forge/coresoi/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
+`coresoi` is a product of the project CO.R.E.- Corruption risk
+indicators in emergency, financed by the EU Commission, as part of the
+Internal Police Security Fund (ISF-P) program.
+
 The goal of `coresoi` is to provide a *sandbox* environment for
 researchers and anti-corruption analysts to interact with the indicators
-we’ve designed. We also offer mock data extracted from
+of corruption risk in public procurement over emergencies we’ve
+designed. We also offer mock data extracted from
 [dati.anticorruzione](https://dati.anticorruzione.it/index.html#/home)
-to aid in their analysis. Our hope is that this platform will facilitate
-and make more effective their efforts in fighting corruption and promote
-greater transparency in government.
+to aid in their analysis. Our hope is that this platform will promote
+greater transparency in government, by helping researchers and
+anti-corruption analysts to make their efforts in fighting corruption
+more effective.
 
 ## Installation
 
