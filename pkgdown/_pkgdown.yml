@@ -30,13 +30,14 @@ reference:
       - ind_9
 
   - title: "Composite Indicator (CI) of corruption risk in emergencies"
-    desc: "Synthetic indicator of corruption risk by contracting authority, company province and municipality"
+    desc: "Synthetic indicator of corruption risk by contracting authority, company, province and municipality (IRT dimensionality assessement )"
     contents:
       - create_indicator_matrix
       - normalise
       - get_weights
       - aggregate
       - composite_sensitivity
+      - dimensionality_check
 
 
   - title: "Data"
