@@ -12,7 +12,7 @@ method and computes the composite according to the specified set of weights."><m
     
     <a class="navbar-brand me-2" href="../index.html">coresoi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -90,11 +90,11 @@ method and computes the composite according to the specified set of weights.</p>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>vector of composite indicators for each target unit in <code>data</code>.</p>
+<p>vector of composite indicator values for each target unit in <code>data</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Aggregate the elementary indicators and compute the composite</p>
+    <p>Aggregate the elementary indicators on the provided data matrix</p>
 <p>The choice of the aggregation method heavily depends on the degree of compensability
 or substitutability of the elementary indicators. A compensatory approach requires the use of
 <em>linear</em> functions (e.g., a linear combination of the elementary indicators), while
@@ -109,6 +109,24 @@ as weighted geometric mean of the elementary indicators:</p>
 <p>$$CI_c = \prod_{q=1}^Q I_{qc}^{w_q}$$</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="va">mock_data_core_variants</span> <span class="op">&lt;-</span> <span class="fu">unnest</span><span class="op">(</span><span class="va">mock_data_core</span>, <span class="va">varianti</span>, keep_empty <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">out_companies</span> <span class="op">&lt;-</span> <span class="fu"><a href="ind_all.html">ind_all</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mock_data_core</span>,</span></span>
+<span class="r-in"><span>                          data_ind8 <span class="op">=</span> <span class="va">mock_data_core_variants</span>,</span></span>
+<span class="r-in"><span>                          emergency_name <span class="op">=</span> <span class="st">"coronavirus"</span>,</span></span>
+<span class="r-in"><span>                          target_unit <span class="op">=</span> <span class="st">"companies"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">data_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="create_indicator_matrix.html">create_indicator_matrix</a></span><span class="op">(</span><span class="va">out_companies</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">data_matrix_norm</span> <span class="op">&lt;-</span> <span class="fu"><a href="normalise.html">normalise</a></span><span class="op">(</span><span class="va">data_matrix</span>, method <span class="op">=</span> <span class="st">"binary"</span>, cutoff <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">data_matrix_norm_nomiss</span> <span class="op">&lt;-</span> <span class="fu"><a href="manage_missing.html">manage_missing</a></span><span class="op">(</span><span class="va">data_matrix_norm</span>, missing <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_weights.html">get_weights</a></span><span class="op">(</span><span class="va">data_matrix_norm_nomiss</span>, method <span class="op">=</span> <span class="st">"equal"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">out_aggr</span> <span class="op">&lt;-</span> <span class="fu">aggregate</span><span class="op">(</span><span class="va">data_matrix_norm_nomiss</span>, method <span class="op">=</span> <span class="st">"linear"</span>, <span class="va">w</span><span class="op">)</span> <span class="co">#it is a composite indicator</span></span></span>
+<span class="r-in"><span> <span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

@@ -12,7 +12,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">coresoi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -75,7 +75,7 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>out_list</dt>
 <dd><p>list of outputs about each indicator computable for the target unit
-(e.g., company or contracting authority), as returned by, for example, <code><a href="ind_1.html">ind_1()</a></code>, <code><a href="ind_2.html">ind_2()</a></code>, etc.</p></dd>
+(e.g., company or contracting authority), as returned by <code><a href="ind_all.html">ind_all()</a></code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -88,10 +88,7 @@ indicator values as subsequent columns (according to <code>out_list</code>).</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Create matrix of elementary indicators</p>
-<p><code>out_list</code> must be manually created by including all the outputs of the functions
-for computing the elementary indicators (<code><a href="ind_1.html">ind_1()</a></code>, <code><a href="ind_2.html">ind_2()</a></code>, etc.) in a list.
-Note that each target unit has its own set of elementary indicators. Moreover, target units
-in each output of <code>out_list</code> can be different and a full join is carried out for merging all the
+<p>Target unit ID in each output of <code>out_list</code> can be different and a full join is carried out for merging all the
 indicators and building the final data matrix.</p>
     </div>
 

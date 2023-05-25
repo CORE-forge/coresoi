@@ -55,6 +55,9 @@
     <loc>https://core-forge.github.io/coresoi/reference/compute_barnard.html</loc>
   </url>
   <url>
+    <loc>https://core-forge.github.io/coresoi/reference/compute_composite.html</loc>
+  </url>
+  <url>
     <loc>https://core-forge.github.io/coresoi/reference/compute_fisher.html</loc>
   </url>
   <url>
@@ -119,6 +122,18 @@
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/ind_9.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/ind_all.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/ind_all_companies.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/ind_all_contr_auth.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/ind_all_geogr.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/index.html</loc>
