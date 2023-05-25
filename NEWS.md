@@ -1,3 +1,5 @@
+# coresoi 1.0.0
+
 # coresoi 0.2.0
 
 - updates pkg documentation
