@@ -64,8 +64,14 @@ is the usual 0.05.
 }
 \examples{
 \dontrun{
-if (interactive()) {
-  normalise(data_matrix, method = "binary", cutoff = 0.95)
-}
+if(interactive()){
+  mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+  out_companies <- ind_all(data = mock_data_core,
+                          data_ind8 = mock_data_core_variants,
+                          emergency_name = "coronavirus",
+                          target_unit = "companies")
+  data_matrix <- create_indicator_matrix(out_companies)
+  data_matrix_norm <- normalise(data_matrix, method = "binary", cutoff = 0.99)
+ }
 }
 }

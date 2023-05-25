@@ -14,6 +14,7 @@ composite_sensitivity_methods(
 \code{composite_sensitivity_methods} performs the sensitivity analysis about
 \strong{only the methodological choices} for computing the composite: \emph{normalisation} (cut-off values),
 method for \emph{managing missing values} and \emph{weighting} scheme.
+\strong{It is an internal function.}
 }
 \details{
 Perform sensitivity analysis (only about methods) of a composite indicator

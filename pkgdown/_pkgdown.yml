@@ -38,6 +38,8 @@ reference:
       - aggregate
       - composite_sensitivity
       - dimensionality_check
+      - ind_all
+      - compute_composite
 
 
   - title: "Data"

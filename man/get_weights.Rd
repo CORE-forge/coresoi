@@ -38,9 +38,15 @@ by rescaling the estimated discrimination parameters (in such a way they sum to 
 }
 \examples{
 \dontrun{
-if (interactive()) {
-  # EXAMPLE1
-}
+if(interactive()){
+  mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+  out_companies <- ind_all(data = mock_data_core,
+                          data_ind8 = mock_data_core_variants,
+                          emergency_name = "coronavirus",
+                          target_unit = "companies")
+  data_matrix <- create_indicator_matrix(out_companies)
+  w <- get_weights(data_matrix, method = "equal")
+ }
 }
 }
 \seealso{

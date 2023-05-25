@@ -8,7 +8,7 @@ create_indicator_matrix(out_list)
 }
 \arguments{
 \item{out_list}{list of outputs about each indicator computable for the target unit
-(e.g., company or contracting authority), as returned by, for example, \code{\link[=ind_1]{ind_1()}}, \code{\link[=ind_2]{ind_2()}}, etc.}
+(e.g., company or contracting authority), as returned by \code{\link[=ind_all]{ind_all()}}.}
 }
 \value{
 data matrix with aggregation ID of the target units as first column and
@@ -21,10 +21,7 @@ indicator values as subsequent columns (according to \code{out_list}).
 \details{
 Create matrix of elementary indicators
 
-\code{out_list} must be manually created by including all the outputs of the functions
-for computing the elementary indicators (\code{\link[=ind_1]{ind_1()}}, \code{\link[=ind_2]{ind_2()}}, etc.) in a list.
-Note that each target unit has its own set of elementary indicators. Moreover, target units
-in each output of \code{out_list} can be different and a full join is carried out for merging all the
+Target unit ID in each output of \code{out_list} can be different and a full join is carried out for merging all the
 indicators and building the final data matrix.
 }
 \keyword{internal}

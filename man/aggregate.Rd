@@ -15,14 +15,14 @@ aggregate(data, method = "linear", w)
 \item{w}{vector of weights, as returned by \code{\link[=get_weights]{get_weights()}}.}
 }
 \value{
-vector of composite indicators for each target unit in \code{data}.
+vector of composite indicator values for each target unit in \code{data}.
 }
 \description{
 \code{aggregate} aggregates the set of elementary indicators through the selected
 method and computes the composite according to the specified set of weights.
 }
 \details{
-Aggregate the elementary indicators and compute the composite
+Aggregate the elementary indicators on the provided data matrix
 
 The choice of the aggregation method heavily depends on the degree of compensability
 or substitutability of the elementary indicators. A compensatory approach requires the use of
@@ -40,4 +40,20 @@ In the second case, using \code{method = "non-linear"}, the resulting composite 
 as weighted geometric mean of the elementary indicators:
 
 \deqn{CI_c = \prod_{q=1}^Q I_{qc}^{w_q}}
+}
+\examples{
+\dontrun{
+if(interactive()){
+  mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+  out_companies <- ind_all(data = mock_data_core,
+                          data_ind8 = mock_data_core_variants,
+                          emergency_name = "coronavirus",
+                          target_unit = "companies")
+  data_matrix <- create_indicator_matrix(out_companies)
+  data_matrix_norm <- normalise(data_matrix, method = "binary", cutoff = 0.95)
+  data_matrix_norm_nomiss <- manage_missing(data_matrix_norm, missing = 0)
+  w <- get_weights(data_matrix_norm_nomiss, method = "equal")
+  out_aggr <- aggregate(data_matrix_norm_nomiss, method = "linear", w) #it is a composite indicator
+ }
+}
 }

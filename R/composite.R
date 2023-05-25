@@ -1,15 +1,330 @@
+#' Elementary indicators for companies
+#' @description `ind_all_companies` computes all the elementary indicators with companies as target unit,
+#' by sequentially calling [ind_1()], [ind_2()], [ind_3()], [ind_4()], [ind_7()], [ind_8()] and [ind_9()].
+#' It is an internal function.
+#' @keywords internal
+#' @export
+ind_all_companies <- function(data,
+                              data_ind8,
+                              emergency_name) {
+
+  # indicators 1, 2, 3, 4, 7, 8 and 9 (7 elementary indicators)
+
+  message("Computing indicator 1 for companies")
+  out1 <- ind_1(
+    data = data,
+    publication_date = data_pubblicazione,
+    stat_unit = codice_fiscale,
+    emergency_name = emergency_name,
+    test_type = "fisher"
+  )
+
+  message("Computing indicator 2 for companies")
+  # out2 <- .GlobalEnv$ind_2(
+  out2 <- ind_2(
+    data = data,
+    contract_value = importo_lotto,
+    publication_date = data_pubblicazione,
+    stat_unit = codice_fiscale,
+    emergency_name = emergency_name
+  )
+
+  message("Computing indicator 3 for companies")
+  # out3 <- .GlobalEnv$ind_3(
+  out3 <- ind_3(
+    data = data,
+    publication_date = data_pubblicazione,
+    award_value = importo_aggiudicazione,
+    sums_paid = importo_finale,
+    stat_unit = codice_fiscale,
+    emergency_name = emergency_name)
+
+  message("Computing indicator 4 for companies")
+  # out4 <- .GlobalEnv$ind_4(
+  out4 <- ind_4(
+    data = data,
+    exp_end = data_termine_contrattuale,
+    eff_start = data_inizio_effettiva,
+    eff_end = data_effettiva_ultimazione,
+    stat_unit = codice_fiscale,
+    emergency_name = emergency_name,
+    publication_date = data_pubblicazione
+  )
+
+  message("Computing indicator 7 for companies")
+  out7 <- ind_7(
+    data = data,
+    final_award_date = data_aggiudicazione_definitiva,
+    emergency_name = emergency_name,
+    stat_unit = codice_fiscale,
+    years_before = 1
+  )
+
+  message("Computing indicator 8 for companies")
+  # data with variants!
+  out8 <- ind_8(
+    data = data_ind8,
+    publication_date = data_pubblicazione,
+    stat_unit = codice_fiscale,
+    variant_date = data_approvazione_variante,
+    months_win = 6,
+    emergency_name = emergency_name
+  )
+
+  message("Computing indicator 9 for companies")
+  out9 <- ind_9(
+    data = data,
+    publication_date = data_pubblicazione,
+    stat_unit = codice_fiscale,
+    eff_start = data_inizio_effettiva,
+    eff_end = data_effettiva_ultimazione,
+    emergency_name = emergency_name
+  )
+
+  out_list <- list(out1, out2, out3, out4, out7, out8, out9)
+  return(out_list)
+}
+
+
+#' Elementary indicators for contracting authorities
+#' @description `ind_all_contr_auth` computes all the elementary indicators with contracting authorities
+#' as target unit, by sequentially calling [ind_3()], [ind_4()], [ind_5()], [ind_6()], [ind_8()] and [ind_9()].
+#' It is an internal function.
+#' @keywords internal
+#' @export
+ind_all_contr_auth <- function(data,
+                               data_ind8,
+                               emergency_name) {
+
+  # indicators 3, 4, 5, 6, 8 and 9 (6 elementary indicators)
+
+  message("Computing indicator 3 for contracting authorities")
+  # out3 <- .GlobalEnv$ind_3(
+  out3 <- ind_3(
+    data = data,
+    publication_date = data_pubblicazione,
+    award_value = importo_aggiudicazione,
+    sums_paid = importo_finale,
+    stat_unit = cf_amministrazione_appaltante,
+    emergency_name = emergency_name)
+
+  message("Computing indicator 4 for contracting authorities")
+  # out4 <- .GlobalEnv$ind_4(
+  out4 <- ind_4(
+    data = data,
+    exp_end = data_termine_contrattuale,
+    eff_start = data_inizio_effettiva,
+    eff_end = data_effettiva_ultimazione,
+    stat_unit = cf_amministrazione_appaltante,
+    emergency_name = emergency_name,
+    publication_date = data_pubblicazione
+  )
+
+  message("Computing indicator 5 for contracting authorities")
+  out5 <- ind_5(
+    data = data,
+    publication_date = data_pubblicazione,
+    stat_unit = cf_amministrazione_appaltante,
+    winners = codice_fiscale,
+    emergency_name = emergency_name
+  )
+
+  message("Computing indicator 6 for contracting authorities")
+  # .GlobalEnv$ind_6(
+  out6 <- ind_6(
+    data = data,
+    publication_date = data_pubblicazione,
+    emergency_name = emergency_name,
+    award_col = id_aggiudicazione,
+    stat_unit = cf_amministrazione_appaltante
+  )
+
+  message("Computing indicator 8 for contracting authorities")
+  # data with variants!
+  out8 <- ind_8(
+    data = data_ind8,
+    publication_date = data_pubblicazione,
+    stat_unit = cf_amministrazione_appaltante,
+    variant_date = data_approvazione_variante,
+    months_win = 6,
+    emergency_name = emergency_name
+  )
+
+  message("Computing indicator 9 for contracting authorities")
+  out9 <- ind_9(
+    data = data,
+    publication_date = data_pubblicazione,
+    stat_unit = cf_amministrazione_appaltante,
+    eff_start = data_inizio_effettiva,
+    eff_end = data_effettiva_ultimazione,
+    emergency_name = emergency_name
+  )
+
+  out_list <- list(out3, out4, out5, out6, out8, out9)
+  return(out_list)
+}
+
+
+#' Elementary indicators for a particular territory
+#' @description `ind_all_geogr` computes all the elementary indicators by geographic location (as specified in
+#' `id_location`), by sequentially calling [ind_3()], [ind_4()], [ind_5()], [ind_6()], [ind_8()] and [ind_9()].
+#' It is an internal function.
+#' @keywords internal
+#' @export
+ind_all_geogr <- function(data,
+                          data_ind8,
+                          emergency_name,
+                          id_location) {
+
+  # indicators 3, 4, 5, 6, 8 and 9 (6 elementary indicators)
+
+  message("Computing indicator 3 for local territory")
+  # out3 <- .GlobalEnv$ind_3(
+  out3 <- ind_3(
+    data = data,
+    publication_date = data_pubblicazione,
+    award_value = importo_aggiudicazione,
+    sums_paid = importo_finale,
+    stat_unit = {{id_location}},
+    emergency_name = emergency_name)
+
+  message("Computing indicator 4 for local territory")
+  # out4 <- .GlobalEnv$ind_4(
+  out4 <- ind_4(
+    data = data,
+    exp_end = data_termine_contrattuale,
+    eff_start = data_inizio_effettiva,
+    eff_end = data_effettiva_ultimazione,
+    stat_unit = {{id_location}},
+    emergency_name = emergency_name,
+    publication_date = data_pubblicazione
+  )
+
+  message("Computing indicator 5 for local territory")
+  out5 <- ind_5(
+    data = data,
+    publication_date = data_pubblicazione,
+    stat_unit = {{id_location}},
+    winners = codice_fiscale,
+    emergency_name = emergency_name
+  )
+
+  message("Computing indicator 6 for local territory")
+  # out6 <- .GlobalEnv$ind_6(
+  out6 <- ind_6(
+    data = data,
+    publication_date = data_pubblicazione,
+    emergency_name = emergency_name,
+    award_col = id_aggiudicazione,
+    stat_unit = {{id_location}}
+  )
+
+  message("Computing indicator 8 for local territory")
+  # data with variants!
+  out8 <- ind_8(
+    data = data_ind8,
+    publication_date = data_pubblicazione,
+    stat_unit = {{id_location}},
+    variant_date = data_approvazione_variante,
+    months_win = 6,
+    emergency_name = emergency_name
+  )
+
+  message("Computing indicator 9 for local territory")
+  out9 <- ind_9(
+    data = data,
+    publication_date = data_pubblicazione,
+    stat_unit = {{id_location}},
+    eff_start = data_inizio_effettiva,
+    eff_end = data_effettiva_ultimazione,
+    emergency_name = emergency_name
+  )
+
+  out_list <- list(out3, out4, out5, out6, out8, out9)
+  return(out_list)
+}
+
+
+
+#' @title ind_all
+#' @description `ind_all` computes all the elementary indicators, by returning them in a list (useful for
+#' calling the other functions of `coresoi`)
+#' @param data a data frame or tibble containing the data you want to use to calculate all the indicator.
+#' @param data_ind8 the same dataframe or tibble containing the data you want to use to calculate indicator 8.
+#' See Details.
+#' @param emergency_name  a character string specifying the name of the emergency or event you are analyzing.
+#' Examples could include "Coronavirus" or "Terremoto Aquila".
+#' @param target_unit the target unit for which the indicators have to be computed. It can be: `"companies"`,
+#' `"contracting_authorities"` or `"territory"`
+#' @param id_location name of the variable in `data` and `data_ind8` that refers to geographic location of
+#' interest (e.g., provinces, regions).
+#' @return a list of outputs about each indicator computable for the selected target unit.
+#' @details This functions is a wrapper of the single functions for computing the elementary indicators.
+#' Given the data on which we want to compute them and the emergency, together with the target unit, the
+#' function calls each 'elementary' function for computing the single red flags, according to the specified target.
+#' In particular:
+#'
+#' - `data` and `data_ind8` are two versions of the same dataframe, containing the information about single contracts,
+#' to be used for computing the elementary indicators. As indicator 8 works on the contract variants, given the potential
+#' '1-n' relationship (i.e., 'one contract - more variants'), `data_ind8` must be a longer (unnested) version of `data`,
+#' which includes the information about the variants (hence, some rows have duplicated columns, except for those related
+#' to the variants). *In `data`, we suggest to include a column with a 'nested' data frame related to the variants,*
+#' *to be unnested and placed in `data_ind8`.*.
+#'
+#' - Argument `target_unit` specifies the target for computing the indicators. On this basis, specific internal functions
+#' are called for computing the suitable set of indicators. In particular, if `target_unit = "companies"`, then elementary
+#' indicators 1, 2, 3, 4, 7, 8 and 9 are computed (by calling the related functions). On the other hand, if
+#' `target_unit = "contracting_authorities"` or `target_unit = "territory"`, then elementary indicators 3, 4, 5, 6, 8 and 9
+#' are obtained. In the latter case, the user has to specify (through `id_location`) the name of the variable in `data`
+#' (and `data_ind8`) that relates to the territorial location of interest (e.g., it could be province code/name).
+#'
+#' **NOTE: for the moment, it works only on Italian data (BDNCP).**
+#'
+#' @examples
+#' \dontrun{
+#' if(interactive()) {
+#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   out_companies <- ind_all(
+#'     data = mock_data_core,
+#'     data_ind8 = mock_data_core_variants,
+#'     emergency_name = "coronavirus",
+#'     target_unit = "companies"
+#'     )
+#' }
+#' }
+#' @rdname ind_all
+#' @export
+ind_all <- function(data,
+                    data_ind8,
+                    emergency_name,
+                    target_unit,
+                    id_location = NULL) {
+
+  match.arg(target_unit, c("companies", "contracting_authorities", "territory"))
+
+  if (target_unit == "companies") {
+    out_list <- ind_all_companies(data, data_ind8, emergency_name) %>% suppressWarnings()
+  }
+  if (target_unit == "contracting_authorities") {
+    out_list <- ind_all_contr_auth(data, data_ind8, emergency_name) %>% suppressWarnings()
+  }
+  if (target_unit == "territory") {
+    out_list <- ind_all_geogr(data, data_ind8, emergency_name, {{id_location}}) %>% suppressWarnings()
+  }
+  return(out_list)
+}
+
+
+
 #' Create matrix of elementary indicators
 #' @title create_indicator_matrix
 #' @description `create_indicator_matrix` creates the data matrix of elementary indicators
 #' (row = target unit; columns = indicator values). **It is an internal function.**
 #' @param out_list list of outputs about each indicator computable for the target unit
-#' (e.g., company or contracting authority), as returned by, for example, [ind_1()], [ind_2()], etc.
+#' (e.g., company or contracting authority), as returned by [ind_all()].
 #' @return data matrix with aggregation ID of the target units as first column and
 #' indicator values as subsequent columns (according to `out_list`).
-#' @details `out_list` must be manually created by including all the outputs of the functions
-#' for computing the elementary indicators ([ind_1()], [ind_2()], etc.) in a list.
-#' Note that each target unit has its own set of elementary indicators. Moreover, target units
-#' in each output of `out_list` can be different and a full join is carried out for merging all the
+#' @details Target unit ID in each output of `out_list` can be different and a full join is carried out for merging all the
 #' indicators and building the final data matrix.
 #' @keywords internal
 #' @export
@@ -24,18 +339,19 @@ create_indicator_matrix <- function(out_list) {
   if (length(unique(aggr_type)) != 1) {
     stop("Please, check indicator list: different aggregation types are found")
   }
-  aggr_type <- aggr_type[1] # codice_fiscale or cf_amministrazione_appaltante
-  n <- length(out_list) # no. of indicators (7 or 6)
+  aggr_type <- aggr_type[1] #codice_fiscale or cf_amministrazione_appaltante
+  n <- length(out_list) #no. of indicators (7 or 6)
   ind_id <- sapply(out_list, function(x) x$indicator_id[1])
 
   X <- out_list[[1]] %>%
     dplyr::select(aggregation_name, indicator_value) %>%
     dplyr::full_join(out_list[[2]] %>%
-      dplyr::select(aggregation_name, indicator_value), by = "aggregation_name")
+                       dplyr::select(aggregation_name, indicator_value), by="aggregation_name")
   for (i in 3:n) {
     X <- X %>%
       dplyr::full_join(out_list[[i]] %>%
-        dplyr::select(aggregation_name, indicator_value), by = "aggregation_name")
+                         dplyr::select(aggregation_name, indicator_value), by="aggregation_name")
+
   }
   names(X)[-1] <- paste0("ind", ind_id)
   # X is a matrix/dataframe with:
@@ -48,6 +364,7 @@ create_indicator_matrix <- function(out_list) {
 #' Manage missing values in elementary indicators
 #' @title manage_missing
 #' @description `manage_missing` deals with the imputation of missing values in the elementary indicators.
+#' **It is an internal function.**
 #' @param data data matrix of elementary indicators (as returned by [create_indicator_matrix()]).
 #' @param missing method for imputing missing values:
 #'
@@ -88,8 +405,8 @@ manage_missing <- function(data,
     cat("Imputing missing values in each indicator using logistic regression \n")
     # logistic regression of each indicator with (at least one) NAs on all the indicators with no NAs
     flag_missing <- apply(data[, -1], 2, function(x) 1 * any(is.na(x)))
-    ind_nomiss <- which(flag_missing == 0) %>% names()
-    ind_miss <- which(flag_missing == 1) %>% names()
+    ind_nomiss <- which(flag_missing == 0) %>% names
+    ind_miss <- which(flag_missing == 1) %>% names
 
     # if all indicators have at least one missing value --> external method to impute
     if (length(ind_miss) == length(flag_missing)) {
@@ -109,7 +426,7 @@ manage_missing <- function(data,
 
       # data with missing values for imputation (no dplyr!)
       data_to_impute <- data[is.na(data[, ind_tomodel]), ind_nomiss] %>%
-        as.data.frame()
+        as.data.frame
       names(data_to_impute) <- ind_nomiss
       cat(paste0(" - observations to impute: ", nrow(data_to_impute), " out of ", nrow(data), "\n"))
 
@@ -182,15 +499,22 @@ manage_missing <- function(data,
 #' is the usual 0.05.
 #' @examples
 #' \dontrun{
-#' if (interactive()) {
-#'   normalise(data_matrix, method = "binary", cutoff = 0.95)
-#' }
+#' if(interactive()){
+#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   out_companies <- ind_all(data = mock_data_core,
+#'                           data_ind8 = mock_data_core_variants,
+#'                           emergency_name = "coronavirus",
+#'                           target_unit = "companies")
+#'   data_matrix <- create_indicator_matrix(out_companies)
+#'   data_matrix_norm <- normalise(data_matrix, method = "binary", cutoff = 0.99)
+#'  }
 #' }
 #' @rdname normalise
 #' @export
 normalise <- function(data,
                       method = "binary",
                       cutoff = 0.95) {
+
   match.arg(method, c("binary", "ranking", "z-score", "minmax", "distref", "catscale"))
 
   cat("---------------------------------------------------\n")
@@ -202,72 +526,52 @@ normalise <- function(data,
     if (cutoff < 0.9) {
       warning("The cut-off for labelling 'at risk' is less than those usually employed (at least 0.90, corresponding to p-value of 0.10)")
     }
-    data_norm <- data.frame(
-      data[, 1],
-      apply(
-        X = data[, -1],
-        MARGIN = 2,
-        FUN = function(x) {
-          cut(x, breaks = c(-Inf, cutoff, Inf), labels = c(0, 1)) %>%
-            as.character() %>%
-            as.numeric()
-        }
-      )
-    )
+    data_norm <- data.frame(data[, 1],
+                            apply(X = data[, -1],
+                                  MARGIN = 2,
+                                  FUN = function(x) {
+                                    cut(x, breaks = c(-Inf, cutoff, Inf), labels = c(0, 1)) %>%
+                                      as.character() %>%
+                                      as.numeric()
+                                  }))
   }
   if (method == "ranking") {
-    data_norm <- data.frame(
-      data[, 1],
-      apply(
-        X = data[, -1],
-        MARGIN = 2,
-        FUN = rank
-      )
-    )
+    data_norm <- data.frame(data[, 1],
+                            apply(X = data[, -1],
+                                  MARGIN = 2,
+                                  FUN = rank))
   }
   if (method == "z-score") {
-    data_norm <- data.frame(
-      data[, 1],
-      scale(data[, -1])
-    )
+    data_norm <- data.frame(data[, 1],
+                            scale(data[, -1]))
   }
   if (method == "minmax") {
-    data_norm <- data.frame(
-      data[, 1],
-      apply(
-        X = data[, -1],
-        MARGIN = 2,
-        FUN = function(x) {
-          (x - min(x, na.rm = TRUE)) / (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
-        }
-      )
-    )
+    data_norm <- data.frame(data[, 1],
+                            apply(X = data[, -1],
+                                  MARGIN = 2,
+                                  FUN = function(x) {
+                                    (x - min(x, na.rm = TRUE))/(max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+                                  }))
+
+
   }
   if (method == "distref") {
-    data_norm <- data.frame(
-      data[, 1],
-      apply(
-        X = data[, -1],
-        MARGIN = 2,
-        FUN = function(x) {
-          x / max(x, na.rm = TRUE)
-        }
-      )
-    )
+    data_norm <- data.frame(data[, 1],
+                            apply(X = data[, -1],
+                                  MARGIN = 2,
+                                  FUN = function(x) {
+                                    x/max(x, na.rm = TRUE)
+                                  }))
   }
   if (method == "catscale") {
-    data_norm <- data.frame(
-      data[, 1],
-      apply(
-        X = data[, -1],
-        MARGIN = 2,
-        FUN = function(x) {
-          tmp <- quantile(x, probs = c(0.2, 0.4, 0.6, 0.8), na.rm = TRUE)
-          res <- x * 0
-          res + 0.25 * (x > tmp[1]) + 0.25 * (x > tmp[2]) + 0.25 * (x > tmp[3]) + 0.25 * (x > tmp[4])
-        }
-      )
-    )
+    data_norm <- data.frame(data[, 1],
+                            apply(X = data[, -1],
+                                  MARGIN = 2,
+                                  FUN = function(x){
+                                    tmp <- quantile(x, probs = c(0.2, 0.4, 0.6, 0.8), na.rm = TRUE)
+                                    res <- x * 0
+                                    res + 0.25 * (x > tmp[1]) + 0.25 * (x > tmp[2]) + 0.25 * (x > tmp[3]) + 0.25 * (x > tmp[4])
+                                  }))
   }
   return(data_norm)
 }
@@ -297,9 +601,15 @@ normalise <- function(data,
 #'
 #' @examples
 #' \dontrun{
-#' if (interactive()) {
-#'   # EXAMPLE1
-#' }
+#' if(interactive()){
+#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   out_companies <- ind_all(data = mock_data_core,
+#'                           data_ind8 = mock_data_core_variants,
+#'                           emergency_name = "coronavirus",
+#'                           target_unit = "companies")
+#'   data_matrix <- create_indicator_matrix(out_companies)
+#'   w <- get_weights(data_matrix, method = "equal")
+#'  }
 #' }
 #' @seealso
 #'  \code{\link[mirt]{mirt}}, \code{\link[mirt]{MDISC}}
@@ -310,34 +620,28 @@ get_weights <- function(data,
                         method,
                         ...) {
   match.arg(arg = method, choices = c("equal", "experts", "irt"))
-  Q <- ncol(data[, -1]) # number of elementary indicators
+  Q <- ncol(data[, -1]) #number of elementary indicators
 
   if (method == "irt") {
     cat("---------------------------------------------------\n")
     cat("Computing IRT weights using discrimination parameters of a 2PL model \n")
     # Check whether the elementary indicators are all binary
-    nu <- apply(
-      X = data[, -1],
-      MARGIN = 2,
-      FUN = function(x) length(unique(x))
-    )
+    nu <- apply(X = data[, -1],
+                MARGIN = 2,
+                FUN = function(x) length(unique(x)))
     if (any(nu > 2)) stop("Elementary indicators must be binary for the moment")
 
     # Check for a unique response modality in the data matrix: in this case, IRT weights are not computable
-    flag_alleq <- apply(
-      X = data[, -1],
-      MARGIN = 2,
-      FUN = function(x) 1 * (all(x == 0, na.rm = TRUE) | all(x == 1, na.rm = TRUE))
-    )
+    flag_alleq <- apply(X = data[, -1],
+                        MARGIN = 2,
+                        FUN = function(x) 1 * (all(x == 0, na.rm = TRUE) | all(x == 1, na.rm = TRUE)))
     if (all(flag_alleq == 0)) {
       # unidimensional 2PL
-      mod2pl <- mirt::mirt(
-        data = data[, -1],
-        model = 1,
-        itemtype = "2PL",
-        ...
-      )
-      w <- mirt::MDISC(mod2pl) / sum(mirt::MDISC(mod2pl))
+      mod2pl <- mirt::mirt(data = data[,-1],
+                           model = 1,
+                           itemtype = "2PL",
+                           ...)
+      w <- mirt::MDISC(mod2pl)/sum(mirt::MDISC(mod2pl))
       cat("\n Resulting IRT weights: \n")
       print(round(w, 3))
     } else {
@@ -346,12 +650,12 @@ get_weights <- function(data,
     }
   }
   if (method == "equal") {
-    w <- rep(1 / Q, Q)
+    w <- rep(1/Q, Q)
   }
   if (method == "experts") {
-    if (Q == 7) { # companies
+    if (Q == 7) { #companies
       w <- c(0.184, 0.153, 0.146, 0.115, 0.189, 0.089, 0.124)
-    } else { # contracting authorities
+    } else { #contracting authorities
       w <- c(0.216, 0.130, 0.203, 0.202, 0.094, 0.155)
     }
   }
@@ -359,7 +663,7 @@ get_weights <- function(data,
 }
 
 
-#' Aggregate the elementary indicators and compute the composite
+#' Aggregate the elementary indicators on the provided data matrix
 #' @title aggregate
 #' @description `aggregate` aggregates the set of elementary indicators through the selected
 #' method and computes the composite according to the specified set of weights.
@@ -367,7 +671,7 @@ get_weights <- function(data,
 #' (without missing values).
 #' @param method aggregation method. Possible choices: `"linear"` (default) and `"non-linear"`. See Details.
 #' @param w vector of weights, as returned by [get_weights()].
-#' @return vector of composite indicators for each target unit in `data`.
+#' @return vector of composite indicator values for each target unit in `data`.
 #' @details The choice of the aggregation method heavily depends on the degree of compensability
 #' or substitutability of the elementary indicators. A compensatory approach requires the use of
 #' *linear* functions (e.g., a linear combination of the elementary indicators), while
@@ -385,32 +689,49 @@ get_weights <- function(data,
 #'
 #' \deqn{CI_c = \prod_{q=1}^Q I_{qc}^{w_q}}
 #'
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   out_companies <- ind_all(data = mock_data_core,
+#'                           data_ind8 = mock_data_core_variants,
+#'                           emergency_name = "coronavirus",
+#'                           target_unit = "companies")
+#'   data_matrix <- create_indicator_matrix(out_companies)
+#'   data_matrix_norm <- normalise(data_matrix, method = "binary", cutoff = 0.95)
+#'   data_matrix_norm_nomiss <- manage_missing(data_matrix_norm, missing = 0)
+#'   w <- get_weights(data_matrix_norm_nomiss, method = "equal")
+#'   out_aggr <- aggregate(data_matrix_norm_nomiss, method = "linear", w) #it is a composite indicator
+#'  }
+#' }
 #' @rdname aggregate
 #' @export
 aggregate <- function(data,
                       method = "linear",
                       w) {
+
   match.arg(method, c("linear", "non-linear"))
 
   if (any(is.na(w))) {
     cat("Composite indicator not computable due to unavailable weights \n")
     composite <- rep(NA, nrow(data))
-  } else {
+  }
+  else {
     if (!all.equal(sum(w), 1)) stop("Weight vector must sum up to 1")
     if (length(w) != (ncol(data) - 1)) stop("Number of weights and indicators differ")
 
+    cat("---------------------------------------------------\n")
+    cat(paste0("Aggregation of elementary indicators using ", method, " method\n"))
     # arithmetic mean
     if (method == "linear") {
-      composite <- as.matrix(data[, -1]) %*% w %>%
-        as.numeric()
+      composite <- as.matrix(data[,-1]) %*% w %>%
+        as.numeric
     }
     # geometric mean
     if (method == "non-linear") {
-      composite <- apply(
-        X = data[, -1],
-        MARGIN = 1,
-        FUN = function(x) prod(x^w)
-      )
+      composite <- apply(X = data[, -1],
+                         MARGIN = 1,
+                         FUN = function(x) prod(x^w))
     }
   }
 
@@ -418,11 +739,90 @@ aggregate <- function(data,
 }
 
 
+#' @title compute_composite
+#' @description `compute_composite` is a generic function that calculates the composite indicators according to
+#' specified *normalisation*, *missing management*, *weighting* and *aggregation* methods.
+#' @param indicator_list list of outputs about each indicator computable for the target unit
+#' (e.g., company or contracting authority), as returned by [ind_all()].
+#' @param norm_method normalisation method (see [normalise()]).
+#' @param miss_method missing management method (see [manage_missing()]).
+#' @param weight_method weighting method (see [get_weights()]).
+#' @param aggr_method aggregation method (see [aggregate()]).
+#' @param cutoff threshold for dichotomising the indicators (when `norm_method = "binary"`).
+#' @return indicator schema as from [generate_indicator_schema()]
+#' @examples
+#' \dontrun{
+#' if(interactive()){
+#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   out_companies <- ind_all(data = mock_data_core,
+#'                            data_ind8 = mock_data_core_variants,
+#'                            emergency_name = "coronavirus",
+#'                            target_unit = "companies")
+#'   composite_companies <- compute_composite(indicator_list = out_companies,
+#'                                            norm_method = "binary",
+#'                                            miss_method = 0,
+#'                                            cutoff = 0.99,
+#'                                            weight_method = "experts",
+#'                                            aggr_method = "linear")
+#'   head(composite_companies)
+#'  }
+#' }
+#' @rdname compute_composite
+#' @export
+compute_composite <- function(indicator_list,
+                              norm_method = "binary",
+                              miss_method = 0,
+                              weight_method = "equal",
+                              aggr_method = "linear",
+                              cutoff = 0.95) {
+
+  indicator_id <- 16
+  indicator_name <- "Composite indicator"
+  aggregation_type <- indicator_list[[1]]$aggregation_type[1]
+  emergency_name <- indicator_list[[1]]$emergency_name[1]
+  emergency_scenario <- emergency_dates(emergency_name)
+
+  # matrix of elementary indicator
+  D <- create_indicator_matrix(indicator_list)
+
+  # normalise
+  D_norm <- normalise(data = D,
+                      method = norm_method,
+                      cutoff = cutoff)
+  # missing management
+  D_norm_miss <- manage_missing(data = D_norm,
+                                missing = miss_method)
+  # weights
+  w <- get_weights(data = D_norm_miss,
+                   method = weight_method)
+  # aggregation --> final composite
+  composite <- aggregate(data = D_norm_miss,
+                         w = w,
+                         method = aggr_method)
+
+  # DD is a temporary dataframe useful for 'generate_indicator_schema()'
+  DD <- data.frame(ID = 1:length(composite))
+  aggregation_name <- data_matrix$aggregation_name
+  out <- DD %>%
+    generate_indicator_schema(
+      indicator_id = indicator_id,
+      indicator_name = indicator_name,
+      indicator_value = composite,
+      aggregation_name = aggregation_name,
+      aggregation_type = as_string(aggregation_type),
+      emergency = emergency_scenario
+    )
+  return(out)
+}
+
+
+
 #' Perform sensitivity analysis (only about methods) of a composite indicator
 #' @title composite_sensitivity_methods
 #' @description `composite_sensitivity_methods` performs the sensitivity analysis about
 #' **only the methodological choices** for computing the composite: *normalisation* (cut-off values),
 #' method for *managing missing values* and *weighting* scheme.
+#' **It is an internal function.**
 #' @keywords internal
 #' @export
 composite_sensitivity_methods <- function(indicator_list,
@@ -432,17 +832,17 @@ composite_sensitivity_methods <- function(indicator_list,
   data_matrix <- create_indicator_matrix(indicator_list)
   n <- length(indicator_list)
 
-  # step 1: cut-off (let's suppose k values)
+  #step 1: cut-off (let's suppose k values)
   cat("\n\n")
   k <- length(cutoff)
   D1 <- list()
   for (i in 1:k) {
-    D1[[i]] <- normalise(data_matrix, cutoff[i]) # binary normalisation
+    D1[[i]] <- normalise(data = data_matrix, cutoff = cutoff[i]) #binary normalisation
   }
   names(D1) <- paste0("c", as.character(cutoff))
 
 
-  # step 2: imputation (2 methods) --> 2*k combinations
+  #step 2: imputation (2 methods) --> 2*k combinations
   cat("\n")
   D2_m0 <- D2_m1 <- list()
   for (i in 1:k) {
@@ -453,7 +853,7 @@ composite_sensitivity_methods <- function(indicator_list,
   names(D2_m0) <- names(D2_m1) <- names(D1)
 
 
-  # step 3: weights (3 sets) --> 3*2*k combinations
+  #step 3: weights (3 sets) --> 3*2*k combinations
   cat("\n")
   # set 1: equal weights
   w_equal <- get_weights(data = D1[[1]], method = "equal")
@@ -501,28 +901,24 @@ composite_sensitivity_methods <- function(indicator_list,
   names(CI_m0_irt) <- paste0(names(D1), ".m0.w_irt")
   names(CI_m1_irt) <- paste0(names(D1), ".m1.w_irt")
 
-  out_wide <- cbind(
-    do.call(what = "cbind", CI_m0_equal),
-    do.call(what = "cbind", CI_m1_equal),
-    do.call(what = "cbind", CI_m0_experts),
-    do.call(what = "cbind", CI_m1_experts),
-    do.call(what = "cbind", CI_m0_irt),
-    do.call(what = "cbind", CI_m1_irt)
-  )
+  out_wide <- cbind(do.call(what = "cbind", CI_m0_equal),
+                    do.call(what = "cbind", CI_m1_equal),
+                    do.call(what = "cbind", CI_m0_experts),
+                    do.call(what = "cbind", CI_m1_experts),
+                    do.call(what = "cbind", CI_m0_irt),
+                    do.call(what = "cbind", CI_m1_irt))
 
   out_wide <- data.frame(aggregation_name = data_matrix$aggregation_name, out_wide)
 
-  weights <- rep(c("w_eq", "w_exp", "w_irt"), each = 2 * k) # for each missing method
-  miss <- rep(c("m0", "m1"), times = 3, each = k) # for each set of weights
-  co <- rep(cutoff, times = 6) # for each combination of missing method (2) and weight set (3)
+  weights <- rep(c("w_eq", "w_exp", "w_irt"), each = 2 * k) #for each missing method
+  miss <- rep(c("m0", "m1"), times = 3, each = k) #for each set of weights
+  co <- rep(cutoff, times = 6) #for each combination of missing method (2) and weight set (3)
   aggr_name <- rep(out_wide$aggregation_name, each = ncol(out_wide[, -1]))
-  out_long <- data.frame(
-    aggregation_name = aggr_name,
-    ci = c(t(out_wide[, -1])),
-    cutoff = co,
-    miss,
-    weights
-  )
+  out_long <- data.frame(aggregation_name = aggr_name,
+                         ci = c(t(out_wide[,-1])),
+                         cutoff = co,
+                         miss,
+                         weights)
 
   return(list(out_wide = out_wide, out_long = out_long))
 }
@@ -538,7 +934,7 @@ composite_sensitivity_methods <- function(indicator_list,
 #' *Note: the unique normalisation method considered within the CO.R.E. project is the 'dichotomisation'.*
 #' *Then, the sensitivity is based on the choice of the threshold. See Details.*
 #' @param indicator_list list of outputs about each indicator computable for the target unit
-#' (e.g., company or contracting authority), as returned by, for example, [ind_1()], [ind_2()], etc.
+#' (e.g., company or contracting authority), as returned by [ind_all()].
 #' @param cutoff vector of thresholds for normalising the indicators (i.e., for their dichotomisation)
 #' @param ... optional arguments of [mirt::mirt()] function (for getting IRT weights).
 #' @return a list with two versions (wide and long) of a dataframe (`sens_wide` and `sens_long`),
@@ -608,9 +1004,51 @@ composite_sensitivity_methods <- function(indicator_list,
 #'
 #' @examples
 #' \dontrun{
-#' if (interactive()) {
-#'   # EXAMPLE1
-#' }
+#' if(interactive()){
+#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   out_companies <- ind_all(data = mock_data_core,
+#'                            data_ind8 = mock_data_core_variants,
+#'                            emergency_name = "coronavirus",
+#'                            target_unit = "companies")
+#'   out_sens <- composite_sensitivity(indicator_list = out_companies,
+#'                                     cutoff = c(0.90, 0.95, 0.99),
+#'                                     TOL = 0.1)  # argument for mirt::mirt function
+#'   View(out_sens$sens_wide)
+#'   View(out_sens$sens_long)
+#'
+#'   # regression and ANOVA on sensitivity output
+#'   datl <- out_sens1$sens_long
+#'   datl$ci100 <- 100 * datl$ci
+#'   datl$ind_removed2 <- factor(datl$ind_removed) %>% relevel(ref = "none")
+#'   X <- model.matrix(ci100 ~ factor(cutoff) + factor(miss) + factor(weights) + ind_removed2, data = datl)
+#'   y <- datl$ci100
+#'   dat <- data.frame(y, X)
+#'   formula <- paste(names(dat)[-1], collapse = "+")
+#'   formula <- paste("y~", formula)
+#'   mod <- lm(formula, data=dat)
+#'   summary(mod)
+#'   mod_anova <- anova(mod)
+#'   mod_anova
+#'
+#'   # graphical visualisation of the results
+#'   # median/mean of CI for each target unit ID
+#'   datw$medianCI <- apply(datw[, -1], MARGIN = 1, FUN = median)
+#'   datw$meanCI <- apply(datw[, -1], MARGIN = 1, FUN = mean)
+#'   datw <- datw %>%
+#'     relocate(medianCI, .after = aggregation_name) %>%
+#'     relocate(meanCI, .after = medianCI)
+#'   datw_no0 <- datw %>%
+#'     filter(meanCI != 0)
+#'   # long data about the first 400 units
+#'   datl_no0 <- datl %>%
+#'     filter(aggregation_name %in% datw_no0$aggregation_name[1:400]) %>%
+#'     left_join(datw_no0 %>% select(aggregation_name, medianCI, meanCI)) %>%
+#'     arrange(meanCI, aggregation_name)
+#'   aggr <- datl_no0$aggregation_name %>% unique
+#'   aggr <- data.frame(id = 1:length(aggr), aggregation_name = aggr)
+#'   datl_no0 <- datl_no0 %>% left_join(aggr)
+#'   boxplot(datl_no0$ci ~ datl_no0$id)
+#'  }
 #' }
 #' @rdname composite_sensitivity
 #' @export
@@ -626,7 +1064,7 @@ composite_sensitivity <- function(indicator_list,
   out_sens_all_long <- out_sens_all$out_long
   out_sens_all_long$ind_removed <- "none"
 
-  sens_wide <- out_sens_all_wide # only aggregation_name
+  sens_wide <- out_sens_all_wide #only aggregation_name
   sens_long <- out_sens_all_long
   # output of sensitivity with the removal of one indicator at a time
   for (i in 1:n) {
@@ -651,3 +1089,5 @@ composite_sensitivity <- function(indicator_list,
   }
   return(list(sens_wide = sens_wide, sens_long = sens_long))
 }
+
+

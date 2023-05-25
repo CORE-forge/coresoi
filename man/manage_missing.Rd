@@ -24,6 +24,7 @@ data matrix with no missing value.
 }
 \description{
 \code{manage_missing} deals with the imputation of missing values in the elementary indicators.
+\strong{It is an internal function.}
 }
 \details{
 Manage missing values in elementary indicators
