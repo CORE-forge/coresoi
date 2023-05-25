@@ -1,5 +1,8 @@
 # coresoi 1.0.0
 
+- add *composite* main function
+- complete documentation for *composite*
+
 # coresoi 0.2.0
 
 - updates pkg documentation
