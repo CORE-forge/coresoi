@@ -359,8 +359,7 @@ create_indicator_matrix <- function(out_list) {
 }
 
 
-#' Manage missing values in elementary indicators
-#' @title manage_missing
+#' @title  Manage missing values in elementary indicators
 #' @description `manage_missing` deals with the imputation of missing values in the elementary indicators.
 #' **It is an internal function.**
 #' @param data data matrix of elementary indicators (as returned by [create_indicator_matrix()]).

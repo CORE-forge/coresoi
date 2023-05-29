@@ -2,7 +2,7 @@
 % Please edit documentation in R/composite.R
 \name{manage_missing}
 \alias{manage_missing}
-\title{manage_missing}
+\title{Manage missing values in elementary indicators}
 \usage{
 manage_missing(data, missing = 0, verbose = TRUE, seed = 1234)
 }
@@ -27,8 +27,6 @@ data matrix with no missing value.
 \strong{It is an internal function.}
 }
 \details{
-Manage missing values in elementary indicators
-
 When \code{missing = 1}, elementary indicators are split up into two groups, according to
 the presence/absence of (at least one) missing values. Hence, the set of indicators without
 missing values (taken as covariates) is used to 'predict' the missing values in each of the other
