@@ -10,7 +10,7 @@ The red flag considers at risk those companies that exceptionally increase their
 Scoring Rule
 
 
-If Test-statistic significant-&amp;gt; 1, otherwise -&amp;gt; 0
+The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
 
 
 
@@ -30,7 +30,7 @@ The red flag considers at risk those companies that exceptionally increase their
 Scoring Rule
 
 
-If Test-statistic significant-&amp;gt; 1, otherwise -&amp;gt; 0
+The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
 
 
 
@@ -111,7 +111,7 @@ This indicator targets Companies
 <h3 id="scoring-rule">Scoring Rule<a class="anchor" aria-label="anchor" href="#scoring-rule"></a></h3>
 
 
-<p>If Test-statistic significant-&gt; 1, otherwise -&gt; 0</p>
+<p>The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.</p>
 </div>
 
 <div class="section">
@@ -158,7 +158,7 @@ This indicator targets Companies
 
 
 <dt>test_type</dt>
-<dd><p>This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".</p></dd>
+<dd><p>This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "wilcoxon" e "ks".</p></dd>
 
 </dl></div>
     <div class="section level2">

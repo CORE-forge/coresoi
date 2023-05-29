@@ -116,8 +116,8 @@ trends across the crisis.</p>
 <div class="section level2">
 <h2 id="compute-red-flags-ind_2">Compute red flags ( <code>ind_2</code> )<a class="anchor" aria-label="anchor" href="#compute-red-flags-ind_2"></a>
 </h2>
-<p>Let’s say we are interested in calculating and indicator say number
-2, All we need to do is to load data sample <code>mock_data_core</code>
+<p>Let’s say we are interested in calculating and indicator, say, number
+2. All we need to do is to load data sample <code>mock_data_core</code>
 and supply related variables to function <code><a href="../reference/ind_2.html">ind_2()</a></code>. Check out
 the documentation for function <code><a href="../reference/ind_2.html">ind_2()</a></code> to get a grasp on
 that.</p>
@@ -126,7 +126,7 @@ that.</p>
 <span></span>
 <span><span class="fu"><a href="../reference/ind_2.html">ind_2</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">mock_data_core</span>,</span>
-<span>  contract_value <span class="op">=</span> <span class="va">importo_complessivo_gara</span>,</span>
+<span>  contract_value <span class="op">=</span> <span class="va">importo_lotto</span>,</span>
 <span>  publication_date <span class="op">=</span> <span class="va">data_pubblicazione</span>,</span>
 <span>  stat_unit <span class="op">=</span> <span class="va">provincia</span>,</span>
 <span>  test_type <span class="op">=</span> <span class="st">"ks"</span>,</span>
@@ -136,15 +136,15 @@ that.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 12</span></span></span>
 <span><span class="co">#&gt;    indicator_id indicator_name   indicator_value aggregation_name aggregation_id</span></span>
 <span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            2 Awarded economi…          0.961  AGRIGENTO        ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            2 Awarded economi…          0.054<span style="text-decoration: underline;">0</span> ALESSANDRIA      ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            2 Awarded economi…          0.414  ANCONA           ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            2 Awarded economi…          0.136  AGRIGENTO        ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            2 Awarded economi…          0.161  ALESSANDRIA      ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            2 Awarded economi…          0.132  ANCONA           ISTAT1        </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            2 Awarded economi…          0.632  AREZZO           ISTAT1        </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            2 Awarded economi…          0      ASCOLI PICENO    ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            2 Awarded economi…          0.057<span style="text-decoration: underline;">0</span> ASTI             ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            2 Awarded economi…          0.143  AVELLINO         ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            2 Awarded economi…          0      BARI             ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            2 Awarded economi…          0.774  BARLETTA-ANDRIA… ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            2 Awarded economi…          0.059<span style="text-decoration: underline;">0</span> ASTI             ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            2 Awarded economi…          0      AVELLINO         ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            2 Awarded economi…          0.514  BARI             ISTAT1        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            2 Awarded economi…          0.488  BARLETTA-ANDRIA… ISTAT1        </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            2 Awarded economi…          0.12   BELLUNO          ISTAT1        </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: aggregation_type &lt;chr&gt;, emergency_id &lt;int&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   emergency_name &lt;chr&gt;, country_id &lt;chr&gt;, country_name &lt;chr&gt;,</span></span></span>
@@ -173,8 +173,8 @@ context for which the red flag was calculated.</li>
 <li>If users encounter any issues while using the package, they can
 refer to the documentation or reach out to the package maintainers via
 Github by opening an <a href="https://github.com/CORE-forge/coresoi/issues/new/choose" class="external-link">issue</a>
-or direcly to (<a href="mailto:niccolo.salvini27@gmail.com">Niccolò
-Salvini</a> or directly for technical support.</li>
+or directly to (<a href="mailto:niccolo.salvini27@gmail.com">Niccolò
+Salvini</a> for for technical support.</li>
 <li>The maintainers can assist with questions regarding the required
 input variables, resolving errors, or understanding the output schema of
 the red flag indicators.</li>
