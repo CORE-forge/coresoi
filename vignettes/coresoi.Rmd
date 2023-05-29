@@ -25,7 +25,7 @@ The procedure is extensible to other crisis contexts, replicable to other nation
 
 ## Compute red flags ( `ind_2` )
 
-Let's say we are interested in calculating and indicator say number 2,
+Let's say we are interested in calculating and indicator, say, number 2.
 All we need to do is to load data sample `mock_data_core` and supply related variables to function `ind_2()`. Check out the documentation for function `ind_2()` to get a grasp on that.
 
 
@@ -34,7 +34,7 @@ data("mock_data_core", package = "coresoi")
 
 ind_2(
   data = mock_data_core,
-  contract_value = importo_complessivo_gara,
+  contract_value = importo_lotto,
   publication_date = data_pubblicazione,
   stat_unit = provincia,
   test_type = "ks",
@@ -55,7 +55,7 @@ ind_2(
 
 ## Technical support
 
-- If users encounter any issues while using the package, they can refer to the documentation or reach out to the package maintainers via Github by opening an [issue](https://github.com/CORE-forge/coresoi/issues/new/choose) or direcly to ([Niccolò Salvini](mailto:niccolo.salvini27@gmail.com) or directly for technical support.
+- If users encounter any issues while using the package, they can refer to the documentation or reach out to the package maintainers via Github by opening an [issue](https://github.com/CORE-forge/coresoi/issues/new/choose) or directly to ([Niccolò Salvini](mailto:niccolo.salvini27@gmail.com) for for technical support.
 - The maintainers can assist with questions regarding the required input variables, resolving errors, or understanding the output schema of the red flag indicators.
 
 

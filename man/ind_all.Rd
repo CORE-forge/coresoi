@@ -2,7 +2,7 @@
 % Please edit documentation in R/composite.R
 \name{ind_all}
 \alias{ind_all}
-\title{ind_all}
+\title{Compute all the elementary indicators}
 \usage{
 ind_all(data, data_ind8, emergency_name, target_unit, id_location = NULL)
 }

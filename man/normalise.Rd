@@ -2,7 +2,7 @@
 % Please edit documentation in R/composite.R
 \name{normalise}
 \alias{normalise}
-\title{normalise}
+\title{Normalise the elementary indicators}
 \usage{
 normalise(data, method = "binary", cutoff = 0.95)
 }
@@ -25,7 +25,7 @@ the z-score is obtained as follows:
 \item \code{"minmax"}: each elementary indicator is normalised using the 'min-max' criterion:
 }
 
-\deqn{I_{qc} = \frac{x_{qc} - min(x_{qc})}{(max(x_{qc}) - min(x_{qc}))}}
+\deqn{I_{qc} = \frac{x_{qc} - min(x_{qc})}{max(x_{qc}) - min(x_{qc})}}
 \itemize{
 \item \code{"distref"}: each elementary indicator is normalised by dividing it by its maximum;
 \item \code{"catscale"}: each elementary indicator is discretised into five categories, according to suitable
@@ -42,8 +42,6 @@ data matrix of normalised indicators according to the chosen method.
 (e.g., ranking, min-max, dichotomisation, etc.).
 }
 \details{
-Normalise the elementary indicators
-
 In the CO.R.E. project, according to the proposed set of elementary indicators,
 a suitable normalisation method should be the \emph{'dichotomisation'} (i.e., \code{method = "binary"}),
 in order to make all the indicators as binary. In particular, if a given normalised elementary

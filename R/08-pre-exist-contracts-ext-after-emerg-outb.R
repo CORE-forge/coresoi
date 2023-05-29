@@ -14,7 +14,7 @@
 #' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
 #' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
 #' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.
-#' @param variant_date This argument specifies the date of any contract variations that may affect the analysis. If provided, the function will only consider data prior to this date for comparison. If not provided, the function will use the exp_end date for each contract.
+#' @param variant_dateThis argument corresponds to the name of the column in data containing the date of each contract variants.
 #' @param months_win This argument specifies the time window for contract variation to be considered when identifying a relevant pre and post contract variation period. This value should be numeric and indicates the duration of the time window in months.
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
 #' @return indicator schema as from `generate_indicator_schema`

@@ -2,7 +2,7 @@
 % Please edit documentation in R/composite.R
 \name{compute_composite}
 \alias{compute_composite}
-\title{compute_composite}
+\title{Compute composite indicator}
 \usage{
 compute_composite(
   indicator_list,

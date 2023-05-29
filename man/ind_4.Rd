@@ -17,7 +17,7 @@ ind_4(
 \arguments{
 \item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
 
-\item{exp_end}{Expected end of the contract i.e. contract completion date}
+\item{exp_end}{This argument corresponds to the name of the column in data containing the expected end of the contract i.e. contract completion date}
 
 \item{eff_start}{This argument corresponds to the name of the column in data containing the effective start date for each contract.}
 
@@ -41,16 +41,13 @@ The red flag considers at risk companies whose contracts undergo a significant i
 
 \subsection{Scoring Rule}{
 
-If Test-statistic significant-> 1, otherwise -> 0
+The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
 }
 
 \subsection{Main target unit}{
 
 This indicator targets \strong{companies} and \strong{contracting authorities}
 }
-}
-\details{
-DETAILS
 }
 \examples{
 \dontrun{

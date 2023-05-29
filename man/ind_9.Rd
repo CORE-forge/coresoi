@@ -2,7 +2,7 @@
 % Please edit documentation in R/09-lengthy-contract.R
 \name{ind_9}
 \alias{ind_9}
-\title{compute Lenghty Contracts indicator}
+\title{Compute Lenghty Contracts indicator}
 \usage{
 ind_9(data, publication_date, stat_unit, eff_start, eff_end, emergency_name)
 }
@@ -31,7 +31,7 @@ The red flag considers at risk contracts won after the emergency outbreak whose 
 
 \subsection{Scoring Rule}{
 
-If Test-statistic significant-> 1, otherwise -> 0
+The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
 }
 
 \subsection{Main target unit}{
@@ -46,7 +46,6 @@ if (interactive()) {
     data = mock_data_core,
     publication_date = data_pubblicazione,
     stat_unit = cf_amministrazione_appaltante,
-    cpv = cod_cpv,
     eff_start = data_inizio_effettiva,
     eff_end = data_effettiva_ultimazione,
     emergency_name = "coronavirus"

@@ -7,7 +7,7 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
     stats::t.test(x = mean_to_compare, mu = ground_mean, alternative = "greater")$p.value
 }
 
-#' compute Lenghty Contracts indicator
+#' Compute Lenghty Contracts indicator
 #'
 #' @description
 #' The indicator reveals whether the duration of a contract is significantly longer than the average length of awarded contracts after the emergency outbreak
@@ -16,7 +16,7 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
 #' The red flag considers at risk contracts won after the emergency outbreak whose duration is not justified by the nature of the crisis, that is, contracts longer than the average duration of contracts won after the emergency outbreak
 #'
 #' ### Scoring Rule
-#' If Test-statistic significant-> 1, otherwise -> 0
+#' The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
 #'
 #' ### Main target unit
 #' This indicator targets **companies** and **contracting authorities**
@@ -34,7 +34,6 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,
 #'     stat_unit = cf_amministrazione_appaltante,
-#'     cpv = cod_cpv,
 #'     eff_start = data_inizio_effettiva,
 #'     eff_end = data_effettiva_ultimazione,
 #'     emergency_name = "coronavirus"

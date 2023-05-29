@@ -34,11 +34,8 @@ If Test-statistic significant-> 1, otherwise -> 0
 
 \subsection{Main target unit}{
 
-This indicator targets \strong{companies} and \strong{contracting authorities}
+This indicator targets \strong{contracting authorities}
 }
-}
-\details{
-DETAILS
 }
 \examples{
 \dontrun{
@@ -47,7 +44,7 @@ if (interactive()) {
     data = mock_data_core,
     publication_date = data_pubblicazione,
     stat_unit = cf_amministrazione_appaltante,
-    winners = denominazione,
+    winners = codice_fiscale,
     emergency_name = "coronavirus"
   )
 }

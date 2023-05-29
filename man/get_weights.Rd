@@ -2,7 +2,7 @@
 % Please edit documentation in R/composite.R
 \name{get_weights}
 \alias{get_weights}
-\title{get_weights}
+\title{Get the set of weights for building the composite indicator}
 \usage{
 get_weights(data, method, ...)
 }
@@ -21,8 +21,6 @@ vector of weights.
 \code{get_weights} returns the weights for constructing the composite indicator.
 }
 \details{
-Get the set of weights for building the composite indicator
-
 This function returns a vector of weights, whose dimension is equal to the
 number of elementary indicators in \code{data} (say, \eqn{Q}). Three choices are offered:
 \itemize{

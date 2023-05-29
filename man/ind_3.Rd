@@ -16,7 +16,7 @@ ind_3(
 \arguments{
 \item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
 
-\item{award_value}{This argument corresponds to the name of the column in data containing the date when the tender was awarded.}
+\item{award_value}{This argument corresponds to the name of the column in data containing award value of the tender.}
 
 \item{sums_paid}{This argument corresponds to the name of the column in data containing the amount paid by the contracting authority for each contract. The values in this column should be numeric.}
 
@@ -38,16 +38,13 @@ The red flag considers at risk companies whose contracts undergo a \strong{signi
 
 \subsection{Scoring Rule}{
 
-If Test-statistic significant-> 1, otherwise -> 0
+The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
 }
 
 \subsection{Main target unit}{
 
 This indicator targets \strong{companies} and \strong{contracting authorities}
 }
-}
-\details{
-DETAILS
 }
 \examples{
 \dontrun{

@@ -7,18 +7,17 @@
 #' The red flag considers at risk companies whose contracts undergo a **significant increase** of their _economic deviation ratio_ - i.e., ratio between awarded economic value and actual amount paid - across the crisis.
 #'
 #' ### Scoring Rule
-#' If Test-statistic significant-> 1, otherwise -> 0
+#'  The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
 #'
 #' ### Main target unit
 #' This indicator targets **companies** and **contracting authorities**
 #' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
-#' @param award_value This argument corresponds to the name of the column in data containing the date when the tender was awarded.
+#' @param award_value This argument corresponds to the name of the column in data containing award value of the tender.
 #' @param sums_paid This argument corresponds to the name of the column in data containing the amount paid by the contracting authority for each contract. The values in this column should be numeric.
 #' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
 #' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
 #' @return indicator schema as from `generate_indicator_schema`
-#' @details DETAILS
 #' @examples
 #' \dontrun{
 #' if (interactive()) {

@@ -2,7 +2,7 @@
 % Please edit documentation in R/composite.R
 \name{composite_sensitivity}
 \alias{composite_sensitivity}
-\title{composite_sensitivity}
+\title{Perform a complete sensitivity analysis of the composite indicator}
 \usage{
 composite_sensitivity(indicator_list, cutoff = c(0.9, 0.95, 0.99, 0.995), ...)
 }
@@ -22,18 +22,15 @@ by combining methodological choices and indicator removals. See Details.
 \description{
 \code{composite_sensitivity} performs a complete sensitivity analysis of the composite
 indicator, by computing it using all the possible combinations of methodological choices --
-about \emph{normalisation}, \emph{management of missing values} and \emph{weighting} -- as well as evaluating
+about \strong{normalisation}, \strong{management of missing values}, \strong{weighting} and \strong{aggregation} -- as well as evaluating
 the contribution of each elementary indicator to the final composite, by removing each indicator
 at a time from the computation.
 \emph{Note: the unique normalisation method considered within the CO.R.E. project is the 'dichotomisation'.}
 \emph{Then, the sensitivity is based on the choice of the threshold. See Details.}
 }
 \details{
-Perform a complete sensitivity analysis of the composite indicator
-
 This is the main function for carrying out the sensitivity analysis of the composite
-indicator. It requires a list of indicator outputs, as returned by the single functions for their
-computation, such as \code{\link[=ind_1]{ind_1()}}, \code{\link[=ind_2]{ind_2()}}, etc. This list is given to the internal function
+indicator. It requires a list of indicator outputs as returned by \code{\link[=ind_all]{ind_all()}}. This list is given to the internal function
 \code{\link[=create_indicator_matrix]{create_indicator_matrix()}} for obtaining the data matrix of elementary indicators.
 
 Thereafter, several steps for the sensitivity analysis are performed, as follows.
@@ -51,7 +48,7 @@ on the basis of each combination of the above methodological choices (steps 1-3)
 hence \eqn{k \times 2 \times 3} combinations, where \eqn{k} is the number of normalisation thresholds
 (\code{cutoff}). In addition, the composite indicator is computed by removing each elementary indicator
 at a time from the computation. Finally, given \eqn{Q} elementary indicators, the composite indicator is
-computed, for each target unit, \eqn{k \times 2 \times 3 \times Q+1} times.
+computed, for each target unit, \eqn{k \times 2 \times 3 \times (Q+1)} times.
 }
 
 Results are returned in two dataframes. In the \strong{wide} version (\code{sens_wide}), we have the target unit

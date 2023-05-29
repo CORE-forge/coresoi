@@ -15,13 +15,10 @@ ind_7(data, final_award_date, emergency_name, stat_unit, years_before)
 
 \item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies are the targets.}
 
-\item{years_before}{This argument specifies how many years before the variant_date (if provided) or the exp_end date to look for historical contract and payment data for comparison. This value should be an integer, it could also be a fraction of a year.}
-}
-\value{
-indicator schema as from \code{generate_indicator_schema}
+\item{years_before}{This argument specifies how many years before the contract date we need to look for the presence of awards to a specific company.}
 }
 \description{
-The indicator focuses on companies that after the emergency outbreak were awarded one or more public contracts having participated in the public procurement process without winning in the 5 years before the emergency outbreak
+The indicator focuses on companies that after the emergency outbreak were awarded one or more public contracts having participated in the public procurement process without winning in the \code{years_before} the emergency outbreak
 \subsection{Motivation:}{
 
 The red flag considers at risk those companies that \strong{show a "one- shot opportunistic behaviour"}, that is, companies that after the emergency outbreak were awarded one or more public contracts but \emph{did not show any competitive power in the previous years}

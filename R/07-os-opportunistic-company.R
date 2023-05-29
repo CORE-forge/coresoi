@@ -1,7 +1,7 @@
 #' Compute One-shot opportunistic companies over the crisiss indicator
 #'
 #' @description
-#' The indicator focuses on companies that after the emergency outbreak were awarded one or more public contracts having participated in the public procurement process without winning in the 5 years before the emergency outbreak
+#' The indicator focuses on companies that after the emergency outbreak were awarded one or more public contracts having participated in the public procurement process without winning in the `years_before` the emergency outbreak
 #'
 #' ### Motivation:
 #' The red flag considers at risk those companies that **show a "one- shot opportunistic behaviour"**, that is, companies that after the emergency outbreak were awarded one or more public contracts but _did not show any competitive power in the previous years_
@@ -15,8 +15,7 @@
 #' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies are the targets.
 #' @param final_award_date  This argument corresponds to the name of the column in data containing the date of the contract award, as recorded in the minutes or official documentation. Although the column values are stored as character strings, the function will automatically convert them to date objects when needed.
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
-#' @param years_before This argument specifies how many years before the variant_date (if provided) or the exp_end date to look for historical contract and payment data for comparison. This value should be an integer, it could also be a fraction of a year.
-#' @return indicator schema as from `generate_indicator_schema`
+#' @param years_before This argument specifies how many years before the contract date we need to look for the presence of awards to a specific company.
 #' @examples
 #' \dontrun{
 #' if (interactive()) {

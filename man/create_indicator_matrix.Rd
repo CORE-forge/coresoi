@@ -2,7 +2,7 @@
 % Please edit documentation in R/composite.R
 \name{create_indicator_matrix}
 \alias{create_indicator_matrix}
-\title{create_indicator_matrix}
+\title{Create matrix of elementary indicators}
 \usage{
 create_indicator_matrix(out_list)
 }
@@ -19,8 +19,6 @@ indicator values as subsequent columns (according to \code{out_list}).
 (row = target unit; columns = indicator values). \strong{It is an internal function.}
 }
 \details{
-Create matrix of elementary indicators
-
 Target unit ID in each output of \code{out_list} can be different and a full join is carried out for merging all the
 indicators and building the final data matrix.
 }

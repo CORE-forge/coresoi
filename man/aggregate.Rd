@@ -2,7 +2,7 @@
 % Please edit documentation in R/composite.R
 \name{aggregate}
 \alias{aggregate}
-\title{aggregate}
+\title{Aggregate the elementary indicators on the provided data matrix}
 \usage{
 aggregate(data, method = "linear", w)
 }
@@ -22,8 +22,6 @@ vector of composite indicator values for each target unit in \code{data}.
 method and computes the composite according to the specified set of weights.
 }
 \details{
-Aggregate the elementary indicators on the provided data matrix
-
 The choice of the aggregation method heavily depends on the degree of compensability
 or substitutability of the elementary indicators. A compensatory approach requires the use of
 \emph{linear} functions (e.g., a linear combination of the elementary indicators), while

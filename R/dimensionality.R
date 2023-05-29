@@ -1,4 +1,4 @@
-#' @title dimensionality_check
+#' @title Dimensionality Check
 #' @description `dimensionality_check` performs a dimensionality assessment of a set of elementary indicators
 #' using either the Item Response Theory (IRT) framework or the Factor Analysis (FA).
 #' @param indicator_list list of outputs about each indicator computable for the target unit
@@ -52,7 +52,7 @@
 #' Finally 1 + `nrep` estimates of the IRT model with \eqn{d} dimensions are obtained and that with the largest
 #' value of maximised likelihood is saved in the list to be returned.
 #'
-#' Step 2 is repeated starting from \eqn{d = 2} until \eqn{d = `max_ndim`}. As the function ends, a list of `max_ndim`
+#' Step 2 is repeated starting from \eqn{d = 2} until \eqn{d =} `max_ndim`. As the function ends, a list of `max_ndim`
 #' IRT models is returned, one for each potential number of dimensions. Moreover, a summary of the dimensionality check
 #' is displayed, showing, for each \eqn{d}, the model fitting metrics of the best model with \eqn{d} dimensions.
 #' This summary helps in selecting the most suitable dimensional solution.
@@ -67,14 +67,29 @@
 #' @examples
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#'  mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'  out_companies <- ind_all(data = mock_data_core,
+#'                          data_ind8 = mock_data_core_variants,
+#'                          emergency_name = "coronavirus",
+#'                          target_unit = "companies")
+#'   out_dim <- dimensionality_check(indicator_list = out_companies,
+#'                                 dim_method = "IRT",
+#'                                 max_ndim = 4,
+#'                                 cutoff = 0.95,
+#'                                 missing = 0,
+#'                                 nrep = 3,
+#'                                 TOL = 0.1,
+#'                                 verbose = TRUE,
+#'                                 method = "QMCEM")
 #'  }
 #' }
 #' @seealso
 #'  \code{\link[mirt]{mirt}}
+#'  \code{\link[psych]{fa}}
 #' @rdname dimensionality_check
 #' @export
 #' @importFrom mirt mirt
+#' @importFrom psych fa
 
 dimensionality_check <- function(indicator_list,
                                  dim_method = "IRT",

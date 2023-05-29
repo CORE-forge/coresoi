@@ -38,7 +38,7 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 #' The red flag considers at risk those companies that **exceptionally increase** their _competitive power_ over the outbreak, in terms of economic value of their awarded contracts on the relevant economic market.
 #'
 #' ### Scoring Rule
-#' If Test-statistic significant-> 1, otherwise -> 0
+#' The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
 #'
 #' ### Main target unit
 #' This indicator targets **Companies**
@@ -46,7 +46,7 @@ compute_kolmogorov_smirnoff <- function(data, var, group, alternative = "less") 
 #' @param contract_value This argument corresponds to the name of the column in data containing the overall amount of the tender for each contract. The values in this column should be numeric.
 #' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator companies are the target.
 #' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
-#' @param test_type This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".
+#' @param test_type This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "wilcoxon" e "ks".
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
 #' @return indicator schema as from `generate_indicator_schema()` rows determined by aggregation level and `indicator_value` based on statistical test performed in `ind_2`
 #' @examples

@@ -246,7 +246,7 @@ ind_all_geogr <- function(data,
 
 
 
-#' @title ind_all
+#' @title Compute all the elementary indicators
 #' @description `ind_all` computes all the elementary indicators, by returning them in a list (useful for
 #' calling the other functions of `coresoi`)
 #' @param data a data frame or tibble containing the data you want to use to calculate all the indicator.
@@ -258,7 +258,6 @@ ind_all_geogr <- function(data,
 #' `"contracting_authorities"` or `"territory"`
 #' @param id_location name of the variable in `data` and `data_ind8` that refers to geographic location of
 #' interest (e.g., provinces, regions).
-#' @return a list of outputs about each indicator computable for the selected target unit.
 #' @details This functions is a wrapper of the single functions for computing the elementary indicators.
 #' Given the data on which we want to compute them and the emergency, together with the target unit, the
 #' function calls each 'elementary' function for computing the single red flags, according to the specified target.
@@ -279,7 +278,7 @@ ind_all_geogr <- function(data,
 #' (and `data_ind8`) that relates to the territorial location of interest (e.g., it could be province code/name).
 #'
 #' **NOTE: for the moment, it works only on Italian data (BDNCP).**
-#'
+#' @return a list of outputs about each indicator computable for the selected target unit.
 #' @examples
 #' \dontrun{
 #' if(interactive()) {
@@ -316,8 +315,7 @@ ind_all <- function(data,
 
 
 
-#' Create matrix of elementary indicators
-#' @title create_indicator_matrix
+#' @title Create matrix of elementary indicators
 #' @description `create_indicator_matrix` creates the data matrix of elementary indicators
 #' (row = target unit; columns = indicator values). **It is an internal function.**
 #' @param out_list list of outputs about each indicator computable for the target unit
@@ -382,7 +380,6 @@ create_indicator_matrix <- function(out_list) {
 #' indicator with missing values. As such, these models can predict a probability for each combination
 #' of observed indicators; then, a random draw from a Bernoulli distribution with the predicted
 #' probability as parameter is performed for imputing '0' or '1' in the indicator with missing values.
-#' @keywords internal
 #' @seealso
 #'  \code{\link[tidyr]{drop_na}}
 #'  \code{\link[dplyr]{select}}
@@ -450,8 +447,7 @@ manage_missing <- function(data,
 }
 
 
-#' Normalise the elementary indicators
-#' @title normalise
+#' @title Normalise the elementary indicators
 #' @description `normalise` normalises the elementary indicators using a suitable normalisation method
 #' (e.g., ranking, min-max, dichotomisation, etc.).
 #' @param data data matrix of elementary indicators (as returned by [create_indicator_matrix()])
@@ -471,7 +467,7 @@ manage_missing <- function(data,
 #'
 #'  - `"minmax"`: each elementary indicator is normalised using the 'min-max' criterion:
 #'
-#'  \deqn{I_{qc} = \frac{x_{qc} - min(x_{qc})}{(max(x_{qc}) - min(x_{qc}))}}
+#'  \deqn{I_{qc} = \frac{x_{qc} - min(x_{qc})}{max(x_{qc}) - min(x_{qc})}}
 #'
 #'  - `"distref"`: each elementary indicator is normalised by dividing it by its maximum;
 #'
@@ -577,8 +573,7 @@ normalise <- function(data,
 }
 
 
-#' Get the set of weights for building the composite indicator
-#' @title get_weights
+#' @title Get the set of weights for building the composite indicator
 #' @description `get_weights` returns the weights for constructing the composite indicator.
 #' @param data data matrix of **binary** elementary indicators (without missing values).
 #' @param method method for getting the set of weights. Possible choices are:
@@ -663,8 +658,7 @@ get_weights <- function(data,
 }
 
 
-#' Aggregate the elementary indicators on the provided data matrix
-#' @title aggregate
+#' @title Aggregate the elementary indicators on the provided data matrix
 #' @description `aggregate` aggregates the set of elementary indicators through the selected
 #' method and computes the composite according to the specified set of weights.
 #' @param data data matrix with the set of **normalised** elementary indicators
@@ -739,7 +733,7 @@ aggregate <- function(data,
 }
 
 
-#' @title compute_composite
+#' @title Compute composite indicator
 #' @description `compute_composite` is a generic function that calculates the composite indicators according to
 #' specified *normalisation*, *missing management*, *weighting* and *aggregation* methods.
 #' @param indicator_list list of outputs about each indicator computable for the target unit
@@ -924,11 +918,10 @@ composite_sensitivity_methods <- function(indicator_list,
 }
 
 
-#' Perform a complete sensitivity analysis of the composite indicator
-#' @title composite_sensitivity
+#' @title Perform a complete sensitivity analysis of the composite indicator
 #' @description `composite_sensitivity` performs a complete sensitivity analysis of the composite
 #' indicator, by computing it using all the possible combinations of methodological choices --
-#' about *normalisation*, *management of missing values* and *weighting* -- as well as evaluating
+#' about **normalisation**, **management of missing values**, **weighting** and **aggregation** -- as well as evaluating
 #' the contribution of each elementary indicator to the final composite, by removing each indicator
 #' at a time from the computation.
 #' *Note: the unique normalisation method considered within the CO.R.E. project is the 'dichotomisation'.*
@@ -941,8 +934,7 @@ composite_sensitivity_methods <- function(indicator_list,
 #' which includes, for each target unit, all the possible values of the composite indicator obtained
 #' by combining methodological choices and indicator removals. See Details.
 #' @details This is the main function for carrying out the sensitivity analysis of the composite
-#' indicator. It requires a list of indicator outputs, as returned by the single functions for their
-#' computation, such as [ind_1()], [ind_2()], etc. This list is given to the internal function
+#' indicator. It requires a list of indicator outputs as returned by [ind_all()]. This list is given to the internal function
 #' [create_indicator_matrix()] for obtaining the data matrix of elementary indicators.
 #'
 #' Thereafter, several steps for the sensitivity analysis are performed, as follows.
@@ -963,7 +955,7 @@ composite_sensitivity_methods <- function(indicator_list,
 #' hence \eqn{k \times 2 \times 3} combinations, where \eqn{k} is the number of normalisation thresholds
 #' (`cutoff`). In addition, the composite indicator is computed by removing each elementary indicator
 #' at a time from the computation. Finally, given \eqn{Q} elementary indicators, the composite indicator is
-#' computed, for each target unit, \eqn{k \times 2 \times 3 \times Q+1} times.
+#' computed, for each target unit, \eqn{k \times 2 \times 3 \times (Q+1)} times.
 #'
 #' Results are returned in two dataframes. In the **wide** version (`sens_wide`), we have the target unit
 #' in the rows and as many columns as the number of the above combinations, which report

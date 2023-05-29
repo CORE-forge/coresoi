@@ -24,7 +24,7 @@ ind_2(
 
 \item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator companies are the target.}
 
-\item{test_type}{This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".}
+\item{test_type}{This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "wilcoxon" e "ks".}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema()} rows determined by aggregation level and \code{indicator_value} based on statistical test performed in \code{ind_2}
@@ -38,7 +38,7 @@ The red flag considers at risk those companies that \strong{exceptionally increa
 
 \subsection{Scoring Rule}{
 
-If Test-statistic significant-> 1, otherwise -> 0
+The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
 }
 
 \subsection{Main target unit}{

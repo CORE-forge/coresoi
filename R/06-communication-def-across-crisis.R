@@ -1,13 +1,13 @@
 #'  Compute Communication default across the crisis indicator
 #'
 #' @description
-#' The indicator reveals whether - and to what extent - the duty of contracting authorities to communicate the public procurement procedure activation to the Anticorruption Authority ended with a technical failure
+#' The indicator reveals whether - and to what extent - the duty of contracting authorities to communicate the public procurement procedure activation to the Anticorruption Authority ended with a technical failure.
 #'
 #' ### Motivation:
 #' The red flag considers at risk contracting authorities **who fail to accomplish their duty** to communicate the public procurement procedure activation to the Anticorruption Authority
 #'
 #' ### Scoring Rule
-#' If Test-statistic significant-> 1, otherwise -> 0
+#' The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
 #'
 #' ### Main target unit
 #' This indicator targets **contracting authorities**
@@ -27,7 +27,7 @@
 #'     publication_date = data_pubblicazione,
 #'     emergency_name = "coronavirus",
 #'     award_col = id_aggiudicazione,
-#'     stat_unit = provincia,
+#'     stat_unit = cf_amministrazione_appaltante,
 #'     test_type = "fisher"
 #'   )
 #' }

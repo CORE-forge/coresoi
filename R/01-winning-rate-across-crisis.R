@@ -77,13 +77,11 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 #' @description
 #' The indicator focuses on companies that after the emergency outbreak were awarded public contracts much more frequently than before the emergency.
 #'
-#' @return indicator schema as from [generate_indicator_schema()]
-#'
 #' ### Motivation:
 #' The red flag considers at risk companies that **exceptionally increase** their competitive power over the emergency outbreak, in terms of proportion of awarded contracts on the relevant economic market.
 #'
-#' ### Scoring Rule:L
-#' If Test-statistic significant-> 1, otherwise -> 0
+#' ### Scoring Rule:
+#' The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
 #'
 #' ### Main target unit:
 #' This indicator targets **Companies**
@@ -93,6 +91,7 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
 #' @param test_type  This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".
 #' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator companies are the targets
+#' @return indicator schema as from [generate_indicator_schema()]
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
