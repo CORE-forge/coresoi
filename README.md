@@ -4,7 +4,7 @@
 # coresoi <img src="man/figures/logo.png" align="right" height="139" />
 
 <!-- badges: start -->
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8013258.svg)](https://doi.org/10.5281/zenodo.8013258)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![codecov](https://codecov.io/gh/CORE-forge/coresoi/branch/main/graph/badge.svg?token=DGJ8P5BZNH)](https://codecov.io/gh/CORE-forge/coresoi)
