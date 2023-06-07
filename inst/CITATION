@@ -5,7 +5,7 @@ citEntry(
   title    = "coresoi: measuring Corruption Risk in Emergency",
   author   = c(as.person("Niccolò Salvini"), as.person("Simone Del Sarto"), as.person("Michela Gnaldi")),
   year     = "2023",
-  doi      = "https://doi.org/10.5281/zenodo.8013258"
+  doi      = "https://doi.org/10.5281/zenodo.8013258",
   url      = c("https://core-forge.github.io/coresoi/index.html", "https://github.com/CORE-forge/coresoi/" ),
   textVersion = paste(
 
