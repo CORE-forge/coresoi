@@ -7,9 +7,10 @@
 generate_indicator_schema(
   .data,
   indicator_id,
-  aggregation_type,
   emergency,
   indicator_name,
+  missing_cols = c("codice_regione", "provincia_codice", "citta_codice",
+    "cf_amministrazione_appaltante", "codice_fiscale"),
   ...
 )
 }
