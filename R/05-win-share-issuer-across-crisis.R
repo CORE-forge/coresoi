@@ -48,6 +48,8 @@ ind_5 <- function(data,
   emergency_scenario <- emergency_dates(emergency_name)
   cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   cpv_col <- grab_cpv(data = data)
+  aggregation_name <- italian_aggregation_mapping[[rlang::ensym(stat_unit)]]
+
 
   data %>%
     dplyr::mutate(
@@ -65,7 +67,8 @@ ind_5 <- function(data,
       norm_gs = 1 -
         DescTools::GiniSimpson({{ winners }} %>% as.factor()) /
           ((dplyr::n_distinct({{ winners }}) - 1) / dplyr::n_distinct({{ winners }})),
-      norm_gs = round(norm_gs, 10)
+      norm_gs = round(norm_gs, 10),
+      aggregation_name = dplyr::first(!!rlang::sym(aggregation_name))
     ) %>%
     dplyr::ungroup() %>%
     tidyr::pivot_wider(names_from = prepost, values_from = norm_gs) %>%
@@ -101,8 +104,8 @@ ind_5 <- function(data,
       indicator_id = indicator_id,
       indicator_name = indicator_name,
       indicator_value = ind5, # no test
-      aggregation_name = {{ stat_unit }},
-      aggregation_type = as_string(aggregation_type),
+      aggregation_id = {{ stat_unit }},
+      aggregation_name = aggregation_name,
       emergency = emergency_scenario
     ) %>%
     return()

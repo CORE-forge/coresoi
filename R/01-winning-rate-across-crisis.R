@@ -120,12 +120,16 @@ ind_1 <- function(data,
                   emergency_name,
                   stat_unit,
                   test_type) {
+
+
+  #check_columns(.data, missing_cols)
+
   indicator_id <- 1
   indicator_name <- "Winning rate across the crisis"
-  aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
   cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   cpv_col <- grab_cpv(data = data)
+  aggregation_name <- italian_aggregation_mapping[[rlang::ensym(stat_unit)]]
 
   test <- function(a, b, c, d, test_type) {
     switch(test_type,
@@ -155,7 +159,7 @@ ind_1 <- function(data,
       )
     ) %>%
     dplyr::filter(!is.na({{ stat_unit }})) %>%
-    dplyr::group_by({{ stat_unit }}) %>%
+    dplyr::group_by({{ stat_unit }}) %>% #.data[[aggregation_name]]
     dplyr::summarise(
       n = dplyr::n(),
       n_11 = sum(flagdivision == 0 & prepost == "pre"),
@@ -166,7 +170,8 @@ ind_1 <- function(data,
       m_2 = n_21 + n_22,
       p_1 = n_12 / m_1,
       p_2 = n_22 / m_2,
-      diff_p2_p1 = p_2 - p_1
+      diff_p2_p1 = p_2 - p_1,
+      aggregation_name = dplyr::first(!!rlang::sym(aggregation_name))
     ) %>%
     # dplyr::filter(!is.na(p_1) & !is.na(p_2)) %>%
     dplyr::filter(n_12 > 0 | n_22 > 0) %>% # at least one contract in selected CPVs
@@ -181,13 +186,13 @@ ind_1 <- function(data,
         false = test
       )
     ) %>%
-    dplyr::select({{ stat_unit }}, dplyr::contains("test")) %>%
+    ungroup() %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
-      indicator_value = 1 - test, # 1 - pvalue
-      aggregation_name = {{ stat_unit }},
-      aggregation_type = as_string(aggregation_type),
+      indicator_value = 1 - test,
+      aggregation_name = aggregation_name,
+      aggregation_id = {{ stat_unit }},
       emergency = emergency_scenario
     ) %>%
     return()
