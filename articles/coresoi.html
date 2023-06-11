@@ -128,27 +128,27 @@ that.</p>
 <span>  data <span class="op">=</span> <span class="va">mock_data_core</span>,</span>
 <span>  contract_value <span class="op">=</span> <span class="va">importo_lotto</span>,</span>
 <span>  publication_date <span class="op">=</span> <span class="va">data_pubblicazione</span>,</span>
-<span>  stat_unit <span class="op">=</span> <span class="va">provincia</span>,</span>
+<span>  stat_unit <span class="op">=</span> <span class="va">codice_nuts3_2021</span>,</span>
 <span>  test_type <span class="op">=</span> <span class="st">"ks"</span>,</span>
 <span>  emergency_name <span class="op">=</span> <span class="st">"coronavirus"</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 12</span></span></span>
-<span><span class="co">#&gt;    indicator_id indicator_name   indicator_value aggregation_name aggregation_id</span></span>
-<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            2 Awarded economi…          0.136  AGRIGENTO        ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            2 Awarded economi…          0.161  ALESSANDRIA      ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            2 Awarded economi…          0.132  ANCONA           ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            2 Awarded economi…          0.632  AREZZO           ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            2 Awarded economi…          0      ASCOLI PICENO    ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            2 Awarded economi…          0.059<span style="text-decoration: underline;">0</span> ASTI             ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            2 Awarded economi…          0      AVELLINO         ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            2 Awarded economi…          0.514  BARI             ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            2 Awarded economi…          0.488  BARLETTA-ANDRIA… ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            2 Awarded economi…          0.12   BELLUNO          ISTAT1        </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: aggregation_type &lt;chr&gt;, emergency_id &lt;int&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   emergency_name &lt;chr&gt;, country_id &lt;chr&gt;, country_name &lt;chr&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   indicator_last_update &lt;dttm&gt;, data_last_update &lt;dttm&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 11</span></span></span>
+<span><span class="co">#&gt;    indicator_id indicator_name   indicator_value aggregation_id aggregation_name</span></span>
+<span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            2 Awarded economi…           0.439 ITC11          Torino          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            2 Awarded economi…           0.358 ITC12          Vercelli        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            2 Awarded economi…           0.841 ITC13          Biella          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            2 Awarded economi…           0.794 ITC14          Verbano-Cusio-O…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            2 Awarded economi…           0.391 ITC15          Novara          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            2 Awarded economi…           0.867 ITC16          Cuneo           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            2 Awarded economi…           0.963 ITC17          Asti            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            2 Awarded economi…           0.155 ITC18          Alessandria     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            2 Awarded economi…           0.934 ITC20          Valle d'Aosta/V…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            2 Awarded economi…           0.988 ITC31          Imperia         </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more variables: emergency_name &lt;chr&gt;, emergency_id &lt;int&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   country_id &lt;chr&gt;, country_name &lt;chr&gt;, indicator_last_update &lt;dttm&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   data_last_update &lt;dttm&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="usage-tips">Usage tips<a class="anchor" aria-label="anchor" href="#usage-tips"></a>

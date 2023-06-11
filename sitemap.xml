@@ -46,6 +46,9 @@
     <loc>https://core-forge.github.io/coresoi/reference/aggregate.html</loc>
   </url>
   <url>
+    <loc>https://core-forge.github.io/coresoi/reference/check_columns.html</loc>
+  </url>
+  <url>
     <loc>https://core-forge.github.io/coresoi/reference/composite_sensitivity.html</loc>
   </url>
   <url>
@@ -137,6 +140,9 @@
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/italian_aggregation_mapping.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/manage_missing.html</loc>
