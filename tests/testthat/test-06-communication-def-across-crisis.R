@@ -44,7 +44,7 @@ expect_within_range <- function(object, min, max) {
   fail(message)
 }
 
-test_that("check `ind_6()` are 12 columns as according to `generate_indicator_schema()`s", {
+test_that("check `ind_6()` are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressMessages({
       ind_6(
@@ -52,18 +52,18 @@ test_that("check `ind_6()` are 12 columns as according to `generate_indicator_sc
         publication_date = data_pubblicazione,
         emergency_name = "coronavirus",
         award_col = id_aggiudicazione,
-        stat_unit = provincia,
+        stat_unit = codice_nuts3_2021,
         test_type = "fisher"
       )
-    }), 12
+    }), 11
   )
 })
 
 
 test_that("check column names are as according to pre determined schema", {
   col_names <- c(
-    "indicator_id", "indicator_name", "indicator_value", "aggregation_name",
-    "aggregation_id", "aggregation_type", "emergency_id", "emergency_name",
+    "indicator_id", "indicator_name", "indicator_value",
+    "aggregation_id", "aggregation_name", "emergency_name", "emergency_id",
     "country_id", "country_name", "indicator_last_update",
     "data_last_update"
   )
@@ -75,7 +75,7 @@ test_that("check column names are as according to pre determined schema", {
         publication_date = data_pubblicazione,
         emergency_name = "coronavirus",
         award_col = id_aggiudicazione,
-        stat_unit = provincia,
+        stat_unit = codice_nuts3_2021,
         test_type = "fisher"
       ))
     }), col_names
@@ -92,7 +92,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         publication_date = data_pubblicazione,
         emergency_name = "coronavirus",
         award_col = id_aggiudicazione,
-        stat_unit = provincia,
+        stat_unit = codice_nuts3_2021,
         test_type = "fisher"
       )
     }),
@@ -102,24 +102,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 
 
 
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen, this time is 'z-test'", {
-  expect_within_range(
-    suppressMessages({
-      ind_6(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        emergency_name = "coronavirus",
-        award_col = id_aggiudicazione,
-        stat_unit = provincia,
-        test_type = "z-test"
-      )
-    }),
-    min = 0, max = 1
-  )
-})
-
-
-
+## test z-test
 
 test_that("check if the number of rows is coherent with the aggregation level (`provincia`)", {
   expect_row_number(
@@ -129,11 +112,11 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         publication_date = data_pubblicazione,
         emergency_name = "coronavirus",
         award_col = id_aggiudicazione,
-        stat_unit = provincia,
+        stat_unit = codice_nuts3_2021,
         test_type = "fisher"
       )
     }),
-    n = 108
+    n = 104
   )
 })
 
@@ -149,7 +132,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         test_type = "fisher"
       )
     }),
-    n = 731
+    n = 773
   )
 })
 

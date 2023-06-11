@@ -50,7 +50,7 @@ expect_within_range <- function(object, min, max) {
 ## - 4 test number of rows choerence with grouping var
 
 
-test_that("check `ind_4()` are 12 columns as according to `generate_indicator_schema()`s", {
+test_that("check `ind_4()` are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
       ind_4(
@@ -62,7 +62,7 @@ test_that("check `ind_4()` are 12 columns as according to `generate_indicator_sc
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       )
-    }), 12
+    }), 11
   )
 })
 
@@ -70,8 +70,8 @@ test_that("check `ind_4()` are 12 columns as according to `generate_indicator_sc
 ##  need to invert column orded (Je ne sais quoi)
 test_that("check column names are as according to pre determined schema", {
   col_names <- c(
-    "indicator_id", "indicator_name", "indicator_value", "aggregation_name",
-    "aggregation_id", "aggregation_type", "emergency_id", "emergency_name",
+    "indicator_id", "indicator_name", "indicator_value",
+    "aggregation_id","aggregation_name",  "emergency_name", "emergency_id",
     "country_id", "country_name", "indicator_last_update",
     "data_last_update"
   )
@@ -108,7 +108,7 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
         emergency_name = "coronavirus"
       )
     }),
-    min = -100, max = 100
+    min = 0, max = 1
   )
 })
 
@@ -126,7 +126,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "coronavirus"
       )
     }),
-    n = 76
+    n = 183
   )
 })
 

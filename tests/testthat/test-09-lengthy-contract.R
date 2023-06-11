@@ -61,7 +61,7 @@ expect_some_variability <- function(object, exp_value_counts) {
 
 
 
-test_that("check `ind_9()` are 12 columns as according to `generate_indicator_schema()`s with `stat_unit` being **cf_amministrazione_appaltante**", {
+test_that("check `ind_9()` are 11 columns as according to `generate_indicator_schema()`s with `stat_unit` being **cf_amministrazione_appaltante**", {
   expect_col_number(
     ind_9(
       data = mock_data_core,
@@ -70,7 +70,7 @@ test_that("check `ind_9()` are 12 columns as according to `generate_indicator_sc
       eff_start = data_inizio_effettiva,
       eff_end = data_effettiva_ultimazione,
       emergency_name = "coronavirus"
-    ), 12
+    ), 11
   )
 })
 
@@ -78,8 +78,8 @@ test_that("check `ind_9()` are 12 columns as according to `generate_indicator_sc
 
 test_that("check column names are as according to pre determined schema", {
   col_names <- c(
-    "indicator_id", "indicator_name", "indicator_value", "aggregation_name",
-    "aggregation_id", "aggregation_type", "emergency_id", "emergency_name",
+    "indicator_id", "indicator_name", "indicator_value",
+    "aggregation_id", "aggregation_name","emergency_name",  "emergency_id",
     "country_id", "country_name", "indicator_last_update",
     "data_last_update"
   )

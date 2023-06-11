@@ -44,7 +44,7 @@ expect_within_range <- function(object, min, max) {
 }
 
 
-test_that("check `ind_3()` are 12 columns as according to `generate_indicator_schema()`s", {
+test_that("check `ind_3()` are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
       ind_3(
@@ -55,15 +55,15 @@ test_that("check `ind_3()` are 12 columns as according to `generate_indicator_sc
         stat_unit = cf_amministrazione_appaltante,
         emergency_name = "coronavirus"
       )
-    }), 12
+    }), 11
   )
 })
 
 
 test_that("check column names are as according to pre determined schema", {
   col_names <- c(
-    "indicator_id", "indicator_name", "indicator_value", "aggregation_name",
-    "aggregation_id", "aggregation_type", "emergency_id", "emergency_name",
+    "indicator_id", "indicator_name", "indicator_value",
+    "aggregation_id","aggregation_name",  "emergency_name", "emergency_id",
     "country_id", "country_name", "indicator_last_update",
     "data_last_update"
   )
@@ -114,11 +114,11 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
         sums_paid = importo_lotto,
-        stat_unit = provincia,
+        stat_unit = codice_nuts3_2021,
         emergency_name = "coronavirus"
       )
     }),
-    n = 92 # without removing NAs
+    n = 104 # qui hai rimosso qualche provincia che magari è NA
   )
 })
 
@@ -135,7 +135,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "coronavirus"
       )
     }),
-    n = 352 # without removing NAs and
+    n = 771 # without removing NAs and
   )
 })
 
@@ -167,10 +167,10 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
         sums_paid = importo_lotto,
-        stat_unit = provincia,
+        stat_unit = codice_nuts3_2021,
         emergency_name = "coronavirus"
       )
     }),
-    n = 92 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
+    n = 104 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
   )
 })
