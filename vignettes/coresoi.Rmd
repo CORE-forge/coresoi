@@ -36,7 +36,7 @@ ind_2(
   data = mock_data_core,
   contract_value = importo_lotto,
   publication_date = data_pubblicazione,
-  stat_unit = provincia,
+  stat_unit = codice_nuts3_2021,
   test_type = "ks",
   emergency_name = "coronavirus"
 ) |>

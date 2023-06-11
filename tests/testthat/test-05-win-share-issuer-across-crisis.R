@@ -72,7 +72,7 @@ expect_within_range_tolerate <- function(object, min, max) {
 ## - 4 test number of rows choerence with grouping var
 ## TODO:  - 5  test diff  scenarios
 
-test_that("check `ind_5()` are 12 columns as according to `generate_indicator_schema()`s", {
+test_that("check `ind_5()` are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
       ind_5(
@@ -82,7 +82,7 @@ test_that("check `ind_5()` are 12 columns as according to `generate_indicator_sc
         winners = denominazione,
         emergency_name = "Coronavirus"
       )
-    }), 12
+    }), 11
   )
 })
 
@@ -116,12 +116,12 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
       ind_5(
         data = mock_data_core,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        stat_unit = codice_nuts3_2021,
         winners = denominazione,
         emergency_name = "Coronavirus"
       )
     }),
-    min = 0, max = 10
+    min = 0, max = 1
   )
 })
 
@@ -137,7 +137,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "Coronavirus"
       )
     }),
-    n = 194
+    n = 363
   )
 })
 
@@ -171,7 +171,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "terremoto aquila"
       )
     }),
-    n = 604 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
+    n = 1425
   )
 })
 

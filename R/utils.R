@@ -97,20 +97,43 @@ get_associated_cpv_from_emergency <- function(emergency_name) {
   return(cpv_match)
 }
 
+
+#' italian mapping from aggregation_id to aggregation_name
+#' @keywords internal
+italian_aggregation_mapping <- list(
+  cf_amministrazione_appaltante = "denominazione_amministrazione_appaltante",
+  codice_fiscale = "denominazione",
+  codice_nuts2_2021 = "nome_regione",
+  codice_nuts3_2021 = "nome_provincia"
+)
+
+
+#' simple wrapper to check if important columns are missing
+#' @keywords internal
+check_columns <- function(df, columns) {
+  missing_cols <- setdiff(columns, names(df))
+  if (length(missing_cols) > 0) {
+    stop(paste0("Missing columns: ", paste(missing_cols, collapse=", ")))
+  }
+}
+
+
+
 #' generate indicator schema
 #' @keywords internal
 #' @export
-generate_indicator_schema <- function(.data, indicator_id, aggregation_type, emergency, indicator_name, ...) { # ...
+generate_indicator_schema <- function(.data, indicator_id, emergency, indicator_name, missing_cols = c("codice_regione", "provincia_codice", "citta_codice", "cf_amministrazione_appaltante", "codice_fiscale"), ...) {
+
+  #check_columns(.data, missing_cols)
+
   common_schema <- .data %>%
     dplyr::transmute(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
       ...,
-      aggregation_id = "ISTAT1", # istat id from function
-      aggregation_type = aggregation_type, #  define also nuts within funs
-      emergency_id = emergency$em_id,
-      # emergency_type = emergency$em_type,
+      # aggregation_id = aggregation_id,
       emergency_name = emergency$em_name,
+      emergency_id = emergency$em_id,
       country_id = "1",
       country_name = "Italy",
       indicator_last_update = lubridate::now(),

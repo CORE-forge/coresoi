@@ -44,7 +44,7 @@ expect_within_range <- function(object, min, max) {
 }
 
 
-test_that("check `ind_2()` are 12 columns as according to `generate_indicator_schema()`s", {
+test_that("check `ind_2()` are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
       ind_2(
@@ -55,15 +55,15 @@ test_that("check `ind_2()` are 12 columns as according to `generate_indicator_sc
         test_type = "ks",
         emergency_name = "coronavirus"
       )
-    }), 12
+    }), 11
   )
 })
 
 
 test_that("check column names are as according to pre determined schema", {
   col_names <- c(
-    "indicator_id", "indicator_name", "indicator_value", "aggregation_name",
-    "aggregation_id", "aggregation_type", "emergency_id", "emergency_name",
+    "indicator_id", "indicator_name", "indicator_value",
+    "aggregation_id", "aggregation_name",  "emergency_name", "emergency_id",
     "country_id", "country_name", "indicator_last_update",
     "data_last_update"
   )
@@ -129,12 +129,12 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         data = mock_data_core,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        stat_unit = codice_nuts3_2021,
         test_type = "ks",
         emergency_name = "coronavirus"
       )
     }),
-    n = 109
+    n = 107
   )
 })
 
@@ -151,7 +151,7 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         emergency_name = "coronavirus"
       )
     }),
-    n = 3004
+    n = 3688 # questo numero è anche diverso di indicatore in indicatore e di scenario di emergenza in scenario
   )
 })
 
@@ -182,12 +182,12 @@ test_that("check if the number of rows is coherent with the aggregation level (`
         data = mock_data_core,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        stat_unit = codice_nuts3_2021,
         test_type = "ks",
         emergency_name = "terremoto aquila"
       )
     }),
-    n = 111
+    n = 107
   )
 })
 
@@ -200,7 +200,7 @@ test_that("check if `indicator_value` lays inbetween min/max values (different a
         data = mock_data_core,
         contract_value = importo_complessivo_gara,
         publication_date = data_pubblicazione,
-        stat_unit = provincia,
+        stat_unit = codice_nuts3_2021,
         test_type = "ks",
         emergency_name = "terremoto aquila"
       )

@@ -65,6 +65,7 @@ ind_9 <- function(data,
   emergency_scenario <- emergency_dates(emergency_name)
   cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   cpv_col <- grab_cpv(data = data)
+  aggregation_name <- italian_aggregation_mapping[[rlang::ensym(stat_unit)]]
 
   data_out <- data %>%
     dplyr::filter(!is.na({{ stat_unit }})) %>%
@@ -81,7 +82,7 @@ ind_9 <- function(data,
       contract_duration = dplyr::if_else(
         {{ eff_end }} < {{ eff_start }},
         true = NA_real_,
-        false = 1 + as.numeric({{ eff_end }} - {{ eff_start }})
+        false = 1 + as.numeric( lubridate::ymd({{ eff_end }})) - as.numeric( lubridate::ymd({{ eff_start }}))
       )
     )
 
@@ -95,6 +96,7 @@ ind_9 <- function(data,
     dplyr::filter(flagdivision == 1) %>%
     dplyr::group_by({{ stat_unit }}) %>%
     dplyr::summarise(
+      aggregation_name = dplyr::first(!!rlang::sym(aggregation_name)),
       n = dplyr::n(),
       mean = mean(contract_duration, na.rm = TRUE),
       median = median(contract_duration, na.rm = TRUE),
@@ -107,8 +109,8 @@ ind_9 <- function(data,
       indicator_id = indicator_id,
       indicator_name = indicator_name,
       indicator_value = 1 - wilctest, # 1 - pvalue
-      aggregation_name = {{ stat_unit }},
-      aggregation_type = rlang::as_string(aggregation_type),
+      aggregation_id = {{ stat_unit }},
+      aggregation_name = aggregation_name,
       emergency = emergency_scenario
     ) %>%
     return()

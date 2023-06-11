@@ -64,7 +64,7 @@ expect_either_0_or_1 <- function(object, min, max) {
 
 
 
-test_that("check `ind_7()` are 12 columns as according to `generate_indicator_schema()`s", {
+test_that("check `ind_7()` are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
       ind_7(
@@ -74,15 +74,15 @@ test_that("check `ind_7()` are 12 columns as according to `generate_indicator_sc
         emergency_name = "coronavirus",
         years_before = 1
       )
-    }), 12
+    }), 11
   )
 })
 
 
 test_that("check column names are as according to pre determined schema", {
   col_names <- c(
-    "indicator_id", "indicator_name", "indicator_value", "aggregation_name",
-    "aggregation_id", "aggregation_type", "emergency_id", "emergency_name",
+    "indicator_id", "indicator_name", "indicator_value",
+    "aggregation_id", "aggregation_name", "emergency_name",  "emergency_id",
     "country_id", "country_name", "indicator_last_update",
     "data_last_update"
   )

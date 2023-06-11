@@ -86,6 +86,7 @@ ind_2 <- function(data,
   emergency_scenario <- emergency_dates(emergency_name)
   cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   cpv_col <- grab_cpv(data = data)
+  aggregation_name <- italian_aggregation_mapping[[rlang::ensym(stat_unit)]]
 
 
   test <- function(data, var, group, test_type) {
@@ -126,6 +127,7 @@ ind_2 <- function(data,
     # dplyr::filter(all(c("pre", "post") %in% prepost)) %>%
     # dplyr::ungroup(prepost) %>%
     dplyr::summarise(
+      aggregation_name = dplyr::first(!!rlang::sym(aggregation_name)),
       npre = sum(prepost == "pre"),
       npost = sum(prepost == "post"),
       mean_pre = mean({{ contract_value }}[prepost == "pre"]),
@@ -143,8 +145,8 @@ ind_2 <- function(data,
       indicator_id = indicator_id,
       indicator_name = indicator_name,
       indicator_value = 1 - test, # 1 - pvalue
-      aggregation_name = {{ stat_unit }},
-      aggregation_type = as_string(aggregation_type),
+      aggregation_id = {{ stat_unit }},
+      aggregation_name = aggregation_name,
       emergency = emergency_scenario
     ) %>%
     return()

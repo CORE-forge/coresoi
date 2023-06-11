@@ -51,6 +51,7 @@ ind_8 <- function(data,
   emergency_scenario <- emergency_dates(emergency_name)
   cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   cpv_col <- grab_cpv(data = data)
+  aggregation_name <- italian_aggregation_mapping[[rlang::ensym(stat_unit)]]
 
   data %>%
     filter(!is.na({{ stat_unit }})) %>%
@@ -90,14 +91,16 @@ ind_8 <- function(data,
       nmod = sum(flag_modif == 1),
       #    ncig_mod = data.table::uniqueN(cig[flag_modif == 1]),
       # prop_mod = nmod/npre,
-      rf_value = 1 * (nmod > 0)
+      rf_value = 1 * (nmod > 0),
+      aggregation_name = dplyr::first(!!rlang::sym(aggregation_name))
+
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
       indicator_value = rf_value, # no test
-      aggregation_name = {{ stat_unit }},
-      aggregation_type = as_string(aggregation_type),
+      aggregation_id = {{ stat_unit }},
+      aggregation_name = aggregation_name,
       emergency = emergency_scenario
     ) %>%
     return()
