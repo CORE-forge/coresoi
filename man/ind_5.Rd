@@ -4,7 +4,7 @@
 \alias{ind_5}
 \title{Compute Winner's share of issuer's contract across the crisis indicator}
 \usage{
-ind_5(data, stat_unit, publication_date, winners, emergency_name)
+ind_5(data, stat_unit, publication_date, winners, emergency_name, cpvs, ...)
 }
 \arguments{
 \item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
@@ -16,6 +16,10 @@ ind_5(data, stat_unit, publication_date, winners, emergency_name)
 \item{winners}{This argument corresponds to the name of the column in data containing the winning companies for each contract. This column should contain character or factor values.}
 
 \item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
+
+\item{cpvs}{character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.}
+
+\item{...}{other parameters to pass to \code{generate_indicator_schema} as \code{country_name} if that not Italy, which is default behavior.}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

@@ -4,7 +4,7 @@
 \alias{ind_1}
 \title{Compute Winning rate across the crisis indicator}
 \usage{
-ind_1(data, publication_date, emergency_name, stat_unit, test_type)
+ind_1(data, publication_date, emergency_name, stat_unit, test_type, cpvs, ...)
 }
 \arguments{
 \item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
@@ -15,7 +15,11 @@ ind_1(data, publication_date, emergency_name, stat_unit, test_type)
 
 \item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator companies are the targets}
 
-\item{test_type}{This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".}
+\item{test_type}{This argument should be a character vector specifying the type of hypothesis test (belonging to category 1 i.e. see statistical_tests.R) to apply to the data. Available options are "barnard", "fisher", or "z-test".}
+
+\item{cpvs}{character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.}
+
+\item{...}{other parameters to pass to \code{generate_indicator_schema} as \code{country_name} if that not Italy, which is default behavior.}
 }
 \value{
 indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}

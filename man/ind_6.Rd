@@ -4,7 +4,16 @@
 \alias{ind_6}
 \title{Compute Communication default across the crisis indicator}
 \usage{
-ind_6(data, publication_date, emergency_name, award_col, stat_unit, test_type)
+ind_6(
+  data,
+  publication_date,
+  emergency_name,
+  award_col,
+  stat_unit,
+  test_type,
+  cpvs,
+  ...
+)
 }
 \arguments{
 \item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
@@ -17,7 +26,9 @@ ind_6(data, publication_date, emergency_name, award_col, stat_unit, test_type)
 
 \item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator contracting authorities are the targets.}
 
-\item{test_type}{This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".}
+\item{test_type}{This argument should be a character vector specifying the type of hypothesis test belonging to category 1 i.e. see statistical_tests.R)to apply to the data. Available options are "barnard", "fisher", or "z-test".}
+
+\item{cpvs}{character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

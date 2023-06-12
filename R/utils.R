@@ -118,11 +118,36 @@ check_columns <- function(df, columns) {
 }
 
 
+#' mapping from country name to id (this is used for frontend purposes)
+#' @keywords internal
+#' @export
+get_country_id_from_name <- function(country_name) {
+  associated_id_list <- list(
+    "Italy" = 1,
+    "Spain" = 2,
+    "Portugal" = 3,
+    "Ireland" = 4
+  )
+  country_match <- agrep(country_name, names(associated_id_list), max.distance = 0.3)
+
+  if (length(country_match) > 0) {
+    country <- list()
+    country$name <- names(associated_id_list[country_match[1]])
+    country$id <- associated_id_list[country_match[1]][[1]]
+    return(country)
+  } else {
+    # if no matches were found, return an error message
+    return("Error: Country specified not found in list. Country partners avaialble are 'Italy','Spain', 'Portugal', 'Ireland'. If you are willing to partecipate and generate indicators for your country please write email at @maintaner <niccolo.salvini27@gmail.com> ")
+  }
+}
+
+
+
 
 #' generate indicator schema
 #' @keywords internal
 #' @export
-generate_indicator_schema <- function(.data, indicator_id, emergency, indicator_name, missing_cols = c("codice_regione", "provincia_codice", "citta_codice", "cf_amministrazione_appaltante", "codice_fiscale"), ...) {
+generate_indicator_schema <- function(.data, indicator_id, emergency, indicator_name, missing_cols = c("codice_regione", "provincia_codice", "citta_codice", "cf_amministrazione_appaltante", "codice_fiscale"),  country_name = "Italy", ...) {
 
   #check_columns(.data, missing_cols)
 
@@ -134,8 +159,8 @@ generate_indicator_schema <- function(.data, indicator_id, emergency, indicator_
       # aggregation_id = aggregation_id,
       emergency_name = emergency$em_name,
       emergency_id = emergency$em_id,
-      country_id = "1",
-      country_name = "Italy",
+      country_id = get_country_id_from_name(country_name)$id,
+      country_name = get_country_id_from_name(country_name)$name,
       indicator_last_update = lubridate::now(),
       data_last_update = lubridate::now()
     )
