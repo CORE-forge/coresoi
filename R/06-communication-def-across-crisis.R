@@ -19,6 +19,7 @@
 #' @param test_type This argument should be a character vector specifying the type of hypothesis test belonging to category 1 i.e. see statistical_tests.R)to apply to the data. Available options are "barnard", "fisher", or "z-test".
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
 #' @param cpvs character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.
+#' @param ...  other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{

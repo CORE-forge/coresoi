@@ -29,6 +29,8 @@ ind_6(
 \item{test_type}{This argument should be a character vector specifying the type of hypothesis test belonging to category 1 i.e. see statistical_tests.R)to apply to the data. Available options are "barnard", "fisher", or "z-test".}
 
 \item{cpvs}{character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.}
+
+\item{...}{other parameters to pass to \code{generate_indicator_schema} as \code{country_name} if that not Italy, which is default behavior.}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}
