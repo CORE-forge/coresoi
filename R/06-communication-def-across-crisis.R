@@ -63,6 +63,11 @@ ind_6 <- function(data,
   }
   cpv_col <- grab_cpv(data = data)
 
+  if (missing(test_type)) {
+    test_type <- "wilcoxon"
+  }
+
+
 
   data %>%
     dplyr::mutate(
