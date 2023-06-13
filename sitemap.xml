@@ -73,6 +73,9 @@
     <loc>https://core-forge.github.io/coresoi/reference/compute_ttest.html</loc>
   </url>
   <url>
+    <loc>https://core-forge.github.io/coresoi/reference/compute_unpaired_ttest.html</loc>
+  </url>
+  <url>
     <loc>https://core-forge.github.io/coresoi/reference/compute_wilcox.html</loc>
   </url>
   <url>
@@ -92,6 +95,9 @@
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/get_associated_cpv_from_emergency.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/get_country_id_from_name.html</loc>
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/get_weights.html</loc>
@@ -155,5 +161,11 @@
   </url>
   <url>
     <loc>https://core-forge.github.io/coresoi/reference/pipe.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/test_set_1.html</loc>
+  </url>
+  <url>
+    <loc>https://core-forge.github.io/coresoi/reference/test_set_2.html</loc>
   </url>
 </urlset>

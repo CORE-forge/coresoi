@@ -131,7 +131,9 @@ This indicator targets Companies
 <span>  <span class="va">publication_date</span>,</span>
 <span>  <span class="va">emergency_name</span>,</span>
 <span>  <span class="va">stat_unit</span>,</span>
-<span>  <span class="va">test_type</span></span>
+<span>  <span class="va">test_type</span>,</span>
+<span>  <span class="va">cpvs</span>,</span>
+<span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -158,7 +160,15 @@ This indicator targets Companies
 
 
 <dt>test_type</dt>
-<dd><p>This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "wilcoxon" e "ks".</p></dd>
+<dd><p>This argument should be a character vector specifying the type of hypothesis test (belonging to category 2 i.e. see statistical_tests.R) to apply to the data. Available options are "wilcoxon" and "ks".</p></dd>
+
+
+<dt>cpvs</dt>
+<dd><p>character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.</p></dd>
+
+
+<dt>...</dt>
+<dd><p>other parameters to pass to <code>generate_indicator_schema</code> as <code>country_name</code> if that not Italy, which is default behavior.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -187,7 +197,7 @@ This indicator targets Companies
 <span class="r-in"><span>    contract_value <span class="op">=</span> <span class="va">importo_complessivo_gara</span>,</span></span>
 <span class="r-in"><span>    publication_date <span class="op">=</span> <span class="va">data_pubblicazione</span>,</span></span>
 <span class="r-in"><span>    stat_unit <span class="op">=</span> <span class="va">provincia</span>,</span></span>
-<span class="r-in"><span>    test_type <span class="op">=</span> <span class="st">"ks"</span>,</span></span>
+<span class="r-in"><span>    test_type <span class="op">=</span> <span class="st">"wilcoxon"</span>,</span></span>
 <span class="r-in"><span>    emergency_name <span class="op">=</span> <span class="st">"coronavirus"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>

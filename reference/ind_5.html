@@ -125,7 +125,7 @@ This indicator targets contracting authorities
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ind_5</span><span class="op">(</span><span class="va">data</span>, <span class="va">stat_unit</span>, <span class="va">publication_date</span>, <span class="va">winners</span>, <span class="va">emergency_name</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ind_5</span><span class="op">(</span><span class="va">data</span>, <span class="va">stat_unit</span>, <span class="va">publication_date</span>, <span class="va">winners</span>, <span class="va">emergency_name</span>, <span class="va">cpvs</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -148,6 +148,14 @@ This indicator targets contracting authorities
 
 <dt>emergency_name</dt>
 <dd><p>This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".</p></dd>
+
+
+<dt>cpvs</dt>
+<dd><p>character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.</p></dd>
+
+
+<dt>...</dt>
+<dd><p>other parameters to pass to <code>generate_indicator_schema</code> as <code>country_name</code> if that not Italy, which is default behavior.</p></dd>
 
 </dl></div>
     <div class="section level2">
