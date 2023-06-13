@@ -104,7 +104,8 @@ italian_aggregation_mapping <- list(
   cf_amministrazione_appaltante = "denominazione_amministrazione_appaltante",
   codice_fiscale = "denominazione",
   codice_nuts2_2021 = "nome_regione",
-  codice_nuts3_2021 = "nome_provincia"
+  codice_nuts3_2021 = "nome_provincia",
+  luogo_istat = "citta_nome"
 )
 
 

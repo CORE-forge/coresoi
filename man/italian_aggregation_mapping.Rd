@@ -5,7 +5,7 @@
 \alias{italian_aggregation_mapping}
 \title{italian mapping from aggregation_id to aggregation_name}
 \format{
-An object of class \code{list} of length 4.
+An object of class \code{list} of length 5.
 }
 \usage{
 italian_aggregation_mapping
