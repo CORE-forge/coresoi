@@ -18,6 +18,9 @@
 #' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
 #' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
+#' @param test_type This argument should be a character vector specifying the type of hypothesis test (belonging to category 2 i.e. see statistical_tests.R) to apply to the data. Available options are "wilcoxon" and "ks".
+#' @param cpvs character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.
+#' @param ...  other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
@@ -46,15 +49,24 @@ ind_4 <- function(data,
                   eff_end,
                   stat_unit,
                   emergency_name,
-                  publication_date) {
+                  publication_date,
+                  test_type,
+                  cpvs,
+                  ...) {
   indicator_id <- 4
   indicator_name <- "Length deviation across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
-  cpv_col <- grab_cpv(data = data)
   aggregation_name <- italian_aggregation_mapping[[rlang::ensym(stat_unit)]]
 
+  if (missing(cpvs)) {
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  }
+  cpv_col <- grab_cpv(data = data)
+
+  if (missing(test_type)) {
+    test_type <- "wilcoxon"
+  }
 
 
   data %>%
@@ -89,7 +101,7 @@ ind_4 <- function(data,
       mean_post = mean(ratio[prepost == "post"]),
       median_pre = median(ratio[prepost == "pre"]),
       median_post = median(ratio[prepost == "post"]),
-      ind_4 = compute_kolmogorov_smirnoff(var = ratio, group = prepost, data = .)[1]
+      ind_4 = test_set_2(var = ratio, group = prepost, data = ., test_type)[1]
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,

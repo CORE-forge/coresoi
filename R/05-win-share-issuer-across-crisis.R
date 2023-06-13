@@ -15,6 +15,8 @@
 #' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.
 #' @param winners  This argument corresponds to the name of the column in data containing the winning companies for each contract. This column should contain character or factor values.
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
+#' @param cpvs character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.
+#' @param ... other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
@@ -41,14 +43,19 @@ ind_5 <- function(data,
                   stat_unit,
                   publication_date,
                   winners,
-                  emergency_name) {
+                  emergency_name,
+                  cpvs,
+                  ...) {
   indicator_id <- 5
   indicator_name <- "Winner's share of issuer's contract across the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
-  cpv_col <- grab_cpv(data = data)
   aggregation_name <- italian_aggregation_mapping[[rlang::ensym(stat_unit)]]
+
+  if (missing(cpvs)) {
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
+  }
+  cpv_col <- grab_cpv(data = data)
 
 
   data %>%

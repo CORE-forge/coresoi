@@ -1,77 +1,3 @@
-#' compute Fisher-exact test https://en.wikipedia.org/wiki/Fisher%27s_exact_test
-#' @description  compute fisher test pvalue and estimate in piped expression
-#' @keywords internal
-#' @export
-compute_fisher <- function(a, b, c, d) {
-  if (any(is.na(list(a, b, c, d)))) {
-    stop("All inputs must be non-missing")
-  }
-
-  data <- matrix(c(a, b, c, d), ncol = 2)
-  c(
-    p_value = round(fisher.test(data, alternative = "greater")$p.value, 3),
-    estimate = round(fisher.test(data, alternative = "greater")$estimate, 3)
-  )
-}
-
-#' compute Barnard test https://en.wikipedia.org/wiki/Barnard%27s_test
-#' @description  compute Barnard test pvalue and estimate in piped expression
-#' @keywords internal
-#' @export
-compute_barnard <- function(a, b, c, d, method = "boschloo") {
-  if (any(is.na(list(a, b, c, d)))) {
-    stop("All inputs must be non-missing")
-  }
-  # only pre
-  if ((a + b) > 0 & (c + d) == 0) {
-    1
-  }
-  # only post
-  else if ((a + b) == 0 & (c + d) > 0) {
-    0
-  } else {
-    data <- matrix(c(d, b, c, a), ncol = 2)
-    out_barn <- DescTools::BarnardTest(data, alternative = "greater", method = "boschloo") %>%
-      suppressWarnings()
-    c(
-      p_value = round(out_barn$p.value, 5),
-      estimate = round(out_barn$estimate, 3)
-    )
-  }
-}
-
-#' compute Z-test proportional
-#' @description  compute Z-test pvalue and estimate in piped expression
-#' @keywords internal
-#' @export
-compute_prop_test <- function(a, b, c, d, correct = FALSE) {
-  if (any(is.na(list(a, b, c, d)))) {
-    stop("All inputs must be non-missing")
-  }
-
-  m_1 <- a + b
-  m_2 <- c + d
-  p_1 <- b / m_1
-  p_2 <- d / m_2
-  diff_p2_p1 <- p_2 - p_1
-
-  c(
-    p_value = stats::prop.test(
-      x = c(d, b),
-      n = c(m_2, m_1),
-      correct = correct,
-      alternative = "greater"
-    )$p.value %>% suppressWarnings(),
-    estimate = stats::prop.test(
-      x = c(d, b),
-      n = c(m_2, m_1),
-      correct = correct,
-      alternative = "greater"
-    )$estimate %>% suppressWarnings()
-  )
-}
-
-
 #' Compute Winning rate across the crisis indicator
 #'
 #' @description
@@ -89,8 +15,10 @@ compute_prop_test <- function(a, b, c, d, correct = FALSE) {
 #' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
 #' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
-#' @param test_type  This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".
+#' @param test_type  This argument should be a character vector specifying the type of hypothesis test (belonging to category 1 i.e. see statistical_tests.R) to apply to the data. Available options are "barnard", "fisher", or "z-test".
 #' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator companies are the targets
+#' @param cpvs  character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.
+#' @param ... other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
 #' @return indicator schema as from [generate_indicator_schema()]
 #' @examples
 #' \dontrun{
@@ -119,7 +47,9 @@ ind_1 <- function(data,
                   publication_date,
                   emergency_name,
                   stat_unit,
-                  test_type) {
+                  test_type,
+                  cpvs,
+                  ...) {
 
 
   #check_columns(.data, missing_cols)
@@ -127,24 +57,13 @@ ind_1 <- function(data,
   indicator_id <- 1
   indicator_name <- "Winning rate across the crisis"
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
-  cpv_col <- grab_cpv(data = data)
   aggregation_name <- italian_aggregation_mapping[[rlang::ensym(stat_unit)]]
 
-  test <- function(a, b, c, d, test_type) {
-    switch(test_type,
-      "barnard" = {
-        compute_barnard(a, b, c, d)
-      },
-      "fisher" = {
-        compute_fisher(a, b, c, d)
-      },
-      "z-test" = {
-        compute_prop_test(a, b, c, d)
-      },
-      stop(paste0("No handler for ", test_type))
-    )
+  if (missing(cpvs)) {
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   }
+
+  cpv_col <- grab_cpv(data = data)
 
   data %>%
     dplyr::mutate(
@@ -179,7 +98,7 @@ ind_1 <- function(data,
     dplyr::mutate(
       ## apply test
       tab = paste(n_11, n_12, n_21, n_22, sep = "-"),
-      test = test(n_11, n_12, n_21, n_22, test_type)[1],
+      test = test_set_1(n_11, n_12, n_21, n_22, test_type)[1],
       # new companies --> at risk
       test = dplyr::if_else(m_1 == 0 & n_22 > 0,
         true = 0,

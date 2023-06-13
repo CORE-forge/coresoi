@@ -16,7 +16,10 @@
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
 #' @param award_col This argument corresponds to the name of the column in data containing the unique identification number for each contract award. This column should contain numeric or character values.
 #' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator contracting authorities are the targets.
-#' @param test_type This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "barnard", "fisher", or "z-test".
+#' @param test_type This argument should be a character vector specifying the type of hypothesis test belonging to category 1 i.e. see statistical_tests.R)to apply to the data. Available options are "barnard", "fisher", or "z-test".
+#' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
+#' @param cpvs character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.
+#' @param ...  other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
@@ -47,29 +50,23 @@ ind_6 <- function(data,
                   emergency_name,
                   award_col,
                   stat_unit,
-                  test_type) {
+                  test_type,
+                  cpvs,
+                  ...) {
   indicator_id <- 6
   indicator_name <- "Communication default across the crisis"
-  aggregation_type <- quo_squash(enquo(stat_unit))
   emergency_scenario <- emergency_dates(emergency_name)
-  cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
-  cpv_col <- grab_cpv(data = data)
   aggregation_name <- italian_aggregation_mapping[[rlang::ensym(stat_unit)]]
 
-  test <- function(a, b, c, d, test_type) {
-    switch(test_type,
-      "barnard" = {
-        compute_barnard(d, b, c, a)
-      },
-      "fisher" = {
-        compute_fisher(a, b, c, d)
-      },
-      "z-test" = {
-        compute_prop_test(a, b, c, d)
-      },
-      stop(paste0("No handler for ", test_type))
-    )
+  if (missing(cpvs)) {
+    cpvs <- get_associated_cpv_from_emergency(emergency_scenario$em_name)
   }
+  cpv_col <- grab_cpv(data = data)
+
+  if (missing(test_type)) {
+    test_type <- "wilcoxon"
+  }
+
 
 
   data %>%
@@ -108,7 +105,7 @@ ind_6 <- function(data,
     dplyr::rowwise() %>%
     dplyr::mutate(
       ## apply test
-      test = test(n_11, n_12, n_21, n_22, test_type)[1],
+      test = test_set_1(n_11, n_12, n_21, n_22, test_type)[1],
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
@@ -116,7 +113,8 @@ ind_6 <- function(data,
       indicator_value = 1 - test, # 1 - pvalue
       aggregation_id = {{ stat_unit }},
       aggregation_name = aggregation_name,
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

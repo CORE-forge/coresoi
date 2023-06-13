@@ -10,7 +10,9 @@ ind_2(
   publication_date,
   emergency_name,
   stat_unit,
-  test_type
+  test_type,
+  cpvs,
+  ...
 )
 }
 \arguments{
@@ -24,7 +26,11 @@ ind_2(
 
 \item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator companies are the target.}
 
-\item{test_type}{This argument should be a character vector specifying the type of hypothesis test to apply to the data. Available options are "wilcoxon" e "ks".}
+\item{test_type}{This argument should be a character vector specifying the type of hypothesis test (belonging to category 2 i.e. see statistical_tests.R) to apply to the data. Available options are "wilcoxon" and "ks".}
+
+\item{cpvs}{character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.}
+
+\item{...}{other parameters to pass to \code{generate_indicator_schema} as \code{country_name} if that not Italy, which is default behavior.}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema()} rows determined by aggregation level and \code{indicator_value} based on statistical test performed in \code{ind_2}
@@ -55,7 +61,7 @@ if (interactive()) {
     contract_value = importo_complessivo_gara,
     publication_date = data_pubblicazione,
     stat_unit = provincia,
-    test_type = "ks",
+    test_type = "wilcoxon",
     emergency_name = "coronavirus"
   )
 }

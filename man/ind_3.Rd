@@ -10,7 +10,10 @@ ind_3(
   sums_paid,
   stat_unit,
   emergency_name,
-  publication_date
+  publication_date,
+  test_type,
+  cpvs,
+  ...
 )
 }
 \arguments{
@@ -25,6 +28,12 @@ ind_3(
 \item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
 
 \item{publication_date}{This argument corresponds to the name of the column in data containing the publication date for each notice or report.}
+
+\item{test_type}{This argument should be a character vector specifying the type of hypothesis test (belonging to category 2 i.e. see statistical_tests.R) to apply to the data. Available options are "wilcoxon" e "ks".}
+
+\item{cpvs}{character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.}
+
+\item{...}{other parameters to pass to \code{generate_indicator_schema} as \code{country_name} if that not Italy, which is default behavior.}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

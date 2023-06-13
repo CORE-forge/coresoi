@@ -11,6 +11,7 @@ generate_indicator_schema(
   indicator_name,
   missing_cols = c("codice_regione", "provincia_codice", "citta_codice",
     "cf_amministrazione_appaltante", "codice_fiscale"),
+  country_name = "Italy",
   ...
 )
 }
