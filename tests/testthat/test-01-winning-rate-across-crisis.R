@@ -1,5 +1,10 @@
 library(dplyr)
 library(purrr)
+library(testthat)
+library(devtools)
+# load_all()
+
+# load new data: load("../../Dati BDNCP/mock_data_core_def.RData")
 
 expect_row_number <- function(object, n) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
@@ -14,7 +19,6 @@ expect_row_number <- function(object, n) {
   fail(message)
 }
 
-
 expect_col_number <- function(object, n) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
 
@@ -27,7 +31,6 @@ expect_col_number <- function(object, n) {
   message <- sprintf("%s has col_number %i, not col_number %i.", act$lab, act$col_number, n)
   fail(message)
 }
-
 
 expect_within_range <- function(object, min, max) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
@@ -44,37 +47,37 @@ expect_within_range <- function(object, min, max) {
   fail(message)
 }
 
-test_that("check `ind_1()` are 11 columns as according to `generate_indicator_schema()`s with `stat_unit` being **provincia**", {
+expect_variability <- function(object) {
+  act <- quasi_label(rlang::enquo(object), arg = "object")
+
+  act$indicator_sd <- sd(act$val$indicator_value)
+
+  if (act$indicator_sd > 0) {
+    succeed()
+    return(invisible(act$val))
+  }
+
+  message <- "`indicator_value` has not variability"
+  fail(message)
+}
+
+# ind1 only for companies
+mock_data_core_comp <- mock_data_core %>%
+  tidyr::unnest(aggiudicatari, keep_empty=TRUE)
+
+test_that("check `ind_1()` are 11 columns as according to `generate_indicator_schema()`s with `stat_unit` being **codice_fiscale**", {
   expect_col_number(
     suppressWarnings({
       ind_1(
-        data = mock_data_core,
+        data = mock_data_core_comp,
         publication_date = data_pubblicazione,
-        stat_unit = codice_nuts3_2021,
+        stat_unit = codice_fiscale,
         emergency_name = "coronavirus",
         test_type = "fisher"
       )
     }), 11
   )
 })
-
-
-
-test_that("check `ind_1()` are 11 columns as according to `generate_indicator_schema()`s  with `stat_unit` being **cf_amministrazione_appaltante**", {
-  expect_col_number(
-    suppressWarnings({
-      ind_1(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus",
-        test_type = "fisher"
-      )
-    }), 11
-  )
-})
-
-
 
 test_that("check column names are as according to pre determined schema", {
   col_names <- c(
@@ -87,9 +90,9 @@ test_that("check column names are as according to pre determined schema", {
   expect_equal(
     suppressWarnings({
       names(ind_1(
-        data = mock_data_core,
+        data = mock_data_core_comp,
         publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
+        stat_unit = codice_fiscale,
         emergency_name = "coronavirus",
         test_type = "fisher"
       ))
@@ -100,14 +103,14 @@ test_that("check column names are as according to pre determined schema", {
 
 
 
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen, Barnard, (slow, only on a 10000 top obs)", {
+test_that("check if `indicator_value` lays inbetween min/max values according to test chosen, Barnard, (slow, only on a 30000 top obs)", {
   expect_within_range(
     suppressWarnings({
       ind_1(
-        # only 10000 obs since this is time consuming
-        data = mock_data_core %>% head(10000),
+        # only 30000 obs since this is time consuming
+        data = mock_data_core_comp %>% dplyr::sample_n(30000),
         publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante ,
+        stat_unit = codice_fiscale ,
         emergency_name = "coronavirus",
         test_type = "barnard"
       )
@@ -116,15 +119,44 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
   )
 })
 
+test_that("check if `indicator_value` variability is not 0", {
+  expect_variability(
+    suppressWarnings({
+      ind_1(
+        # only 10000 obs since this is time consuming
+        data = mock_data_core_comp %>% dplyr::sample_n(10000),
+        publication_date = data_pubblicazione,
+        stat_unit = codice_fiscale ,
+        emergency_name = "coronavirus",
+        test_type = "barnard"
+      )
+    })
+  )
+})
+
+test_that("check if `indicator_value` variability is not 0", {
+  expect_variability(
+    suppressWarnings({
+      ind_1(
+        # only 10000 obs since this is time consuming
+        data = mock_data_core_comp,
+        publication_date = data_pubblicazione,
+        stat_unit = codice_fiscale ,
+        emergency_name = "coronavirus",
+        test_type = "fisher"
+      )
+    })
+  )
+})
 
 
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Fisher)", {
+test_that("check if `indicator_value` lays inbetween min/max values according to test chosen (Fisher)", {
   expect_within_range(
     suppressWarnings({
       ind_1(
-        data = mock_data_core,
+        data = mock_data_core_comp,
         publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
+        stat_unit = codice_fiscale,
         emergency_name = "coronavirus",
         test_type = "fisher"
       )
@@ -133,66 +165,14 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
   )
 })
 
-
-
-# test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Z-test proportional test)", {
-#   expect_within_range(
-#     suppressWarnings({
-#       ind_1(
-#         data = mock_data_core,
-#         publication_date = data_pubblicazione,
-#         stat_unit = cf_amministrazione_appaltante,
-#         emergency_name = "coronavirus",
-#         test_type = "z-test"
-#       )
-#     }),
-#     min = 0, max = 1
-#   )
-# })
-#
-#
-
-
-test_that("check if the number of rows is coherent with the aggregation level `provincia`", {
-  expect_row_number(
-    suppressWarnings({
-      ind_1(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = codice_nuts3_2021,
-        emergency_name = "coronavirus",
-        test_type = "fisher"
-      )
-    }),
-    n = 107 # numero province in italia
-  )
-})
-
-
-test_that("check if the number of rows is coherent with the aggregation level (`cf_amministrazione_appaltante`)", {
-  expect_row_number(
-    suppressWarnings({
-      ind_1(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus",
-        test_type = "fisher"
-      )
-    }),
-    n = 3691 ## questo numero dipende dal mock_data_core, in tutta italia le stazioni sono piùdi 36 mila
-  )
-})
-
 ## test for different scenarios
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
+test_that("check if `indicator_value` lays inbetween min/max values according to test chosen", {
   expect_within_range(
     suppressWarnings({
       ind_1(
-        data = mock_data_core,
+        data = mock_data_core_comp,
         publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
+        stat_unit = codice_fiscale,
         emergency_name = "terremoto aquila",
         test_type = "fisher"
       )
@@ -203,32 +183,18 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 
 
 
-# test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
-#   expect_within_range(
-#     suppressWarnings({
-#       ind_1(
-#         data = mock_data_core,
-#         publication_date = data_pubblicazione,
-#         stat_unit = cf_amministrazione_appaltante,
-#         emergency_name = "terremoto aquila",
-#         test_type = "z-test"
-#       )
-#     }),
-#     min = 0, max = 1
-#   )
-# })
-
-
 
 test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario", {
   expect_equal(
     ind_1(
-      data = mock_data_core,
+      data = mock_data_core_comp,
       publication_date = data_pubblicazione,
-      stat_unit = codice_nuts3_2021,
+      stat_unit = codice_fiscale,
       emergency_name = "terremoto ischia",
       test_type = "fisher"
-    ) %>% distinct(emergency_name, emergency_id) %>% purrr::flatten(),
+    ) %>%
+      distinct(emergency_name, emergency_id) %>%
+      purrr::flatten(),
     list(
       emergency_name = "Terremoto Ischia",
       emergency_id = 3

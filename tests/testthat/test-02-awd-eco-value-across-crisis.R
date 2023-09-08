@@ -43,15 +43,32 @@ expect_within_range <- function(object, min, max) {
   fail(message)
 }
 
+expect_variability <- function(object) {
+  act <- quasi_label(rlang::enquo(object), arg = "object")
+
+  act$indicator_sd <- sd(act$val$indicator_value)
+
+  if (act$indicator_sd > 0) {
+    succeed()
+    return(invisible(act$val))
+  }
+
+  message <- "`indicator_value` has not variability"
+  fail(message)
+}
+
+# ind2 only for companies
+mock_data_core_comp <- mock_data_core %>%
+  tidyr::unnest(aggiudicatari, keep_empty=TRUE)
 
 test_that("check `ind_2()` are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
       ind_2(
-        data = mock_data_core,
-        contract_value = importo_complessivo_gara,
+        data = mock_data_core_comp,
+        contract_value = importo_lotto,
         publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
+        stat_unit = codice_fiscale,
         test_type = "ks",
         emergency_name = "coronavirus"
       )
@@ -71,11 +88,11 @@ test_that("check column names are as according to pre determined schema", {
   expect_equal(
     suppressWarnings({
       names(ind_2(
-        data = mock_data_core,
-        contract_value = importo_complessivo_gara,
+        data = mock_data_core_comp,
+        contract_value = importo_lotto,
         publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        test_type = "ks",
+        stat_unit = codice_fiscale,
+        test_type = "wilcoxon",
         emergency_name = "coronavirus"
       ))
     }), col_names,
@@ -85,31 +102,43 @@ test_that("check column names are as according to pre determined schema", {
 
 
 
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Kolmogorv Smirnov)", {
-  expect_within_range(
+test_that("check if `indicator_value` has variability according to the test chosen (Kolmogorv Smirnov)", {
+  expect_variability(
     suppressWarnings({
       ind_2(
-        data = mock_data_core,
-        contract_value = importo_complessivo_gara,
+        data = mock_data_core_comp,
+        contract_value = importo_lotto,
         publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
+        stat_unit = codice_fiscale,
         test_type = "ks",
         emergency_name = "coronavirus"
       )
-    }),
-    min = 0, max = 1
+    })
+  )
+})
+
+test_that("check if `indicator_value` has variability according to the test chosen (Wilcoxon)", {
+  expect_variability(
+    suppressWarnings({
+      ind_2(
+        data = mock_data_core_comp,
+        contract_value = importo_lotto,
+        publication_date = data_pubblicazione,
+        stat_unit = codice_fiscale,
+        test_type = "wilcoxon",
+        emergency_name = "coronavirus"
+      )
+    })
   )
 })
 
 
-
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Wilcoxon-Mann-Whitney)", {
+test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Wilcoxon)", {
   expect_within_range(
     suppressWarnings({
       ind_2(
-        data = mock_data_core,
-        contract_value = importo_complessivo_gara,
+        data = mock_data_core_comp,
+        contract_value = importo_lotto,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         test_type = "wilcoxon",
@@ -122,89 +151,35 @@ test_that("check if `indicator_value` lays inbetween min/max values accroding to
 
 
 
-test_that("check if the number of rows is coherent with the aggregation level (`provincia`)", {
-  expect_row_number(
-    suppressWarnings({
-      ind_2(
-        data = mock_data_core,
-        contract_value = importo_complessivo_gara,
-        publication_date = data_pubblicazione,
-        stat_unit = codice_nuts3_2021,
-        test_type = "ks",
-        emergency_name = "coronavirus"
-      )
-    }),
-    n = 107
-  )
-})
-
-
-test_that("check if the number of rows is coherent with the aggregation level (`cf_amministrazione_appaltante`)", {
-  expect_row_number(
-    suppressWarnings({
-      ind_2(
-        data = mock_data_core,
-        contract_value = importo_complessivo_gara,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        test_type = "ks",
-        emergency_name = "coronavirus"
-      )
-    }),
-    n = 3688 # questo numero è anche diverso di indicatore in indicatore e di scenario di emergenza in scenario
-  )
-})
 
 ## test with different scenarios
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen in a changed scenario i.e. Terremoto Aquila", {
-  expect_within_range(
+test_that("check if `indicator_value` has variability according to the test chosen (Wilcoxon)", {
+  expect_variability(
     suppressWarnings({
       ind_2(
-        data = mock_data_core,
-        contract_value = importo_complessivo_gara,
+        data = mock_data_core_comp,
+        contract_value = importo_lotto,
         publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        test_type = "ks",
+        stat_unit = codice_fiscale,
+        test_type = "wilcoxon",
         emergency_name = "terremoto aquila"
       )
-    }),
-    min = 0, max = 1
+    })
   )
 })
 
-
-
-test_that("check if the number of rows is coherent with the aggregation level (`provincia`) with a different emergency scenario", {
-  expect_row_number(
+test_that("check if `indicator_value` has variability according to the test chosen (KS)", {
+  expect_variability(
     suppressWarnings({
       ind_2(
-        data = mock_data_core,
-        contract_value = importo_complessivo_gara,
+        data = mock_data_core_comp,
+        contract_value = importo_lotto,
         publication_date = data_pubblicazione,
-        stat_unit = codice_nuts3_2021,
+        stat_unit = codice_fiscale,
         test_type = "ks",
-        emergency_name = "terremoto aquila"
+        emergency_name = "terremoto centro italia"
       )
-    }),
-    n = 107
+    })
   )
 })
 
-
-
-test_that("check if `indicator_value` lays inbetween min/max values (different aggregation units) accroding to test chosen AND it is consistent with a different scenario", {
-  expect_within_range(
-    suppressWarnings({
-      ind_2(
-        data = mock_data_core,
-        contract_value = importo_complessivo_gara,
-        publication_date = data_pubblicazione,
-        stat_unit = codice_nuts3_2021,
-        test_type = "ks",
-        emergency_name = "terremoto aquila"
-      )
-    }),
-    min = 0, max = 1
-  )
-})

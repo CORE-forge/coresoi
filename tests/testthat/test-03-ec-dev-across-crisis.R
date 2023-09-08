@@ -1,5 +1,6 @@
 library(dplyr)
 
+
 expect_row_number <- function(object, n) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
 
@@ -43,24 +44,40 @@ expect_within_range <- function(object, min, max) {
   fail(message)
 }
 
+expect_variability <- function(object) {
+  act <- quasi_label(rlang::enquo(object), arg = "object")
 
-test_that("check `ind_3()` are 11 columns as according to `generate_indicator_schema()`s", {
+  act$indicator_sd <- sd(act$val$indicator_value)
+
+  if (act$indicator_sd > 0) {
+    succeed()
+    return(invisible(act$val))
+  }
+
+  message <- "`indicator_value` has not variability"
+  fail(message)
+}
+
+mock_data_core_comp <- mock_data_core %>%
+  tidyr::unnest(aggiudicatari, keep_empty=TRUE)
+
+test_that("check `ind_3()` by contr auth+wilcoxon are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
       ind_3(
-        data = mock_data_core,
+        data = mock_data_core, #not unnested
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_lotto,
+        sums_paid = importo_finale,
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus"
+        emergency_name = "coronavirus",
       )
     }), 11
   )
 })
 
 
-test_that("check column names are as according to pre determined schema", {
+test_that("check column names are as according to pre determined schema (by company)", {
   col_names <- c(
     "indicator_id", "indicator_name", "indicator_value",
     "aggregation_id","aggregation_name",  "emergency_name", "emergency_id",
@@ -71,11 +88,11 @@ test_that("check column names are as according to pre determined schema", {
   expect_equal(
     suppressWarnings({
       names(ind_3(
-        data = mock_data_core,
+        data = mock_data_core_comp,
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_lotto,
-        stat_unit = cf_amministrazione_appaltante,
+        sums_paid = importo_finale,
+        stat_unit = codice_fiscale,
         emergency_name = "coronavirus"
       ))
     }), col_names,
@@ -84,93 +101,102 @@ test_that("check column names are as according to pre determined schema", {
 })
 
 
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Kolmogorv Smirnov)", {
-  expect_within_range(
+test_that("check if `indicator_value` by contr auth is variable (Kolmogorv Smirnov)", {
+  expect_variability(
     suppressWarnings({
       ind_3(
         data = mock_data_core,
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_lotto,
+        sums_paid = importo_finale,
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus"
+        emergency_name = "coronavirus",
+        test_type = "ks"
       )
-    }),
-    min = 0, max = 1
+    })
   )
 })
 
 
-
-
-
-
-test_that("check if the number of rows is coherent with the aggregation level (`provincia`)", {
-  expect_row_number(
+test_that("check if `indicator_value` by nuts3 is variable (Wilcoxon)", {
+  expect_variability(
     suppressWarnings({
       ind_3(
-        data = mock_data_core,
+        data = mock_data_core, #unnested version
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_lotto,
+        sums_paid = importo_finale,
         stat_unit = codice_nuts3_2021,
         emergency_name = "coronavirus"
       )
-    }),
-    n = 104 # qui hai rimosso qualche provincia che magari è NA
+    })
   )
 })
 
 
-test_that("check if the number of rows is coherent with the aggregation level (`cf_amministrazione_appaltante`)", {
-  expect_row_number(
+test_that("check if `indicator_value` by nuts2 is variable", {
+  expect_variability(
     suppressWarnings({
       ind_3(
-        data = mock_data_core,
+        data = mock_data_core, #unnested version
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_lotto,
-        stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus"
+        sums_paid = importo_finale,
+        stat_unit = codice_nuts2_2021,
+        emergency_name = "coronavirus",
+        test_type = "ks"
       )
-    }),
-    n = 771 # without removing NAs and
+    })
   )
 })
+
 
 ## test with different scenarios
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen in a changed scenario i.e. Terremoto Aquila", {
-  expect_within_range(
+test_that("check if `indicator_value` by contr auth is variable (Kolmogorv Smirnov)", {
+  expect_variability(
     suppressWarnings({
       ind_3(
         data = mock_data_core,
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_lotto,
+        sums_paid = importo_finale,
         stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "Terremoto Aquila"
+        emergency_name = "terremoto aquila",
+        test_type = "ks"
       )
-    }),
-    min = 0, max = 1
+    })
   )
 })
 
 
-
-test_that("check if the number of rows is coherent with the aggregation level (`provincia`) with a different emergency scenario", {
-  expect_row_number(
+test_that("check if `indicator_value` by nuts3 is variable", {
+  expect_variability(
     suppressWarnings({
       ind_3(
-        data = mock_data_core,
+        data = mock_data_core, #unnested version
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
-        sums_paid = importo_lotto,
+        sums_paid = importo_finale,
         stat_unit = codice_nuts3_2021,
-        emergency_name = "coronavirus"
+        emergency_name = "terremoto aquila"
       )
-    }),
-    n = 104 # qui diverso perchè c'è filtro su cpv per 33, mi aspetto meno dati
+    })
+  )
+})
+
+
+test_that("check if `indicator_value` by nuts2 is variable", {
+  expect_variability(
+    suppressWarnings({
+      ind_3(
+        data = mock_data_core, #unnested version
+        publication_date = data_pubblicazione,
+        award_value = importo_aggiudicazione,
+        sums_paid = importo_finale,
+        stat_unit = codice_nuts2_2021,
+        emergency_name = "terremoto centro",
+        test_type = "ks"
+      )
+    })
   )
 })

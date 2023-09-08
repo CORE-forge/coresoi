@@ -113,7 +113,8 @@ ind_5 <- function(data,
       indicator_value = ind5, # no test
       aggregation_id = {{ stat_unit }},
       aggregation_name = aggregation_name,
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

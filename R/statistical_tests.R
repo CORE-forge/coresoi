@@ -4,7 +4,7 @@
 #' @export
 compute_wilcox <- function(data, var, group, exact = TRUE, alternative = "greater", paired = FALSE) {
   test_res <- data %>%
-    wilcox.test(var ~ group, data = ., exact = exact, alternative = alternative)
+    wilcox.test(var ~ group, data = ., exact = exact, alternative = alternative) %>% suppressWarnings()
   c(
     p_value = round(test_res$p.value, 3),
     estimate = round(test_res$statistic, 3)

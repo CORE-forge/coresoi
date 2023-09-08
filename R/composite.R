@@ -332,28 +332,24 @@ create_indicator_matrix <- function(out_list) {
   cat("---------------------------------------------------\n")
   cat("Creating the matrix of elementary indicators \n")
 
-  # check that aggregation_type is the same for each element of the list
-  aggr_type <- sapply(out_list, function(x) x$aggregation_type[1])
-  if (length(unique(aggr_type)) != 1) {
-    stop("Please, check indicator list: different aggregation types are found")
-  }
-  aggr_type <- aggr_type[1] #codice_fiscale or cf_amministrazione_appaltante
   n <- length(out_list) #no. of indicators (7 or 6)
   ind_id <- sapply(out_list, function(x) x$indicator_id[1])
 
   X <- out_list[[1]] %>%
-    dplyr::select(aggregation_name, indicator_value) %>%
+    dplyr::select(aggregation_id, aggregation_name, indicator_value) %>%
     dplyr::full_join(out_list[[2]] %>%
-                       dplyr::select(aggregation_name, indicator_value), by="aggregation_name")
+                       dplyr::select(aggregation_id, aggregation_name, indicator_value),
+                     by=c("aggregation_id", "aggregation_name"))
   for (i in 3:n) {
     X <- X %>%
       dplyr::full_join(out_list[[i]] %>%
-                         dplyr::select(aggregation_name, indicator_value), by="aggregation_name")
-
+                         dplyr::select(aggregation_id, aggregation_name, indicator_value),
+                       by=c("aggregation_id", "aggregation_name"))
   }
-  names(X)[-1] <- paste0("ind", ind_id)
+  names(X)[-c(1,2)] <- paste0("ind", ind_id)
   # X is a matrix/dataframe with:
-  # first column: aggregation name (ID)
+  # first column: aggregation ID
+  # second column: aggregation name
   # other columns: elementary indicators
   return(X)
 }
@@ -400,7 +396,7 @@ manage_missing <- function(data,
     cat("---------------------------------------------------\n")
     cat("Imputing missing values in each indicator using logistic regression \n")
     # logistic regression of each indicator with (at least one) NAs on all the indicators with no NAs
-    flag_missing <- apply(data[, -1], 2, function(x) 1 * any(is.na(x)))
+    flag_missing <- apply(data[, -c(1, 2)], 2, function(x) 1 * any(is.na(x)))
     ind_nomiss <- which(flag_missing == 0) %>% names
     ind_miss <- which(flag_missing == 1) %>% names
 
@@ -411,7 +407,7 @@ manage_missing <- function(data,
 
     cat("\n")
     for (i in 1:length(ind_miss)) {
-      cat("---------------------------------------------------\n")
+      cat("******************************\n")
       cat(paste0("Imputation for '", ind_miss[i], "'"))
       ind_tomodel <- ind_miss[i]
 
@@ -521,8 +517,8 @@ normalise <- function(data,
     if (cutoff < 0.9) {
       warning("The cut-off for labelling 'at risk' is less than those usually employed (at least 0.90, corresponding to p-value of 0.10)")
     }
-    data_norm <- data.frame(data[, 1],
-                            apply(X = data[, -1],
+    data_norm <- data.frame(data[, 1:2],
+                            apply(X = data[, -c(1, 2)],
                                   MARGIN = 2,
                                   FUN = function(x) {
                                     cut(x, breaks = c(-Inf, cutoff, Inf), labels = c(0, 1)) %>%
@@ -531,18 +527,18 @@ normalise <- function(data,
                                   }))
   }
   if (method == "ranking") {
-    data_norm <- data.frame(data[, 1],
-                            apply(X = data[, -1],
+    data_norm <- data.frame(data[, 1:2],
+                            apply(X = data[, -c(1, 2)],
                                   MARGIN = 2,
                                   FUN = rank))
   }
   if (method == "z-score") {
-    data_norm <- data.frame(data[, 1],
-                            scale(data[, -1]))
+    data_norm <- data.frame(data[, 1:2],
+                            scale(data[, -c(1, 2)]))
   }
   if (method == "minmax") {
-    data_norm <- data.frame(data[, 1],
-                            apply(X = data[, -1],
+    data_norm <- data.frame(data[, 1:2],
+                            apply(X = data[, -c(1, 2)],
                                   MARGIN = 2,
                                   FUN = function(x) {
                                     (x - min(x, na.rm = TRUE))/(max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
@@ -551,16 +547,16 @@ normalise <- function(data,
 
   }
   if (method == "distref") {
-    data_norm <- data.frame(data[, 1],
-                            apply(X = data[, -1],
+    data_norm <- data.frame(data[, 1:2],
+                            apply(X = data[, -c(1, 2)],
                                   MARGIN = 2,
                                   FUN = function(x) {
                                     x/max(x, na.rm = TRUE)
                                   }))
   }
   if (method == "catscale") {
-    data_norm <- data.frame(data[, 1],
-                            apply(X = data[, -1],
+    data_norm <- data.frame(data[, 1:2],
+                            apply(X = data[, -c(1, 2)],
                                   MARGIN = 2,
                                   FUN = function(x){
                                     tmp <- quantile(x, probs = c(0.2, 0.4, 0.6, 0.8), na.rm = TRUE)
@@ -577,6 +573,7 @@ normalise <- function(data,
 #' @param data data matrix of **binary** elementary indicators (without missing values).
 #' @param method method for getting the set of weights. Possible choices are:
 #' `"equal"`, `"experts"` or `"irt"`. See Details.
+#' @param expert_weights user-provided expert weights (if any).
 #' @param ... optional arguments for [mirt::mirt()] function. See Details.
 #' @return vector of weights.
 #' @details This function returns a vector of weights, whose dimension is equal to the
@@ -584,9 +581,12 @@ normalise <- function(data,
 #'
 #' - `"equal"`: each elementary indicator receives the same weight, equal to \eqn{1/Q};
 #'
-#' - `"experts"`: each elementary indicator receives a specific weight provided by experts;
+#' - `"experts"`: each elementary indicator receives a specific weight provided by experts. The user
+#' can provide the weights provided by his/her own experts (through argument `expert_weights`), otherwise
+#' the weights provided by our pool of experts is used;
 #'
 #' - `"irt"`: each elementary indicator receives a specific weights provided by the IRT framework.
+#'
 #' Specifically, a unidimensional 2PL IRT model is estimated on `data` through [mirt::mirt()] function,
 #' for which possible additional arguments can be provided (`...`), such as estimation algorithm,
 #' numerical optimiser, convergence threshold, etc. Once the model is fitted, weights are computed
@@ -612,26 +612,27 @@ normalise <- function(data,
 #' @importFrom mirt mirt MDISC
 get_weights <- function(data,
                         method,
+                        expert_weights = NULL,
                         ...) {
   match.arg(arg = method, choices = c("equal", "experts", "irt"))
-  Q <- ncol(data[, -1]) #number of elementary indicators
+  Q <- ncol(data[, -c(1, 2)]) #number of elementary indicators
 
   if (method == "irt") {
     cat("---------------------------------------------------\n")
     cat("Computing IRT weights using discrimination parameters of a 2PL model \n")
     # Check whether the elementary indicators are all binary
-    nu <- apply(X = data[, -1],
+    nu <- apply(X = data[, -c(1, 2)],
                 MARGIN = 2,
                 FUN = function(x) length(unique(x)))
     if (any(nu > 2)) stop("Elementary indicators must be binary for the moment")
 
     # Check for a unique response modality in the data matrix: in this case, IRT weights are not computable
-    flag_alleq <- apply(X = data[, -1],
+    flag_alleq <- apply(X = data[, -c(1, 2)],
                         MARGIN = 2,
                         FUN = function(x) 1 * (all(x == 0, na.rm = TRUE) | all(x == 1, na.rm = TRUE)))
     if (all(flag_alleq == 0)) {
       # unidimensional 2PL
-      mod2pl <- mirt::mirt(data = data[,-1],
+      mod2pl <- mirt::mirt(data = data[, -c(1, 2)],
                            model = 1,
                            itemtype = "2PL",
                            ...)
@@ -647,11 +648,24 @@ get_weights <- function(data,
     w <- rep(1/Q, Q)
   }
   if (method == "experts") {
-    if (Q == 7) { #companies
-      w <- c(0.184, 0.153, 0.146, 0.115, 0.189, 0.089, 0.124)
-    } else { #contracting authorities
-      w <- c(0.216, 0.130, 0.203, 0.202, 0.094, 0.155)
+    if (is.null(expert_weights)) {
+      if ("ind1" %in% names(data) | "ind2" %in% names(data)) {#companies (7 indicators)
+        w_init <- c("ind1" = 0.170, "ind2" = 0.151,
+                    "ind3" = 0.114,	"ind4" = 0.094,
+                    "ind7" = 0.185,	"ind8" = 0.120,
+                    "ind9" = 0.166)
+      } else { #contracting authorities (6 indicators)
+        w_init <- c("ind3" = 0.191,	"ind4" = 0.146,
+                    "ind5" = 0.195, "ind6" = 0.171,
+                    "ind8" = 0.122, "ind9" = 0.175)
+      }
+      w <- w_init[names(data[-c(1, 2)])]
     }
+    else {
+      if (length(expert_weights) != Q) stop("Please, check the experts weights")
+      w <- expert_weights
+    }
+
   }
   return(w)
 }
@@ -704,25 +718,24 @@ aggregate <- function(data,
                       w) {
 
   match.arg(method, c("linear", "non-linear"))
-
   if (any(is.na(w))) {
     cat("Composite indicator not computable due to unavailable weights \n")
     composite <- rep(NA, nrow(data))
   }
   else {
-    if (!all.equal(sum(w), 1)) stop("Weight vector must sum up to 1")
-    if (length(w) != (ncol(data) - 1)) stop("Number of weights and indicators differ")
+    if (sum(w) - 1 > 0.0011) stop("Weight vector must sum up to 1")
+    if (length(w) != (ncol(data) - 2)) stop("Number of weights and indicators differ")
 
     cat("---------------------------------------------------\n")
     cat(paste0("Aggregation of elementary indicators using ", method, " method\n"))
     # arithmetic mean
     if (method == "linear") {
-      composite <- as.matrix(data[,-1]) %*% w %>%
+      composite <- as.matrix(data[, -c(1, 2)]) %*% w %>%
         as.numeric
     }
     # geometric mean
     if (method == "non-linear") {
-      composite <- apply(X = data[, -1],
+      composite <- apply(X = data[, -c(1, 2)],
                          MARGIN = 1,
                          FUN = function(x) prod(x^w))
     }
@@ -742,6 +755,8 @@ aggregate <- function(data,
 #' @param weight_method weighting method (see [get_weights()]).
 #' @param aggr_method aggregation method (see [aggregate()]).
 #' @param cutoff threshold for dichotomising the indicators (when `norm_method = "binary"`).
+#' @param expert_weights
+#' @param ... optional arguments for [mirt::mirt()] function. See Details.
 #' @return indicator schema as from [generate_indicator_schema()]
 #' @examples
 #' \dontrun{
@@ -764,14 +779,15 @@ aggregate <- function(data,
 #' @export
 compute_composite <- function(indicator_list,
                               norm_method = "binary",
-                              miss_method = 0,
-                              weight_method = "equal",
+                              miss_method = 1,
+                              weight_method = "experts",
                               aggr_method = "linear",
-                              cutoff = 0.95) {
+                              cutoff = 0.95,
+                              expert_weights = NULL,
+                              ...) {
 
   indicator_id <- 16
   indicator_name <- "Composite indicator"
-  aggregation_type <- indicator_list[[1]]$aggregation_type[1]
   emergency_name <- indicator_list[[1]]$emergency_name[1]
   emergency_scenario <- emergency_dates(emergency_name)
 
@@ -786,23 +802,29 @@ compute_composite <- function(indicator_list,
   D_norm_miss <- manage_missing(data = D_norm,
                                 missing = miss_method)
   # weights
-  w <- get_weights(data = D_norm_miss,
-                   method = weight_method)
+  w_current <- get_weights(data = D_norm_miss,
+                           method = weight_method,
+                           expert_weights = expert_weights,
+                           ...)
+  cat("---------------------------------------------------\n")
+  cat("Using weighting method:", weight_method, "\n")
+  cat("Resulting weights:", round(w_current, 3), "\n")
   # aggregation --> final composite
   composite <- aggregate(data = D_norm_miss,
-                         w = w,
-                         method = aggr_method)
+                         method = aggr_method,
+                         w = w_current)
 
   # DD is a temporary dataframe useful for 'generate_indicator_schema()'
   DD <- data.frame(ID = 1:length(composite))
-  aggregation_name <- data_matrix$aggregation_name
+  aggregation_id <- D$aggregation_id
+  aggregation_name <- D$aggregation_name
   out <- DD %>%
     generate_indicator_schema(
       indicator_id = indicator_id,
       indicator_name = indicator_name,
       indicator_value = composite,
+      aggregation_id = aggregation_id,
       aggregation_name = aggregation_name,
-      aggregation_type = as_string(aggregation_type),
       emergency = emergency_scenario
     )
   return(out)
@@ -819,7 +841,9 @@ compute_composite <- function(indicator_list,
 #' @keywords internal
 #' @export
 composite_sensitivity_methods <- function(indicator_list,
-                                          cutoff = c(0.9, 0.95, 0.99, 0.995),
+                                          cutoff,
+                                          expert_weights = NULL,
+                                          removed_ind = NULL,
                                           ...) {
   # step 0: get the data matrix of elementary indicators
   data_matrix <- create_indicator_matrix(indicator_list)
@@ -852,7 +876,10 @@ composite_sensitivity_methods <- function(indicator_list,
   w_equal <- get_weights(data = D1[[1]], method = "equal")
 
   # set 2: expert weights
-  w_experts <- get_weights(data = D1[[1]], method = "experts")
+  w_experts <- get_weights(data = D1[[1]], method = "experts", expert_weights = expert_weights)
+  if (removed_ind) {
+    w_experts <- w_experts/sum(w_experts)
+  }
 
   # set 3: IRT weights
   w_irt_m0 <- w_irt_m1 <- list()
@@ -901,14 +928,16 @@ composite_sensitivity_methods <- function(indicator_list,
                     do.call(what = "cbind", CI_m0_irt),
                     do.call(what = "cbind", CI_m1_irt))
 
-  out_wide <- data.frame(aggregation_name = data_matrix$aggregation_name, out_wide)
+  out_wide <- data.frame(aggregation_id = data_matrix$aggregation_id,
+                         aggregation_name = data_matrix$aggregation_name,
+                         out_wide)
 
   weights <- rep(c("w_eq", "w_exp", "w_irt"), each = 2 * k) #for each missing method
   miss <- rep(c("m0", "m1"), times = 3, each = k) #for each set of weights
   co <- rep(cutoff, times = 6) #for each combination of missing method (2) and weight set (3)
-  aggr_name <- rep(out_wide$aggregation_name, each = ncol(out_wide[, -1]))
+  aggr_name <- rep(out_wide$aggregation_name, each = ncol(out_wide[, -c(1, 2)]))
   out_long <- data.frame(aggregation_name = aggr_name,
-                         ci = c(t(out_wide[,-1])),
+                         ci = c(t(out_wide[, -c(1, 2)])),
                          cutoff = co,
                          miss,
                          weights)
@@ -927,7 +956,8 @@ composite_sensitivity_methods <- function(indicator_list,
 #' *Then, the sensitivity is based on the choice of the threshold. See Details.*
 #' @param indicator_list list of outputs about each indicator computable for the target unit
 #' (e.g., company or contracting authority), as returned by [ind_all()].
-#' @param cutoff vector of thresholds for normalising the indicators (i.e., for their dichotomisation)
+#' @param cutoff vector of thresholds for normalising the indicators (i.e., for their dichotomisation).
+#' @param expert_weights user-provided expert weights (not available at the moment for sensitivity analysis).
 #' @param ... optional arguments of [mirt::mirt()] function (for getting IRT weights).
 #' @return a list with two versions (wide and long) of a dataframe (`sens_wide` and `sens_long`),
 #' which includes, for each target unit, all the possible values of the composite indicator obtained
@@ -947,7 +977,9 @@ composite_sensitivity_methods <- function(indicator_list,
 #'
 #' 3. Vectors of *weights* are obtained according to all the three proposed ways, that is, equal weights,
 #' expert weights and IRT weights (see [get_weights()]). The last method can require much time, as it
-#' depends on the data at hand, which are different every time according to step 1 and 2.
+#' depends on the data at hand, which are different every time according to step 1 and 2. Moreover,
+#' for weights provided by experts, the user can input a set of own expert weights, using argument
+#' `expert_weights`.
 #'
 #' 4. *Composite indicator computation*. For each target unit, the composite indicator is computed
 #' on the basis of each combination of the above methodological choices (steps 1-3),
@@ -1045,13 +1077,18 @@ composite_sensitivity_methods <- function(indicator_list,
 #' @export
 composite_sensitivity <- function(indicator_list,
                                   cutoff = c(0.9, 0.95, 0.99, 0.995),
+                                  expert_weights = NULL,
                                   ...) {
   n <- length(indicator_list)
 
   # output of sensitivity with all the elementary indicators together
-  out_sens_all <- composite_sensitivity_methods(indicator_list, cutoff, ...)
+  out_sens_all <- composite_sensitivity_methods(indicator_list,
+                                                cutoff,
+                                                expert_weights,
+                                                FALSE,
+                                                ...)
   out_sens_all_wide <- out_sens_all$out_wide
-  names(out_sens_all_wide)[-1] <- paste0(names(out_sens_all_wide)[-1], ".all")
+  names(out_sens_all_wide)[-c(1, 2)] <- paste0(names(out_sens_all_wide)[-c(1, 2)], ".all")
   out_sens_all_long <- out_sens_all$out_long
   out_sens_all_long$ind_removed <- "none"
 
@@ -1064,13 +1101,17 @@ composite_sensitivity <- function(indicator_list,
     cat("########################################################################\n")
     cat(paste0("####################### REMOVING INDICATOR 'ind", ind_toremove, "'#######################\n"))
     cat("########################################################################\n")
-    out_sens1 <- composite_sensitivity_methods(indicator_list[-i], cutoff, ...)
+    out_sens1 <- composite_sensitivity_methods(indicator_list[-i],
+                                               cutoff,
+                                               expert_weights,
+                                               TRUE,
+                                               ...)
 
     # wide
     out_sens1_wide <- out_sens1$out_wide
     names(out_sens1_wide) <- paste0(names(out_sens1_wide), ".ind", ind_toremove)
     # adding the current output to the object to be returned
-    sens_wide <- data.frame(sens_wide, out_sens1_wide[, -1])
+    sens_wide <- data.frame(sens_wide, out_sens1_wide[, -c(1, 2)])
 
     # long
     out_sens1_long <- out_sens1$out_long

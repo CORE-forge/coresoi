@@ -64,6 +64,10 @@ ind_2 <- function(data,
 
   cpv_col <- grab_cpv(data = data)
 
+  if (missing(test_type)) {
+    test_type <- "wilcoxon"
+  }
+
   data %>%
     dplyr::mutate(
       prepost = dplyr::if_else(lubridate::ymd({{ publication_date }}) >= emergency_scenario$em_date,
@@ -103,7 +107,8 @@ ind_2 <- function(data,
       indicator_value = 1 - test, # 1 - pvalue
       aggregation_id = {{ stat_unit }},
       aggregation_name = aggregation_name,
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }
