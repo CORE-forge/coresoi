@@ -4,13 +4,20 @@
 \alias{composite_sensitivity}
 \title{Perform a complete sensitivity analysis of the composite indicator}
 \usage{
-composite_sensitivity(indicator_list, cutoff = c(0.9, 0.95, 0.99, 0.995), ...)
+composite_sensitivity(
+  indicator_list,
+  cutoff = c(0.9, 0.95, 0.99, 0.995),
+  expert_weights = NULL,
+  ...
+)
 }
 \arguments{
 \item{indicator_list}{list of outputs about each indicator computable for the target unit
 (e.g., company or contracting authority), as returned by \code{\link[=ind_all]{ind_all()}}.}
 
-\item{cutoff}{vector of thresholds for normalising the indicators (i.e., for their dichotomisation)}
+\item{cutoff}{vector of thresholds for normalising the indicators (i.e., for their dichotomisation).}
+
+\item{expert_weights}{user-provided expert weights (not available at the moment for sensitivity analysis).}
 
 \item{...}{optional arguments of \code{\link[mirt:mirt]{mirt::mirt()}} function (for getting IRT weights).}
 }
@@ -42,7 +49,9 @@ that is, by replacing missing values with '0' ('not at risk'), or by means of lo
 models (see internal function \code{\link[=manage_missing]{manage_missing()}}).
 \item Vectors of \emph{weights} are obtained according to all the three proposed ways, that is, equal weights,
 expert weights and IRT weights (see \code{\link[=get_weights]{get_weights()}}). The last method can require much time, as it
-depends on the data at hand, which are different every time according to step 1 and 2.
+depends on the data at hand, which are different every time according to step 1 and 2. Moreover,
+for weights provided by experts, the user can input a set of own expert weights, using argument
+\code{expert_weights}.
 \item \emph{Composite indicator computation}. For each target unit, the composite indicator is computed
 on the basis of each combination of the above methodological choices (steps 1-3),
 hence \eqn{k \times 2 \times 3} combinations, where \eqn{k} is the number of normalisation thresholds

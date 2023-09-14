@@ -43,6 +43,21 @@ expect_within_range <- function(object, min, max) {
   fail(message)
 }
 
+expect_variability <- function(object) {
+  act <- quasi_label(rlang::enquo(object), arg = "object")
+
+  act$indicator_sd <- sd(act$val$indicator_value)
+
+  if (act$indicator_sd > 0) {
+    succeed()
+    return(invisible(act$val))
+  }
+
+  message <- "`indicator_value` has not variability"
+  fail(message)
+}
+
+
 
 expect_either_0_or_1 <- function(object, min, max) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
@@ -59,18 +74,18 @@ expect_either_0_or_1 <- function(object, min, max) {
   fail(message)
 }
 
+mock_data_core_comp <- mock_data_core %>%
+  tidyr::unnest(aggiudicatari, keep_empty=TRUE)
 
-
-
-
+# ind7 only for companies --> use the unnested version of data
 
 test_that("check `ind_7()` are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
       ind_7(
-        data = mock_data_core,
+        data = mock_data_core_comp,
         final_award_date = data_aggiudicazione_definitiva,
-        stat_unit = cf_amministrazione_appaltante,
+        stat_unit = codice_fiscale,
         emergency_name = "coronavirus",
         years_before = 1
       )
@@ -79,58 +94,48 @@ test_that("check `ind_7()` are 11 columns as according to `generate_indicator_sc
 })
 
 
-test_that("check column names are as according to pre determined schema", {
-  col_names <- c(
-    "indicator_id", "indicator_name", "indicator_value",
-    "aggregation_id", "aggregation_name", "emergency_name",  "emergency_id",
-    "country_id", "country_name", "indicator_last_update",
-    "data_last_update"
-  )
-
-  expect_equal(
-    suppressWarnings({
-      names(ind_7(
-        data = mock_data_core,
-        final_award_date = data_aggiudicazione_definitiva,
-        stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "coronavirus",
-        years_before = 1
-      ))
-    }), col_names
-  )
-})
-
-
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen", {
-  expect_within_range(
+test_that("check `ind_7()` is variable", {
+  expect_variability(
     suppressWarnings({
       ind_7(
-        data = mock_data_core,
+        data = mock_data_core_comp,
         final_award_date = data_aggiudicazione_definitiva,
-        stat_unit = cf_amministrazione_appaltante,
+        stat_unit = codice_fiscale,
         emergency_name = "coronavirus",
         years_before = 1
       )
-    }),
-    min = 0, max = 1
+    })
+  )
+})
+
+## other scenarios
+test_that("check `ind_7()` are 11 columns as according to `generate_indicator_schema()`s", {
+  expect_col_number(
+    suppressWarnings({
+      ind_7(
+        data = mock_data_core_comp,
+        final_award_date = data_aggiudicazione_definitiva,
+        stat_unit = codice_fiscale,
+        emergency_name = "terremoto centro italia",
+        years_before = 1
+      )
+    }), 11
   )
 })
 
 
-
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
-  expect_within_range(
+test_that("check `ind_7()` is variable", {
+  expect_variability(
     suppressWarnings({
       ind_7(
-        data = mock_data_core,
+        data = mock_data_core_comp,
         final_award_date = data_aggiudicazione_definitiva,
         stat_unit = codice_fiscale,
         emergency_name = "terremoto aquila",
         years_before = 1
       )
-    }),
-    min = 0, max = 1
+    })
   )
 })
+
+

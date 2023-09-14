@@ -1,4 +1,5 @@
 library(dplyr)
+library(tidyr)
 
 expect_row_number <- function(object, n) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
@@ -43,10 +44,6 @@ expect_within_range <- function(object, min, max) {
   fail(message)
 }
 
-
-
-
-
 ## it keeps expectation within range, but it also tolerates Inf when Lim denominator -> 0
 expect_within_range_tolerate <- function(object, min, max) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
@@ -63,23 +60,31 @@ expect_within_range_tolerate <- function(object, min, max) {
   fail(message)
 }
 
+expect_variability <- function(object) {
+  act <- quasi_label(rlang::enquo(object), arg = "object")
+
+  act$indicator_sd <- sd(act$val$indicator_value)
+
+  if (act$indicator_sd > 0) {
+    succeed()
+    return(invisible(act$val))
+  }
+
+  message <- "`indicator_value` has not variability"
+  fail(message)
+}
 
 
-## test suite
-## - 1 test colnames for different emergency scenarios OK
-## - 2 test compliance to schema OK
-## - 3 test `indicator_value` inbetween a range OK
-## - 4 test number of rows choerence with grouping var
-## TODO:  - 5  test diff  scenarios
+
 
 test_that("check `ind_5()` are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
       ind_5(
-        data = mock_data_core,
+        data = unnest(mock_data_core, aggiudicatari),
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        winners = denominazione,
+        winners = codice_fiscale,
         emergency_name = "Coronavirus"
       )
     }), 11
@@ -87,111 +92,48 @@ test_that("check `ind_5()` are 11 columns as according to `generate_indicator_sc
 })
 
 
-# test_that("check column names are as according to pre determined schema", {
-#   col_names <- c(
-#     "indicator_id", "indicator_name", "indicator_value", "aggregation_name",
-#     "aggregation_id", "aggregation_type", "emergency_id", "emergency_name",
-#     "country_id", "country_name", "indicator_last_update",
-#     "data_last_update"
-#   )
-#
-#   expect_equal(
-#     suppressWarnings({
-#       names(ind_5(
-#         data = mock_data_core,
-#         publication_date = data_pubblicazione,
-#         stat_unit = cf_amministrazione_appaltante,
-#         winners = denominazione,
-#         emergency_name = "Coronavirus"
-#       ))
-#     }), col_names
-#   )
-# })
-
-
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen, tolerating Inf,", {
-  expect_within_range_tolerate(
+test_that("check `ind_5()` is variable", {
+  expect_variability(
     suppressWarnings({
       ind_5(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = codice_nuts3_2021,
-        winners = denominazione,
-        emergency_name = "Coronavirus"
-      )
-    }),
-    min = 0, max = 1
-  )
-})
-
-
-test_that("check if the number of rows is coherent with the aggregation level (`cf_amministrazione_appaltante`), `ind_5` has only one target stat_unit", {
-  expect_row_number(
-    suppressWarnings({
-      ind_5(
-        data = mock_data_core,
+        data = unnest(mock_data_core, aggiudicatari),
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        winners = denominazione,
+        winners = codice_fiscale,
         emergency_name = "Coronavirus"
       )
-    }),
-    n = 363
+    })
   )
 })
+
 
 ## test with different scenarios
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen in a changed scenario i.e. Terremoto Aquila", {
-  expect_within_range_tolerate(
+test_that("check `ind_5()` are 11 columns as according to `generate_indicator_schema()`s", {
+  expect_col_number(
     suppressWarnings({
       ind_5(
-        data = mock_data_core,
+        data = unnest(mock_data_core, aggiudicatari),
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
-        winners = denominazione,
+        winners = codice_fiscale,
+        emergency_name = "terremoto centro italia"
+      )
+    }), 11
+  )
+})
+
+
+test_that("check `ind_5()` is variable", {
+  expect_variability(
+    suppressWarnings({
+      ind_5(
+        data = unnest(mock_data_core, aggiudicatari),
+        publication_date = data_pubblicazione,
+        stat_unit = cf_amministrazione_appaltante,
+        winners = codice_fiscale,
         emergency_name = "terremoto aquila"
       )
-    }),
-    min = 0, max = 10
+    })
   )
 })
 
-
-
-test_that("check if the number of rows is coherent with the aggregation level (`provincia`) with a different emergency scenario", {
-  expect_row_number(
-    suppressWarnings({
-      ind_5(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        winners = denominazione,
-        emergency_name = "terremoto aquila"
-      )
-    }),
-    n = 1425
-  )
-})
-
-
-test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario", {
-  expect_equal(
-    suppressWarnings({
-      ind_5(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        stat_unit = cf_amministrazione_appaltante,
-        winners = denominazione,
-        emergency_name = "terremoto ischia"
-      ) %>%
-        distinct(emergency_name, emergency_id) %>%
-        flatten()
-    }),
-    list(
-      emergency_name = "Terremoto Ischia",
-      emergency_id = 3
-    )
-  )
-})

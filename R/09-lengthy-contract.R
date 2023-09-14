@@ -1,12 +1,3 @@
-#' compute t test
-#' @description  compute  test pvalue and estimate in piped expression
-#' @keywords internal
-#' @export
-compute_ttest <- function(mean_to_compare, ground_mean) {
-  data %>%
-    stats::t.test(x = mean_to_compare, mu = ground_mean, alternative = "greater")$p.value
-}
-
 #' Compute Lenghty Contracts indicator
 #'
 #' @description
@@ -26,6 +17,7 @@ compute_ttest <- function(mean_to_compare, ground_mean) {
 #' @param eff_start This argument corresponds to the name of the column in data containing the effective start date for each contract.
 #' @param eff_end This argument corresponds to the name of the column in data containing the effective end date for each contract.
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
+#' @param ... other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{
@@ -58,7 +50,8 @@ ind_9 <- function(data,
                   stat_unit,
                   eff_start,
                   eff_end,
-                  emergency_name) {
+                  emergency_name,
+                  ...) {
   indicator_id <- 9
   indicator_name <- "Lengthy contracts"
   aggregation_type <- rlang::quo_squash(rlang::enquo(stat_unit))
@@ -111,7 +104,8 @@ ind_9 <- function(data,
       indicator_value = 1 - wilctest, # 1 - pvalue
       aggregation_id = {{ stat_unit }},
       aggregation_name = aggregation_name,
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

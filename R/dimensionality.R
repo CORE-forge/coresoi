@@ -17,6 +17,18 @@
 #' @param max_ndim maximum number of dimensions to check in the IRT framework (not greater than the number
 #' of elementary indicators).
 #' @param nrep number of replicates for random initialisation of the algorithm for fitting IRT models.
+#' @param seed seed number used during estimation. Default is 12345
+#' @param arg_tech_list a list containing lower level technical parameters for estimation. May be:
+#'
+#'  -  **NCYCLES** maximum number of EM or MH-RM cycles; defaults are 500 and
+#'  2000
+#'  - **MAXQUAD** maximum number of quadratures, which you can increase if you
+#'  have more than 4GB or RAM on your PC; default 20000
+#'  - **theta_lim** range of integration grid for each dimension; default is `c(-6, 6)`.
+#'
+#'  Note that when `itemtype = 'ULL'` a log-normal distribution is used and the
+#'  range is change to `c(.01, and 6^2)`, where the second term is the square
+#'  of the theta_lim input instead
 #' @param ... optional arguments for [mirt::mirt()] (e.g., estimation algorithm, convergence threshold,
 #' etc.) or [psych::fa()] (e.g., method for factor extraction, rotation method, etc.).
 #' @return different objects according to `dim_method`:
@@ -97,6 +109,8 @@ dimensionality_check <- function(indicator_list,
                                  missing = 0,
                                  max_ndim = length(indicator_list),
                                  nrep = 5,
+                                 seed = NULL, #random
+                                 arg_tech_list= NULL,
                                  ...) {
 
   match.arg(dim_method, c("IRT", "FA"))
@@ -112,15 +126,17 @@ dimensionality_check <- function(indicator_list,
     # first check: Rasch or 2PL? Look at unidimensional model for the best one
     cat("---------------------------------------------------\n")
     cat("Fitting unidimensional Rasch model \n")
-    out_rasch1 <- mirt::mirt(data = data_matrix2[, -1],
+    out_rasch1 <- mirt::mirt(data = data_matrix2[, -c(1, 2)],
                              model = 1,
                              itemtype = "Rasch",
+                             technical = arg_tech_list,
                              ...)
     cat("---------------------------------------------------\n")
     cat("Fitting unidimensional 2PL model \n")
-    out_2pl1 <- mirt::mirt(data = data_matrix2[, -1],
+    out_2pl1 <- mirt::mirt(data = data_matrix2[, -c(1, 2)],
                            model = 1,
                            itemtype = "2PL",
+                           technical = arg_tech_list,
                            ...)
 
     cat("---------------------------------------------------\n")
@@ -149,21 +165,30 @@ dimensionality_check <- function(indicator_list,
       cat(paste0("Fitting ", best, " model with ", d, " dimensions \n"))
 
       # deterministic start
-      out_mirt_det <- mirt::mirt(data = data_matrix2[, -1],
+      out_mirt_det <- mirt::mirt(data = data_matrix2[, -c(1, 2)],
                                  model = d,
                                  itemtype = best,
                                  GenRandomPars = FALSE,
+                                 technical = arg_tech_list,
                                  ...)
       bic_det <- anova(out_mirt_det)$BIC
 
       # random starts
       out_mirt_rnd <- list()
       bic_rnd <- NULL
+
       for (i in 1:(nrep[d - 1])) {
-        out_mirt_rnd[[i]] <- mirt::mirt(data = data_matrix2[, -1],
+        if (is.null(seed)) tech_list <- arg_tech_list
+        else {
+          if (length(seed) != nrep[d - 1]) stop("Please, check seed length")
+          tech_list <- append(arg_tech_list, seed[i])
+          names(tech_list)[length(tech_list)] <- "set.seed"
+        }
+        out_mirt_rnd[[i]] <- mirt::mirt(data = data_matrix2[, -c(1, 2)],
                                         model = d,
                                         itemtype = best,
                                         GenRandomPars = TRUE,
+                                        technical = tech_list,
                                         ...)
         bic_rnd <- c(bic_rnd, anova(out_mirt_rnd[[i]])$BIC)
       }
@@ -191,7 +216,7 @@ dimensionality_check <- function(indicator_list,
 
   # factor analysis using tetrachoric correlation
   if (dim_method == "FA") {
-    R <- psych::tetrachoric(data_matrix2[,-1])$rho %>% suppressMessages()
+    R <- psych::tetrachoric(data_matrix2[, -c(1, 2)])$rho %>% suppressMessages()
     lambda <- eigen(R)$values
 
     # Eigenvalue plot

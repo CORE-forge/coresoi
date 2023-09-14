@@ -6,7 +6,9 @@
 \usage{
 composite_sensitivity_methods(
   indicator_list,
-  cutoff = c(0.9, 0.95, 0.99, 0.995),
+  cutoff,
+  expert_weights = NULL,
+  removed_ind = NULL,
   ...
 )
 }

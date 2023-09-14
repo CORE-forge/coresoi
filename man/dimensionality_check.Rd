@@ -11,6 +11,8 @@ dimensionality_check(
   missing = 0,
   max_ndim = length(indicator_list),
   nrep = 5,
+  seed = NULL,
+  arg_tech_list = NULL,
   ...
 )
 }
@@ -35,6 +37,21 @@ using \code{\link[mirt:mirt]{mirt::mirt()}} function. On the other hand, explora
 of elementary indicators).}
 
 \item{nrep}{number of replicates for random initialisation of the algorithm for fitting IRT models.}
+
+\item{seed}{seed number used during estimation. Default is 12345}
+
+\item{arg_tech_list}{a list containing lower level technical parameters for estimation. May be:
+\itemize{
+\item \strong{NCYCLES} maximum number of EM or MH-RM cycles; defaults are 500 and
+2000
+\item \strong{MAXQUAD} maximum number of quadratures, which you can increase if you
+have more than 4GB or RAM on your PC; default 20000
+\item \strong{theta_lim} range of integration grid for each dimension; default is \code{c(-6, 6)}.
+}
+
+Note that when \code{itemtype = 'ULL'} a log-normal distribution is used and the
+range is change to \verb{c(.01, and 6^2)}, where the second term is the square
+of the theta_lim input instead}
 
 \item{...}{optional arguments for \code{\link[mirt:mirt]{mirt::mirt()}} (e.g., estimation algorithm, convergence threshold,
 etc.) or \code{\link[psych:fa]{psych::fa()}} (e.g., method for factor extraction, rotation method, etc.).}

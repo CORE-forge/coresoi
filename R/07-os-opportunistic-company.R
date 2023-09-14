@@ -16,6 +16,7 @@
 #' @param final_award_date  This argument corresponds to the name of the column in data containing the date of the contract award, as recorded in the minutes or official documentation. Although the column values are stored as character strings, the function will automatically convert them to date objects when needed.
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
 #' @param years_before This argument specifies how many years before the contract date we need to look for the presence of awards to a specific company.
+#' @param ... other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
@@ -42,7 +43,8 @@ ind_7 <- function(data,
                   final_award_date,
                   emergency_name,
                   stat_unit,
-                  years_before) {
+                  years_before,
+                  ...) {
   indicator_id <- 7
   indicator_name <- "One-shot opportunistic companies over the crisis"
   aggregation_type <- quo_squash(enquo(stat_unit))
@@ -89,7 +91,8 @@ ind_7 <- function(data,
       indicator_value = flag_oneshot, # no test
       aggregation_id = {{ stat_unit }},
       aggregation_name = aggregation_name,
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

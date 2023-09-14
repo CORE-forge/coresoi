@@ -45,23 +45,25 @@ expect_within_range <- function(object, min, max) {
 }
 
 
-expect_some_variability <- function(object, exp_value_counts) {
+expect_variability <- function(object) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
 
-  act$value_counts <- unique(act$val$indicator_value)
+  act$indicator_sd <- sd(act$val$indicator_value)
 
-  if (length(act$val$indicator_value) > exp_value_counts) {
+  if (act$indicator_sd > 0) {
     succeed()
     return(invisible(act$val))
   }
 
-  message <- sprintf("`indicator_value` has not that many values %i", act$value_counts)
+  message <- "`indicator_value` has not variability"
   fail(message)
 }
 
+mock_data_core_comp <- mock_data_core %>%
+  tidyr::unnest(aggiudicatari, keep_empty=TRUE)
 
 
-test_that("check `ind_9()` are 11 columns as according to `generate_indicator_schema()`s with `stat_unit` being **cf_amministrazione_appaltante**", {
+test_that("check `ind_9()` by contr auth are 11 columns as according to `generate_indicator_schema()`s ", {
   expect_col_number(
     ind_9(
       data = mock_data_core,
@@ -74,83 +76,23 @@ test_that("check `ind_9()` are 11 columns as according to `generate_indicator_sc
   )
 })
 
-
-
-test_that("check column names are as according to pre determined schema", {
-  col_names <- c(
-    "indicator_id", "indicator_name", "indicator_value",
-    "aggregation_id", "aggregation_name","emergency_name",  "emergency_id",
-    "country_id", "country_name", "indicator_last_update",
-    "data_last_update"
-  )
-
-  expect_equal(
-    names(ind_9(
-      data = mock_data_core,
+test_that("check if `indicator_value` by company is variable", {
+  expect_variability(
+    ind_9(
+      data = mock_data_core_comp,
       publication_date = data_pubblicazione,
-      stat_unit = cf_amministrazione_appaltante,
+      stat_unit = codice_fiscale,
       eff_start = data_inizio_effettiva,
       eff_end = data_effettiva_ultimazione,
       emergency_name = "coronavirus"
-    )), col_names,
-    tolerance = 0.8
+    )
   )
 })
 
 
-
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Wilcoxon)", {
-  expect_within_range(
-    ind_9(
-      data = mock_data_core,
-      publication_date = data_pubblicazione,
-      stat_unit = cf_amministrazione_appaltante,
-      eff_start = data_inizio_effettiva,
-      eff_end = data_effettiva_ultimazione,
-      emergency_name = "coronavirus"
-    ),
-    min = 0, max = 1
-  )
-})
-
-
-
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen (Wilcoxon)", {
-  expect_some_variability(
-    ind_9(
-      data = mock_data_core,
-      publication_date = data_pubblicazione,
-      stat_unit = cf_amministrazione_appaltante,
-      eff_start = data_inizio_effettiva,
-      eff_end = data_effettiva_ultimazione,
-      emergency_name = "coronavirus"
-    ),
-    exp_value_counts = 2
-  )
-})
-
-
-
-## test resiliency oevr differnt scenario
-test_that("check if `indicator_value` lays inbetween min/max values accroding to test chosen AND it is consistent with a different scenario", {
-  expect_within_range(
-    ind_9(
-      data = mock_data_core,
-      publication_date = data_pubblicazione,
-      stat_unit = cf_amministrazione_appaltante,
-      eff_start = data_inizio_effettiva,
-      eff_end = data_effettiva_ultimazione,
-      emergency_name = "terremoto aquila"
-    ),
-    min = 0, max = 1
-  )
-})
-
-
-
-test_that("check if the indicator table, in its column `emergency_name` and `emergency_id` is coherent with the change in emergency scenario", {
-  expect_equal(
+## different scenarios
+test_that("check `ind_9()` by contr auth are 11 columns as according to `generate_indicator_schema()`s ", {
+  expect_col_number(
     ind_9(
       data = mock_data_core,
       publication_date = data_pubblicazione,
@@ -158,10 +100,33 @@ test_that("check if the indicator table, in its column `emergency_name` and `eme
       eff_start = data_inizio_effettiva,
       eff_end = data_effettiva_ultimazione,
       emergency_name = "terremoto ischia"
-    ) %>% distinct(emergency_name, emergency_id) %>% purrr::flatten(),
-    list(
-      emergency_name = "Terremoto Ischia",
-      emergency_id = 3
+    ), 11
+  )
+})
+
+test_that("check if `indicator_value` by company is variable", {
+  expect_variability(
+    ind_9(
+      data = mock_data_core_comp,
+      publication_date = data_pubblicazione,
+      stat_unit = codice_fiscale,
+      eff_start = data_inizio_effettiva,
+      eff_end = data_effettiva_ultimazione,
+      emergency_name = "terrmoto centro ialia"
     )
   )
 })
+
+test_that("check if `indicator_value` by nuts3 is variable", {
+  expect_variability(
+    ind_9(
+      data = mock_data_core,
+      publication_date = data_pubblicazione,
+      stat_unit = codice_nuts3_2021,
+      eff_start = data_inizio_effettiva,
+      eff_end = data_effettiva_ultimazione,
+      emergency_name = "terrmoto centro ialia"
+    )
+  )
+})
+

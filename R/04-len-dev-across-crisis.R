@@ -109,7 +109,8 @@ ind_4 <- function(data,
       indicator_value = 1 - ind_4, # 1 - pvalue
       aggregation_id = {{ stat_unit }},
       aggregation_name = aggregation_name,
-      emergency = emergency_scenario
+      emergency = emergency_scenario,
+      ...
     ) %>%
     return()
 }

@@ -10,7 +10,8 @@ ind_8(
   stat_unit,
   variant_date,
   emergency_name,
-  months_win = 6
+  months_win = 6,
+  ...
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ ind_8(
 \item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
 
 \item{months_win}{This argument specifies the time window for contract variation to be considered when identifying a relevant pre and post contract variation period. This value should be numeric and indicates the duration of the time window in months.}
+
+\item{...}{other parameters to pass to \code{generate_indicator_schema} as \code{country_name} if that not Italy, which is default behavior.}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}
