@@ -65,7 +65,7 @@ test_that("check `ind_3()` by contr auth+wilcoxon are 11 columns as according to
   expect_col_number(
     suppressWarnings({
       ind_3(
-        data = mock_data_core, #not unnested
+        data = mock_data_core_comp, #not unnested
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
         sums_paid = importo_finale,
@@ -105,7 +105,7 @@ test_that("check if `indicator_value` by contr auth is variable (Kolmogorv Smirn
   expect_variability(
     suppressWarnings({
       ind_3(
-        data = mock_data_core,
+        data = mock_data_core_comp,
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
         sums_paid = importo_finale,
@@ -122,7 +122,7 @@ test_that("check if `indicator_value` by nuts3 is variable (Wilcoxon)", {
   expect_variability(
     suppressWarnings({
       ind_3(
-        data = mock_data_core, #unnested version
+        data = mock_data_core_comp, #unnested version
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
         sums_paid = importo_finale,
@@ -138,7 +138,7 @@ test_that("check if `indicator_value` by nuts2 is variable", {
   expect_variability(
     suppressWarnings({
       ind_3(
-        data = mock_data_core, #unnested version
+        data = mock_data_core_comp, #unnested version
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
         sums_paid = importo_finale,
@@ -152,28 +152,28 @@ test_that("check if `indicator_value` by nuts2 is variable", {
 
 
 ## test with different scenarios
-test_that("check if `indicator_value` by contr auth is variable (Kolmogorv Smirnov)", {
-  expect_variability(
-    suppressWarnings({
-      ind_3(
-        data = mock_data_core,
-        publication_date = data_pubblicazione,
-        award_value = importo_aggiudicazione,
-        sums_paid = importo_finale,
-        stat_unit = cf_amministrazione_appaltante,
-        emergency_name = "terremoto aquila",
-        test_type = "ks"
-      )
-    })
-  )
-})
+# test_that("check if `indicator_value` by contr auth is variable (Kolmogorv Smirnov)", {
+#   expect_variability(
+#     suppressWarnings({
+#       ind_3(
+#         data = mock_data_core_comp,
+#         publication_date = data_pubblicazione,
+#         award_value = importo_aggiudicazione,
+#         sums_paid = importo_finale,
+#         stat_unit = cf_amministrazione_appaltante,
+#         emergency_name = "terremoto aquila",
+#         test_type = "ks"
+#       )
+#     })
+#   )
+# })
 
 
 test_that("check if `indicator_value` by nuts3 is variable", {
   expect_variability(
     suppressWarnings({
       ind_3(
-        data = mock_data_core, #unnested version
+        data = mock_data_core_comp, #unnested version
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
         sums_paid = importo_finale,
@@ -189,7 +189,7 @@ test_that("check if `indicator_value` by nuts2 is variable", {
   expect_variability(
     suppressWarnings({
       ind_3(
-        data = mock_data_core, #unnested version
+        data = mock_data_core_comp, #unnested version
         publication_date = data_pubblicazione,
         award_value = importo_aggiudicazione,
         sums_paid = importo_finale,

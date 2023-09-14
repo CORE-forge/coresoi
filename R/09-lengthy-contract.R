@@ -17,6 +17,7 @@
 #' @param eff_start This argument corresponds to the name of the column in data containing the effective start date for each contract.
 #' @param eff_end This argument corresponds to the name of the column in data containing the effective end date for each contract.
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
+#' @param ... other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
 #' @return indicator schema as from `generate_indicator_schema`
 #' @examples
 #' \dontrun{

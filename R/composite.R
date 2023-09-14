@@ -755,7 +755,7 @@ aggregate <- function(data,
 #' @param weight_method weighting method (see [get_weights()]).
 #' @param aggr_method aggregation method (see [aggregate()]).
 #' @param cutoff threshold for dichotomising the indicators (when `norm_method = "binary"`).
-#' @param expert_weights
+#' @param expert_weights mean weights over a pool of anticorruption experts which express the relative impact of each indicator over the composite (these are originally expressed on a scale of 1 to 10)
 #' @param ... optional arguments for [mirt::mirt()] function. See Details.
 #' @return indicator schema as from [generate_indicator_schema()]
 #' @examples

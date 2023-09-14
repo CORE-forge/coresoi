@@ -4,7 +4,15 @@
 \alias{ind_9}
 \title{Compute Lenghty Contracts indicator}
 \usage{
-ind_9(data, publication_date, stat_unit, eff_start, eff_end, emergency_name)
+ind_9(
+  data,
+  publication_date,
+  stat_unit,
+  eff_start,
+  eff_end,
+  emergency_name,
+  ...
+)
 }
 \arguments{
 \item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
@@ -18,6 +26,8 @@ ind_9(data, publication_date, stat_unit, eff_start, eff_end, emergency_name)
 \item{eff_end}{This argument corresponds to the name of the column in data containing the effective end date for each contract.}
 
 \item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
+
+\item{...}{other parameters to pass to \code{generate_indicator_schema} as \code{country_name} if that not Italy, which is default behavior.}
 }
 \value{
 indicator schema as from \code{generate_indicator_schema}

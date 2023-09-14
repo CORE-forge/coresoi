@@ -7,10 +7,12 @@
 compute_composite(
   indicator_list,
   norm_method = "binary",
-  miss_method = 0,
-  weight_method = "equal",
+  miss_method = 1,
+  weight_method = "experts",
   aggr_method = "linear",
-  cutoff = 0.95
+  cutoff = 0.95,
+  expert_weights = NULL,
+  ...
 )
 }
 \arguments{
@@ -26,6 +28,10 @@ compute_composite(
 \item{aggr_method}{aggregation method (see \code{\link[=aggregate]{aggregate()}}).}
 
 \item{cutoff}{threshold for dichotomising the indicators (when \code{norm_method = "binary"}).}
+
+\item{expert_weights}{mean weights over a pool of anticorruption experts which express the relative impact of each indicator over the composite (these are originally expressed on a scale of 1 to 10)}
+
+\item{...}{optional arguments for \code{\link[mirt:mirt]{mirt::mirt()}} function. See Details.}
 }
 \value{
 indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}

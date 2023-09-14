@@ -1,10 +1,7 @@
 library(dplyr)
 library(purrr)
 library(testthat)
-library(devtools)
-# load_all()
 
-# load new data: load("../../Dati BDNCP/mock_data_core_def.RData")
 
 expect_row_number <- function(object, n) {
   act <- quasi_label(rlang::enquo(object), arg = "object")

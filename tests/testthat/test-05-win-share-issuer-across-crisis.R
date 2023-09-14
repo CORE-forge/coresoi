@@ -1,4 +1,5 @@
 library(dplyr)
+library(tidyr)
 
 expect_row_number <- function(object, n) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
@@ -74,11 +75,13 @@ expect_variability <- function(object) {
 }
 
 
+
+
 test_that("check `ind_5()` are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
       ind_5(
-        data = mock_data_core,
+        data = unnest(mock_data_core, aggiudicatari),
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         winners = codice_fiscale,
@@ -93,7 +96,7 @@ test_that("check `ind_5()` is variable", {
   expect_variability(
     suppressWarnings({
       ind_5(
-        data = mock_data_core,
+        data = unnest(mock_data_core, aggiudicatari),
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         winners = codice_fiscale,
@@ -109,7 +112,7 @@ test_that("check `ind_5()` are 11 columns as according to `generate_indicator_sc
   expect_col_number(
     suppressWarnings({
       ind_5(
-        data = mock_data_core,
+        data = unnest(mock_data_core, aggiudicatari),
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         winners = codice_fiscale,
@@ -124,7 +127,7 @@ test_that("check `ind_5()` is variable", {
   expect_variability(
     suppressWarnings({
       ind_5(
-        data = mock_data_core,
+        data = unnest(mock_data_core, aggiudicatari),
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         winners = codice_fiscale,

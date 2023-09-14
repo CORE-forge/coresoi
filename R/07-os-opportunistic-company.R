@@ -16,6 +16,7 @@
 #' @param final_award_date  This argument corresponds to the name of the column in data containing the date of the contract award, as recorded in the minutes or official documentation. Although the column values are stored as character strings, the function will automatically convert them to date objects when needed.
 #' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
 #' @param years_before This argument specifies how many years before the contract date we need to look for the presence of awards to a specific company.
+#' @param ... other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
 #' @examples
 #' \dontrun{
 #' if (interactive()) {

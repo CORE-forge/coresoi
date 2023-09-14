@@ -4,13 +4,15 @@
 \alias{get_weights}
 \title{Get the set of weights for building the composite indicator}
 \usage{
-get_weights(data, method, ...)
+get_weights(data, method, expert_weights = NULL, ...)
 }
 \arguments{
 \item{data}{data matrix of \strong{binary} elementary indicators (without missing values).}
 
 \item{method}{method for getting the set of weights. Possible choices are:
 \code{"equal"}, \code{"experts"} or \code{"irt"}. See Details.}
+
+\item{expert_weights}{user-provided expert weights (if any).}
 
 \item{...}{optional arguments for \code{\link[mirt:mirt]{mirt::mirt()}} function. See Details.}
 }
@@ -25,14 +27,17 @@ This function returns a vector of weights, whose dimension is equal to the
 number of elementary indicators in \code{data} (say, \eqn{Q}). Three choices are offered:
 \itemize{
 \item \code{"equal"}: each elementary indicator receives the same weight, equal to \eqn{1/Q};
-\item \code{"experts"}: each elementary indicator receives a specific weight provided by experts;
+\item \code{"experts"}: each elementary indicator receives a specific weight provided by experts. The user
+can provide the weights provided by his/her own experts (through argument \code{expert_weights}), otherwise
+the weights provided by our pool of experts is used;
 \item \code{"irt"}: each elementary indicator receives a specific weights provided by the IRT framework.
+}
+
 Specifically, a unidimensional 2PL IRT model is estimated on \code{data} through \code{\link[mirt:mirt]{mirt::mirt()}} function,
 for which possible additional arguments can be provided (\code{...}), such as estimation algorithm,
 numerical optimiser, convergence threshold, etc. Once the model is fitted, weights are computed
 by rescaling the estimated discrimination parameters (in such a way they sum to 1).
 \emph{Note: for the moment, IRT weights can be obtained only when the elementary indicators are all binary.}
-}
 }
 \examples{
 \dontrun{

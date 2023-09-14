@@ -17,6 +17,18 @@
 #' @param max_ndim maximum number of dimensions to check in the IRT framework (not greater than the number
 #' of elementary indicators).
 #' @param nrep number of replicates for random initialisation of the algorithm for fitting IRT models.
+#' @param seed seed number used during estimation. Default is 12345
+#' @param arg_tech_list a list containing lower level technical parameters for estimation. May be:
+#'
+#'  -  **NCYCLES** maximum number of EM or MH-RM cycles; defaults are 500 and
+#'  2000
+#'  - **MAXQUAD** maximum number of quadratures, which you can increase if you
+#'  have more than 4GB or RAM on your PC; default 20000
+#'  - **theta_lim** range of integration grid for each dimension; default is `c(-6, 6)`.
+#'
+#'  Note that when `itemtype = 'ULL'` a log-normal distribution is used and the
+#'  range is change to `c(.01, and 6^2)`, where the second term is the square
+#'  of the theta_lim input instead
 #' @param ... optional arguments for [mirt::mirt()] (e.g., estimation algorithm, convergence threshold,
 #' etc.) or [psych::fa()] (e.g., method for factor extraction, rotation method, etc.).
 #' @return different objects according to `dim_method`:

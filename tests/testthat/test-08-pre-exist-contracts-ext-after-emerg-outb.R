@@ -1,5 +1,6 @@
 library(dplyr)
 library(purrr)
+library(tidyr)
 
 expect_row_number <- function(object, n) {
   act <- quasi_label(rlang::enquo(object), arg = "object")
@@ -44,14 +45,14 @@ expect_variability <- function(object) {
 
 
 # unnest data by variants
-mock_data_core_ca <- unnest(mock_data_core, varianti, keep_empty=TRUE) #for ca
-mock_data_core_comp <- unnest(mock_data_core_ca, varianti, keep_empty=TRUE) #for companies
+mock_data_core_ca <- unnest(mock_data_core, varianti, keep_empty=TRUE)
+mock_data_core_ca_com <- unnest(mock_data_core_ca, aggiudicatari, keep_empty=TRUE)
 
 test_that("check `ind_8()` by contr auth are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
     suppressWarnings({
       ind_8(
-        data = mock_data_core_ca,
+        data = mock_data_core_ca_com,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         variant_date = data_approvazione_variante,
@@ -66,7 +67,7 @@ test_that("check `ind_8()` by company is variable", {
   expect_variability(
     suppressWarnings({
       ind_8(
-        data = mock_data_core_comp,
+        data = mock_data_core_ca_com,
         publication_date = data_pubblicazione,
         stat_unit = codice_fiscale,
         variant_date = data_approvazione_variante,
@@ -82,7 +83,7 @@ test_that("check `ind_8()` by nuts3 are 11 columns as according to `generate_ind
   expect_col_number(
     suppressWarnings({
       ind_8(
-        data = mock_data_core_ca,
+        data = mock_data_core_ca_com,
         publication_date = data_pubblicazione,
         stat_unit = codice_nuts3_2021,
         variant_date = data_approvazione_variante,
@@ -98,7 +99,7 @@ test_that("check `ind_8()` by contr auth are 11 columns as according to `generat
   expect_col_number(
     suppressWarnings({
       ind_8(
-        data = mock_data_core_ca,
+        data = mock_data_core_ca_com,
         publication_date = data_pubblicazione,
         stat_unit = cf_amministrazione_appaltante,
         variant_date = data_approvazione_variante,
@@ -113,7 +114,7 @@ test_that("check `ind_8()` by company is variable", {
   expect_variability(
     suppressWarnings({
       ind_8(
-        data = mock_data_core_comp,
+        data = mock_data_core_ca_com,
         publication_date = data_pubblicazione,
         stat_unit = codice_fiscale,
         variant_date = data_approvazione_variante,
@@ -129,7 +130,7 @@ test_that("check `ind_8()` by nuts3 are 11 columns as according to `generate_ind
   expect_col_number(
     suppressWarnings({
       ind_8(
-        data = mock_data_core_ca,
+        data = mock_data_core_ca_com,
         publication_date = data_pubblicazione,
         stat_unit = codice_nuts3_2021,
         variant_date = data_approvazione_variante,
@@ -139,3 +140,4 @@ test_that("check `ind_8()` by nuts3 are 11 columns as according to `generate_ind
     }), 11
   )
 })
+

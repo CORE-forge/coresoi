@@ -4,7 +4,7 @@
 \alias{ind_7}
 \title{Compute One-shot opportunistic companies over the crisiss indicator}
 \usage{
-ind_7(data, final_award_date, emergency_name, stat_unit, years_before)
+ind_7(data, final_award_date, emergency_name, stat_unit, years_before, ...)
 }
 \arguments{
 \item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
@@ -16,6 +16,8 @@ ind_7(data, final_award_date, emergency_name, stat_unit, years_before)
 \item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies are the targets.}
 
 \item{years_before}{This argument specifies how many years before the contract date we need to look for the presence of awards to a specific company.}
+
+\item{...}{other parameters to pass to \code{generate_indicator_schema} as \code{country_name} if that not Italy, which is default behavior.}
 }
 \description{
 The indicator focuses on companies that after the emergency outbreak were awarded one or more public contracts having participated in the public procurement process without winning in the \code{years_before} the emergency outbreak
