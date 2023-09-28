@@ -74,10 +74,10 @@ get_associated_cpv_from_emergency <- function(emergency_name) {
   }
 
   associated_cpv_list <- list(
-    "Coronavirus" = c(18, 19, 22, 24, 30, 32, 33, 34, 38, 39, 41, 44, 65, 85),
+    "Coronavirus" = c(33, 35, 18),
     "Terremoto Aquila" = c(45, 34, 35, 39, 43, 50, 60, 77, 85, 90),
     "Terremoto Ischia" = c(45, 34, 35, 39, 43, 60, 50, 77, 85, 90),
-    "Terremoto Centro Italia 2016-2017" = c(45, 34, 35, 39, 43, 50, 60, 77, 85, 90),
+    "Terremoto Centro Italia 2016-2017" = c(33, 85, 55, 50),
     "Terremoto Emilia-Romagna e Lombardia 2012" = c(45, 34, 35, 39, 43, 50, 60, 77, 85, 90),
     "Etna - Eruzione 2008-2009" = c(03, 15, 18, 31, 33, 35, 39, 43, 45, 50, 71),
     "Etna - Eruzione 2006-2007" = c(03, 15, 18, 31, 33, 35, 39, 43, 45, 50, 71),
@@ -89,7 +89,7 @@ get_associated_cpv_from_emergency <- function(emergency_name) {
     "Rimozione delle ecoballe nel Golfo di Follonica 2020" = c(18, 19, 22, 24, 30, 32, 34, 38, 39, 41, 44, 65, 85), # TODO see better cpv specs
     "Incendi stagione estiva 2017" = c(18, 19, 22, 24, 30, 32, 34, 38, 39, 41, 44, 65, 85), # TODO see better cpv specs
     "Naufragio della Concordia" = c(18, 19, 22, 24, 30, 32, 34, 38, 39, 41, 44, 65, 85), # TODO see better cpv specs
-    "Incendi stagione estiva 2017" = c(18, 19, 22, 24, 30, 32, 34, 38, 39, 41, 44, 65, 85) # TODO see better cpv specs
+    "Incendi stagione estiva 2017" = c(33, 45, 30, 71)
   )
 
   cpv_match <- associated_cpv_list[[emergency_name]]
