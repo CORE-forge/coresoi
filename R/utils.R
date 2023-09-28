@@ -87,7 +87,6 @@ get_associated_cpv_from_emergency <- function(emergency_name) {
     "Neve al centro-sud 2012" = c(18, 19, 22, 24, 30, 32, 34, 38, 39, 41, 44, 65, 85), # TODO see better cpv specs
     "Alluvione di Messina" = c(45, 34, 35, 39, 43, 60, 77, 85, 90),
     "Rimozione delle ecoballe nel Golfo di Follonica 2020" = c(18, 19, 22, 24, 30, 32, 34, 38, 39, 41, 44, 65, 85), # TODO see better cpv specs
-    "Incendi stagione estiva 2017" = c(18, 19, 22, 24, 30, 32, 34, 38, 39, 41, 44, 65, 85), # TODO see better cpv specs
     "Naufragio della Concordia" = c(18, 19, 22, 24, 30, 32, 34, 38, 39, 41, 44, 65, 85), # TODO see better cpv specs
     "Incendi stagione estiva 2017" = c(33, 45, 30, 71)
   )
