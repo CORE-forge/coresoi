@@ -1,15 +1,15 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   ChoiceOfElementaryIndicators: ChoiceOfElementaryIndicators.html
   CompositeIndicator: CompositeIndicator.html
+  coresoi: coresoi.html
   DataSelectionArchitecture: DataSelectionArchitecture.html
   summary: summary.html
   tryCoresoiWithYourData: tryCoresoiWithYourData.html
   useCoresoiAPI: useCoresoiAPI.html
-  coresoi: coresoi.html
-last_built: 2023-09-29T05:56Z
+last_built: 2024-05-13T11:44Z
 urls:
   reference: https://core-forge.github.io/coresoi/reference
   article: https://core-forge.github.io/coresoi/articles

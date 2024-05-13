@@ -14,13 +14,13 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Dosis-0.4.7/font.css" rel="stylesheet">
-<link href="../deps/JetBrains_Mono-0.4.7/font.css" rel="stylesheet">
-<link href="../deps/Lora-0.4.7/font.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Dosis-0.4.9/font.css" rel="stylesheet">
+<link href="../deps/JetBrains_Mono-0.4.9/font.css" rel="stylesheet">
+<link href="../deps/Lora-0.4.9/font.css" rel="stylesheet">
 <!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Use CORE API in R">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Use CORE API in R">
 <meta property="og:description" content="coresoi">
 <meta property="og:image" content="https://core-forge.github.io/coresoi/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -32,7 +32,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">coresoi</a>
 
@@ -126,11 +126,11 @@ related to public procurement in Italy.</p>
 <span></span>
 <span><span class="co"># Create a function to call the /aggiudicatari endpoint</span></span>
 <span><span class="va">get_aggiudicatari</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">api_key</span>, <span class="va">limit</span>, <span class="va">cig</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">ruolo</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">codice_fiscale</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                               <span class="va">denominazione</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">tipo_soggetto</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">id_aggiudicazione</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                               <span class="va">sort_param</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                              <span class="va">denominazione</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">tipo_soggetto</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">id_aggiudicazione</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                              <span class="va">sort_param</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># Set the API endpoint for the /aggiudicatari endpoint</span></span>
 <span>  <span class="va">endpoint</span> <span class="op">&lt;-</span> <span class="st">"/aggiudicatari"</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="co"># Create the request URL with the specified parameters</span></span>
 <span>  <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">url</span>, <span class="va">endpoint</span>, <span class="st">"?limit="</span>, <span class="va">limit</span><span class="op">)</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">cig</span><span class="op">)</span><span class="op">)</span> <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="st">"&amp;cig="</span>, <span class="va">cig</span><span class="op">)</span></span>
@@ -140,21 +140,21 @@ related to public procurement in Italy.</p>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">tipo_soggetto</span><span class="op">)</span><span class="op">)</span> <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="st">"&amp;tipo_soggetto="</span>, <span class="va">tipo_soggetto</span><span class="op">)</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">id_aggiudicazione</span><span class="op">)</span><span class="op">)</span> <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="st">"&amp;id_aggiudicazione="</span>, <span class="va">id_aggiudicazione</span><span class="op">)</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">sort_param</span><span class="op">)</span><span class="op">)</span> <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="st">"&amp;sort_param="</span>, <span class="va">sort_param</span><span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="co"># Make the API request with the API key in the header</span></span>
 <span>  <span class="va">response</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr.r-lib.org/reference/GET.html" class="external-link">GET</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="fu"><a href="https://httr.r-lib.org/reference/add_headers.html" class="external-link">add_headers</a></span><span class="op">(</span><span class="st">"x-api-key"</span> <span class="op">=</span> <span class="va">api_key</span><span class="op">)</span><span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="co"># Return the response as a JSON object</span></span>
 <span>  <span class="fu"><a href="https://httr.r-lib.org/reference/content.html" class="external-link">content</a></span><span class="op">(</span><span class="va">response</span>, as <span class="op">=</span> <span class="st">"parsed"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="co"># Create a function to call the /cigs endpoint</span></span>
 <span><span class="va">get_cigs</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">api_key</span>, <span class="va">limit</span>, <span class="va">cig</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">provincia</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">tipo_scelta_contraente</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                      <span class="va">data_pubblicazione_min</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data_pubblicazione_max</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                      <span class="va">importo_lotto_min</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">importo_lotto_max</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                     <span class="va">data_pubblicazione_min</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">data_pubblicazione_max</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                     <span class="va">importo_lotto_min</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">importo_lotto_max</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># Set the API endpoint for the /cigs endpoint</span></span>
 <span>  <span class="va">endpoint</span> <span class="op">&lt;-</span> <span class="st">"/cigs"</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="co"># Create the request URL with the specified parameters</span></span>
 <span>  <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">url</span>, <span class="va">endpoint</span>, <span class="st">"?limit="</span>, <span class="va">limit</span><span class="op">)</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">cig</span><span class="op">)</span><span class="op">)</span> <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="st">"&amp;cig="</span>, <span class="va">cig</span><span class="op">)</span></span>
@@ -164,21 +164,21 @@ related to public procurement in Italy.</p>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">data_pubblicazione_max</span><span class="op">)</span><span class="op">)</span> <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="st">"&amp;data_pubblicazione_max="</span>, <span class="va">data_pubblicazione_max</span><span class="op">)</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">importo_lotto_min</span><span class="op">)</span><span class="op">)</span> <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="st">"&amp;importo_lotto_min="</span>, <span class="va">importo_lotto_min</span><span class="op">)</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">importo_lotto_max</span><span class="op">)</span><span class="op">)</span> <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="st">"&amp;importo_lotto_max="</span>, <span class="va">importo_lotto_max</span><span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="co"># Make the API request with the API key in the header</span></span>
 <span>  <span class="va">response</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr.r-lib.org/reference/GET.html" class="external-link">GET</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="fu"><a href="https://httr.r-lib.org/reference/add_headers.html" class="external-link">add_headers</a></span><span class="op">(</span><span class="st">"x-api-key"</span> <span class="op">=</span> <span class="va">api_key</span><span class="op">)</span><span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="co"># Return the response as a JSON object</span></span>
 <span>  <span class="fu"><a href="https://httr.r-lib.org/reference/content.html" class="external-link">content</a></span><span class="op">(</span><span class="va">response</span>, as <span class="op">=</span> <span class="st">"parsed"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="co"># Create a function to call the /stazione-appaltante endpoint</span></span>
 <span><span class="va">get_stazione_appaltante</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">api_key</span>, <span class="va">limit</span>, <span class="va">codice_fiscale</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">partita_iva</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                                     <span class="va">denominazione</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">provincia_nome</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">citta_codice</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>                                     <span class="va">citta_nome</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">sort_param</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
+<span>                                    <span class="va">denominazione</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">provincia_nome</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">citta_codice</span> <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                                    <span class="va">citta_nome</span> <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">sort_param</span> <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="co"># Set the API endpoint for the /stazione-appaltante endpoint</span></span>
 <span>  <span class="va">endpoint</span> <span class="op">&lt;-</span> <span class="st">"/stazione-appaltante"</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="co"># Create the request URL with the specified parameters</span></span>
 <span>  <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">url</span>, <span class="va">endpoint</span>, <span class="st">"?limit="</span>, <span class="va">limit</span><span class="op">)</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">codice_fiscale</span><span class="op">)</span><span class="op">)</span> <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="st">"&amp;codice_fiscale="</span>, <span class="va">codice_fiscale</span><span class="op">)</span></span>
@@ -188,10 +188,10 @@ related to public procurement in Italy.</p>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">citta_codice</span><span class="op">)</span><span class="op">)</span> <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="st">"&amp;citta_codice="</span>, <span class="va">citta_codice</span><span class="op">)</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">citta_nome</span><span class="op">)</span><span class="op">)</span> <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="st">"&amp;citta_nome="</span>, <span class="va">citta_nome</span><span class="op">)</span></span>
 <span>  <span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">sort_param</span><span class="op">)</span><span class="op">)</span> <span class="va">request_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="st">"&amp;sort_param="</span>, <span class="va">sort_param</span><span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="co"># Make the API request with the API key in the header</span></span>
 <span>  <span class="va">response</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://httr.r-lib.org/reference/GET.html" class="external-link">GET</a></span><span class="op">(</span><span class="va">request_url</span>, <span class="fu"><a href="https://httr.r-lib.org/reference/add_headers.html" class="external-link">add_headers</a></span><span class="op">(</span><span class="st">"x-api-key"</span> <span class="op">=</span> <span class="va">api_key</span><span class="op">)</span><span class="op">)</span></span>
-<span>  </span>
+<span></span>
 <span>  <span class="co"># Return the response as a JSON object</span></span>
 <span>  <span class="fu"><a href="https://httr.r-lib.org/reference/content.html" class="external-link">content</a></span><span class="op">(</span><span class="va">response</span>, as <span class="op">=</span> <span class="st">"parsed"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
@@ -201,7 +201,7 @@ parameters (such as cig or provincia) according to the Swagger API
 specifications. For example:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># free usage plan (limited to Rate 100 requests per second, Burst 100 requests,Quota 10,000 requests per month starting on the 1st day)</span></span>
-<span><span class="va">free_usage_api_key</span> <span class="op">=</span> <span class="st">"m4JqlGtSl8aZyAIRyPzd3mPTFCO7VC2vo9O7Xpc0"</span></span>
+<span><span class="va">free_usage_api_key</span> <span class="op">&lt;-</span> <span class="st">"m4JqlGtSl8aZyAIRyPzd3mPTFCO7VC2vo9O7Xpc0"</span></span>
 <span></span>
 <span><span class="co"># Call the /aggiudicatari endpoint with a limit of 10 and a codice_fiscale of "6960001684"</span></span>
 <span><span class="fu">get_aggiudicatari</span><span class="op">(</span>api_key <span class="op">=</span> <span class="va">free_usage_api_key</span>, limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
@@ -217,13 +217,11 @@ specifications. For example:</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by Niccolo Salvini, Simone DelSarto, Michela Gnaldi.</p>
+  <p>Developed by Niccolo Salvini, Simone DelSarto, Michela Gnaldi.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
 </div>
 
     </footer>
