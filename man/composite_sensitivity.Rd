@@ -93,15 +93,19 @@ The long version can be useful for further specific analysis.
 }
 \examples{
 \dontrun{
-if(interactive()){
+if (interactive()) {
   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
-  out_companies <- ind_all(data = mock_data_core,
-                           data_ind8 = mock_data_core_variants,
-                           emergency_name = "coronavirus",
-                           target_unit = "companies")
-  out_sens <- composite_sensitivity(indicator_list = out_companies,
-                                    cutoff = c(0.90, 0.95, 0.99),
-                                    TOL = 0.1)  # argument for mirt::mirt function
+  out_companies <- ind_all(
+    data = mock_data_core,
+    data_ind8 = mock_data_core_variants,
+    emergency_name = "coronavirus",
+    target_unit = "companies"
+  )
+  out_sens <- composite_sensitivity(
+    indicator_list = out_companies,
+    cutoff = c(0.90, 0.95, 0.99),
+    TOL = 0.1
+  ) # argument for mirt::mirt function
   View(out_sens$sens_wide)
   View(out_sens$sens_long)
 
@@ -114,7 +118,7 @@ if(interactive()){
   dat <- data.frame(y, X)
   formula <- paste(names(dat)[-1], collapse = "+")
   formula <- paste("y~", formula)
-  mod <- lm(formula, data=dat)
+  mod <- lm(formula, data = dat)
   summary(mod)
   mod_anova <- anova(mod)
   mod_anova
@@ -133,10 +137,10 @@ if(interactive()){
     filter(aggregation_name \%in\% datw_no0$aggregation_name[1:400]) \%>\%
     left_join(datw_no0 \%>\% select(aggregation_name, medianCI, meanCI)) \%>\%
     arrange(meanCI, aggregation_name)
-  aggr <- datl_no0$aggregation_name \%>\% unique
+  aggr <- datl_no0$aggregation_name \%>\% unique()
   aggr <- data.frame(id = 1:length(aggr), aggregation_name = aggr)
   datl_no0 <- datl_no0 \%>\% left_join(aggr)
   boxplot(datl_no0$ci ~ datl_no0$id)
- }
+}
 }
 }

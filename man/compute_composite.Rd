@@ -42,19 +42,23 @@ specified \emph{normalisation}, \emph{missing management}, \emph{weighting} and 
 }
 \examples{
 \dontrun{
-if(interactive()){
+if (interactive()) {
   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
-  out_companies <- ind_all(data = mock_data_core,
-                           data_ind8 = mock_data_core_variants,
-                           emergency_name = "coronavirus",
-                           target_unit = "companies")
-  composite_companies <- compute_composite(indicator_list = out_companies,
-                                           norm_method = "binary",
-                                           miss_method = 0,
-                                           cutoff = 0.99,
-                                           weight_method = "experts",
-                                           aggr_method = "linear")
+  out_companies <- ind_all(
+    data = mock_data_core,
+    data_ind8 = mock_data_core_variants,
+    emergency_name = "coronavirus",
+    target_unit = "companies"
+  )
+  composite_companies <- compute_composite(
+    indicator_list = out_companies,
+    norm_method = "binary",
+    miss_method = 0,
+    cutoff = 0.99,
+    weight_method = "experts",
+    aggr_method = "linear"
+  )
   head(composite_companies)
- }
+}
 }
 }

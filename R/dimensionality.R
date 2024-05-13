@@ -78,23 +78,27 @@
 #'
 #' @examples
 #' \dontrun{
-#' if(interactive()){
-#'  mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
-#'  out_companies <- ind_all(data = mock_data_core,
-#'                          data_ind8 = mock_data_core_variants,
-#'                          emergency_name = "coronavirus",
-#'                          target_unit = "companies")
-#'   out_dim <- dimensionality_check(indicator_list = out_companies,
-#'                                 dim_method = "IRT",
-#'                                 max_ndim = 4,
-#'                                 cutoff = 0.95,
-#'                                 missing = 0,
-#'                                 nrep = 3,
-#'                                 TOL = 0.1,
-#'                                 verbose = TRUE,
-#'                                 method = "QMCEM")
-#'    }
-#'  }
+#' if (interactive()) {
+#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   out_companies <- ind_all(
+#'     data = mock_data_core,
+#'     data_ind8 = mock_data_core_variants,
+#'     emergency_name = "coronavirus",
+#'     target_unit = "companies"
+#'   )
+#'   out_dim <- dimensionality_check(
+#'     indicator_list = out_companies,
+#'     dim_method = "IRT",
+#'     max_ndim = 4,
+#'     cutoff = 0.95,
+#'     missing = 0,
+#'     nrep = 3,
+#'     TOL = 0.1,
+#'     verbose = TRUE,
+#'     method = "QMCEM"
+#'   )
+#' }
+#' }
 #' @seealso
 #'  \code{\link[mirt]{mirt}}
 #'  \code{\link[psych]{fa}}
@@ -109,10 +113,9 @@ dimensionality_check <- function(indicator_list,
                                  missing = 0,
                                  max_ndim = length(indicator_list),
                                  nrep = 5,
-                                 seed = NULL, #random
-                                 arg_tech_list= NULL,
+                                 seed = NULL, # random
+                                 arg_tech_list = NULL,
                                  ...) {
-
   match.arg(dim_method, c("IRT", "FA"))
   Q <- length(indicator_list)
   if (max_ndim > Q) stop("Number of dimensions can not be greater than the number of elementary indicators")
@@ -122,22 +125,25 @@ dimensionality_check <- function(indicator_list,
 
   cat(paste0("\n\n************************** DIMENSIONALITY CHECK through ", dim_method, " **************************\n"))
   if (dim_method == "IRT") {
-
     # first check: Rasch or 2PL? Look at unidimensional model for the best one
     cat("---------------------------------------------------\n")
     cat("Fitting unidimensional Rasch model \n")
-    out_rasch1 <- mirt::mirt(data = data_matrix2[, -c(1, 2)],
-                             model = 1,
-                             itemtype = "Rasch",
-                             technical = arg_tech_list,
-                             ...)
+    out_rasch1 <- mirt::mirt(
+      data = data_matrix2[, -c(1, 2)],
+      model = 1,
+      itemtype = "Rasch",
+      technical = arg_tech_list,
+      ...
+    )
     cat("---------------------------------------------------\n")
     cat("Fitting unidimensional 2PL model \n")
-    out_2pl1 <- mirt::mirt(data = data_matrix2[, -c(1, 2)],
-                           model = 1,
-                           itemtype = "2PL",
-                           technical = arg_tech_list,
-                           ...)
+    out_2pl1 <- mirt::mirt(
+      data = data_matrix2[, -c(1, 2)],
+      model = 1,
+      itemtype = "2PL",
+      technical = arg_tech_list,
+      ...
+    )
 
     cat("---------------------------------------------------\n")
     cat("\nStep 1: Rasch vs. 2PL \n")
@@ -148,7 +154,7 @@ dimensionality_check <- function(indicator_list,
     out_mirt <- list()
     bic_rasch <- anova(out_rasch1)$BIC
     bic_2pl <- anova(out_2pl1)$BIC
-    if(bic_rasch < bic_2pl) {
+    if (bic_rasch < bic_2pl) {
       best <- "Rasch"
       out_mirt[[1]] <- out_rasch1
     } else {
@@ -165,12 +171,14 @@ dimensionality_check <- function(indicator_list,
       cat(paste0("Fitting ", best, " model with ", d, " dimensions \n"))
 
       # deterministic start
-      out_mirt_det <- mirt::mirt(data = data_matrix2[, -c(1, 2)],
-                                 model = d,
-                                 itemtype = best,
-                                 GenRandomPars = FALSE,
-                                 technical = arg_tech_list,
-                                 ...)
+      out_mirt_det <- mirt::mirt(
+        data = data_matrix2[, -c(1, 2)],
+        model = d,
+        itemtype = best,
+        GenRandomPars = FALSE,
+        technical = arg_tech_list,
+        ...
+      )
       bic_det <- anova(out_mirt_det)$BIC
 
       # random starts
@@ -178,39 +186,51 @@ dimensionality_check <- function(indicator_list,
       bic_rnd <- NULL
 
       for (i in 1:(nrep[d - 1])) {
-        if (is.null(seed)) tech_list <- arg_tech_list
-        else {
+        if (is.null(seed)) {
+          tech_list <- arg_tech_list
+        } else {
           if (length(seed) != nrep[d - 1]) stop("Please, check seed length")
           tech_list <- append(arg_tech_list, seed[i])
           names(tech_list)[length(tech_list)] <- "set.seed"
         }
-        out_mirt_rnd[[i]] <- mirt::mirt(data = data_matrix2[, -c(1, 2)],
-                                        model = d,
-                                        itemtype = best,
-                                        GenRandomPars = TRUE,
-                                        technical = tech_list,
-                                        ...)
+        out_mirt_rnd[[i]] <- mirt::mirt(
+          data = data_matrix2[, -c(1, 2)],
+          model = d,
+          itemtype = best,
+          GenRandomPars = TRUE,
+          technical = tech_list,
+          ...
+        )
         bic_rnd <- c(bic_rnd, anova(out_mirt_rnd[[i]])$BIC)
       }
       # best random
       cat(paste0("\nFit of models with ", d, " dimensions\n"))
       summary_det <- data.frame(replicate = "det", BIC = bic_det)
-      summary_rnd <- data.frame(replicate = paste0("rnd", 1:length(bic_rnd)),
-                                BIC = bic_rnd)
+      summary_rnd <- data.frame(
+        replicate = paste0("rnd", 1:length(bic_rnd)),
+        BIC = bic_rnd
+      )
       summary_models <- rbind(summary_det, summary_rnd)
       print(summary_models, row.names = FALSE)
 
       best_rnd <- out_mirt_rnd[[which.min(bic_rnd)]]
 
-      if (bic_det < min(bic_rnd)) out_mirt[[d]] <- out_mirt_det
-      else out_mirt[[d]] <- best_rnd
+      if (bic_det < min(bic_rnd)) {
+        out_mirt[[d]] <- out_mirt_det
+      } else {
+        out_mirt[[d]] <- best_rnd
+      }
     }
 
     cat("---------------------------------------------------\n")
     cat("\n\nSummary of the dimensionality check\n")
-    print(data.frame(dim = 1:max_ndim,
-                     sapply(out_mirt, anova) %>% t),
-          row.names = FALSE)
+    print(
+      data.frame(
+        dim = 1:max_ndim,
+        sapply(out_mirt, anova) %>% t()
+      ),
+      row.names = FALSE
+    )
     out <- out_mirt
   }
 
@@ -220,20 +240,19 @@ dimensionality_check <- function(indicator_list,
     lambda <- eigen(R)$values
 
     # Eigenvalue plot
-    plot(lambda, type="o", xlab="Number of factors", ylab="Eigenvalues", pch=20)
-    abline(h=1, lty=2)
+    plot(lambda, type = "o", xlab = "Number of factors", ylab = "Eigenvalues", pch = 20)
+    abline(h = 1, lty = 2)
 
     nfact <- which(lambda > 1) %>% tail(1)
     cat(paste0("According to eigenvalues, ", nfact, " factors are retained\n"))
 
-    out <- psych::fa(R, nfactors = nfact, n.obs=nrow(data_matrix2), ...)
+    out <- psych::fa(R, nfactors = nfact, n.obs = nrow(data_matrix2), ...)
 
     # fm="pa", rotate="oblimin"
     # x <- psych::fa(R, nfactors = 1, n.obs=nrow(data_matrix2), ...)
     # x2 <- psych::fa(R, nfactors = 2, n.obs=nrow(data_matrix2), ...)
     # x3 <- psych::fa(R, nfactors = 3, n.obs=nrow(data_matrix2), ...)
     # anova(x, x2, x3)
-
   }
 
 

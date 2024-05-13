@@ -45,8 +45,8 @@ expect_variability <- function(object) {
 
 
 # unnest data by variants
-mock_data_core_ca <- unnest(mock_data_core, varianti, keep_empty=TRUE)
-mock_data_core_ca_com <- unnest(mock_data_core_ca, aggiudicatari, keep_empty=TRUE)
+mock_data_core_ca <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+mock_data_core_ca_com <- unnest(mock_data_core_ca, aggiudicatari, keep_empty = TRUE)
 
 test_that("check `ind_8()` by contr auth are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
@@ -140,4 +140,3 @@ test_that("check `ind_8()` by nuts3 are 11 columns as according to `generate_ind
     }), 11
   )
 })
-

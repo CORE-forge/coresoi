@@ -2,7 +2,7 @@
 % Please edit documentation in R/05-win-share-issuer-across-crisis.R
 \name{ind_5}
 \alias{ind_5}
-\title{Compute Winner's share of issuer's contract across the crisis indicator}
+\title{Compute Excess of concentration of the winners’ distribution indicator}
 \usage{
 ind_5(data, stat_unit, publication_date, winners, emergency_name, cpvs, ...)
 }

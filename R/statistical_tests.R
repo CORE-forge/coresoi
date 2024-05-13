@@ -4,7 +4,8 @@
 #' @export
 compute_wilcox <- function(data, var, group, exact = TRUE, alternative = "greater", paired = FALSE) {
   test_res <- data %>%
-    wilcox.test(var ~ group, data = ., exact = exact, alternative = alternative) %>% suppressWarnings()
+    wilcox.test(var ~ group, data = ., exact = exact, alternative = alternative) %>%
+    suppressWarnings()
   c(
     p_value = round(test_res$p.value, 3),
     estimate = round(test_res$statistic, 3)
@@ -125,16 +126,16 @@ compute_unpaired_ttest <- function(.data, var, group, alternative = "less", pair
 #' @export
 test_set_1 <- function(a, b, c, d, test_type) {
   switch(test_type,
-         "barnard" = {
-           compute_barnard(a, b, c, d)
-         },
-         "fisher" = {
-           compute_fisher(a, b, c, d)
-         },
-         "z-test" = {
-           compute_prop_test(a, b, c, d)
-         },
-         stop(paste0("No handler for ", test_type))
+    "barnard" = {
+      compute_barnard(a, b, c, d)
+    },
+    "fisher" = {
+      compute_fisher(a, b, c, d)
+    },
+    "z-test" = {
+      compute_prop_test(a, b, c, d)
+    },
+    stop(paste0("No handler for ", test_type))
   )
 }
 
@@ -150,13 +151,13 @@ test_set_2 <- function(data, var, group, test_type) {
   } else {
     # print("test")
     switch(test_type,
-           "ks" = {
-             compute_kolmogorov_smirnoff(data, var, group)
-           },
-           "wilcoxon" = {
-             compute_wilcox(data, var, group)
-           },
-           stop(paste0("No handler for ", test_type))
+      "ks" = {
+        compute_kolmogorov_smirnoff(data, var, group)
+      },
+      "wilcoxon" = {
+        compute_wilcox(data, var, group)
+      },
+      stop(paste0("No handler for ", test_type))
     )
   }
 }

@@ -75,7 +75,7 @@ expect_either_0_or_1 <- function(object, min, max) {
 }
 
 mock_data_core_comp <- mock_data_core %>%
-  tidyr::unnest(aggiudicatari, keep_empty=TRUE)
+  tidyr::unnest(aggiudicatari, keep_empty = TRUE)
 
 # ind7 only for companies --> use the unnested version of data
 
@@ -137,5 +137,3 @@ test_that("check `ind_7()` is variable", {
     })
   )
 })
-
-

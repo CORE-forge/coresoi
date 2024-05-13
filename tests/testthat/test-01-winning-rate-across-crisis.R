@@ -60,7 +60,7 @@ expect_variability <- function(object) {
 
 # ind1 only for companies
 mock_data_core_comp <- mock_data_core %>%
-  tidyr::unnest(aggiudicatari, keep_empty=TRUE)
+  tidyr::unnest(aggiudicatari, keep_empty = TRUE)
 
 test_that("check `ind_1()` are 11 columns as according to `generate_indicator_schema()`s with `stat_unit` being **codice_fiscale**", {
   expect_col_number(
@@ -79,7 +79,7 @@ test_that("check `ind_1()` are 11 columns as according to `generate_indicator_sc
 test_that("check column names are as according to pre determined schema", {
   col_names <- c(
     "indicator_id", "indicator_name", "indicator_value", "aggregation_name",
-    "aggregation_id",  "emergency_name", "emergency_id",
+    "aggregation_id", "emergency_name", "emergency_id",
     "country_id", "country_name", "indicator_last_update",
     "data_last_update"
   )
@@ -107,7 +107,7 @@ test_that("check if `indicator_value` lays inbetween min/max values according to
         # only 30000 obs since this is time consuming
         data = mock_data_core_comp %>% dplyr::sample_n(30000),
         publication_date = data_pubblicazione,
-        stat_unit = codice_fiscale ,
+        stat_unit = codice_fiscale,
         emergency_name = "coronavirus",
         test_type = "barnard"
       )
@@ -123,7 +123,7 @@ test_that("check if `indicator_value` variability is not 0", {
         # only 10000 obs since this is time consuming
         data = mock_data_core_comp %>% dplyr::sample_n(10000),
         publication_date = data_pubblicazione,
-        stat_unit = codice_fiscale ,
+        stat_unit = codice_fiscale,
         emergency_name = "coronavirus",
         test_type = "barnard"
       )
@@ -138,7 +138,7 @@ test_that("check if `indicator_value` variability is not 0", {
         # only 10000 obs since this is time consuming
         data = mock_data_core_comp,
         publication_date = data_pubblicazione,
-        stat_unit = codice_fiscale ,
+        stat_unit = codice_fiscale,
         emergency_name = "coronavirus",
         test_type = "fisher"
       )

@@ -136,4 +136,3 @@ test_that("check `ind_5()` is variable", {
     })
   )
 })
-

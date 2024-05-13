@@ -59,7 +59,7 @@ expect_variability <- function(object) {
 
 
 mock_data_core_comp <- mock_data_core %>%
-  tidyr::unnest(aggiudicatari, keep_empty=TRUE)
+  tidyr::unnest(aggiudicatari, keep_empty = TRUE)
 
 test_that("check `ind_4()` by contr auth+wilcoxon are 11 columns as according to `generate_indicator_schema()`s", {
   expect_col_number(
@@ -81,7 +81,7 @@ test_that("check `ind_4()` by contr auth+wilcoxon are 11 columns as according to
 test_that("check column names are as according to pre determined schema (by company)", {
   col_names <- c(
     "indicator_id", "indicator_name", "indicator_value",
-    "aggregation_id","aggregation_name",  "emergency_name", "emergency_id",
+    "aggregation_id", "aggregation_name", "emergency_name", "emergency_id",
     "country_id", "country_name", "indicator_last_update",
     "data_last_update"
   )
@@ -161,7 +161,7 @@ test_that("check if `indicator_value` by nuts3 is variable (Wilcoxon)", {
 test_that("check column names are as according to pre determined schema (by company)", {
   col_names <- c(
     "indicator_id", "indicator_name", "indicator_value",
-    "aggregation_id","aggregation_name",  "emergency_name", "emergency_id",
+    "aggregation_id", "aggregation_name", "emergency_name", "emergency_id",
     "country_id", "country_name", "indicator_last_update",
     "data_last_update"
   )

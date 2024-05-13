@@ -2,7 +2,7 @@
 % Please edit documentation in R/06-communication-def-across-crisis.R
 \name{ind_6}
 \alias{ind_6}
-\title{Compute Communication default across the crisis indicator}
+\title{Compute Award communication default across the crisis indicator}
 \usage{
 ind_6(
   data,

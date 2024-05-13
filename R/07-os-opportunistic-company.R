@@ -1,4 +1,4 @@
-#' Compute One-shot opportunistic companies over the crisiss indicator
+#' Compute One-shot opportunistic companies over the crisis indicator
 #'
 #' @description
 #' The indicator focuses on companies that after the emergency outbreak were awarded one or more public contracts having participated in the public procurement process without winning in the `years_before` the emergency outbreak

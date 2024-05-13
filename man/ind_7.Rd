@@ -2,7 +2,7 @@
 % Please edit documentation in R/07-os-opportunistic-company.R
 \name{ind_7}
 \alias{ind_7}
-\title{Compute One-shot opportunistic companies over the crisiss indicator}
+\title{Compute One-shot opportunistic companies over the crisis indicator}
 \usage{
 ind_7(data, final_award_date, emergency_name, stat_unit, years_before, ...)
 }

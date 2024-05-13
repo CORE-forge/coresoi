@@ -95,7 +95,6 @@ ind_8 <- function(data,
       # prop_mod = nmod/npre,
       rf_value = 1 * (nmod > 0),
       aggregation_name = dplyr::first(!!rlang::sym(aggregation_name))
-
     ) %>%
     generate_indicator_schema(
       indicator_id = indicator_id,

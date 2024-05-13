@@ -50,9 +50,7 @@ ind_1 <- function(data,
                   test_type,
                   cpvs,
                   ...) {
-
-
-  #check_columns(.data, missing_cols)
+  # check_columns(.data, missing_cols)
 
   indicator_id <- 1
   indicator_name <- "Winning rate across the crisis"
@@ -82,7 +80,7 @@ ind_1 <- function(data,
       )
     ) %>%
     dplyr::filter(!is.na({{ stat_unit }})) %>%
-    dplyr::group_by({{ stat_unit }}) %>% #.data[[aggregation_name]]
+    dplyr::group_by({{ stat_unit }}) %>% # .data[[aggregation_name]]
     dplyr::summarise(
       n = dplyr::n(),
       n_11 = sum(flagdivision == 0 & prepost == "pre"),

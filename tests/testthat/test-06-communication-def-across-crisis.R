@@ -64,7 +64,7 @@ test_that("check `ind_6()` by contr auth are 11 columns as according to `generat
   expect_col_number(
     suppressMessages({
       ind_6(
-        data = mock_data_core, #nested version
+        data = mock_data_core, # nested version
         publication_date = data_pubblicazione,
         award_col = id_aggiudicazione,
         stat_unit = cf_amministrazione_appaltante,
@@ -80,7 +80,7 @@ test_that("check `ind_6()` by contr auth are 11 columns as according to `generat
   expect_variability(
     suppressMessages({
       ind_6(
-        data = mock_data_core, #nested version
+        data = mock_data_core, # nested version
         publication_date = data_pubblicazione,
         award_col = id_aggiudicazione,
         stat_unit = cf_amministrazione_appaltante,
@@ -97,7 +97,7 @@ test_that("check if `indicator_value` by nuts3 lays inbetween min/max values acc
   expect_within_range(
     suppressMessages({
       ind_6(
-        data = mock_data_core, #nested version
+        data = mock_data_core, # nested version
         publication_date = data_pubblicazione,
         award_col = id_aggiudicazione,
         stat_unit = codice_nuts3_2021,
@@ -115,7 +115,7 @@ test_that("check `ind_6()` by contr auth are 11 columns as according to `generat
   expect_col_number(
     suppressMessages({
       ind_6(
-        data = mock_data_core, #nested version
+        data = mock_data_core, # nested version
         publication_date = data_pubblicazione,
         award_col = id_aggiudicazione,
         stat_unit = cf_amministrazione_appaltante,
@@ -131,7 +131,7 @@ test_that("check `ind_6()` by contr auth are 11 columns as according to `generat
   expect_variability(
     suppressMessages({
       ind_6(
-        data = mock_data_core, #nested version
+        data = mock_data_core, # nested version
         publication_date = data_pubblicazione,
         award_col = id_aggiudicazione,
         stat_unit = cf_amministrazione_appaltante,
@@ -148,7 +148,7 @@ test_that("check if `indicator_value` by nuts3 lays inbetween min/max values acc
   expect_within_range(
     suppressMessages({
       ind_6(
-        data = mock_data_core, #nested version
+        data = mock_data_core, # nested version
         publication_date = data_pubblicazione,
         award_col = id_aggiudicazione,
         stat_unit = codice_nuts3_2021,

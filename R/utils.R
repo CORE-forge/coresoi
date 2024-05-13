@@ -113,7 +113,7 @@ italian_aggregation_mapping <- list(
 check_columns <- function(df, columns) {
   missing_cols <- setdiff(columns, names(df))
   if (length(missing_cols) > 0) {
-    stop(paste0("Missing columns: ", paste(missing_cols, collapse=", ")))
+    stop(paste0("Missing columns: ", paste(missing_cols, collapse = ", ")))
   }
 }
 
@@ -147,9 +147,8 @@ get_country_id_from_name <- function(country_name) {
 #' generate indicator schema
 #' @keywords internal
 #' @export
-generate_indicator_schema <- function(.data, indicator_id, emergency, indicator_name, missing_cols = c("codice_regione", "provincia_codice", "citta_codice", "cf_amministrazione_appaltante", "codice_fiscale"),  country_name = "Italy", ...) {
-
-  #check_columns(.data, missing_cols)
+generate_indicator_schema <- function(.data, indicator_id, emergency, indicator_name, missing_cols = c("codice_regione", "provincia_codice", "citta_codice", "cf_amministrazione_appaltante", "codice_fiscale"), country_name = "Italy", ...) {
+  # check_columns(.data, missing_cols)
 
   common_schema <- .data %>%
     dplyr::transmute(

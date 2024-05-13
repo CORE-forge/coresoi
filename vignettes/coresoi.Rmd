@@ -41,7 +41,6 @@ ind_2(
   emergency_name = "coronavirus"
 ) |>
   head(10)
-
 ```
 
 

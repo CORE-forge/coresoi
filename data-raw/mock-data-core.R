@@ -20,7 +20,7 @@ library(stringr)
 #   saveRDS(file = here("data-raw", "mock_data_core.rds"))
 
 
-mock_data_core = tibble(get(load("/Users/niccolo/Desktop/core_assets/mock_data_core_def.RData")))
+mock_data_core <- tibble(get(load("/Users/niccolo/Desktop/core_assets/mock_data_core_def.RData")))
 
 
 # mock_data_core <- read_rds(here("data-raw", "mock_data_core.rds"))
@@ -48,6 +48,6 @@ fix_encoding <- function(x) {
   return(x)
 }
 mock_data_core <- mock_data_core %>%
-  mutate_if(is.character,fix_encoding)
+  mutate_if(is.character, fix_encoding)
 
 usethis::use_data(mock_data_core, overwrite = TRUE)

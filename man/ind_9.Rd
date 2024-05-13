@@ -2,7 +2,7 @@
 % Please edit documentation in R/09-lengthy-contract.R
 \name{ind_9}
 \alias{ind_9}
-\title{Compute Lenghty Contracts indicator}
+\title{Compute Lenghty contracts indicator}
 \usage{
 ind_9(
   data,

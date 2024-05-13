@@ -52,14 +52,14 @@ are obtained. In the latter case, the user has to specify (through \code{id_loca
 }
 \examples{
 \dontrun{
-if(interactive()) {
+if (interactive()) {
   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
   out_companies <- ind_all(
     data = mock_data_core,
     data_ind8 = mock_data_core_variants,
     emergency_name = "coronavirus",
     target_unit = "companies"
-    )
+  )
 }
 }
 }

@@ -60,7 +60,7 @@ expect_variability <- function(object) {
 }
 
 mock_data_core_comp <- mock_data_core %>%
-  tidyr::unnest(aggiudicatari, keep_empty=TRUE)
+  tidyr::unnest(aggiudicatari, keep_empty = TRUE)
 
 
 test_that("check `ind_9()` by contr auth are 11 columns as according to `generate_indicator_schema()`s ", {
@@ -129,4 +129,3 @@ test_that("check if `indicator_value` by nuts3 is variable", {
     )
   )
 })
-

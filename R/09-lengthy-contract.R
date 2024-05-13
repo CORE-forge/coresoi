@@ -1,4 +1,4 @@
-#' Compute Lenghty Contracts indicator
+#' Compute Lenghty contracts indicator
 #'
 #' @description
 #' The indicator reveals whether the duration of a contract is significantly longer than the average length of awarded contracts after the emergency outbreak
@@ -75,7 +75,7 @@ ind_9 <- function(data,
       contract_duration = dplyr::if_else(
         {{ eff_end }} < {{ eff_start }},
         true = NA_real_,
-        false = 1 + as.numeric( lubridate::ymd({{ eff_end }})) - as.numeric( lubridate::ymd({{ eff_start }}))
+        false = 1 + as.numeric(lubridate::ymd({{ eff_end }})) - as.numeric(lubridate::ymd({{ eff_start }}))
       )
     )
 

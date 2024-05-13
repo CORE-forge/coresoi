@@ -1,4 +1,4 @@
-#'  Compute Communication default across the crisis indicator
+#'  Compute Award communication default across the crisis indicator
 #'
 #' @description
 #' The indicator reveals whether - and to what extent - the duty of contracting authorities to communicate the public procurement procedure activation to the Anticorruption Authority ended with a technical failure.

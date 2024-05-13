@@ -108,23 +108,27 @@ used in calling \code{\link[psych:fa]{psych::fa()}}. The plot of the eigenvalues
 }
 \examples{
 \dontrun{
-if(interactive()){
- mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
- out_companies <- ind_all(data = mock_data_core,
-                         data_ind8 = mock_data_core_variants,
-                         emergency_name = "coronavirus",
-                         target_unit = "companies")
-  out_dim <- dimensionality_check(indicator_list = out_companies,
-                                dim_method = "IRT",
-                                max_ndim = 4,
-                                cutoff = 0.95,
-                                missing = 0,
-                                nrep = 3,
-                                TOL = 0.1,
-                                verbose = TRUE,
-                                method = "QMCEM")
-   }
- }
+if (interactive()) {
+  mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+  out_companies <- ind_all(
+    data = mock_data_core,
+    data_ind8 = mock_data_core_variants,
+    emergency_name = "coronavirus",
+    target_unit = "companies"
+  )
+  out_dim <- dimensionality_check(
+    indicator_list = out_companies,
+    dim_method = "IRT",
+    max_ndim = 4,
+    cutoff = 0.95,
+    missing = 0,
+    nrep = 3,
+    TOL = 0.1,
+    verbose = TRUE,
+    method = "QMCEM"
+  )
+}
+}
 }
 \seealso{
 \code{\link[mirt]{mirt}}
