@@ -108,7 +108,7 @@ period.</p>
 authority behaviours after the emergency outbreak with respect to their
 historical behaviour and assesses the associated risk through
 statistical testing. Given the focus on crises, each red flag is
-calculated regarding contracts awarded in the relevant market for the
+calculated regarding contracts awarded in the relevant market(s) for the
 crisis at issue.</p>
 <p>The procedure is extensible to other crisis contexts, replicable to
 other national contexts, and adjustable on account of different market
@@ -116,36 +116,40 @@ trends across the crisis.</p>
 <div class="section level2">
 <h2 id="compute-red-flags-ind_2">Compute red flags ( <code>ind_2</code> )<a class="anchor" aria-label="anchor" href="#compute-red-flags-ind_2"></a>
 </h2>
-<p>Let’s say we are interested in calculating and indicator, say, number
+<p>Let us say we are interested in calculating an indicator, say, number
 2. All we need to do is to load data sample <code>mock_data_core</code>
 and supply related variables to function <code><a href="../reference/ind_2.html">ind_2()</a></code>. Check out
 the documentation for function <code><a href="../reference/ind_2.html">ind_2()</a></code> to get a grasp on
 that.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mock_data_core"</span>, package <span class="op">=</span> <span class="st">"coresoi"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://core-forge.github.io/coresoi/">coresoi</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mock_data_core"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">mock_data_core</span> <span class="op">&lt;-</span> <span class="va">mock_data_core</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">aggiudicatari</span>, keep_empty <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="../reference/ind_2.html">ind_2</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">mock_data_core</span>,</span>
 <span>  contract_value <span class="op">=</span> <span class="va">importo_lotto</span>,</span>
 <span>  publication_date <span class="op">=</span> <span class="va">data_pubblicazione</span>,</span>
-<span>  stat_unit <span class="op">=</span> <span class="va">codice_nuts3_2021</span>,</span>
-<span>  test_type <span class="op">=</span> <span class="st">"ks"</span>,</span>
+<span>  stat_unit <span class="op">=</span> <span class="va">codice_fiscale</span>,</span>
+<span>  test_type <span class="op">=</span> <span class="st">"wilcoxon"</span>,</span>
 <span>  emergency_name <span class="op">=</span> <span class="st">"coronavirus"</span></span>
 <span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 11</span></span></span>
 <span><span class="co">#&gt;    indicator_id indicator_name   indicator_value aggregation_id aggregation_name</span></span>
 <span><span class="co">#&gt;           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            2 Awarded economi…           1     ITC11          Torino          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            2 Awarded economi…           1     ITC12          Vercelli        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            2 Awarded economi…           0.76  ITC13          Biella          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            2 Awarded economi…           0.944 ITC14          Verbano-Cusio-O…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            2 Awarded economi…           1     ITC15          Novara          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            2 Awarded economi…           0     ITC16          Cuneo           </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            2 Awarded economi…           0.999 ITC17          Asti            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            2 Awarded economi…           1     ITC18          Alessandria     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            2 Awarded economi…           0.979 ITC20          Valle d'Aosta/V…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            2 Awarded economi…           1     ITC31          Imperia         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>            2 Awarded economi…           0     0000000000     MOUSAWAT        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>            2 Awarded economi…           1     00000000000    GO.MA. S.R.L.   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>            2 Awarded economi…           1     0000000000000… BDC LABORATORIES</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>            2 Awarded economi…           0     00000000785    ADVANCED MEDICA…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>            2 Awarded economi…           0     00000004649    ADVANCED MEDICA…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>            2 Awarded economi…           0     00000149997    AGFA HEALTHCARE…</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>            2 Awarded economi…           0     00000186762    UNIPHARMA       </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>            2 Awarded economi…           0     00000646471    BIOCRATES LIFE …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>            2 Awarded economi…           0     00038730123    OMNIA PLASTICA …</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>            2 Awarded economi…           0.994 00047510326    EUROSPITAL S.P.…</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more variables: emergency_name &lt;chr&gt;, emergency_id &lt;int&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   country_id &lt;dbl&gt;, country_name &lt;chr&gt;, indicator_last_update &lt;dttm&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   data_last_update &lt;dttm&gt;</span></span></span></code></pre></div>
@@ -162,8 +166,8 @@ calling the relevant indicator function (e.g.,
 <li>Refer to the documentation for each indicator function to understand
 the required input variables and the expected output schema.</li>
 <li>The output schema provides information regarding the indicator name,
-indicator value, relevant geographic aggregation, and the emergency
-context for which the red flag was calculated.</li>
+indicator value, relevant geographic aggregation (if any), and the
+emergency context for which the red flag is calculated.</li>
 </ul>
 </div>
 <div class="section level2">
@@ -174,7 +178,7 @@ context for which the red flag was calculated.</li>
 refer to the documentation or reach out to the package maintainers via
 Github by opening an <a href="https://github.com/CORE-forge/coresoi/issues/new/choose" class="external-link">issue</a>
 or directly to (<a href="mailto:niccolo.salvini27@gmail.com">Niccolò
-Salvini</a> for for technical support.</li>
+Salvini</a> for for technical support).</li>
 <li>The maintainers can assist with questions regarding the required
 input variables, resolving errors, or understanding the output schema of
 the red flag indicators.</li>
