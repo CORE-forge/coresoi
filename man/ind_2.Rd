@@ -16,35 +16,35 @@ ind_2(
 )
 }
 \arguments{
-\item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
+\item{data}{a dataframe containing the data to use for computing the indicator.}
 
-\item{contract_value}{This argument corresponds to the name of the column in data containing the overall amount of the tender for each contract. The values in this column should be numeric.}
+\item{contract_value}{name of the variable in \code{data} containing the economic amount of each contract.}
 
-\item{publication_date}{This argument corresponds to the name of the column in data containing the publication date for each notice or report.}
+\item{publication_date}{name of the variable in \code{data} containing the publication date of each contract.}
 
-\item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
+\item{emergency_name}{string specifying the name of the emergency to consider. Examples could include "Coronavirus" or "Terremoto Centro Italia 2016-2017".}
 
-\item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator companies are the target.}
+\item{stat_unit}{name of the variable in \code{data} containing the target unit ID (in this case, the company).}
 
-\item{test_type}{This argument should be a character vector specifying the type of hypothesis test (belonging to category 2 i.e. see statistical_tests.R) to apply to the data. Available options are "wilcoxon" and "ks".}
+\item{test_type}{string specifying the statistical test to use for computing the indicator. Available options are "wilcoxon" and "ks" (Kolmogorov-Smirnov test).}
 
-\item{cpvs}{character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.}
+\item{cpvs}{character vector of CPV divisions (first two digits of CPV code) on which \code{data} are filtered out. Note: a panel of experts have already chosen which CPV divisions are most affected by which emergency.}
 
-\item{...}{other parameters to pass to \code{generate_indicator_schema} as \code{country_name} if that not Italy, which is default behavior.}
+\item{...}{other parameters to pass to \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}, such as \code{country_name} (default: Italy).}
 }
 \value{
-indicator schema as from \code{generate_indicator_schema()} rows determined by aggregation level and \code{indicator_value} based on statistical test performed in \code{ind_2}
+indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}
 }
 \description{
-The indicator focuses on companies that after the emergency outbreak were awarded public contracts much higher in economic value than before the emergency
-\subsection{Motivation:}{
+The indicator focuses on companies that after the emergency outbreak have been awarded public contracts in the relevant economic market with higher economic value than before the emergency occurred.
+\subsection{Motivation}{
 
-The red flag considers at risk those companies that \strong{exceptionally increase} their \emph{competitive power} over the outbreak, in terms of economic value of their awarded contracts on the relevant economic market.
+The red flag considers at risk those companies that exceptionally increase their competitive power over the outbreak, in terms of economic value of their awarded contracts on the relevant economic market.
 }
 
 \subsection{Scoring Rule}{
 
-The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
+The computation procedure returns \emph{1 - p-value} (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite, it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see \code{\link[=normalise]{normalise()}}).
 }
 
 \subsection{Main target unit}{
@@ -55,12 +55,13 @@ This indicator targets \strong{Companies}
 \examples{
 \dontrun{
 if (interactive()) {
-  data("mock_data_core")
+  mock_data_core <- mock_data_core |>
+    tidyr::unnest(aggiudicatari, keep_empty = TRUE)
   ind_2(
     data = mock_data_core,
-    contract_value = importo_complessivo_gara,
+    contract_value = importo_lotto,
     publication_date = data_pubblicazione,
-    stat_unit = provincia,
+    stat_unit = codice_fiscale,
     test_type = "wilcoxon",
     emergency_name = "coronavirus"
   )

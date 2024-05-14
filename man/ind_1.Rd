@@ -7,36 +7,36 @@
 ind_1(data, publication_date, emergency_name, stat_unit, test_type, cpvs, ...)
 }
 \arguments{
-\item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
+\item{data}{a dataframe containing the data to use for computing the indicator.}
 
-\item{publication_date}{This argument corresponds to the name of the column in data containing the publication date for each notice or report.}
+\item{publication_date}{name of the variable in \code{data} containing the publication date of each contract.}
 
-\item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Centro Italia 2016-2017".}
+\item{emergency_name}{string specifying the name of the emergency to consider. Examples could include "Coronavirus" or "Terremoto Centro Italia 2016-2017".}
 
-\item{stat_unit}{This argument should be a string specifying the variable containing the target unit ID (in this case, the company).}
+\item{stat_unit}{name of the variable in \code{data} containing the target unit ID (in this case, the company).}
 
-\item{test_type}{This argument should be a character vector specifying statistical test to use for computing the indicator. Available options are "barnard", "fisher", or "z-test".}
+\item{test_type}{string specifying the statistical test to use for computing the indicator. Available options are "barnard", "fisher", or "z-test".}
 
-\item{cpvs}{character vector of CPV divisions (first two digits of CPV code) on which data is filtered out. A panel of experts have already chosen which CPV divisions are most affected by which emergency.}
+\item{cpvs}{character vector of CPV divisions (first two digits of CPV code) on which \code{data} are filtered out. Note: a panel of experts have already chosen which CPV divisions are most affected by which emergency.}
 
-\item{...}{other parameters to pass to \code{generate_indicator_schema}, such as \code{country_name} (default: Italy).}
+\item{...}{other parameters to pass to \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}, such as \code{country_name} (default: Italy).}
 }
 \value{
 indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}
 }
 \description{
 The indicator focuses on companies that after the emergency outbreak win public contracts in the relevant economic market much more frequently than before the emergency.
-\subsection{Motivation:}{
+\subsection{Motivation}{
 
 The red flag considers at risk companies that exceptionally increase their competitive power over the emergency outbreak, in terms of proportion of awarded contracts on the relevant economic market(s).
 }
 
-\subsection{Scoring Rule:}{
+\subsection{Scoring Rule}{
 
-The computation procedure returns \emph{1 -- p-value} (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite, it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see \code{\link[=normalise]{normalise()}}).
+The computation procedure returns \emph{1 - p-value} (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite, it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see \code{\link[=normalise]{normalise()}}).
 }
 
-\subsection{Main target unit:}{
+\subsection{Main target unit}{
 
 This indicator targets \strong{Companies}
 }

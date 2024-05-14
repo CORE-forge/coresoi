@@ -3,22 +3,22 @@
 #' @description
 #' The indicator focuses on companies that after the emergency outbreak win public contracts in the relevant economic market much more frequently than before the emergency.
 #'
-#' ### Motivation:
+#' ### Motivation
 #' The red flag considers at risk companies that exceptionally increase their competitive power over the emergency outbreak, in terms of proportion of awarded contracts on the relevant economic market(s).
 #'
-#' ### Scoring Rule:
-#' The computation procedure returns _1 -- p-value_ (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite, it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see [normalise()]).
+#' ### Scoring Rule
+#' The computation procedure returns _1 - p-value_ (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite, it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see [normalise()]).
 #'
-#' ### Main target unit:
+#' ### Main target unit
 #' This indicator targets **Companies**
 #'
-#' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
-#' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
-#' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Centro Italia 2016-2017".
-#' @param test_type  This argument should be a character vector specifying statistical test to use for computing the indicator. Available options are "barnard", "fisher", or "z-test".
-#' @param stat_unit This argument should be a string specifying the variable containing the target unit ID (in this case, the company).
-#' @param cpvs  character vector of CPV divisions (first two digits of CPV code) on which data is filtered out. A panel of experts have already chosen which CPV divisions are most affected by which emergency.
-#' @param ... other parameters to pass to `generate_indicator_schema`, such as `country_name` (default: Italy).
+#' @param data a dataframe containing the data to use for computing the indicator.
+#' @param publication_date name of the variable in `data` containing the publication date of each contract.
+#' @param emergency_name string specifying the name of the emergency to consider. Examples could include "Coronavirus" or "Terremoto Centro Italia 2016-2017".
+#' @param test_type string specifying the statistical test to use for computing the indicator. Available options are "barnard", "fisher", or "z-test".
+#' @param stat_unit name of the variable in `data` containing the target unit ID (in this case, the company).
+#' @param cpvs character vector of CPV divisions (first two digits of CPV code) on which `data` are filtered out. Note: a panel of experts have already chosen which CPV divisions are most affected by which emergency.
+#' @param ... other parameters to pass to [generate_indicator_schema()], such as `country_name` (default: Italy).
 #' @return indicator schema as from [generate_indicator_schema()]
 #' @examples
 #' \dontrun{
