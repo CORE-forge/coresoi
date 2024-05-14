@@ -18,26 +18,30 @@ library(coresoi)
 
 Companies and contracting authorities at risk of being corrupt across emergencies are identified through the selection of a set of red flags computed through a procedure which exploits the time discontinuity introduced by the emergency outbreak, that is, the possibility to distinguish two time-spans, a pre-emergency period and a post-emergency period.  
 
-The approach compares, whenever possible, company and/or contracting authority behaviours after the emergency outbreak with respect to their historical behaviour and assesses the associated risk through statistical testing. Given the focus on crises, each red flag is calculated regarding contracts awarded in the relevant market for the crisis at issue.
+The approach compares, whenever possible, company and/or contracting authority behaviours after the emergency outbreak with respect to their historical behaviour and assesses the associated risk through statistical testing. Given the focus on crises, each red flag is calculated regarding contracts awarded in the relevant market(s) for the crisis at issue.
 
 The procedure is extensible to other crisis contexts, replicable to other national contexts, and adjustable on account of different market trends across the crisis.
 
 
 ## Compute red flags ( `ind_2` )
 
-Let's say we are interested in calculating and indicator, say, number 2.
+Let us say we are interested in calculating an indicator, say, number 2.
 All we need to do is to load data sample `mock_data_core` and supply related variables to function `ind_2()`. Check out the documentation for function `ind_2()` to get a grasp on that.
 
 
 ```{r ind2}
-data("mock_data_core", package = "coresoi")
+library(coresoi)
+data("mock_data_core")
+
+mock_data_core <- mock_data_core |>
+  tidyr::unnest(aggiudicatari, keep_empty = TRUE)
 
 ind_2(
   data = mock_data_core,
   contract_value = importo_lotto,
   publication_date = data_pubblicazione,
-  stat_unit = codice_nuts3_2021,
-  test_type = "ks",
+  stat_unit = codice_fiscale,
+  test_type = "wilcoxon",
   emergency_name = "coronavirus"
 ) |>
   head(10)
@@ -49,12 +53,12 @@ ind_2(
 - To compute red flags using the package, start by loading the sample data (`mock_data_core`) provided in the package.
 - Specify the relevant variables for the red flag calculation when calling the relevant indicator function (e.g., `ind_2()`).
 - Refer to the documentation for each indicator function to understand the required input variables and the expected output schema.
-- The output schema provides information regarding the indicator name, indicator value, relevant geographic aggregation, and the emergency context for which the red flag was calculated.
+- The output schema provides information regarding the indicator name, indicator value, relevant geographic aggregation (if any), and the emergency context for which the red flag is calculated.
 
 
 ## Technical support
 
-- If users encounter any issues while using the package, they can refer to the documentation or reach out to the package maintainers via Github by opening an [issue](https://github.com/CORE-forge/coresoi/issues/new/choose) or directly to ([Niccolò Salvini](mailto:niccolo.salvini27@gmail.com) for for technical support.
+- If users encounter any issues while using the package, they can refer to the documentation or reach out to the package maintainers via Github by opening an [issue](https://github.com/CORE-forge/coresoi/issues/new/choose) or directly to ([Niccolò Salvini](mailto:niccolo.salvini27@gmail.com) for for technical support).
 - The maintainers can assist with questions regarding the required input variables, resolving errors, or understanding the output schema of the red flag indicators.
 
 

@@ -21,13 +21,13 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/CORE-forge/coresoi/actions/workflows/check-standard.yaml/badge.svg)](https://github.com/CORE-forge/coresoi/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-`coresoi` is a product of the project CO.R.E.- Corruption risk indicators in emergency, financed by the EU Commission, as part of the Internal Police Security Fund (ISF-P) program.
+`coresoi` is a product of the project CO.R.E. (COrruption Risk indicators in Emergency), financed by the EU Commission, as part of the Internal Police Security Fund (ISF-P) program.
 
-The goal of `coresoi` is to provide a _sandbox_ environment for researchers and anti-corruption analysts to interact with the indicators of corruption risk in public procurement over emergencies we’ve designed. We also offer mock data extracted from [dati.anticorruzione](https://dati.anticorruzione.it/index.html#/home) to aid in their analysis. Our hope is that this platform will promote greater transparency in government, by helping researchers and anti-corruption analysts to make their efforts in fighting corruption more effective.
+The goal of `coresoi` is to provide a _sandbox_ environment for researchers and anti-corruption analysts to interact with the indicators of corruption risk in public procurement over emergencies we have designed. We also offer mock data extracted from [dati.anticorruzione](https://dati.anticorruzione.it/index.html#/home) to aid in their analysis. Our hope is that this platform will promote greater transparency in government, by helping researchers and anti-corruption analysts to make their efforts in fighting corruption more effective.
 
 ## Installation
 
-You can install the development version of coresoi from [GitHub](https://github.com/) with:
+You can install the development version of `coresoi` from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -36,14 +36,14 @@ devtools::install_github("CORE-forge/coresoi")
 
 ## CORE ecosystem 🌏
 
-`coresoi` is part of the project __CO.R.E.__ - Corruption Risk indicators in Emergency, financed by the EU Commission, as part of the Internal Police Security Fund (ISF-P) program. The project presented by the Department of Political Sciences of the University of Perugia (Italy) as leader with the coordination of Prof. Gnaldi (PI) was funded for a total of 514 thousand euros. The international network involves Universitat Obierta Catalunya ( __Spain__ ), Dublin City University ( __Ireland__), Oficina Antifrau de Catalunya ( __Spain__), Infonodes ( __Italy__), Transparency International ( __Portugal__), Villa Montesca Foundation ( __Italy__). 
+`coresoi` is part of the project __CO.R.E.__ - COrruption Risk indicators in Emergency - financed by the EU Commission, as part of the Internal Police Security Fund (ISF-P) program. The project presented by the Department of Political Science of the University of Perugia (Italy) as leader with the coordination of Prof. Gnaldi (PI) was funded for a total of 514 thousand euros. The international network involves Universitat Obierta Catalunya ( __Spain__ ), Dublin City University ( __Ireland__), Oficina Antifrau de Catalunya ( __Spain__), Infonodes ( __Italy__), Transparency International ( __Portugal__), Villa Montesca Foundation ( __Italy__). 
 CO.R.E. focuses on assessing the risk of corruption in public procurement in emergency settings from a preventive point of view. In view of achieving this goal, central to the European agenda, CO.R.E. intends to develop and validate a replicable procedure for the construction of a synthetic (or composite) indicator (CI) of the risk of corruption in public procurement in various emergency scenarios, which can be usefully employed by national anti-corruption agencies, the media and the citizens for accountability purposes. 
 
 The development of a synthetic measure of corruption risk involves several stages:
  
 1. selection of the data 
-1. computation of elementary indicators (i.e. red flags) of corruption risk; 
-1. choice of normalization, weighting and aggregation schemes;
+1. computation of elementary indicators (i.e., red flags) of corruption risk; 
+1. choice of normalisation, weighting and aggregation schemes;
 1. multivariate analysis for the study of the data relational structure;
 1. sensitivity analysis of the resulting synthetic indicator to check its robustness. 
 

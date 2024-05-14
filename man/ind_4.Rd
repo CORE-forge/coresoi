@@ -2,7 +2,7 @@
 % Please edit documentation in R/04-len-dev-across-crisis.R
 \name{ind_4}
 \alias{ind_4}
-\title{Compute Contract Lenght deviation across the crisis indicator}
+\title{Compute Contract length deviation across the crisis indicator}
 \usage{
 ind_4(
   data,
