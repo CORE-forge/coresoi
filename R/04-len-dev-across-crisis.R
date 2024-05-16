@@ -1,27 +1,35 @@
 #' Compute Contract length deviation across the crisis indicator
 #'
 #' @description
-#'  The indicator reveals whether there has been a deviation of the contract actual execution duration from its stated/expected duration
+#' The indicator reveals whether there has been an increase in the deviation of the contract actual execution duration from its
+#' stated/expected duration.
 #'
-#' ### Motivation:
-#' The red flag considers at risk companies whose contracts undergo a significant increase of their length deviation ratio - i.e., ratio between contract actual execution duration and expected duration - across the crisis
+#' ### Motivation
+#' The red flag considers at risk companies/contracting authorities whose contracts undergo a significant increase of their
+#' _length deviation ratio_ - i.e., ratio between contract actual execution duration and expected duration - across the crisis.
 #'
-#' ### Scoring Rule
-#'  The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
+#' ### Scoring rule
+#' The computation procedure returns _1 - p-value_ of the involved test (so that high values of the indicator correspond
+#' to high levels of corruption risk). When computing the composite, it will be dichotomised to 1 if statistical test is
+#' significant, and 0 otherwise (see [normalise()]).
 #'
 #' ### Main target unit
-#' This indicator targets **companies** and **contracting authorities**
-#' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
-#' @param exp_end This argument corresponds to the name of the column in data containing the expected end of the contract i.e. contract completion date
-#' @param eff_end This argument corresponds to the name of the column in data containing the effective end date for each contract.
-#' @param eff_start This argument corresponds to the name of the column in data containing the effective start date for each contract.
-#' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.
-#' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
-#' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
-#' @param test_type This argument should be a character vector specifying the type of hypothesis test (belonging to category 2 i.e. see statistical_tests.R) to apply to the data. Available options are "wilcoxon" and "ks".
-#' @param cpvs character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.
-#' @param ...  other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
-#' @return indicator schema as from `generate_indicator_schema`
+#' This indicator targets **companies** and **contracting authorities**.
+#'
+#' @param data a dataframe containing the data to use for computing the indicator.
+#' @param exp_end name of the variable in `data` containing the expected end date of each contract, i.e., contract completion date.
+#' @param eff_end name of the variable in `data` containing the contract execution effective end date.
+#' @param eff_start name of the variable in `data` containing the effective start date of each contract.
+#' @param stat_unit name of the variable in `data` containing the target unit ID (in this case, company or contracting authority).
+#' @param emergency_name string specifying the name of the emergency to consider. Examples could include "Coronavirus" or
+#' "Terremoto Centro Italia 2016-2017".
+#' @param publication_date name of the variable in `data` containing the publication date of each contract.
+#' @param test_type string specifying the statistical test to use for computing the indicator. Available options are "wilcoxon"
+#' and "ks" (Kolmogorov-Smirnov test).
+#' @param cpvs character vector of CPV divisions (first two digits of CPV code) on which `data` are filtered out.
+#' Note: a panel of experts have already chosen which CPV divisions are most affected by which emergency.
+#' @param ...  other parameters to pass to [generate_indicator_schema()], such as `country_name` (default: Italy).
+#' @return indicator schema as from [generate_indicator_schema()].
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
@@ -30,7 +38,7 @@
 #'     publication_date = data_pubblicazione,
 #'     exp_end = data_termine_contrattuale,
 #'     eff_end = data_effettiva_ultimazione,
-#'     eff_start = data_stipula_contratto,
+#'     eff_start = data_inizio_effettiva,
 #'     stat_unit = cf_amministrazione_appaltante,
 #'     emergency_name = "coronavirus"
 #'   )

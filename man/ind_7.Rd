@@ -7,43 +7,53 @@
 ind_7(data, final_award_date, emergency_name, stat_unit, years_before, ...)
 }
 \arguments{
-\item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
+\item{data}{a dataframe containing the data to use for computing the indicator.}
 
-\item{final_award_date}{This argument corresponds to the name of the column in data containing the date of the contract award, as recorded in the minutes or official documentation. Although the column values are stored as character strings, the function will automatically convert them to date objects when needed.}
+\item{final_award_date}{name of the variable in \code{data} containing award notice date for each contract.}
 
-\item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
+\item{emergency_name}{string specifying the name of the emergency to consider. Examples could include "Coronavirus" or
+"Terremoto Centro Italia 2016-2017".}
 
-\item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies are the targets.}
+\item{stat_unit}{name of the variable in \code{data} containing the target unit ID (in this case, company).}
 
-\item{years_before}{This argument specifies how many years before the contract date we need to look for the presence of awards to a specific company.}
+\item{years_before}{how many years before the contract date we need to look for the presence of awards to a specific company.}
 
-\item{...}{other parameters to pass to \code{generate_indicator_schema} as \code{country_name} if that not Italy, which is default behavior.}
+\item{...}{other parameters to pass to \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}, such as \code{country_name} (default: Italy).}
+}
+\value{
+indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}.
 }
 \description{
-The indicator focuses on companies that after the emergency outbreak were awarded one or more public contracts having participated in the public procurement process without winning in the \code{years_before} the emergency outbreak
-\subsection{Motivation:}{
+The indicator focuses on companies that after the emergency outbreak win one or more public contracts,
+without winning in the years before the emergency outbreak (e.g., in the preceding five years), with reference
+to contracts belonging to relevant economic market.
+\subsection{Motivation}{
 
-The red flag considers at risk those companies that \strong{show a "one- shot opportunistic behaviour"}, that is, companies that after the emergency outbreak were awarded one or more public contracts but \emph{did not show any competitive power in the previous years}
+The red flag considers at risk those companies that show a "one-shot opportunistic behaviour", that is,
+companies that after the emergency outbreak have been awarded one or more public contracts but have not shown
+any competitive power in the previous year(s).
 }
 
-\subsection{Scoring Rule}{
+\subsection{Scoring rule}{
 
-If a company wins one or more contracts after the emergency outbreak having participated in the public procurement process without winning in the 5 years before the emergency outbreak -> 1, otherwise 0
+If a company wins one or more contracts after the emergency outbreak but has not won any contracts in the years
+before the emergency outbreak, the indicator will be equal to 1; otherwise, it will be equal to 0.
 }
 
 \subsection{Main target unit}{
 
-This indicator targets \strong{companies}
+This indicator targets \strong{companies}.
 }
 }
 \examples{
 \dontrun{
 if (interactive()) {
-  data("mock_data_core")
+  mock_data_core <- mock_data_core |>
+    tidyr::unnest(aggiudicatari, keep_empty = TRUE)
   ind_7(
     data = mock_data_core,
     final_award_date = data_aggiudicazione_definitiva,
-    stat_unit = cf_amministrazione_appaltante,
+    stat_unit = codice_fiscale,
     emergency_name = "coronavirus",
     years_before = 1
   )

@@ -1,26 +1,36 @@
 #' Compute Excess of concentration of the winners’ distribution indicator
 #'
-#' @description The indicator reveals, for each issuer, the share of contracts awarded to the same company out of the total number of contracts issued
+#' @description The indicator compares the concentration degree of the winners’ distribution of a contracting authority based
+#' on the contracts issued after the emergency with respect to what occurred before, with reference to the contracts belonging
+#' to the pertinent market.
 #'
-#' ### Motivation:
-#' The red flag considers at risk companies that **exceptionally increase** _their competitive power_ over the emergency outbreak, as a consequence of a high proportion of contracts awarded by the same contracting authority
+#' ### Motivation
+#' The red flag considers at risk contracting authorities showing an increase in the concentration of the winners’ distribution
+#' across the crisis, thus highlighting a high degree of awarding their contracts to an increasingly small number of firms.
 #'
-#' ### Scoring Rule
-#' If Test-statistic significant-> 1, otherwise -> 0
+#' ### Scoring rule
+#' For each contracting authority, a comparison of concentration index (e.g., inverse of Gini-normalised for heterogeneity) -
+#' discretised into five categories - before and after the outbreak is performed.
+#' If concentration category across the emergency increases, this indicator will be equal to 1. Otherwise, it will be equal to 0.
 #'
 #' ### Main target unit
 #' This indicator targets **contracting authorities**
-#' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
-#' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
-#' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.
-#' @param winners  This argument corresponds to the name of the column in data containing the winning companies for each contract. This column should contain character or factor values.
-#' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
-#' @param cpvs character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.
-#' @param ... other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
-#' @return indicator schema as from `generate_indicator_schema`
+#'
+#' @param data a dataframe containing the data to use for computing the indicator.
+#' @param publication_date name of the variable in `data` containing the publication date of each contract.
+#' @param stat_unit name of the variable in `data` containing the target unit ID (in this case, contracting authority).
+#' @param winners name of the variable in `data` containing the winning company ID of each contract.
+#' @param emergency_name string specifying the name of the emergency to consider. Examples could include "Coronavirus" or
+#' "Terremoto Centro Italia 2016-2017".
+#' @param cpvs character vector of CPV divisions (first two digits of CPV code) on which `data` are filtered out.
+#' Note: a panel of experts have already chosen which CPV divisions are most affected by which emergency.
+#' @param ...  other parameters to pass to [generate_indicator_schema()], such as `country_name` (default: Italy).
+#' @return indicator schema as from [generate_indicator_schema()].
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
+#'   mock_data_core <- mock_data_core |>
+#'     tidyr::unnest(aggiudicatari, keep_empty = TRUE)
 #'   ind_5(
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,

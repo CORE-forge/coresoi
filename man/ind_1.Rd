@@ -22,7 +22,7 @@ ind_1(data, publication_date, emergency_name, stat_unit, test_type, cpvs, ...)
 \item{...}{other parameters to pass to \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}, such as \code{country_name} (default: Italy).}
 }
 \value{
-indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}
+indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}.
 }
 \description{
 The indicator focuses on companies that after the emergency outbreak win public contracts in the relevant economic market much more frequently than before the emergency.
@@ -31,14 +31,14 @@ The indicator focuses on companies that after the emergency outbreak win public 
 The red flag considers at risk companies that exceptionally increase their competitive power over the emergency outbreak, in terms of proportion of awarded contracts on the relevant economic market(s).
 }
 
-\subsection{Scoring Rule}{
+\subsection{Scoring rule}{
 
-The computation procedure returns \emph{1 - p-value} (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite, it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see \code{\link[=normalise]{normalise()}}).
+The computation procedure returns \emph{1 - p-value} of the involved test (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite, it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see \code{\link[=normalise]{normalise()}}).
 }
 
 \subsection{Main target unit}{
 
-This indicator targets \strong{Companies}
+This indicator targets \strong{companies}.
 }
 }
 \examples{

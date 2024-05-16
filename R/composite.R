@@ -122,7 +122,7 @@ ind_all_contr_auth <- function(data,
 
   message("Computing indicator 5 for contracting authorities")
   out5 <- ind_5(
-    data = data,
+    data = data %>% tidyr::unnest(aggiudicatari, keep_empty = TRUE),
     publication_date = data_pubblicazione,
     stat_unit = cf_amministrazione_appaltante,
     winners = codice_fiscale,
@@ -248,29 +248,31 @@ ind_all_geogr <- function(data,
 
 #' @title Compute all the elementary indicators
 #' @description `ind_all` computes all the elementary indicators, by returning them in a list (useful for
-#' calling the other functions of `coresoi`)
-#' @param data a data frame or tibble containing the data you want to use to calculate all the indicator.
-#' @param data_ind8 the same dataframe or tibble containing the data you want to use to calculate indicator 8.
+#' calling the other functions of `coresoi` for computing the composite indicator).
+#'
+#' @param data a dataframe containing the data to use for computing the indicators.
+#' @param data_ind8 the same dataframe containing the data to use to calculate indicator 8.
 #' See Details.
-#' @param emergency_name  a character string specifying the name of the emergency or event you are analyzing.
-#' Examples could include "Coronavirus" or "Terremoto Aquila".
+#' @param emergency_name string specifying the name of the emergency to consider. Examples could include "Coronavirus" or
+#' "Terremoto Centro Italia 2016-2017".
 #' @param target_unit the target unit for which the indicators have to be computed. It can be: `"companies"`,
-#' `"contracting_authorities"` or `"territory"`
-#' @param id_location name of the variable in `data` and `data_ind8` that refers to geographic location of
+#' `"contracting_authorities"` or `"territory"`.
+#' @param id_location name of the variable in `data` and `data_ind8` containing the geographic location of
 #' interest (e.g., provinces, regions).
+#'
 #' @details This functions is a wrapper of the single functions for computing the elementary indicators.
 #' Given the data on which we want to compute them and the emergency, together with the target unit, the
-#' function calls each 'elementary' function for computing the single red flags, according to the specified target.
+#' function calls each "elementary" function for computing the single red flags, according to the specified target.
 #' In particular:
 #'
 #' - `data` and `data_ind8` are two versions of the same dataframe, containing the information about single contracts,
 #' to be used for computing the elementary indicators. As indicator 8 works on the contract variants, given the potential
-#' '1-n' relationship (i.e., 'one contract - more variants'), `data_ind8` must be a longer (unnested) version of `data`,
+#' "1-n" relationship (i.e., "one contract - more variants"), `data_ind8` must be a longer (unnested) version of `data`,
 #' which includes the information about the variants (hence, some rows have duplicated columns, except for those related
-#' to the variants). *In `data`, we suggest to include a column with a 'nested' data frame related to the variants,*
-#' *to be unnested and placed in `data_ind8`.*.
+#' to the variants). In `data`, we suggest to include a column with a "nested" data frame related to the variants,
+#' to be unnested and placed in `data_ind8` (see the example).
 #'
-#' - Argument `target_unit` specifies the target for computing the indicators. On this basis, specific internal functions
+#' - Argument `target_unit` specifies the target for computing the indicators. On this basis, specific functions
 #' are called for computing the suitable set of indicators. In particular, if `target_unit = "companies"`, then elementary
 #' indicators 1, 2, 3, 4, 7, 8 and 9 are computed (by calling the related functions). On the other hand, if
 #' `target_unit = "contracting_authorities"` or `target_unit = "territory"`, then elementary indicators 3, 4, 5, 6, 8 and 9
@@ -278,16 +280,34 @@ ind_all_geogr <- function(data,
 #' (and `data_ind8`) that relates to the territorial location of interest (e.g., it could be province code/name).
 #'
 #' **NOTE: for the moment, it works only on Italian data (BDNCP).**
-#' @return a list of outputs about each indicator computable for the selected target unit.
+#' @return a list of outputs of each indicator computable for the selected target unit.
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   # sample of 100k contracts
+#'   set.seed(12345)
+#'   i <- sample(1:nrow(mock_data_core), size = 1e5)
+#'   mock_sample0 <- mock_data_core[sort(i), ]
+#'
+#'   # indicators for companies
+#'   mock_sample <- tidyr::unnest(mock_sample0, aggiudicatari, keep_empty = TRUE)
+#'   mock_sample_variants <- tidyr::unnest(mock_sample, varianti, keep_empty = TRUE)
+#'
 #'   out_companies <- ind_all(
-#'     data = mock_data_core,
-#'     data_ind8 = mock_data_core_variants,
+#'     data = mock_sample,
+#'     data_ind8 = mock_sample_variants,
 #'     emergency_name = "coronavirus",
 #'     target_unit = "companies"
+#'   )
+#'
+#'   # indicators for contracting authorities
+#'   mock_sample_ca <- mock_sample0
+#'   mock_sample_ca_variants <- tidyr::unnest(mock_sample_ca, varianti, keep_empty = TRUE)
+#'   out_contrauth <- ind_all(
+#'     data = mock_sample_ca,
+#'     data_ind8 = mock_sample_ca_variants,
+#'     emergency_name = "coronavirus",
+#'     target_unit = "contracting_authorities"
 #'   )
 #' }
 #' }

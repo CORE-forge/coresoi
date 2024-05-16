@@ -1,28 +1,37 @@
 #' Compute Pre-existing contracts modified after the crisis indicator
 #'
 #' @description
-#'  The indicator reveals whether a pre- existing awarded contract has been modified after the emergency outbreak
+#' The indicator reveals whether a contracting authority/company has at least one pre-existing contract with respect
+#' to the emergency outbreak (i.e., with a call before the beginning of the emergency), which has been modified after
+#' the emergency outbreak, with reference to relevant economic market.
 #'
-#' ### Motivation:
-#' The red flag considers at risk contracts awarded before the emergency outbreak, but modified through variants after 6 months (parametric window) from the emergency outbreak
+#' ### Motivation
+#' The red flag considers at risk the contracting authority/company with existing contracts before the emergency outbreak
+#' and subsequently modified through variants after the emergency began; this assessment excludes modifications made immediately
+#' thereafter, using a parametric window (e.g., within the following six months).
 #'
-#' ### Scoring Rule
-#' If an awarded contract before the outbreak is modified through variants after 6 months from the emergency outbreak -> 1, otherwise -> 0
+#' ### Scoring rule
+#' For a given target unit, if a contract existing before the outbreak is modified through variants after the emergency outbreak
+#' (given the parametric window, e.g., six months), the indicator will be equal to 1; otherwise, it will be equal to 0.
 #'
 #' ### Main target unit
-#' This indicator targets **companies** and **contracting authorities**
-#' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
-#' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
-#' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.
-#' @param variant_date This argument corresponds to the name of the column in data containing the date of each contract variants.
-#' @param months_win This argument specifies the time window for contract variation to be considered when identifying a relevant pre and post contract variation period. This value should be numeric and indicates the duration of the time window in months.
-#' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
-#' @param ... other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
-#' @return indicator schema as from `generate_indicator_schema`
+#' This indicator targets **companies** and **contracting authorities**.
+#'
+#' @param data a dataframe containing the data to use for computing the indicator.
+#' @param publication_date name of the variable in `data` containing the publication date of each contract.
+#' @param stat_unit name of the variable in `data` containing the target unit ID (in this case, company or contracting authority).
+#' @param variant_date name of the variable in `data` containing the date of occurrence for each contract variant.
+#' @param months_win parametric time window (in months) from the emergency outbreak. Only contract modifications made after
+#' this window are considered.
+#' @param emergency_name string specifying the name of the emergency to consider. Examples could include "Coronavirus" or
+#' "Terremoto Centro Italia 2016-2017".
+#' @param ...  other parameters to pass to [generate_indicator_schema()], such as `country_name` (default: Italy).
+#' @return indicator schema as from [generate_indicator_schema()].
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   data("mock_data_core")
+#'   mock_data_core <- mock_data_core |>
+#'     tidyr::unnest(varianti, keep_empty = TRUE)
 #'   ind_8(
 #'     data = mock_data_core,
 #'     publication_date = data_pubblicazione,

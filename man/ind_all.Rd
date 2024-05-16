@@ -7,40 +7,40 @@
 ind_all(data, data_ind8, emergency_name, target_unit, id_location = NULL)
 }
 \arguments{
-\item{data}{a data frame or tibble containing the data you want to use to calculate all the indicator.}
+\item{data}{a dataframe containing the data to use for computing the indicators.}
 
-\item{data_ind8}{the same dataframe or tibble containing the data you want to use to calculate indicator 8.
+\item{data_ind8}{the same dataframe containing the data to use to calculate indicator 8.
 See Details.}
 
-\item{emergency_name}{a character string specifying the name of the emergency or event you are analyzing.
-Examples could include "Coronavirus" or "Terremoto Aquila".}
+\item{emergency_name}{string specifying the name of the emergency to consider. Examples could include "Coronavirus" or
+"Terremoto Centro Italia 2016-2017".}
 
 \item{target_unit}{the target unit for which the indicators have to be computed. It can be: \code{"companies"},
-\code{"contracting_authorities"} or \code{"territory"}}
+\code{"contracting_authorities"} or \code{"territory"}.}
 
-\item{id_location}{name of the variable in \code{data} and \code{data_ind8} that refers to geographic location of
+\item{id_location}{name of the variable in \code{data} and \code{data_ind8} containing the geographic location of
 interest (e.g., provinces, regions).}
 }
 \value{
-a list of outputs about each indicator computable for the selected target unit.
+a list of outputs of each indicator computable for the selected target unit.
 }
 \description{
 \code{ind_all} computes all the elementary indicators, by returning them in a list (useful for
-calling the other functions of \code{coresoi})
+calling the other functions of \code{coresoi} for computing the composite indicator).
 }
 \details{
 This functions is a wrapper of the single functions for computing the elementary indicators.
 Given the data on which we want to compute them and the emergency, together with the target unit, the
-function calls each 'elementary' function for computing the single red flags, according to the specified target.
+function calls each "elementary" function for computing the single red flags, according to the specified target.
 In particular:
 \itemize{
 \item \code{data} and \code{data_ind8} are two versions of the same dataframe, containing the information about single contracts,
 to be used for computing the elementary indicators. As indicator 8 works on the contract variants, given the potential
-'1-n' relationship (i.e., 'one contract - more variants'), \code{data_ind8} must be a longer (unnested) version of \code{data},
+"1-n" relationship (i.e., "one contract - more variants"), \code{data_ind8} must be a longer (unnested) version of \code{data},
 which includes the information about the variants (hence, some rows have duplicated columns, except for those related
-to the variants). \emph{In \code{data}, we suggest to include a column with a 'nested' data frame related to the variants,}
-\emph{to be unnested and placed in \code{data_ind8}.}.
-\item Argument \code{target_unit} specifies the target for computing the indicators. On this basis, specific internal functions
+to the variants). In \code{data}, we suggest to include a column with a "nested" data frame related to the variants,
+to be unnested and placed in \code{data_ind8} (see the example).
+\item Argument \code{target_unit} specifies the target for computing the indicators. On this basis, specific functions
 are called for computing the suitable set of indicators. In particular, if \code{target_unit = "companies"}, then elementary
 indicators 1, 2, 3, 4, 7, 8 and 9 are computed (by calling the related functions). On the other hand, if
 \code{target_unit = "contracting_authorities"} or \code{target_unit = "territory"}, then elementary indicators 3, 4, 5, 6, 8 and 9
@@ -53,12 +53,30 @@ are obtained. In the latter case, the user has to specify (through \code{id_loca
 \examples{
 \dontrun{
 if (interactive()) {
-  mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+  # sample of 100k contracts
+  set.seed(12345)
+  i <- sample(1:nrow(mock_data_core), size = 1e5)
+  mock_sample0 <- mock_data_core[sort(i), ]
+
+  # indicators for companies
+  mock_sample <- tidyr::unnest(mock_sample0, aggiudicatari, keep_empty = TRUE)
+  mock_sample_variants <- tidyr::unnest(mock_sample, varianti, keep_empty = TRUE)
+
   out_companies <- ind_all(
-    data = mock_data_core,
-    data_ind8 = mock_data_core_variants,
+    data = mock_sample,
+    data_ind8 = mock_sample_variants,
     emergency_name = "coronavirus",
     target_unit = "companies"
+  )
+
+  # indicators for contracting authorities
+  mock_sample_ca <- mock_sample0
+  mock_sample_ca_variants <- tidyr::unnest(mock_sample_ca, varianti, keep_empty = TRUE)
+  out_contrauth <- ind_all(
+    data = mock_sample_ca,
+    data_ind8 = mock_sample_ca_variants,
+    emergency_name = "coronavirus",
+    target_unit = "contracting_authorities"
   )
 }
 }

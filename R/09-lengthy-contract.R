@@ -1,24 +1,31 @@
 #' Compute Lenghty contracts indicator
 #'
 #' @description
-#' The indicator reveals whether the duration of a contract is significantly longer than the average length of awarded contracts after the emergency outbreak
+#' The indicator reveals whether the (average) contract duration of a contracting authority/company is significantly longer
+#' than the overall (average) contract duration, with reference to post-emergency contracts belonging to relevant economic market.
 #'
-#' ### Motivation:
-#' The red flag considers at risk contracts won after the emergency outbreak whose duration is not justified by the nature of the crisis, that is, contracts longer than the average duration of contracts won after the emergency outbreak
+#' ### Motivation
+#' The red flag considers at risk contracting authorities/companies with post-emergency contracts whose excessive duration
+#' is not justified by the nature of the crisis, that is, contracts longer than the overall average duration of contracts won
+#' after the emergency outbreak.
 #'
-#' ### Scoring Rule
-#' The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
+#' ### Scoring rule
+#' The computation procedure returns _1 - p-value_ of the involved test - Wilcoxon test in this case - (so that high values of
+#' the indicator correspond to high levels of corruption risk). When computing the composite,
+#' it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see [normalise()]).
 #'
 #' ### Main target unit
-#' This indicator targets **companies** and **contracting authorities**
-#' @param data This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.
-#' @param publication_date This argument corresponds to the name of the column in data containing the publication date for each notice or report.
-#' @param stat_unit This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.
-#' @param eff_start This argument corresponds to the name of the column in data containing the effective start date for each contract.
-#' @param eff_end This argument corresponds to the name of the column in data containing the effective end date for each contract.
-#' @param emergency_name This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".
-#' @param ... other parameters to pass to `generate_indicator_schema` as `country_name` if that not Italy, which is default behavior.
-#' @return indicator schema as from `generate_indicator_schema`
+#' This indicator targets **companies** and **contracting authorities**.
+#'
+#' @param data a dataframe containing the data to use for computing the indicator.
+#' @param publication_date name of the variable in `data` containing the publication date of each contract.
+#' @param stat_unit name of the variable in `data` containing the target unit ID (in this case, company or contracting authority).
+#' @param eff_start name of the variable in `data` containing the effective start date of each contract.
+#' @param eff_end name of the variable in `data` containing the contract execution effective end date.
+#' @param emergency_name string specifying the name of the emergency to consider. Examples could include "Coronavirus" or
+#' "Terremoto Centro Italia 2016-2017".
+#' @param ...  other parameters to pass to [generate_indicator_schema()], such as `country_name` (default: Italy).
+#' @return indicator schema as from [generate_indicator_schema()].
 #' @examples
 #' \dontrun{
 #' if (interactive()) {

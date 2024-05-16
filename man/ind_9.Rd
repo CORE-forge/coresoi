@@ -15,38 +15,44 @@ ind_9(
 )
 }
 \arguments{
-\item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
+\item{data}{a dataframe containing the data to use for computing the indicator.}
 
-\item{publication_date}{This argument corresponds to the name of the column in data containing the publication date for each notice or report.}
+\item{publication_date}{name of the variable in \code{data} containing the publication date of each contract.}
 
-\item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator both companies and contracting authorities are the targets.}
+\item{stat_unit}{name of the variable in \code{data} containing the target unit ID (in this case, company or contracting authority).}
 
-\item{eff_start}{This argument corresponds to the name of the column in data containing the effective start date for each contract.}
+\item{eff_start}{name of the variable in \code{data} containing the effective start date of each contract.}
 
-\item{eff_end}{This argument corresponds to the name of the column in data containing the effective end date for each contract.}
+\item{eff_end}{name of the variable in \code{data} containing the contract execution effective end date.}
 
-\item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
+\item{emergency_name}{string specifying the name of the emergency to consider. Examples could include "Coronavirus" or
+"Terremoto Centro Italia 2016-2017".}
 
-\item{...}{other parameters to pass to \code{generate_indicator_schema} as \code{country_name} if that not Italy, which is default behavior.}
+\item{...}{other parameters to pass to \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}, such as \code{country_name} (default: Italy).}
 }
 \value{
-indicator schema as from \code{generate_indicator_schema}
+indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}.
 }
 \description{
-The indicator reveals whether the duration of a contract is significantly longer than the average length of awarded contracts after the emergency outbreak
-\subsection{Motivation:}{
+The indicator reveals whether the (average) contract duration of a contracting authority/company is significantly longer
+than the overall (average) contract duration, with reference to post-emergency contracts belonging to relevant economic market.
+\subsection{Motivation}{
 
-The red flag considers at risk contracts won after the emergency outbreak whose duration is not justified by the nature of the crisis, that is, contracts longer than the average duration of contracts won after the emergency outbreak
+The red flag considers at risk contracting authorities/companies with post-emergency contracts whose excessive duration
+is not justified by the nature of the crisis, that is, contracts longer than the overall average duration of contracts won
+after the emergency outbreak.
 }
 
-\subsection{Scoring Rule}{
+\subsection{Scoring rule}{
 
-The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
+The computation procedure returns \emph{1 - p-value} of the involved test - Wilcoxon test in this case - (so that high values of
+the indicator correspond to high levels of corruption risk). When computing the composite,
+it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see \code{\link[=normalise]{normalise()}}).
 }
 
 \subsection{Main target unit}{
 
-This indicator targets \strong{companies} and \strong{contracting authorities}
+This indicator targets \strong{companies} and \strong{contracting authorities}.
 }
 }
 \examples{

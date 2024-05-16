@@ -21,7 +21,7 @@ ind_3(
 
 \item{award_value}{name of the variable in \code{data} containing the award value of each contract.}
 
-\item{sums_paid}{name of the variable in \code{data} containing the amount paid by the contracting authority for each contract.}
+\item{sums_paid}{name of the variable in \code{data} containing the contract actual execution economic value (i.e., amount paid by the contracting authority).}
 
 \item{stat_unit}{name of the variable in \code{data} containing the target unit ID (in this case, company or contracting authority).}
 
@@ -37,7 +37,7 @@ divisions are most affected by which emergency.}
 \item{...}{other parameters to pass to \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}, such as \code{country_name} (default: Italy).}
 }
 \value{
-indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}
+indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}.
 }
 \description{
 The indicator reveals whether there has been an increase in the deviation of the contract actual execution economic value from its initial awarded value,
@@ -48,15 +48,15 @@ The red flag considers at risk companies/contracting authorities whose contracts
 ratio between actual amount paid and awarded economic value - across the crisis.
 }
 
-\subsection{Scoring Rule}{
+\subsection{Scoring rule}{
 
-The computation procedure returns \emph{1 - p-value} (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite,
+The computation procedure returns \emph{1 - p-value} of the involved test (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite,
 it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see \code{\link[=normalise]{normalise()}}).
 }
 
 \subsection{Main target unit}{
 
-This indicator targets \strong{Companies} and \strong{Contracting authorities}
+This indicator targets \strong{companies} and \strong{contracting authorities}.
 }
 }
 \examples{

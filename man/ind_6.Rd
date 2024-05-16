@@ -16,46 +16,53 @@ ind_6(
 )
 }
 \arguments{
-\item{data}{This argument should be a data frame or tibble containing the data you want to use to calculate the indicator.}
+\item{data}{a dataframe containing the data to use for computing the indicator.}
 
-\item{publication_date}{This argument corresponds to the name of the column in data containing the publication date for each notice or report.}
+\item{publication_date}{name of the variable in \code{data} containing the publication date of each contract.}
 
-\item{emergency_name}{This argument should be a character string specifying the name of the emergency or event you are analyzing. Examples could include "Coronavirus" or "Terremoto Aquila".}
+\item{emergency_name}{string specifying the name of the emergency to consider. Examples could include "Coronavirus" or
+"Terremoto Centro Italia 2016-2017".}
 
-\item{award_col}{This argument corresponds to the name of the column in data containing the unique identification number for each contract award. This column should contain numeric or character values.}
+\item{award_col}{name of the variable in \code{data}containing the award notice ID for each contract.}
 
-\item{stat_unit}{This argument should be a character string specifying the statistical unit of measurement or aggregation variable for the indicator. In this indicator contracting authorities are the targets.}
+\item{stat_unit}{name of the variable in \code{data} containing the target unit ID (in this case, contracting authority).}
 
-\item{test_type}{This argument should be a character vector specifying the type of hypothesis test belonging to category 1 i.e. see statistical_tests.R)to apply to the data. Available options are "barnard", "fisher", or "z-test".}
+\item{test_type}{string specifying the statistical test to use for computing the indicator. Available options are "barnard",
+"fisher", or "z-test".}
 
-\item{cpvs}{character vector of macro-cpv on which data is filtered out. A panel of experts have already chosen which cpvs are most affected by which emergency for you.}
+\item{cpvs}{character vector of CPV divisions (first two digits of CPV code) on which \code{data} are filtered out.
+Note: a panel of experts have already chosen which CPV divisions are most affected by which emergency.}
 
-\item{...}{other parameters to pass to \code{generate_indicator_schema} as \code{country_name} if that not Italy, which is default behavior.}
+\item{...}{other parameters to pass to \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}, such as \code{country_name} (default: Italy).}
 }
 \value{
-indicator schema as from \code{generate_indicator_schema}
+indicator schema as from \code{\link[=generate_indicator_schema]{generate_indicator_schema()}}.
 }
 \description{
-The indicator reveals whether - and to what extent - the duty of contracting authorities to communicate the public procurement procedure activation to the Anticorruption Authority ended with a technical failure.
-\subsection{Motivation:}{
+The indicator detects an increase across the emergency in the rate of contracts for which the contracting authorities
+have not communicated the award details to Anticorruption Authority, with reference to contracts belonging to relevant
+economic market.
+\subsection{Motivation}{
 
-The red flag considers at risk contracting authorities \strong{who fail to accomplish their duty} to communicate the public procurement procedure activation to the Anticorruption Authority
+The red flag considers at risk those contracting authorities with an increase in the communication default rate of award
+information, hence a worsening of their communication duties.
 }
 
-\subsection{Scoring Rule}{
+\subsection{Scoring rule}{
 
-The output will give $1 - pvalue$, which will then be dichotomised to 1 if statistical test is significant, 0 otherwise.
+The computation procedure returns \emph{1 - p-value} of the involved test (so that high values of the indicator correspond
+to high levels of corruption risk). When computing the composite, it will be dichotomised to 1 if statistical test is
+significant, and 0 otherwise (see \code{\link[=normalise]{normalise()}}).
 }
 
 \subsection{Main target unit}{
 
-This indicator targets \strong{contracting authorities}
+This indicator targets \strong{contracting authorities}.
 }
 }
 \examples{
 \dontrun{
 if (interactive()) {
-  data("mock_data_core")
   ind_6(
     data = mock_data_core,
     publication_date = data_pubblicazione,

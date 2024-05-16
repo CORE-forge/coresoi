@@ -6,11 +6,11 @@
 #' ### Motivation
 #' The red flag considers at risk companies that exceptionally increase their competitive power over the emergency outbreak, in terms of proportion of awarded contracts on the relevant economic market(s).
 #'
-#' ### Scoring Rule
-#' The computation procedure returns _1 - p-value_ (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite, it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see [normalise()]).
+#' ### Scoring rule
+#' The computation procedure returns _1 - p-value_ of the involved test (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite, it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see [normalise()]).
 #'
 #' ### Main target unit
-#' This indicator targets **Companies**
+#' This indicator targets **companies**.
 #'
 #' @param data a dataframe containing the data to use for computing the indicator.
 #' @param publication_date name of the variable in `data` containing the publication date of each contract.
@@ -19,7 +19,7 @@
 #' @param stat_unit name of the variable in `data` containing the target unit ID (in this case, the company).
 #' @param cpvs character vector of CPV divisions (first two digits of CPV code) on which `data` are filtered out. Note: a panel of experts have already chosen which CPV divisions are most affected by which emergency.
 #' @param ... other parameters to pass to [generate_indicator_schema()], such as `country_name` (default: Italy).
-#' @return indicator schema as from [generate_indicator_schema()]
+#' @return indicator schema as from [generate_indicator_schema()].
 #' @examples
 #' \dontrun{
 #' if (interactive()) {

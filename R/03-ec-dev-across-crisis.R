@@ -8,15 +8,16 @@
 #' The red flag considers at risk companies/contracting authorities whose contracts undergo a significant increase of their _economic deviation ratio_ - i.e.,
 #' ratio between actual amount paid and awarded economic value - across the crisis.
 #'
-#' ### Scoring Rule
-#' The computation procedure returns _1 - p-value_ (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite,
+#' ### Scoring rule
+#' The computation procedure returns _1 - p-value_ of the involved test (so that high values of the indicator correspond to high levels of corruption risk). When computing the composite,
 #' it will be dichotomised to 1 if statistical test is significant, and 0 otherwise (see [normalise()]).
 #'
 #' ### Main target unit
-#' This indicator targets **Companies** and **Contracting authorities**
+#' This indicator targets **companies** and **contracting authorities**.
+#'
 #' @param data a dataframe containing the data to use for computing the indicator.
 #' @param award_value name of the variable in `data` containing the award value of each contract.
-#' @param sums_paid name of the variable in `data` containing the amount paid by the contracting authority for each contract.
+#' @param sums_paid name of the variable in `data` containing the contract actual execution economic value (i.e., amount paid by the contracting authority).
 #' @param stat_unit name of the variable in `data` containing the target unit ID (in this case, company or contracting authority).
 #' @param emergency_name string specifying the name of the emergency to consider. Examples could include "Coronavirus" or "Terremoto Centro Italia 2016-2017".
 #' @param publication_date name of the variable in `data` containing the publication date of each contract.
@@ -24,7 +25,7 @@
 #' @param cpvs character vector of CPV divisions (first two digits of CPV code) on which `data` are filtered out. Note: a panel of experts have already chosen which CPV
 #' divisions are most affected by which emergency.
 #' @param ... other parameters to pass to [generate_indicator_schema()], such as `country_name` (default: Italy).
-#' @return indicator schema as from [generate_indicator_schema()]
+#' @return indicator schema as from [generate_indicator_schema()].
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
