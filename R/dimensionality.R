@@ -79,10 +79,18 @@
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   # sample of 200k contracts
+#'   set.seed(456)
+#'   i <- sample(1:nrow(mock_data_core), size = 2e5)
+#'   mock_sample0 <- mock_data_core[sort(i), ]
+#'
+#'   # indicators for companies
+#'   mock_sample <- tidyr::unnest(mock_sample0, aggiudicatari, keep_empty = TRUE)
+#'   mock_sample_variants <- tidyr::unnest(mock_sample, varianti, keep_empty = TRUE)
+#'
 #'   out_companies <- ind_all(
-#'     data = mock_data_core,
-#'     data_ind8 = mock_data_core_variants,
+#'     data = mock_sample,
+#'     data_ind8 = mock_sample_variants,
 #'     emergency_name = "coronavirus",
 #'     target_unit = "companies"
 #'   )
@@ -147,13 +155,13 @@ dimensionality_check <- function(indicator_list,
 
     cat("---------------------------------------------------\n")
     cat("\nStep 1: Rasch vs. 2PL \n")
-    summary_uni <- anova(out_rasch1, out_2pl1)
+    summary_uni <- mirt::anova(out_rasch1, out_2pl1)
     rownames(summary_uni) <- c("rasch", "2pl")
     print(summary_uni)
 
     out_mirt <- list()
-    bic_rasch <- anova(out_rasch1)$BIC
-    bic_2pl <- anova(out_2pl1)$BIC
+    bic_rasch <- mirt::anova(out_rasch1)$BIC
+    bic_2pl <- mirt::anova(out_2pl1)$BIC
     if (bic_rasch < bic_2pl) {
       best <- "Rasch"
       out_mirt[[1]] <- out_rasch1
@@ -179,7 +187,7 @@ dimensionality_check <- function(indicator_list,
         technical = arg_tech_list,
         ...
       )
-      bic_det <- anova(out_mirt_det)$BIC
+      bic_det <- mirt::anova(out_mirt_det)$BIC
 
       # random starts
       out_mirt_rnd <- list()
@@ -201,7 +209,7 @@ dimensionality_check <- function(indicator_list,
           technical = tech_list,
           ...
         )
-        bic_rnd <- c(bic_rnd, anova(out_mirt_rnd[[i]])$BIC)
+        bic_rnd <- c(bic_rnd, mirt::anova(out_mirt_rnd[[i]])$BIC)
       }
       # best random
       cat(paste0("\nFit of models with ", d, " dimensions\n"))
@@ -227,7 +235,7 @@ dimensionality_check <- function(indicator_list,
     print(
       data.frame(
         dim = 1:max_ndim,
-        sapply(out_mirt, anova) %>% t()
+        sapply(out_mirt, mirt::anova) %>% t()
       ),
       row.names = FALSE
     )
@@ -247,12 +255,6 @@ dimensionality_check <- function(indicator_list,
     cat(paste0("According to eigenvalues, ", nfact, " factors are retained\n"))
 
     out <- psych::fa(R, nfactors = nfact, n.obs = nrow(data_matrix2), ...)
-
-    # fm="pa", rotate="oblimin"
-    # x <- psych::fa(R, nfactors = 1, n.obs=nrow(data_matrix2), ...)
-    # x2 <- psych::fa(R, nfactors = 2, n.obs=nrow(data_matrix2), ...)
-    # x3 <- psych::fa(R, nfactors = 3, n.obs=nrow(data_matrix2), ...)
-    # anova(x, x2, x3)
   }
 
 

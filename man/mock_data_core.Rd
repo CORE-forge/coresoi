@@ -3,90 +3,53 @@
 \docType{data}
 \name{mock_data_core}
 \alias{mock_data_core}
-\title{BDNCP open data from ANAC}
+\title{Italian \emph{Banca Dati Nazionali dei Contratti Pubblici} (BDNCP)}
 \format{
 \subsection{\code{mock_data_core}}{
 
-A data frame with 100,000 rows and 79 columns:
+A data frame with approximately 300,000 contracts and 39 variables:
 \describe{
-\item{cig, cig_accordo_quadro}{Tender Identification Code, is a code assigned by the Authority to uniquely track tenders and contracts nationwide and is assigned at the Lot level.}
-\item{numero_gara,}{number identifying a tender; a tender consists of one or more lots, each identified by a CIG}
-\item{oggetto_gara}{Subject of the Tender - description of goods and services to be procured}
-\item{importo_complessivo_gara}{Overall Amount of the Tender}
-\item{n_lotti_componenti}{Number of lots that make up the contract}
-\item{oggetto_lotto}{Subject of the Lot}
-\item{importo_lotto}{Lot amount}
-\item{oggetto_principale_contratto}{Main object of the contract (Works, Services Supplies)}
-\item{stato}{cig life cycle status}
-\item{settore}{indicates whether the Contracting Authority operates in the ordinary sectors (EU Directive 24 applies) or in the Special Sectors (EU Directive 25 applies)}
-\item{luogo_istat}{ISTAT Localization}
-\item{provincia}{Province abbreviation}
-\item{data_pubblicazione}{date of publication of the notice}
-\item{data_scadenza_offerta}{Deadline for submission of a bid}
-\item{cod_tipo_scelta_contraente}{Code referring to the procedure for choosing a contractor}
-\item{tipo_scelta_contraente}{Description of the procedure for selecting the contractor}
-\item{cod_modalita_realizzazione}{Code referring to the mode of implementation of the tender}
-\item{modalita_realizzazione}{Description of the mode of implementation of the tender}
-\item{codice_ausa}{AUSA Code (a code assigned by ANAC (italian national anti-corruption authority), which identifies the Contracting Station i.e. authority in the Unique Register of Contracting Stations)}
-\item{cf_amministrazione_appaltante}{Fiscal Code of the Administration that tenders or purchases}
-\item{denominazione_amministrazione_appaltante}{Name of the administration issuing the invitation to tender or purchase}
-\item{sezione_regionale}{Regional reference section for data submission.}
-\item{id_centro_costo}{Identifier of the Cost Center, organizational unit of the contracting station.}
-\item{denominazione_centro_costo}{Cost Center Name}
-\item{anno_pubblicazione}{Reference year, extracted from the date of publication}
-\item{mese_pubblicazione}{Reference month, extracted from the date of publication}
-\item{cod_cpv}{Commodity category code of the purchased good or service (CPV vocabulary)}
-\item{descrizione_cpv}{Description of the commodity category of the good or service purchased}
-\item{flag_prevalente}{denotes whether the commodity category is prevailing (a contract may include more than one category of goods or services)}
-\item{cup}{Unique Project Code, identifies a public investment project}
-\item{id_categoria}{Identification code for the category of works being procured}
-\item{descrizione}{Description of the categories of works}
-\item{descrizione_tipo_categoria}{Description of the type of work category of the contract}
-\item{modalita_realizzazione_denominazione}{Name of the mode of implementation of the contract}
-\item{tipo_scelta_contraente_denominazione}{name of the Contractor's Choice}
-\item{data_aggiudicazione_definitiva}{Date of award, as per the minutes}
-\item{esito}{Description of the outcome of the award process (Awarded, Cancelled...)}
-\item{criterio_aggiudicazione}{Award criterion adopted (most economically advantageous bid, lowest price, etc.)}
-\item{data_comunicazione_esito}{Date of announcement of the outcome of the award.}
-\item{importo_aggiudicazione}{amount of the award}
-\item{ribasso_aggiudicazione}{Value of the rebate made by the Economic Operator who was awarded the tender.}
-\item{flag_subappalto}{Indicator of possibility of subcontracting}
-\item{id_aggiudicazione}{Unique award code}
-\item{cod_esito}{Code identifying outcome of award procedure}
-\item{asta_elettronica}{Indicator of use of electronic auction}
-\item{massimo_ribasso}{Maximum value of the discount charged}
-\item{minimo_ribasso}{Minimum value of the discount charged in the tender}
-\item{data}{reference date for the data block}
-\item{descrizione_evento}{Event Description (Auction Base, Variant...)}
-\item{importo_sicurezza}{Event Description (Auction Base, Variant...)}
-\item{dettaglio_evento}{Detail of variation e.g. variant number}
-\item{importo_forniture}{Amount of Supplies}
-\item{importo_lavori}{Amount of Work}
-\item{importo_progettazione}{Design Amount}
-\item{somme_a_disposizione}{Amounts available}
-\item{importo_servizi}{Amount of Services}
-\item{ulteriori_oneri_non_soggetti_ribasso}{Additional charges not subject to rebate}
-\item{ruolo}{Description of the participant's role.}
-\item{codice_fiscale}{Participant's tax code.}
-\item{denominazione}{Participant name.}
-\item{tipo_soggetto}{Type of participating entity.}
-\item{cf_subappaltante}{Subcontractor Tax Code.}
-\item{data_autorizzazione}{Subcontracting authorization date}
-\item{oggetto}{Subject of subcontracting.}
-\item{descrizione_categoria}{Description of the category of works.}
-\item{cod_categoria}{Works category identification code.}
-\item{data_stipula_contratto}{Date of entering into the contract}
-\item{data_esecutivita_contratto}{Contract execution date}
-\item{data_termine_contrattuale}{Contract termination date}
-\item{data_inizio_effettiva}{Actual start date of work}
-\item{consegna_frazionata}{Fractional delivery indicator}
-\item{id_variante}{Unique variant identifier.}
-\item{motivo_variante}{Description of the reason for the variance.}
-\item{data_approvazione_variante}{Date of approval of the variance.}
-\item{motivo_risoluzione}{Reason for contract resolution}
-\item{motivo_interruzione_anticipata}{Description of the reason for early termination}
-\item{data_conclusione_anticipata}{Date of early termination of the contract}
-\item{data_effettiva_ultimazione}{Effective completion date of the contract}
+\item{cig}{Contract identification code: it is a code assigned by the Authority to uniquely track tenders and contracts nationwide
+and is assigned at the lot level.}
+\item{importo_lotto}{Economic amount (starting bid).}
+\item{oggetto_lotto}{Object (string).}
+\item{oggetto_principale_contratto}{Main contract object: works ("LAVORI") , services ("SERVIZI"), supplies ("FORNITURE").}
+\item{cod_cpv}{Common Procurement Vocabulary (CPV) code.}
+\item{descrizione_cpv}{Common Procurement Vocabulary (CPV) description.}
+\item{flag_prevalente}{Dummy, indicating whether the CPV is prevailing }
+\item{luogo_istat}{Contract geographic localisation (ISTAT code).}
+\item{data_pubblicazione}{Publication date of the call for tenders.}
+\item{cod_tipo_scelta_contraente}{Code referring to the procedure type for choosing a contractor.}
+\item{tipo_scelta_contraente}{Description of the procedure type for selecting the contractor.}
+\item{cod_modalita_realizzazione}{Code referring to the mode of implementation of the contract.}
+\item{modalita_realizzazione}{Description of the mode of implementation of the contract.}
+\item{cf_amministrazione_appaltante}{ID code (\emph{codice fiscale}) of the contracting authorities issuing the contract.}
+\item{denominazione_amministrazione_appaltante}{Name of the contracting authorities issuing the contract.}
+\item{citta_codice_stazapp}{Contracting authority geographic location (ISTAT code).}
+\item{id_aggiudicazione}{Award notice ID.}
+\item{data_aggiudicazione_definitiva}{Award notice date.}
+\item{importo_aggiudicazione}{Award value.}
+\item{criterio_aggiudicazione}{Award criterion (most economically advantageous bid, lowest price, etc.).}
+\item{numero_offerte_ammesse}{Number of eligible bids.}
+\item{num_imprese_offerenti}{Number of received bids.}
+\item{data_termine_contrattuale}{Expected end date.}
+\item{data_inizio_effettiva}{Actual start date.}
+\item{data_effettiva_ultimazione}{Actual end date.}
+\item{aggiudicatari}{\emph{Nested} dataframe containing basic information on the awarded company(ies):
+\code{codice_fiscale} (Company ID) and \code{denominazione} (company denomination).}
+\item{varianti}{\emph{Nested} dataframe containing information on the modification(s) occured:
+\code{id_variante}(variant ID), \code{data_approvazione_variante} (variant date), \code{cod_motivo_variante} (variant reason code),
+and \code{motivo_variante} (variant reason description).}
+\item{cod_regione}{Region ISTAT code (NUTS-2 level).}
+\item{nome_regione}{Region name (NUTS-2 level).}
+\item{cod_provincia}{Province ISTAT code (NUTS-3 level).}
+\item{nome_provincia}{Province name (NUTS-3 level).}
+\item{cod_comune}{Municipality ISTAT code (local administrative units).}
+\item{nome_comune}{Municipality name (local administrative units).}
+\item{rip_geo}{Geographic macro-level (NUTS-1 level).}
+\item{codice_nuts1_2021}{NUTS-1 code.}
+\item{codice_nuts2_2021}{NUTS-2 code.}
+\item{codice_nuts3_2021}{NUTS-3 code.}
 }
 }
 }
@@ -97,8 +60,10 @@ A data frame with 100,000 rows and 79 columns:
 mock_data_core
 }
 \description{
-Data on public contracts in Italy are published in open open format on the \href{https://dati.anticorruzione.it/opendata/dataset}{portal}.
-The data are those communicated in their original form to the Authority by the Single Procedure Managers of the Contracting Stations.
-In this case we merged the tables whose dimensions  i.e. columns if joined to "bando cig", are to calculate indicators.
+Data on public contracts in Italy are published in open format on the \href{https://dati.anticorruzione.it/opendata/dataset}{portal},
+handled by the Italian anticorruption authority (ANAC).
+}
+\details{
+Nested dataframes (see \code{aggiudicatari} and \code{varianti}) can be unnested using function \code{\link[tidyr:unnest]{tidyr::unnest()}}.
 }
 \keyword{datasets}

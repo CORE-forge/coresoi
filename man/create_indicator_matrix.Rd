@@ -16,10 +16,32 @@ indicator values as subsequent columns (according to \code{out_list}).
 }
 \description{
 \code{create_indicator_matrix} creates the data matrix of elementary indicators
-(row = target unit; columns = indicator values). \strong{It is an internal function.}
+(row = target unit; columns = indicator values).
 }
 \details{
 Target unit ID in each output of \code{out_list} can be different and a full join is carried out for merging all the
 indicators and building the final data matrix.
+}
+\examples{
+\dontrun{
+if (interactive()) {
+  # sample of 100k contracts
+  set.seed(12345)
+  i <- sample(1:nrow(mock_data_core), size = 1e5)
+  mock_sample0 <- mock_data_core[sort(i), ]
+
+  # indicators for companies
+  mock_sample <- tidyr::unnest(mock_sample0, aggiudicatari, keep_empty = TRUE)
+  mock_sample_variants <- tidyr::unnest(mock_sample, varianti, keep_empty = TRUE)
+
+  out_companies <- ind_all(
+    data = mock_sample,
+    data_ind8 = mock_sample_variants,
+    emergency_name = "coronavirus",
+    target_unit = "companies"
+  )
+  indicator_data_matrix <- create_indicator_matrix(out_companies)
+}
+}
 }
 \keyword{internal}

@@ -1,4 +1,4 @@
-#' Compute Economic deviation across the crisis indicator
+#' Compute Contract economic deviation across the crisis indicator
 #'
 #' @description
 #'  The indicator reveals whether there has been an increase in the deviation of the contract actual execution economic value from its initial awarded value,

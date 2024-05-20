@@ -94,30 +94,41 @@ The long version can be useful for further specific analysis.
 \examples{
 \dontrun{
 if (interactive()) {
-  mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+  # sample of 100k contracts
+  set.seed(12345)
+  i <- sample(1:nrow(mock_data_core), size = 1e5)
+  mock_sample0 <- mock_data_core[sort(i), ]
+
+  # indicators for companies
+  mock_sample <- tidyr::unnest(mock_sample0, aggiudicatari, keep_empty = TRUE)
+  mock_sample_variants <- tidyr::unnest(mock_sample, varianti, keep_empty = TRUE)
+
   out_companies <- ind_all(
-    data = mock_data_core,
-    data_ind8 = mock_data_core_variants,
+    data = mock_sample,
+    data_ind8 = mock_sample_variants,
     emergency_name = "coronavirus",
     target_unit = "companies"
   )
   out_sens <- composite_sensitivity(
     indicator_list = out_companies,
     cutoff = c(0.90, 0.95, 0.99),
-    TOL = 0.1
-  ) # argument for mirt::mirt function
+    TOL = 0.1 # argument for mirt::mirt function
+  )
   View(out_sens$sens_wide)
   View(out_sens$sens_long)
 
   # regression and ANOVA on sensitivity output
   datl <- out_sens1$sens_long
   datl$ci100 <- 100 * datl$ci
-  datl$ind_removed2 <- factor(datl$ind_removed) \%>\% relevel(ref = "none")
-  X <- model.matrix(ci100 ~ factor(cutoff) + factor(miss) + factor(weights) + ind_removed2, data = datl)
-  y <- datl$ci100
+  datl$ind_removed2 <- factor(datl$ind_removed) \%>\%
+    relevel(ref = "none")
+  X <- model.matrix(ci100 ~ factor(cutoff) + factor(miss) + factor(weights) + ind_removed2,
+    data = datl
+  )
+  y <- na.omit(datl$ci100)
   dat <- data.frame(y, X)
   formula <- paste(names(dat)[-1], collapse = "+")
-  formula <- paste("y~", formula)
+  formula <- paste("y~0+", formula)
   mod <- lm(formula, data = dat)
   summary(mod)
   mod_anova <- anova(mod)
@@ -125,22 +136,29 @@ if (interactive()) {
 
   # graphical visualisation of the results
   # median/mean of CI for each target unit ID
-  datw$medianCI <- apply(datw[, -1], MARGIN = 1, FUN = median)
-  datw$meanCI <- apply(datw[, -1], MARGIN = 1, FUN = mean)
+  datw$medianCI <- apply(datw[, -c(1, 2)], MARGIN = 1, FUN = median)
+  datw$meanCI <- apply(datw[, -c(1, 2)], MARGIN = 1, FUN = mean)
   datw <- datw \%>\%
-    relocate(medianCI, .after = aggregation_name) \%>\%
-    relocate(meanCI, .after = medianCI)
+    dplyr::relocate(medianCI, .after = aggregation_name) \%>\%
+    dplyr::relocate(meanCI, .after = medianCI)
   datw_no0 <- datw \%>\%
-    filter(meanCI != 0)
+    dplyr::filter(meanCI != 0)
+
   # long data about the first 400 units
   datl_no0 <- datl \%>\%
-    filter(aggregation_name \%in\% datw_no0$aggregation_name[1:400]) \%>\%
-    left_join(datw_no0 \%>\% select(aggregation_name, medianCI, meanCI)) \%>\%
-    arrange(meanCI, aggregation_name)
-  aggr <- datl_no0$aggregation_name \%>\% unique()
+    dplyr::filter(aggregation_name \%in\% datw_no0$aggregation_name[1:400]) \%>\%
+    dplyr::left_join(datw_no0 \%>\%
+      dplyr::select(aggregation_name, medianCI, meanCI)) \%>\%
+    dplyr::arrange(meanCI, aggregation_name)
+  aggr <- datl_no0$aggregation_name \%>\%
+    unique()
   aggr <- data.frame(id = 1:length(aggr), aggregation_name = aggr)
-  datl_no0 <- datl_no0 \%>\% left_join(aggr)
-  boxplot(datl_no0$ci ~ datl_no0$id)
+  datl_no0 <- datl_no0 \%>\%
+    dplyr::left_join(aggr)
+  boxplot(datl_no0$ci ~ datl_no0$id,
+    ylab = "Composite indicator",
+    xlab = "Company index (1:400)"
+  )
 }
 }
 }

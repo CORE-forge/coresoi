@@ -35,7 +35,3 @@ indicator with missing values. As such, these models can predict a probability f
 of observed indicators; then, a random draw from a Bernoulli distribution with the predicted
 probability as parameter is performed for imputing '0' or '1' in the indicator with missing values.
 }
-\seealso{
-\code{\link[tidyr]{drop_na}}
-\code{\link[dplyr]{select}}
-}

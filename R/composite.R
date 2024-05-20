@@ -336,17 +336,39 @@ ind_all <- function(data,
 
 #' @title Create matrix of elementary indicators
 #' @description `create_indicator_matrix` creates the data matrix of elementary indicators
-#' (row = target unit; columns = indicator values). **It is an internal function.**
+#' (row = target unit; columns = indicator values).
 #' @param out_list list of outputs about each indicator computable for the target unit
 #' (e.g., company or contracting authority), as returned by [ind_all()].
 #' @return data matrix with aggregation ID of the target units as first column and
 #' indicator values as subsequent columns (according to `out_list`).
 #' @details Target unit ID in each output of `out_list` can be different and a full join is carried out for merging all the
 #' indicators and building the final data matrix.
+#' @examples
+#' \dontrun{
+#' if (interactive()) {
+#'   # sample of 100k contracts
+#'   set.seed(12345)
+#'   i <- sample(1:nrow(mock_data_core), size = 1e5)
+#'   mock_sample0 <- mock_data_core[sort(i), ]
+#'
+#'   # indicators for companies
+#'   mock_sample <- tidyr::unnest(mock_sample0, aggiudicatari, keep_empty = TRUE)
+#'   mock_sample_variants <- tidyr::unnest(mock_sample, varianti, keep_empty = TRUE)
+#'
+#'   out_companies <- ind_all(
+#'     data = mock_sample,
+#'     data_ind8 = mock_sample_variants,
+#'     emergency_name = "coronavirus",
+#'     target_unit = "companies"
+#'   )
+#'   indicator_data_matrix <- create_indicator_matrix(out_companies)
+#' }
+#' }
 #' @keywords internal
 #' @export
 #' @rdname create_indicator_matrix
-#' @importFrom dplyr select full_join
+#' @importFrom dplyr select full_join distinct group_by summarise first
+#' @importFrom tidyr drop_na
 create_indicator_matrix <- function(out_list) {
   cat("---------------------------------------------------\n")
   cat("Creating the matrix of elementary indicators \n")
@@ -354,27 +376,38 @@ create_indicator_matrix <- function(out_list) {
   n <- length(out_list) # no. of indicators (7 or 6)
   ind_id <- sapply(out_list, function(x) x$indicator_id[1])
 
-  X <- out_list[[1]] %>%
-    dplyr::select(aggregation_id, aggregation_name, indicator_value) %>%
+  # catch 'aggregation_id' and 'aggregation_name' from 'out_list'
+  X <- do.call(dplyr::bind_rows, out_list) %>%
+    tidyr::drop_na(aggregation_id) %>%
+    dplyr::select(aggregation_id, aggregation_name) %>%
+    dplyr::distinct() %>%
+    dplyr::group_by(aggregation_id) %>%
+    dplyr::summarise(aggregation_name = dplyr::first(aggregation_name))
+
+  X <- X %>%
     dplyr::full_join(
-      out_list[[2]] %>%
-        dplyr::select(aggregation_id, aggregation_name, indicator_value),
-      by = c("aggregation_id", "aggregation_name")
+      out_list[[1]] %>%
+        dplyr::select(aggregation_id, indicator_value),
+      by = c("aggregation_id")
     )
-  for (i in 3:n) {
+  for (i in 2:n) {
     X <- X %>%
       dplyr::full_join(
         out_list[[i]] %>%
-          dplyr::select(aggregation_id, aggregation_name, indicator_value),
-        by = c("aggregation_id", "aggregation_name")
+          dplyr::select(aggregation_id, indicator_value),
+        by = c("aggregation_id")
       )
   }
+
   names(X)[-c(1, 2)] <- paste0("ind", ind_id)
   # X is a matrix/dataframe with:
   # first column: aggregation ID
   # second column: aggregation name
   # other columns: elementary indicators
-  return(X)
+
+  X <- X %>%
+    tidyr::drop_na(aggregation_id) %>%
+    return(X)
 }
 
 
@@ -398,9 +431,6 @@ create_indicator_matrix <- function(out_list) {
 #' indicator with missing values. As such, these models can predict a probability for each combination
 #' of observed indicators; then, a random draw from a Bernoulli distribution with the predicted
 #' probability as parameter is performed for imputing '0' or '1' in the indicator with missing values.
-#' @seealso
-#'  \code{\link[tidyr]{drop_na}}
-#'  \code{\link[dplyr]{select}}
 #' @rdname manage_missing
 #' @export
 #' @importFrom tidyr drop_na
@@ -514,15 +544,23 @@ manage_missing <- function(data,
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   # sample of 100k contracts
+#'   set.seed(12345)
+#'   i <- sample(1:nrow(mock_data_core), size = 1e5)
+#'   mock_sample0 <- mock_data_core[sort(i), ]
+#'
+#'   # indicators for companies
+#'   mock_sample <- tidyr::unnest(mock_sample0, aggiudicatari, keep_empty = TRUE)
+#'   mock_sample_variants <- tidyr::unnest(mock_sample, varianti, keep_empty = TRUE)
+#'
 #'   out_companies <- ind_all(
-#'     data = mock_data_core,
-#'     data_ind8 = mock_data_core_variants,
+#'     data = mock_sample,
+#'     data_ind8 = mock_sample_variants,
 #'     emergency_name = "coronavirus",
 #'     target_unit = "companies"
 #'   )
-#'   data_matrix <- create_indicator_matrix(out_companies)
-#'   data_matrix_norm <- normalise(data_matrix, method = "binary", cutoff = 0.99)
+#'   indicator_data_matrix <- create_indicator_matrix(out_companies)
+#'   indicator_data_matrix_norm <- normalise(data_matrix, method = "binary", cutoff = 0.99)
 #' }
 #' }
 #' @rdname normalise
@@ -640,15 +678,26 @@ normalise <- function(data,
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   # sample of 100k contracts
+#'   set.seed(12345)
+#'   i <- sample(1:nrow(mock_data_core), size = 1e5)
+#'   mock_sample0 <- mock_data_core[sort(i), ]
+#'
+#'   # indicators for companies
+#'   mock_sample <- tidyr::unnest(mock_sample0, aggiudicatari, keep_empty = TRUE)
+#'   mock_sample_variants <- tidyr::unnest(mock_sample, varianti, keep_empty = TRUE)
+#'
 #'   out_companies <- ind_all(
-#'     data = mock_data_core,
-#'     data_ind8 = mock_data_core_variants,
+#'     data = mock_sample,
+#'     data_ind8 = mock_sample_variants,
 #'     emergency_name = "coronavirus",
 #'     target_unit = "companies"
 #'   )
-#'   data_matrix <- create_indicator_matrix(out_companies)
-#'   w <- get_weights(data_matrix, method = "equal")
+#'   indicator_data_matrix <- create_indicator_matrix(out_companies)
+#'   w <- get_weights(indicator_data_matrix, method = "equal")
+#'   w
+#'   w <- get_weights(indicator_data_matrix, method = "experts")
+#'   w
 #' }
 #' }
 #' @seealso
@@ -698,6 +747,7 @@ get_weights <- function(data,
   }
   if (method == "equal") {
     w <- rep(1 / Q, Q)
+    names(w) <- tail(names(data), Q)
   }
   if (method == "experts") {
     if (is.null(expert_weights)) {
@@ -750,24 +800,8 @@ get_weights <- function(data,
 #'
 #' \deqn{CI_c = \prod_{q=1}^Q I_{qc}^{w_q}}
 #'
-#' @examples
-#' \dontrun{
-#' if (interactive()) {
-#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
-#'   out_companies <- ind_all(
-#'     data = mock_data_core,
-#'     data_ind8 = mock_data_core_variants,
-#'     emergency_name = "coronavirus",
-#'     target_unit = "companies"
-#'   )
-#'   data_matrix <- create_indicator_matrix(out_companies)
-#'   data_matrix_norm <- normalise(data_matrix, method = "binary", cutoff = 0.95)
-#'   data_matrix_norm_nomiss <- manage_missing(data_matrix_norm, missing = 0)
-#'   w <- get_weights(data_matrix_norm_nomiss, method = "equal")
-#'   out_aggr <- aggregate(data_matrix_norm_nomiss, method = "linear", w) # it is a composite indicator
-#' }
-#' }
 #' @rdname aggregate
+#' @keywords internal
 #' @export
 aggregate <- function(data,
                       method = "linear",
@@ -817,10 +851,18 @@ aggregate <- function(data,
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   # sample of 100k contracts
+#'   set.seed(12345)
+#'   i <- sample(1:nrow(mock_data_core), size = 1e5)
+#'   mock_sample0 <- mock_data_core[sort(i), ]
+#'
+#'   # indicators for companies
+#'   mock_sample <- tidyr::unnest(mock_sample0, aggiudicatari, keep_empty = TRUE)
+#'   mock_sample_variants <- tidyr::unnest(mock_sample, varianti, keep_empty = TRUE)
+#'
 #'   out_companies <- ind_all(
-#'     data = mock_data_core,
-#'     data_ind8 = mock_data_core_variants,
+#'     data = mock_sample,
+#'     data_ind8 = mock_sample_variants,
 #'     emergency_name = "coronavirus",
 #'     target_unit = "companies"
 #'   )
@@ -832,7 +874,6 @@ aggregate <- function(data,
 #'     weight_method = "experts",
 #'     aggr_method = "linear"
 #'   )
-#'   head(composite_companies)
 #' }
 #' }
 #' @rdname compute_composite
@@ -1006,8 +1047,10 @@ composite_sensitivity_methods <- function(indicator_list,
   weights <- rep(c("w_eq", "w_exp", "w_irt"), each = 2 * k) # for each missing method
   miss <- rep(c("m0", "m1"), times = 3, each = k) # for each set of weights
   co <- rep(cutoff, times = 6) # for each combination of missing method (2) and weight set (3)
+  aggr_id <- rep(out_wide$aggregation_id, each = ncol(out_wide[, -c(1, 2)]))
   aggr_name <- rep(out_wide$aggregation_name, each = ncol(out_wide[, -c(1, 2)]))
   out_long <- data.frame(
+    aggregation_id = aggr_id,
     aggregation_name = aggr_name,
     ci = c(t(out_wide[, -c(1, 2)])),
     cutoff = co,
@@ -1101,30 +1144,41 @@ composite_sensitivity_methods <- function(indicator_list,
 #' @examples
 #' \dontrun{
 #' if (interactive()) {
-#'   mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+#'   # sample of 100k contracts
+#'   set.seed(12345)
+#'   i <- sample(1:nrow(mock_data_core), size = 1e5)
+#'   mock_sample0 <- mock_data_core[sort(i), ]
+#'
+#'   # indicators for companies
+#'   mock_sample <- tidyr::unnest(mock_sample0, aggiudicatari, keep_empty = TRUE)
+#'   mock_sample_variants <- tidyr::unnest(mock_sample, varianti, keep_empty = TRUE)
+#'
 #'   out_companies <- ind_all(
-#'     data = mock_data_core,
-#'     data_ind8 = mock_data_core_variants,
+#'     data = mock_sample,
+#'     data_ind8 = mock_sample_variants,
 #'     emergency_name = "coronavirus",
 #'     target_unit = "companies"
 #'   )
 #'   out_sens <- composite_sensitivity(
 #'     indicator_list = out_companies,
 #'     cutoff = c(0.90, 0.95, 0.99),
-#'     TOL = 0.1
-#'   ) # argument for mirt::mirt function
+#'     TOL = 0.1 # argument for mirt::mirt function
+#'   )
 #'   View(out_sens$sens_wide)
 #'   View(out_sens$sens_long)
 #'
 #'   # regression and ANOVA on sensitivity output
 #'   datl <- out_sens1$sens_long
 #'   datl$ci100 <- 100 * datl$ci
-#'   datl$ind_removed2 <- factor(datl$ind_removed) %>% relevel(ref = "none")
-#'   X <- model.matrix(ci100 ~ factor(cutoff) + factor(miss) + factor(weights) + ind_removed2, data = datl)
-#'   y <- datl$ci100
+#'   datl$ind_removed2 <- factor(datl$ind_removed) %>%
+#'     relevel(ref = "none")
+#'   X <- model.matrix(ci100 ~ factor(cutoff) + factor(miss) + factor(weights) + ind_removed2,
+#'     data = datl
+#'   )
+#'   y <- na.omit(datl$ci100)
 #'   dat <- data.frame(y, X)
 #'   formula <- paste(names(dat)[-1], collapse = "+")
-#'   formula <- paste("y~", formula)
+#'   formula <- paste("y~0+", formula)
 #'   mod <- lm(formula, data = dat)
 #'   summary(mod)
 #'   mod_anova <- anova(mod)
@@ -1132,22 +1186,29 @@ composite_sensitivity_methods <- function(indicator_list,
 #'
 #'   # graphical visualisation of the results
 #'   # median/mean of CI for each target unit ID
-#'   datw$medianCI <- apply(datw[, -1], MARGIN = 1, FUN = median)
-#'   datw$meanCI <- apply(datw[, -1], MARGIN = 1, FUN = mean)
+#'   datw$medianCI <- apply(datw[, -c(1, 2)], MARGIN = 1, FUN = median)
+#'   datw$meanCI <- apply(datw[, -c(1, 2)], MARGIN = 1, FUN = mean)
 #'   datw <- datw %>%
-#'     relocate(medianCI, .after = aggregation_name) %>%
-#'     relocate(meanCI, .after = medianCI)
+#'     dplyr::relocate(medianCI, .after = aggregation_name) %>%
+#'     dplyr::relocate(meanCI, .after = medianCI)
 #'   datw_no0 <- datw %>%
-#'     filter(meanCI != 0)
+#'     dplyr::filter(meanCI != 0)
+#'
 #'   # long data about the first 400 units
 #'   datl_no0 <- datl %>%
-#'     filter(aggregation_name %in% datw_no0$aggregation_name[1:400]) %>%
-#'     left_join(datw_no0 %>% select(aggregation_name, medianCI, meanCI)) %>%
-#'     arrange(meanCI, aggregation_name)
-#'   aggr <- datl_no0$aggregation_name %>% unique()
+#'     dplyr::filter(aggregation_name %in% datw_no0$aggregation_name[1:400]) %>%
+#'     dplyr::left_join(datw_no0 %>%
+#'       dplyr::select(aggregation_name, medianCI, meanCI)) %>%
+#'     dplyr::arrange(meanCI, aggregation_name)
+#'   aggr <- datl_no0$aggregation_name %>%
+#'     unique()
 #'   aggr <- data.frame(id = 1:length(aggr), aggregation_name = aggr)
-#'   datl_no0 <- datl_no0 %>% left_join(aggr)
-#'   boxplot(datl_no0$ci ~ datl_no0$id)
+#'   datl_no0 <- datl_no0 %>%
+#'     dplyr::left_join(aggr)
+#'   boxplot(datl_no0$ci ~ datl_no0$id,
+#'     ylab = "Composite indicator",
+#'     xlab = "Company index (1:400)"
+#'   )
 #' }
 #' }
 #' @rdname composite_sensitivity

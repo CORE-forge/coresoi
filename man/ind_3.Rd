@@ -2,7 +2,7 @@
 % Please edit documentation in R/03-ec-dev-across-crisis.R
 \name{ind_3}
 \alias{ind_3}
-\title{Compute Economic deviation across the crisis indicator}
+\title{Compute Contract economic deviation across the crisis indicator}
 \usage{
 ind_3(
   data,

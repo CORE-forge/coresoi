@@ -2,26 +2,20 @@
 % Please edit documentation in R/utils.R
 \name{get_associated_cpv_from_emergency}
 \alias{get_associated_cpv_from_emergency}
-\title{Get the associated CPV code from emergency name}
+\title{Get the associated CPV code(s) from emergency name.}
 \usage{
 get_associated_cpv_from_emergency(emergency_name)
 }
 \arguments{
-\item{emergency_name}{PARAM_DESCRIPTION}
+\item{emergency_name}{string specifying the name of the emergency to consider. Examples could include "Coronavirus" or
+"Terremoto Centro Italia 2016-2017".}
 }
 \value{
-cpv_code
+CPV division code(s) involved by the selected emergency.
 }
 \description{
-Not all the emergency are going to impact each contract. Some of them like coronavirus are going to impact more CPV 33 "Medical equipments, pharmaceuticals and personal care products" insted of say "Agricultural, forestry, horticultural, aquacultural and apicultural services". Here we emplyed a set of domain experts which have worked on associating each emergency to a set of respective CPVs.
-}
-\details{
-DETAILS
-}
-\examples{
-\dontrun{
-if (interactive()) {
-  # EXAMPLE1
-}
-}
+Not all the emergency are going to impact each contract. For example, Coronavirus is supposed to
+impact predominantly contracts with CPV 33 "Medical equipments, pharmaceuticals and personal care products".
+Here we employed a set of domain experts who worked on associating each emergency to a set of
+CPV division code (first two digits of CPV code).
 }

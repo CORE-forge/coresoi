@@ -42,15 +42,26 @@ by rescaling the estimated discrimination parameters (in such a way they sum to 
 \examples{
 \dontrun{
 if (interactive()) {
-  mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
+  # sample of 100k contracts
+  set.seed(12345)
+  i <- sample(1:nrow(mock_data_core), size = 1e5)
+  mock_sample0 <- mock_data_core[sort(i), ]
+
+  # indicators for companies
+  mock_sample <- tidyr::unnest(mock_sample0, aggiudicatari, keep_empty = TRUE)
+  mock_sample_variants <- tidyr::unnest(mock_sample, varianti, keep_empty = TRUE)
+
   out_companies <- ind_all(
-    data = mock_data_core,
-    data_ind8 = mock_data_core_variants,
+    data = mock_sample,
+    data_ind8 = mock_sample_variants,
     emergency_name = "coronavirus",
     target_unit = "companies"
   )
-  data_matrix <- create_indicator_matrix(out_companies)
-  w <- get_weights(data_matrix, method = "equal")
+  indicator_data_matrix <- create_indicator_matrix(out_companies)
+  w <- get_weights(indicator_data_matrix, method = "equal")
+  w
+  w <- get_weights(indicator_data_matrix, method = "experts")
+  w
 }
 }
 }

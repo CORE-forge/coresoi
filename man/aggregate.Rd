@@ -39,21 +39,4 @@ as weighted geometric mean of the elementary indicators:
 
 \deqn{CI_c = \prod_{q=1}^Q I_{qc}^{w_q}}
 }
-\examples{
-\dontrun{
-if (interactive()) {
-  mock_data_core_variants <- unnest(mock_data_core, varianti, keep_empty = TRUE)
-  out_companies <- ind_all(
-    data = mock_data_core,
-    data_ind8 = mock_data_core_variants,
-    emergency_name = "coronavirus",
-    target_unit = "companies"
-  )
-  data_matrix <- create_indicator_matrix(out_companies)
-  data_matrix_norm <- normalise(data_matrix, method = "binary", cutoff = 0.95)
-  data_matrix_norm_nomiss <- manage_missing(data_matrix_norm, missing = 0)
-  w <- get_weights(data_matrix_norm_nomiss, method = "equal")
-  out_aggr <- aggregate(data_matrix_norm_nomiss, method = "linear", w) # it is a composite indicator
-}
-}
-}
+\keyword{internal}

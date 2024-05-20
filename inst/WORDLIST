@@ -1,5 +1,4 @@
 ANAC
-AUSA
 Aggiudicatari
 Anticorruption
 Antifrau
@@ -10,13 +9,10 @@ BNDCP
 Banca
 Birnbaum
 CAE
-CIG
 CMD
 COrruption
 CPV
-CPVs
 CRI
-Cancelled
 Catalunya
 Centro
 Cigs
@@ -30,8 +26,10 @@ ECR
 ECS
 EMR
 ETL
+FORNITURE
 Fazekas
 Flink
+Gini
 Github
 Hudi
 ISF
@@ -40,6 +38,7 @@ Infonodes
 Italia
 JSON
 Joliffe
+LAVORI
 Lenghty
 Lifecycle
 MAXQUAD
@@ -51,6 +50,7 @@ Montesca
 NCYCLES
 Nachtigall
 Nazionale
+Nazionali
 Niccolò
 Normalisation
 Normalise
@@ -59,7 +59,6 @@ ORCID
 Obierta
 Oficina
 Otoiu
-PARAM
 Perugia
 Pre
 Pubblici
@@ -69,6 +68,7 @@ Reckase
 Rescaling
 SABIC
 SEM
+SERVIZI
 Standardisation
 Stazione
 Terremoto
@@ -81,10 +81,7 @@ analytics
 anticorruption
 anticorruzione
 api
-apicultural
-aquacultural
 aws
-bando
 barnard
 behaviour
 behaviours
@@ -98,9 +95,7 @@ codice
 colname
 compensability
 computable
-coronavirus
 cpv
-cpvs
 cq
 crowdsourcing
 dati
@@ -127,10 +122,10 @@ frac
 frontend
 generalised
 https
+ies
 incrementing
 initialisation
 initialisations
-insted
 institutionalised
 interpretability
 irt
@@ -139,6 +134,7 @@ labelled
 leq
 lim
 loadings
+localisation
 lubridate
 magrittr
 maximise
@@ -151,6 +147,7 @@ normalised
 normalises
 normalising
 oblimin
+occured
 onwards
 opensource
 operationalise
@@ -186,7 +183,6 @@ summarised
 summarising
 tetrachoric
 th
-tibble
 toolset
 un
 uncorrelation
